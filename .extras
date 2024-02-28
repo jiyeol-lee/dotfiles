@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+precmd() {
+	if tmux list-sessions >/dev/null 2>&1; then
+		tmux refresh-client -S
+	fi
+}
