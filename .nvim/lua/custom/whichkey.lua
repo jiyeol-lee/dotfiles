@@ -117,7 +117,7 @@ M.config = function()
 
     f = {
       name = "Telescope Find",
-      f = { "<cmd>Telescope find_files hidden=true<CR>", "Find Files" },
+      f = { "<cmd>Telescope find_files<CR>", "Find Files" },
       e = { "<cmd>Telescope emoji<CR>", "Find Emoji" },
       g = { "<cmd>Telescope live_grep<CR>", "Find Grep" },
     },
