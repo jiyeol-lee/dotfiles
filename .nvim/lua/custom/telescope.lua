@@ -41,12 +41,20 @@ M.config = function()
           ["<C-k>"] = "move_selection_previous",
           ["<C-j>"] = "move_selection_next",
           ['<C-t>'] = fzf_multi_select,
-        }
+        },
       },
       sorting_strategy = "ascending",
       layout_config = {
         prompt_position = "top"
       }
+    },
+    pickers = {
+      find_files = {
+        find_command = function()
+          return { "rg", "--files", "--color", "never", "-g", "!.git" }
+        end,
+        hidden = true,
+      },
     },
     extensions = {
       emoji = {
