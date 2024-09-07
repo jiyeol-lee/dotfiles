@@ -18,7 +18,7 @@ M.config = function()
     },
     heading = {
       position = 'inline',
-      icons = { '󰲡', '󰲣', '󰲥', '󰲧', '󰲩', '󰲫' },
+      icons = { '[H1]', '[H2]', '[H3]', '[H4]', '[H5]', '[H6]' },
     },
     checkbox = {
       unchecked = { icon = '🌑', highlight = 'RenderMarkdownUnchecked' },
