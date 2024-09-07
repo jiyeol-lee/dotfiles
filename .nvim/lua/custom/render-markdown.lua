@@ -1,6 +1,6 @@
 local M = {
   'MeanderingProgrammer/render-markdown.nvim',
-  opts = {},
+  priority = 2000,
   dependencies = {
     'nvim-treesitter/nvim-treesitter',
     'nvim-tree/nvim-web-devicons'
@@ -17,7 +17,8 @@ M.config = function()
       per_level = 0,
     },
     heading = {
-      position = 'inline'
+      position = 'inline',
+      icons = { '󰲡', '󰲣', '󰲥', '󰲧', '󰲩', '󰲫' },
     },
     checkbox = {
       unchecked = { icon = '🌑', highlight = 'RenderMarkdownUnchecked' },
