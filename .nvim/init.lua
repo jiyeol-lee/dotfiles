@@ -21,6 +21,7 @@ spec("custom.comment")
 spec("custom.vimwiki")
 spec("custom.highlightyark")
 -- spec "custom.octo"
+spec("custom.indent-blankline")
 spec("custom.treesitter")
 spec("custom.nvim-tree")
 spec("custom.telescope")
