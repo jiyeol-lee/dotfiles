@@ -33,7 +33,6 @@ spec("custom.cmp")
 spec("custom.autopairs") -- this should be after cmp
 spec("custom.test")
 spec("custom.markdown-preview")
-spec("custom.render-markdown")
 spec("custom.bookmarks")
 spec("custom.prisma") -- tree sitter is not working for some reason
 
