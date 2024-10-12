@@ -38,7 +38,7 @@ function installPackages() {
   brew install --cask google-chrome
 
   # Install firefox developer edition
-  brew install --cask firefox@developer-edition
+  # brew install --cask firefox@developer-edition
 
   # Install alfred
   brew install --cask google-drive
