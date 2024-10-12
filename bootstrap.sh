@@ -83,6 +83,10 @@ function installPackages() {
   # Install go
   brew install go
 
+  # Install go tools
+  brew install golines
+  brew install gofumpt
+
   # Install ripgrep
   brew install ripgrep
 
