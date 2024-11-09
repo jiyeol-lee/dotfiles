@@ -26,7 +26,7 @@ function installPackages() {
   brew install --cask chatgpt
 
   # Install figma
-  brew install --cask figma
+  # brew install --cask figma
 
   # Install notion
   brew install --cask notion
