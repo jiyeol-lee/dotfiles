@@ -118,7 +118,7 @@ end
 
 local function on_init(client)
   -- let's see if we can get this working
-  if client.name == "tsserver" and client.server_capabilities then
+  if client.name == "ts_ls" and client.server_capabilities then
     client.server_capabilities.documentFormattingProvider = false
   end
 
@@ -134,7 +134,7 @@ M.config = function()
 
   -- remove "html" because it's conflicted with "angularls"
   local servers = {
-    "tsserver",
+    "ts_ls",
     "cssls",
     "jsonls",
     "pyright",
