@@ -9,6 +9,8 @@ export HISTCONTROL='ignoreboth';
 # Change default editor to neovim
 export EDITOR=nvim
 
+# Add go path to PATH
+export PATH=$PATH:$(go env GOPATH)/bin
 # nodejs 20
 export PATH="/opt/homebrew/opt/node@20/bin:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/node@20/lib"
