@@ -1,17 +1,6 @@
 #!/usr/bin/env bash
 
 function installPackages() {
-  # Install Homebrew.
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-  source ~/.zshrc
-
-  # Make sure we’re using the latest Homebrew.
-  brew update
-
-  # Upgrade any already-installed formulae.
-  brew upgrade
-
   # Add additional taps
   # ref: https://github.com/Homebrew/homebrew-cask/blob/master/USAGE.md#additional-taps-optional
   # brew tap homebrew/cask-versions
@@ -103,12 +92,13 @@ function doIt() {
   mkdir -p ~/.config/tmux
   mkdir -p ~/.docker
 
-  installPackages;
-
   # Configure git
   git config --global user.name "Jiyeol Lee"
   git config --global user.email "ka.felix496@gmail.com"
   git config --global rerere.enabled true # Enable rerere to make my life easier
+
+  # Install Homebrew.
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   # Create symbolic links
   ln -s ~/dotfiles/.tmux.conf ~/.config/tmux/tmux.conf
@@ -121,6 +111,15 @@ function doIt() {
   ln -s ~/dotfiles/.exports ~/.exports
   ln -s ~/dotfiles/.extras ~/.extras
   ln -s ~/dotfiles/.profile ~/.zshrc
+
+  source ~/.zshrc
+
+  # Make sure we’re using the latest Homebrew.
+  brew update
+  # Upgrade any already-installed formulae.
+  brew upgrade
+
+  installPackages;
 
   # Configure docker
   echo -e "{\n\t\"cliPluginsExtraDirs\": [\n\t\t\"/opt/homebrew/lib/docker/cli-plugins\"\n\t],\n\t\"currentContext\": \"colima\"\n}" > ~/.docker/config.json
