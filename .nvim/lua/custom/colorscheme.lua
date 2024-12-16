@@ -1,21 +1,21 @@
 local M = {
-  "ellisonleao/gruvbox.nvim",
+  "catppuccin/nvim",
   priority = 1000
 }
 
 M.config = function()
-  local gruvbox = require("gruvbox")
+  local catppuccin = require("catppuccin")
   local setup = {
     terminal_colors = true,
     transparent_mode = true
   }
 
-  gruvbox.setup(setup)
+  catppuccin.setup(setup)
 
   vim.cmd([[
     " set the colorscheme and highlight here
     set background=dark
-    colorscheme gruvbox
+    colorscheme catppuccin
 
     " make background transparent
     highlight Normal guibg=NONE ctermbg=NONE
