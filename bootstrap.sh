@@ -76,6 +76,10 @@ function installPackages() {
   brew install golines
   brew install gofumpt
 
+  # Install shell tools
+  brew install shellcheck
+  brew install shfmt
+
   # Install ripgrep
   brew install ripgrep
 
@@ -119,19 +123,19 @@ function doIt() {
   # Upgrade any already-installed formulae.
   brew upgrade
 
-  installPackages;
+  installPackages
 
   # Configure docker
-  echo -e "{\n\t\"cliPluginsExtraDirs\": [\n\t\t\"/opt/homebrew/lib/docker/cli-plugins\"\n\t],\n\t\"currentContext\": \"colima\"\n}" > ~/.docker/config.json
-  
+  echo -e "{\n\t\"cliPluginsExtraDirs\": [\n\t\t\"/opt/homebrew/lib/docker/cli-plugins\"\n\t],\n\t\"currentContext\": \"colima\"\n}" >~/.docker/config.json
+
   source ~/.zshrc
 }
 
-doIt;
+doIt
 
-echo "Configurations are done!";
-echo "Do not forget to run ':Copilot setup' in neovim!";
-echo "Do not forget to run 'Prefix + I' in tmux!";
+echo "Configurations are done!"
+echo "Do not forget to run ':Copilot setup' in neovim!"
+echo "Do not forget to run 'Prefix + I' in tmux!"
 
-unset installPackages;
-unset doIt;
+unset installPackages
+unset doIt
