@@ -26,6 +26,8 @@ M.config = function()
       "regex",
       "yaml",
       "http",
+      "bash",
+      "ssh_config"
     },
     highlight = {
       -- disable because of an error. don't know why.

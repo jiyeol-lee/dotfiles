@@ -144,7 +144,8 @@ M.config = function()
     "angularls",
     "gopls",
     "prismals",
-    "lua_ls"
+    "lua_ls",
+    "bashls"
   }
   local mason_setup = {
     ui = {
