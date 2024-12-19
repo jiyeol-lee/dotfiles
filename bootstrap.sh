@@ -63,9 +63,6 @@ function installPackages() {
   # Install nodejs
   brew install node@20
 
-  # Install yarn -- must be installed after nodejs
-  brew install yarn
-
   # Install gh
   brew install gh
 
