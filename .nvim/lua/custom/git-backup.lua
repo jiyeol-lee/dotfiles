@@ -16,8 +16,8 @@ end
 function Git_backup()
   local notify = require("notify")
   local output = run_command('git log --oneline --format=%s -1')
-  local current_date = run_command('date "+%Y-%m-%d"')
-  local commit_message = 'backup ' .. current_date
+  local current_date = run_command('date "+%Y-%m-%d %H:%M:%S (%z)"')
+  local commit_message = 'chore(backup): ' .. current_date
   local notify_title = 'Git Processing'
 
   if output == commit_message then
