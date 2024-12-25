@@ -1,20 +1,12 @@
-vim.cmd [[
-  augroup _markdown
-    autocmd!
-    autocmd FileType markdown nmap <buffer> <Space> :VimwikiToggleListItem<CR>
-    autocmd FileType markdown vmap <buffer> <Space> :VimwikiToggleListItem<CR>
-  augroup end
-]]
+local function is_in_xxx_directory(directory_name, file_path)
+  local pattern = "^(.-/?)" .. directory_name .. "/.+%.md$"
 
-local function is_in_xxx_directory(directoryName, filePath)
-  local pattern = "^(.-/?)" .. directoryName .. "/.+%.md$"
-
-  return string.match(filePath, pattern) ~= nil
+  return string.match(file_path, pattern) ~= nil
 end
 
-local function get_xxx_directory(directoryName, filePath)
-  local pattern = "(.-" .. directoryName .. ")/"
-  local match = string.match(filePath, pattern)
+local function get_xxx_directory(directory_name, file_path)
+  local pattern = "(.-" .. directory_name .. ")/"
+  local match = string.match(file_path, pattern)
   if match then
     -- Return the match including 'xxx'
     return match
@@ -29,14 +21,22 @@ local buf_hash = {}
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   callback = function()
-    local filepath = vim.api.nvim_buf_get_name(0)
+    local file_path = vim.api.nvim_buf_get_name(0)
 
-    if is_in_xxx_directory("vimwiki", filepath) then
-      local vimwiki_root = get_xxx_directory("vimwiki", filepath)
-      -- Set current directory to vimwiki root
-      vim.api.nvim_set_current_dir(vimwiki_root)
-    elseif is_in_xxx_directory("dotfiles", filepath) then
-      local dotfiles_root = get_xxx_directory("dotfiles", filepath)
+    if is_in_xxx_directory("vault-personal", file_path) then
+      local vault_personal_root = get_xxx_directory("vault-personal", file_path)
+      -- Set current directory to vault-personal root
+      vim.api.nvim_set_current_dir(vault_personal_root)
+    elseif is_in_xxx_directory("vault-work-2", file_path) then
+      local vault_work_root = get_xxx_directory("vault-work-2", file_path)
+      -- Set current directory to vault-work-2 root
+      vim.api.nvim_set_current_dir(vault_work_root)
+    elseif is_in_xxx_directory("vault-work-3", file_path) then
+      local vault_work_root = get_xxx_directory("vault-work-3", file_path)
+      -- Set current directory to vault-work-3 root
+      vim.api.nvim_set_current_dir(vault_work_root)
+    elseif is_in_xxx_directory("dotfiles", file_path) then
+      local dotfiles_root = get_xxx_directory("dotfiles", file_path)
       -- Set current directory to dotfiles root
       vim.api.nvim_set_current_dir(dotfiles_root)
     else

@@ -20,6 +20,9 @@ function installPackages() {
   # Install notion
   brew install --cask notion
 
+  # Install pngpaste for pasting image to markdown using obsidian.nvim
+  brew install pngpaste
+
   # Install brave browser
   # brew install --cask brave-browser
 

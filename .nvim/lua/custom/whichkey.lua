@@ -50,6 +50,14 @@ M.config = function()
     { mode = "n", "<leader>lI",   "<cmd>LspInstallInfo<CR>",                                                                                                                  desc = "Installer Info",             nowait = true },
     { mode = "n", "<leader>lr",   "<cmd>LspRestart<CR>",                                                                                                                      desc = "Restart Lsp Server",         nowait = true },
 
+    { mode = "n", "<leader>o",    group = "Obsidian",                                                                                                                         nowait = true },
+    { mode = "n", "<leader>os",   ":ObsidianSearch<CR>",                                                                                                                      desc = "Search in workspace",        nowait = true },
+    { mode = "n", "<leader>on",   ":ObsidianNew<CR>",                                                                                                                         desc = "Create a new note",          nowait = true },
+    { mode = "n", "<leader>od",   ":ObsidianDailies -1 1<CR>",                                                                                                                desc = "Open dailies telescope",     nowait = true },
+    { mode = "n", "<leader>olb",  ":ObsidianBacklinks<CR>",                                                                                                                   desc = "Display backlinks",          nowait = true },
+    { mode = "n", "<leader>olf",  ":ObsidianLinks<CR>",                                                                                                                       desc = "Display links",              nowait = true },
+    { mode = "n", "<leader>oln",  ":ObsidianLinkNew<CR>",                                                                                                                     desc = "Create a new link",          nowait = true },
+
     { mode = "n", "<leader>s",    group = "Search",                                                                                                                           nowait = true },
     { mode = "n", "<leader>ss",   "<cmd>lua require('spectre').open()<CR>",                                                                                                   desc = "Search",                     nowait = true },
 

@@ -18,7 +18,7 @@ spec("custom.notify")
 spec("custom.typescript")
 spec("custom.colorscheme")
 spec("custom.comment")
-spec("custom.vimwiki")
+spec("custom.obsidian")
 spec("custom.highlightyark")
 -- spec "custom.octo"
 spec("custom.indent-blankline")
