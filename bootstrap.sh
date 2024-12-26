@@ -80,6 +80,9 @@ function installPackages() {
   brew install shellcheck
   brew install shfmt
 
+  # Install deno
+  brew install deno
+
   # Install ripgrep
   brew install ripgrep
 

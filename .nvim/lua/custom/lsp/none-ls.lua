@@ -7,6 +7,35 @@ local M = {
   }
 }
 
+local function denoFmt()
+  local h = require("null-ls.helpers")
+  local methods = require("null-ls.methods")
+  local FORMATTING = methods.internal.FORMATTING
+  local extensions = {
+    -- javascript = "js",
+    -- javascriptreact = "jsx",
+    -- json = "json",
+    -- jsonc = "jsonc",
+    markdown = "md",
+    -- typescript = "ts",
+    -- typescriptreact = "tsx",
+  }
+
+  return h.make_builtin({
+    name = "denoFmt",
+    method = FORMATTING,
+    filetypes = { "markdown" },
+    generator_opts = {
+      command = "deno",
+      args = function(params)
+        return { "fmt", "-", "--ext", extensions[params.ft] }
+      end,
+      to_stdin = true,
+    },
+    factory = h.formatter_factory,
+  })
+end
+
 M.config = function()
   local null_ls = require("null-ls")
   -- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
@@ -24,6 +53,7 @@ M.config = function()
       formatting.gofumpt,
       -- bash
       formatting.shfmt,
+      denoFmt()
     },
     on_attach = function(client, bufnr)
       -- the Buffer will be null in buffers like nvim-tree or new unsaved files
