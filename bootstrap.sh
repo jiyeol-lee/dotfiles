@@ -66,6 +66,12 @@ function installPackages() {
   # Install nodejs
   brew install node@20
 
+  # Install deno
+  brew install deno
+
+  # Install web dev tools
+  brew install prettier
+
   # Install gh
   brew install gh
 
@@ -79,9 +85,6 @@ function installPackages() {
   # Install shell tools
   brew install shellcheck
   brew install shfmt
-
-  # Install deno
-  brew install deno
 
   # Install ripgrep
   brew install ripgrep
