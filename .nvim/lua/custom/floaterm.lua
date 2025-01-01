@@ -1,5 +1,6 @@
 local M = {
-  "voldikss/vim-floaterm"
+  "voldikss/vim-floaterm",
+  version = "*",
 }
 
 M.config = function()

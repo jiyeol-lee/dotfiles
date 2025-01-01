@@ -1,6 +1,6 @@
 local M = {
   "epwalsh/obsidian.nvim",
-  version = "*", -- recommended, use latest release instead of latest commit
+  version = "*",
   dependencies = {
     "nvim-lua/plenary.nvim",
   },

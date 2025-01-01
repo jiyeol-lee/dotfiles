@@ -1,5 +1,6 @@
 local M = {
   "catppuccin/nvim",
+  version = "*",
   priority = 1000
 }
 

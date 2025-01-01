@@ -1,5 +1,6 @@
 local M = {
-  "prisma/vim-prisma"
+  "prisma/vim-prisma",
+  version = "*",
 }
 
 return M

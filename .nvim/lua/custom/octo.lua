@@ -1,5 +1,6 @@
 local M = {
-  "pwntester/octo.nvim"
+  "pwntester/octo.nvim",
+  version = "*",
 }
 
 M.config = function()

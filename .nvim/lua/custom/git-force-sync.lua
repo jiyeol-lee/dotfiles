@@ -1,18 +1,3 @@
-local function run_command(command)
-  local handle = io.popen(command)
-
-  if not handle then
-    return ""
-  end
-
-  local result = handle:read("*a")
-
-  handle:close()
-
-  return result
-end
-
-
 function Git_force_sync()
   local notify = require("notify")
   local notify_title = 'Git Processing'

@@ -1,5 +1,6 @@
 local M = {
   "nvim-treesitter/nvim-treesitter",
+  version = "*",
   build = ":TSUpdate"
 }
 
@@ -30,8 +31,6 @@ M.config = function()
       "ssh_config"
     },
     highlight = {
-      -- disable because of an error. don't know why.
-      -- false will disable the whole extension
       enable = true,
 
       -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
