@@ -72,13 +72,13 @@ M.config = function()
     { mode = "n", "<leader>Th",   "<cmd>ToggleTerm size=10 direction=horizontal<CR>",                                                                                         desc = "Horizontal",                 nowait = true },
     { mode = "n", "<leader>Tv",   "<cmd>ToggleTerm size=80 direction=vertical<CR>",                                                                                           desc = "Vertical",                   nowait = true },
 
-    { mode = "n", "<leader>W",    group = "Vim Wiki",                                                                                                                         nowait = true },
-    { mode = "n", "<leader>Wt",   "<cmd>VimwikiTabIndex<CR>",                                                                                                                 desc = "Vim Wiki Tab",               nowait = true },
+    { mode = "n", "<leader>z",    function() Snacks.dim() end,                                                                                                                desc = "Toggle zen mode",            nowait = true },
 
     { mode = "v", "<leader>f",    group = "Telescope Find",                                                                                                                   nowait = true },
     { mode = "v", "<leader>fg",   "y<ESC><cmd>Telescope grep_string<CR>",                                                                                                     desc = "Find Grep",                  nowait = true },
     { mode = "v", "<leader>s",    group = "Search",                                                                                                                           nowait = true },
     { mode = "v", "<leader>ss",   "<cmd>lua require('spectre').open_visual({select_word=true})<CR>",                                                                          desc = "Search",                     nowait = true },
+
   }
 
   local which_key = require("which-key")
