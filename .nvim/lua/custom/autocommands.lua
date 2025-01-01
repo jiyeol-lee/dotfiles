@@ -23,17 +23,17 @@ vim.api.nvim_create_autocmd("BufEnter", {
   callback = function()
     local file_path = vim.api.nvim_buf_get_name(0)
 
-    if is_in_xxx_directory("vault-personal", file_path) then
-      local vault_personal_root = get_xxx_directory("vault-personal", file_path)
-      -- Set current directory to vault-personal root
+    if is_in_xxx_directory("vpersonal", file_path) then
+      local vault_personal_root = get_xxx_directory("vpersonal", file_path)
+      -- Set current directory to vpersonal root
       vim.api.nvim_set_current_dir(vault_personal_root)
-    elseif is_in_xxx_directory("vault-work-2", file_path) then
-      local vault_work_root = get_xxx_directory("vault-work-2", file_path)
-      -- Set current directory to vault-work-2 root
+    elseif is_in_xxx_directory("vwork2", file_path) then
+      local vault_work_root = get_xxx_directory("vwork2", file_path)
+      -- Set current directory to vwork2 root
       vim.api.nvim_set_current_dir(vault_work_root)
-    elseif is_in_xxx_directory("vault-work-3", file_path) then
-      local vault_work_root = get_xxx_directory("vault-work-3", file_path)
-      -- Set current directory to vault-work-3 root
+    elseif is_in_xxx_directory("vwork3", file_path) then
+      local vault_work_root = get_xxx_directory("vwork3", file_path)
+      -- Set current directory to vwork3 root
       vim.api.nvim_set_current_dir(vault_work_root)
     elseif is_in_xxx_directory("dotfiles", file_path) then
       local dotfiles_root = get_xxx_directory("dotfiles", file_path)

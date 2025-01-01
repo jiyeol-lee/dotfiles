@@ -9,8 +9,27 @@ local M = {
 M.config = function()
   local obsidian = require("obsidian")
   local setup = {
+    workspaces = {
+      {
+        name = "personal",
+        path = "~/vaults/vpersonal",
+        strict = true,
+      },
+      {
+        name = "work2",
+        path = "~/vaults/vwork2",
+        strict = true,
+      },
+      {
+        name = "work3",
+        path = "~/vaults/vwork3",
+        strict = true,
+      },
+    },
+
     -- Optional, if you keep notes in a specific subdirectory of your vault.
     notes_subdir = "notes",
+
     daily_notes = {
       -- Optional, if you keep daily notes in a separate directory.
       folder = "dailies",
@@ -43,18 +62,6 @@ M.config = function()
     -- Optional, alternatively you can customize the frontmatter data.
     ---@return table
     note_frontmatter_func = function(note)
-      -- local client = require "obsidian".get_client()
-      -- local Workspace = require "obsidian.workspace"
-      -- local options = {}
-      -- for i, spec in ipairs(client.opts.workspaces) do
-      --   local workspace = Workspace.new_from_spec(spec)
-      --   if workspace == client.current_workspace then
-      --     options[#options + 1] = string.format("*[%d] %s @ '%s'", i, workspace.name, workspace.path)
-      --   else
-      --     options[#options + 1] = string.format("[%d] %s @ '%s'", i, workspace.name, workspace.path)
-      --   end
-      -- end
-
       -- Add the title of the note as an alias.
       if note.title then
         note:add_alias(note.title)
@@ -133,21 +140,6 @@ M.config = function()
         tag_note = "<C-x>",
         -- Insert a tag at the current location.
         insert_tag = "<C-l>",
-      },
-    },
-
-    workspaces = {
-      {
-        name = "personal",
-        path = "~/vaults/vault-personal",
-      },
-      {
-        name = "work-2",
-        path = "~/vaults/vault-work-2",
-      },
-      {
-        name = "work-3",
-        path = "~/vaults/vault-work-3",
       },
     },
 
