@@ -16,13 +16,13 @@ alias ..='cd ..'
 
 # Vaults
 ### Change directory Vault Personal
-alias cvp='cd ~/vaults/vault-personal'
+alias cvp='cd ~/vaults/vpersonal'
 alias ovp='cvp && v'
 ### Change directory Vault Work 2
-alias cvw2='cd ~/vaults/vault-work-2'
+alias cvw2='cd ~/vaults/vwork2'
 alias ovw2='cvw2 && v'
 ### Change directory Vault Work 3
-alias cvw3='cd ~/vaults/vault-work-3'
+alias cvw3='cd ~/vaults/vwork3'
 alias ovw3='cvw3 && v'
 
 # Config
