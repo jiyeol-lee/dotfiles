@@ -102,6 +102,11 @@ function doIt() {
   mkdir -p ~/.config/tmux
   mkdir -p ~/.docker
 
+  # Create vault directories
+  mkdir -p ~/vaults/vpersonal
+  mkdir -p ~/vaults/vwork2
+  mkdir -p ~/vaults/vwork3
+
   # Configure git
   git config --global user.name "Jiyeol Lee"
   git config --global user.email "ka.felix496@gmail.com"
