@@ -6,6 +6,55 @@ local M = {
   },
 }
 
+local function rename_current_file(new_name)
+  -- Get the current file path
+  local current_file = vim.fn.expand('%:p')
+
+  -- Check if the file exists
+  if current_file == '' then
+    print("No file is currently loaded!")
+    return
+  end
+
+  -- Get the directory of the current file
+  local dir = vim.fn.fnamemodify(current_file, ':h')
+  local new_path = dir .. '/' .. new_name
+
+  -- Rename the file
+  local success, err = os.rename(current_file, new_path)
+  if not success then
+    print("Error renaming file: " .. err)
+    return
+  end
+
+  -- Update the buffer to the new file name
+  vim.api.nvim_command('file ' .. new_path)
+
+  -- Reload the buffer to reflect the new file name
+  vim.api.nvim_command('edit')
+end
+
+local get_note_id_prefix = function(title)
+  -- Create note IDs in a Zettelkasten format with a prefix and a timestamp.
+  -- In this case a note with the title 'My new note' will be given an ID that looks
+  -- like 'my-new-note-1657296016', and therefore the file name 'my-new-note-1657296016.md'
+  local prefix = ""
+  if title ~= nil then
+    -- If title is given, transform it into valid file name.
+    prefix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+  else
+    -- If title is nil, just add 4 random uppercase letters to the prefix.
+    for _ = 1, 4 do
+      prefix = prefix .. string.char(math.random(65, 90))
+    end
+  end
+  return prefix
+end
+
+local get_note_id = function(title)
+  return get_note_id_prefix(title) .. "-" .. tostring(os.time())
+end
+
 M.config = function()
   local obsidian = require("obsidian")
   local setup = {
@@ -56,18 +105,38 @@ M.config = function()
     --  * "notes_subdir" - put new notes in the default notes subdirectory.
     new_notes_location = "notes_subdir",
 
+    -- Optional, customize how note IDs are generated given an optional title.
+    ---@param title string|?
+    ---@return string
+    note_id_func = function(title)
+      if string.match(title, "^%d%d%d%d%-%d%d%-%d%d$") then
+        return title
+      end
+      return get_note_id(title)
+    end,
+
     -- Either 'wiki' or 'markdown'.
     preferred_link_style = "markdown",
 
     -- Optional, alternatively you can customize the frontmatter data.
     ---@return table
     note_frontmatter_func = function(note)
-      -- Add the title of the note as an alias.
       if note.title then
         note:add_alias(note.title)
       end
 
-      local out = { id = note.id, aliases = note.aliases, tags = note.tags }
+      local id = note.id
+      local pattern = ("^" .. get_note_id_prefix(note.title) .. "-" .. "%d%d%d%d%d%d%d%d%d%d$"):gsub("%-", "%%%-")
+
+      if note.title and not string.match(id, pattern) then
+        if string.match(note.title, "^%d%d%d%d%-%d%d%-%d%d$") then
+          id = note.title
+        elseif not string.match(id, pattern) then
+          id = get_note_id(note.title)
+        end
+      end
+
+      local out = { id = id, aliases = note.aliases, tags = note.tags }
 
       -- `note.metadata` contains any manually added fields in the frontmatter.
       -- So here we just make sure those fields are kept in the frontmatter.
@@ -79,6 +148,36 @@ M.config = function()
 
       return out
     end,
+
+    callbacks = {
+      -- I'd like to use post_write_note callback event but they don't support it
+      -- Runs right before writing the buffer for a note.
+      ---@param client obsidian.Client
+      ---@param note obsidian.Note
+      leave_note = function(_, note)
+        local is_daily_note = false
+        for _, v in ipairs(note.tags) do
+          if v == "daily-notes" then
+            is_daily_note = true
+          end
+        end
+
+        if is_daily_note then
+          return
+        end
+
+        local file_name = vim.fn.expand('%:t')
+        local pattern = ("^" .. get_note_id_prefix(note.title) .. "-" .. "%d%d%d%d%d%d%d%d%d%d.md$"):gsub("%-", "%%%-")
+
+        if not string.match(file_name, pattern) then
+          local choice = vim.fn.confirm("Title is changed, do you want to change the file name as well?", "&Yes\n&No", 1)
+
+          if choice == 1 then
+            rename_current_file(get_note_id(note.title) .. ".md")
+          end
+        end
+      end,
+    },
 
     -- Optional, for templates (see below).
     templates = {
@@ -97,7 +196,10 @@ M.config = function()
           local month = os.date("%m", os.time())
 
           return math.ceil(month / 3)
-        end
+        end,
+        date = function()
+          return os.date("%Y-%m-%d", os.time())
+        end,
       },
     },
 
