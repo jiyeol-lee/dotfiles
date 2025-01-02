@@ -55,6 +55,42 @@ local get_note_id = function(title)
   return get_note_id_prefix(title) .. "-" .. tostring(os.time())
 end
 
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*.md",
+  callback = function()
+    local Note = require("obsidian.note")
+    local client = require("obsidian").get_client()
+
+    local target_dir = vim.fn.expand("~/vaults/") -- Expand '~' to the absolute path
+    local full_path = vim.fn.expand('%:p')
+
+    -- Check if the file is under the target directory
+    if not full_path:find(target_dir, 1, true) then
+      return -- Exit if the file is not under the target directory
+    end
+
+    local note = Note.from_file(full_path, client.dir)
+
+    local is_daily_note = false
+    for _, v in ipairs(note.tags) do
+      if v == "daily-notes" then
+        is_daily_note = true
+      end
+    end
+
+    if is_daily_note then
+      return
+    end
+
+    local file_name = vim.fn.expand('%:t')
+    local pattern = ("^" .. get_note_id_prefix(note.title) .. "-" .. "%d%d%d%d%d%d%d%d%d%d.md$"):gsub("%-", "%%%-")
+
+    if not string.match(file_name, pattern) then
+      rename_current_file(get_note_id(note.title) .. ".md")
+    end
+  end,
+})
+
 M.config = function()
   local obsidian = require("obsidian")
   local setup = {
@@ -148,36 +184,6 @@ M.config = function()
 
       return out
     end,
-
-    callbacks = {
-      -- I'd like to use post_write_note callback event but they don't support it
-      -- Runs right before writing the buffer for a note.
-      ---@param client obsidian.Client
-      ---@param note obsidian.Note
-      leave_note = function(_, note)
-        local is_daily_note = false
-        for _, v in ipairs(note.tags) do
-          if v == "daily-notes" then
-            is_daily_note = true
-          end
-        end
-
-        if is_daily_note then
-          return
-        end
-
-        local file_name = vim.fn.expand('%:t')
-        local pattern = ("^" .. get_note_id_prefix(note.title) .. "-" .. "%d%d%d%d%d%d%d%d%d%d.md$"):gsub("%-", "%%%-")
-
-        if not string.match(file_name, pattern) then
-          local choice = vim.fn.confirm("Title is changed, do you want to change the file name as well?", "&Yes\n&No", 1)
-
-          if choice == 1 then
-            rename_current_file(get_note_id(note.title) .. ".md")
-          end
-        end
-      end,
-    },
 
     -- Optional, for templates (see below).
     templates = {
