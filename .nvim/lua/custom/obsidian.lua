@@ -1,5 +1,5 @@
 local M = {
-  "epwalsh/obsidian.nvim",
+  "jiyeol-lee/obsidian.nvim",
   version = "*",
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -227,6 +227,13 @@ M.config = function()
       vim.fn.jobstart { "qlmanage", "-p", img } -- Mac OS quick look preview
       -- vim.fn.jobstart({"xdg-open", url})  -- linux
       -- vim.cmd(':silent exec "!start ' .. url .. '"') -- Windows
+    end,
+
+    ---@param pdf string
+    follow_pdf_func = function(pdf)
+      -- os.execute('start "" "' .. pdf .. '"') -- For Windows
+      -- os.execute('xdg-open "' .. pdf .. '"')  -- For Linux
+      os.execute('open "' .. pdf .. '"') -- For macOS
     end,
 
     -- Optional, set to true to force ':ObsidianOpen' to bring the app to the foreground.
