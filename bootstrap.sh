@@ -86,6 +86,9 @@ function installPackages() {
   brew install shellcheck
   brew install shfmt
 
+  # Install lua tools
+  brew install stylua
+
   # Install ripgrep
   brew install ripgrep
 
