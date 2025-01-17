@@ -6,23 +6,6 @@ local M = {
   },
 }
 
-local get_note_id_prefix = function(title)
-  -- Create note IDs in a Zettelkasten format with a prefix and a timestamp.
-  -- In this case a note with the title 'My new note' will be given an ID that looks
-  -- like 'my-new-note-1657296016', and therefore the file name 'my-new-note-1657296016.md'
-  local prefix = ""
-  if title ~= nil then
-    -- If title is given, transform it into valid file name.
-    prefix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
-  else
-    -- If title is nil, just add 4 random uppercase letters to the prefix.
-    for _ = 1, 4 do
-      prefix = prefix .. string.char(math.random(65, 90))
-    end
-  end
-  return prefix
-end
-
 M.config = function()
   local obsidian = require "obsidian"
   local setup = {
@@ -195,6 +178,11 @@ M.config = function()
 
     ui = {
       enable = false,
+      checkboxes = {
+        [" "] = { char = "󰄱", hl_group = "RenderMarkdownUnchecked" },
+        ["x"] = { char = "", hl_group = "RenderMarkdownChecked" },
+        ["-"] = { char = "󰥔", hl_group = "RenderMarkdownTodo" },
+      },
     },
 
     -- Specify how to handle attachments.
