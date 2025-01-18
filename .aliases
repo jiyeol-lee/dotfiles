@@ -7,8 +7,6 @@ alias v='nvim'
 alias t='tmux'
 ### Clear
 alias c='clear'
-### Tmux Kill Session
-alias tks='t kill-session -t '
 ### go to previous directory
 alias ..='cd ..'
 
@@ -21,35 +19,28 @@ alias awve='aws-vault exec '
 alias awved='aws-vault exec jiyeol-lee'
 
 # Vaults
-### Change directory Vault Personal
+### Change directory to Vault Personal
 alias cvp='cd ~/vaults/vpersonal'
-alias ovp='cvp && v'
-### Change directory Vault Work 2
+### Change directory to Vault Work 2
 alias cvw2='cd ~/vaults/vwork2'
-alias ovw2='cvw2 && v'
-### Change directory Vault Work 3
+### Change directory to Vault Work 3
 alias cvw3='cd ~/vaults/vwork3'
-alias ovw3='cvw3 && v'
 
-# Config
-### Config folder Open
-alias co='cd ~/dotfiles && v'
-### Config shell read Command Open
-alias cco='v ~/dotfiles/.profile'
-### Config Alias Open
-alias cao='v ~/dotfiles/.aliases'
-### Config neoVim Open
-alias cvo='cd ~/dotfiles/.nvim && v'
-### Config shell ReLoad read command
-alias crl='source ~/.zshrc'
+# Config/Dotfiles
+### Change directory to Config folder
+alias cc='cd ~/dotfiles'
+### Change directory to Neovim Config folder
+alias cnc='cd ~/dotfiles/.nvim && v'
+### shell ReLoad zshrc
+alias rlc='source ~/.zshrc'
 
 # Colima
-### ColimA Start
-alias cas='colima start --cpu 4 --memory 8'
-### ColimA Start With Kubernetes
-alias caswk='colima start --cpu 4 --memory 8 --kubernetes'
-### ColimA Terminate
-alias cat='colima stop'
+### COlima Start
+alias cos='colima start --cpu 4 --memory 8'
+### COlima Start with Kubernetes
+alias cosk='colima start --cpu 4 --memory 8 --kubernetes'
+### COlima Terminate
+alias cot='colima stop'
 
 # Docker Compose
 ### Docker Compose Up
@@ -68,11 +59,4 @@ alias gsu='gh auth switch && gh auth setup-git'
 
 # Go
 ### Go Run Main
-alias pcv='go run main.go'
-
-# Coding For Fun
-## Change directory
-### change directory to Coding for Fun
-alias cf="cd ~/code/coding-for-fun-org"
-### change directory to frontend
-alias fe="cd frontend"
+alias grm='go run main.go'
