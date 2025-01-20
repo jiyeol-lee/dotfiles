@@ -113,7 +113,7 @@ function doIt() {
 
   # Configure git
   git config --global user.name "Jiyeol Lee"
-  git config --global user.email "ka.felix496@gmail.com"
+  git config --global user.email "jiyeol.tech@gmail.com"
   git config --global rerere.enabled true # Enable rerere to make my life easier
 
   # Install Homebrew.
