@@ -98,6 +98,8 @@ function installPackages() {
 
   # Install gnu sed
   brew install gnu-sed
+
+  go install github.com/coding-for-fun-org/gcli@latest
 }
 
 function doIt() {
