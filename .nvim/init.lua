@@ -4,7 +4,7 @@ require "custom.launch"
 require "custom.keymaps"
 require "custom.options"
 require "custom.autocommands"
-require "custom.git-backup"     -- to backup git repo
+require "custom.git-backup" -- to backup git repo
 require "custom.git-force-sync" -- to force sync git repo
 
 -- lsp
@@ -37,6 +37,7 @@ spec "custom.test"
 spec "custom.markdown-preview"
 spec "custom.bookmarks"
 spec "custom.prisma" -- tree sitter is not working for some reason
+spec "custom.gopher"
 
 -- vim extra combinations start
 spec "custom.subversive"
