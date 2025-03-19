@@ -57,6 +57,11 @@ alias dchp='docker compose down --remove-orphans -v --rmi all'
 alias grpo='git remote prune origin'
 alias gsu='gh auth switch && gh auth setup-git'
 
+# Terraform
+### TerraForm Plan
+alias tf='terraform'
+alias tfp='terraform plan'
+
 # Go
 ### Go Run Main
 alias grm='go run main.go'
