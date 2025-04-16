@@ -65,3 +65,4 @@ alias tfp='terraform plan'
 # Go
 ### Go Run Main
 alias grm='go run main.go'
+alias gta='go test ./...'
