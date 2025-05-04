@@ -23,7 +23,7 @@ local function basic_lsp_setup()
   end
 
   local diagnostic_configs = {
-    virtual_text = true,
+    virtual_text = false,
     signs = {
       active = signs,
     },
