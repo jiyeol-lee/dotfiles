@@ -146,6 +146,19 @@ M.config = function()
 
     {
       mode = "n",
+      "grd",
+      "<cmd>lua vim.lsp.buf.definition()<CR>",
+      nowait = true,
+    },
+    {
+      mode = "n",
+      "grh",
+      "<cmd>lua vim.lsp.buf.hover()<CR>",
+      nowait = true,
+    },
+
+    {
+      mode = "n",
       "<leader>g",
       group = "Git",
       nowait = false,
@@ -155,27 +168,6 @@ M.config = function()
       "<leader>gg",
       "<cmd>FloatermNew lazygit<CR>",
       desc = "Lazygit",
-      nowait = true,
-    },
-    {
-      mode = "n",
-      "<leader>gj",
-      "<cmd>lua require 'gitsigns'.next_hunk()<CR>",
-      desc = "Next Hunk",
-      nowait = true,
-    },
-    {
-      mode = "n",
-      "<leader>gk",
-      "<cmd>lua require 'gitsigns'.prev_hunk()<CR>",
-      desc = "Prev Hunk",
-      nowait = true,
-    },
-    {
-      mode = "n",
-      "<leader>gl",
-      "<cmd>lua require 'gitsigns'.blame_line()<CR>",
-      desc = "Blame",
       nowait = true,
     },
     {
@@ -190,13 +182,6 @@ M.config = function()
       "<leader>gd",
       "<cmd>Gitsigns diffthis HEAD<CR>",
       desc = "Diff",
-      nowait = true,
-    },
-    {
-      mode = "n",
-      "<leader>gD",
-      "<cmd>wincmd p | q<CR>",
-      desc = "Go back to original window",
       nowait = true,
     },
     {
