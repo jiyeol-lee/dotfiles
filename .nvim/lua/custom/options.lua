@@ -43,5 +43,3 @@ vim.opt.shortmess:append "c"
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
-
-vim.diagnostic.config { virtual_text = { current_line = false } }
