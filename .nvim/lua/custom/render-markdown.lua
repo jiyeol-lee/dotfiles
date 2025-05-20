@@ -14,6 +14,7 @@ M.config = function()
     render_modes = true,
     file_types = {
       "markdown",
+      "Avante",
     },
   }
 
