@@ -1,8 +1,8 @@
 local M = {
-  "williamboman/mason-lspconfig.nvim",
+  "mason-org/mason-lspconfig.nvim",
   dependencies = {
     {
-      "williamboman/mason.nvim",
+      "mason-org/mason.nvim",
     },
     {
       "neovim/nvim-lspconfig",
@@ -111,6 +111,7 @@ M.config = function()
   local mason_lspconfig_setup = {
     ensure_installed = servers,
     automatic_installation = true,
+    automatic_enable = false,
   }
 
   require("mason").setup(mason_setup)
