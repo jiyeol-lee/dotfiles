@@ -90,11 +90,11 @@ M.config = function()
     "eslint",
     "angularls",
     "gopls",
-    "prismals",
     "lua_ls",
     "bashls",
     "terraformls",
     "tflint",
+    "yamlls",
   }
   local mason_setup = {
     ui = {
