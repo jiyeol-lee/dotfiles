@@ -12,41 +12,6 @@ M.config = function()
   local mappings = {
     {
       mode = "n",
-      "<leader>,",
-      "<cmd>BookmarkToggle<CR>",
-      desc = "Bookmark Toggle",
-      nowait = true,
-    },
-    {
-      mode = "n",
-      "<leader>a",
-      "<cmd>BookmarkShowAll<CR>",
-      desc = "Bookmark Show All",
-      nowait = true,
-    },
-    {
-      mode = "n",
-      "<leader>j",
-      "<cmd>BookmarkNext<CR>",
-      desc = "Bookmark Next",
-      nowait = true,
-    },
-    {
-      mode = "n",
-      "<leader>k",
-      "<cmd>BookmarkPrev<CR>",
-      desc = "Bookmark Prev",
-      nowait = true,
-    },
-    {
-      mode = "n",
-      "<leader>x",
-      "<cmd>BookmarkClearAll<CR>",
-      desc = "Bookmark Clear All",
-      nowait = true,
-    },
-    {
-      mode = "n",
       "<leader>1",
       "1gt",
       desc = "Tab 1",
@@ -143,7 +108,6 @@ M.config = function()
       desc = "No Highlight",
       nowait = true,
     },
-
     {
       mode = "n",
       "grd",
@@ -154,6 +118,48 @@ M.config = function()
       mode = "n",
       "grh",
       "<cmd>lua vim.lsp.buf.hover()<CR>",
+      nowait = true,
+    },
+
+    {
+      mode = "n",
+      "<leader>b",
+      group = "Bookmark",
+      nowait = false,
+    },
+    {
+      mode = "n",
+      "<leader>bt",
+      "<cmd>BookmarkToggle<CR>",
+      desc = "Bookmark Toggle",
+      nowait = true,
+    },
+    {
+      mode = "n",
+      "<leader>ba",
+      "<cmd>BookmarkShowAll<CR>",
+      desc = "Bookmark Show All",
+      nowait = true,
+    },
+    {
+      mode = "n",
+      "<leader>bj",
+      "<cmd>BookmarkNext<CR>",
+      desc = "Bookmark Next",
+      nowait = true,
+    },
+    {
+      mode = "n",
+      "<leader>bk",
+      "<cmd>BookmarkPrev<CR>",
+      desc = "Bookmark Prev",
+      nowait = true,
+    },
+    {
+      mode = "n",
+      "<leader>bx",
+      "<cmd>BookmarkClearAll<CR>",
+      desc = "Bookmark Clear All",
       nowait = true,
     },
 
