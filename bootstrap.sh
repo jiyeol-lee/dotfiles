@@ -18,23 +18,14 @@ function installPackages() {
   # Install chatgpt
   brew install --cask chatgpt
 
-  # Install figma
-  # brew install --cask figma
-
   # Install notion
   brew install --cask notion
 
   # Install pngpaste for pasting image to markdown using obsidian.nvim
   brew install pngpaste
 
-  # Install brave browser
-  # brew install --cask brave-browser
-
   # Install google chrome
   brew install --cask google-chrome
-
-  # Install firefox developer edition
-  # brew install --cask firefox@developer-edition
 
   # Install alfred
   brew install --cask google-drive
