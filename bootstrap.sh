@@ -59,7 +59,7 @@ function installPackages() {
   brew install colima
 
   # Install nodejs
-  brew install node@20
+  brew install node@22
 
   # Install web dev tools
   brew install prettier
