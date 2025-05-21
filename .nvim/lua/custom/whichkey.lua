@@ -120,6 +120,12 @@ M.config = function()
       "<cmd>lua vim.lsp.buf.hover()<CR>",
       nowait = true,
     },
+    {
+      mode = "n",
+      "grl",
+      "<cmd>lua vim.diagnostic.open_float()<CR>",
+      nowait = true,
+    },
 
     {
       mode = "n",
