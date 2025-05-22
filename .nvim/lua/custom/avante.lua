@@ -9,10 +9,7 @@ local M = {
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
     --- The below dependencies are optional,
-    "echasnovski/mini.pick",         -- for file_selector provider mini.pick
-    "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-    "hrsh7th/nvim-cmp",              -- autocompletion for avante commands and mentions
-    "ibhagwan/fzf-lua",              -- for file_selector provider fzf
+    "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
   },
 }
 
@@ -25,7 +22,7 @@ function M.config()
       model = "gpt-4o-2024-11-20",
       proxy = nil,            -- [protocol://]host[:port] Use this proxy
       allow_insecure = false, -- Allow insecure server connections
-      timeout = 600000, -- Timeout in milliseconds
+      timeout = 600000,       -- Timeout in milliseconds
       temperature = 0,
       max_tokens = 100000,
     },
