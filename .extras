@@ -21,3 +21,15 @@ precmd() {
 		fi
 	fi
 }
+
+# Define cleanup logic
+function _zsh_cleanup() {
+	if ! pgrep -u "$USER" -f zsh | grep -v -q $$; then
+		cd ~/dotfiles || return
+		make remove-secrets
+	fi
+}
+
+zshexit() {
+	_zsh_cleanup
+}

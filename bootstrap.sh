@@ -119,7 +119,6 @@ function doIt() {
   ln -s ~/dotfiles/.alacritty.toml ~/.config/alacritty/alacritty.toml
   ln -s ~/dotfiles/.nvim ~/.config/nvim
   ln -s ~/dotfiles/.aliases ~/.aliases
-  ln -s ~/dotfiles/.exports ~/.exports
   ln -s ~/dotfiles/.extras ~/.extras
   ln -s ~/dotfiles/.profile ~/.zshrc
   ln -s ~/dotfiles/.__editorconfig ~/.editorconfig
