@@ -12,6 +12,9 @@ function installPackages() {
   brew tap hashicorp/tap
   brew install hashicorp/tap/terraform
 
+  # Install awscli
+  brew install awscli
+
   # Install starship
   brew install starship
 
