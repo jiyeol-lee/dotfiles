@@ -16,13 +16,13 @@ local M = {
 function M.config()
   local avante = require "avante"
   local setup = {
-    provider = "copilot-gemini-2.5",
+    provider = "copilot-claude-sonnet-4",
     copilot = {
       endpoint = "https://api.githubcopilot.com",
-      model = "gpt-4o-2024-11-20",
-      proxy = nil,            -- [protocol://]host[:port] Use this proxy
+      model = "claude-sonnet-4",
+      proxy = nil, -- [protocol://]host[:port] Use this proxy
       allow_insecure = false, -- Allow insecure server connections
-      timeout = 600000,       -- Timeout in milliseconds
+      timeout = 600000, -- Timeout in milliseconds
       temperature = 0,
       max_tokens = 100000,
     },
@@ -34,6 +34,10 @@ function M.config()
       ["copilot-claude-3.7-sonnet"] = {
         __inherited_from = "copilot",
         model = "claude-3.7-sonnet",
+      },
+      ["copilot-claude-sonnet-4"] = {
+        __inherited_from = "copilot",
+        model = "claude-sonnet-4",
       },
       ["copilot-o3-mini"] = {
         __inherited_from = "copilot",
