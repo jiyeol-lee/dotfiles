@@ -1,5 +1,6 @@
 local M = {
   "ray-x/lsp_signature.nvim",
+  event = "InsertEnter",
 }
 
 M.config = function()
@@ -10,23 +11,24 @@ M.config = function()
     doc_lines = 10,
     floating_window = true,
     floating_window_above_cur_line = true,
-    fix_pos = false,
+    fix_pos = true,
     hint_enable = false,
     use_lspsaga = false,
     hi_parameter = "LspSignatureActiveParameter",
     max_height = 12,
-    max_width = 120,
+    max_width = function()
+      return vim.api.nvim_win_get_width(0) * 0.8
+    end,
     handler_opts = {
-      border = "rounded", -- double, rounded, single, shadow, none
+      border = "rounded",
+      relative = "editor",
     },
     always_trigger = true,
     auto_close_after = nil,
     extra_trigger_chars = {},
     zindex = 200,
-    padding = "",
-    transparency = nil,
-    shadow_blend = 36,
-    shadow_guibg = "Black",
+    padding = " ",
+    transparency = 85,
     timer_interval = 200,
     toggle_key = nil,
   }
