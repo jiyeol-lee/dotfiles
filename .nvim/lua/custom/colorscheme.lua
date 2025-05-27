@@ -67,6 +67,8 @@ M.config = function()
     highlight AvanteStateSpinnerCompacting guifg=#1e222a guibg=#c678dd
 
     highlight BookmarkSign guifg=#ffffff ctermbg=NONE
+
+    highlight NormalFloat guibg=NONE ctermbg=NONE
   ]]
 end
 
