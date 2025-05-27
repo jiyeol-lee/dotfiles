@@ -123,7 +123,7 @@ M.config = function()
       on_attach = on_attach,
       capabilities = common_capabilities(),
     }
-    local has_custom_options, server_custom_options = pcall(require, "custom.lsp.settings." .. server)
+    local has_custom_options, server_custom_options = pcall(require, "plugins.lsp.settings." .. server)
 
     if has_custom_options then
       lsp_options = vim.tbl_deep_extend("force", lsp_options, server_custom_options)
