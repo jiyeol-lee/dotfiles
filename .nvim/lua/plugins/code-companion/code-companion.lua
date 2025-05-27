@@ -1,8 +1,15 @@
 local M = {
   "olimorris/codecompanion.nvim",
   event = "VeryLazy",
+  version = "*",
   dependencies = {
     "nvim-lua/plenary.nvim",
+    {
+      "j-hui/fidget.nvim",
+      init = function()
+        require("plugins.code-companion.utils.fidget-spinner"):init()
+      end,
+    },
   },
 }
 
