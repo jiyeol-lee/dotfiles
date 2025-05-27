@@ -129,6 +129,20 @@ M.config = function()
 
     {
       mode = "n",
+      "<leader>a",
+      group = "AI",
+      nowait = false,
+    },
+    {
+      mode = "n",
+      "<leader>aa",
+      "<cmd>CodeCompanionActions<CR>",
+      desc = "Bookmark Toggle",
+      nowait = true,
+    },
+
+    {
+      mode = "n",
       "<leader>b",
       group = "Bookmark",
       nowait = false,
