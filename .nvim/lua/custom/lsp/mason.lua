@@ -58,9 +58,7 @@ local function common_capabilities()
 end
 
 local function lsp_keymaps(bufnr)
-  local options = { noremap = true, silent = true }
-
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", options)
+  -- local options = { noremap = true, silent = true }
 end
 
 local function on_init(client)
