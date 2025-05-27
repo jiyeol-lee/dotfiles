@@ -30,7 +30,7 @@ spec "custom.lualine"
 spec "custom.gitsigns"
 spec "custom.floaterm"
 spec "custom.copilot"
-spec "custom.code-companion"
+spec "plugins.code-companion"
 spec "custom.cmp"
 spec "custom.autopairs" -- this should be after cmp
 spec "custom.test"
