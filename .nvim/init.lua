@@ -4,7 +4,7 @@ require "custom.launch"
 require "custom.keymaps"
 require "custom.options"
 require "custom.autocommands"
-require "custom.git-backup" -- to backup git repo
+require "custom.git-backup"     -- to backup git repo
 require "custom.git-force-sync" -- to force sync git repo
 
 -- lsp
@@ -31,7 +31,8 @@ spec "custom.lualine"
 spec "custom.gitsigns"
 spec "custom.floaterm"
 spec "custom.copilot"
-spec "custom.avante"
+-- spec "custom.avante"
+spec "custom.code-companion"
 spec "custom.cmp"
 spec "custom.autopairs" -- this should be after cmp
 spec "custom.test"
