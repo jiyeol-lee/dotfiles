@@ -9,6 +9,8 @@ alias t='tmux'
 alias c='clear'
 ### go to previous directory
 alias ..='cd ..'
+### do not turn off the screen
+alias cafe='caffeinate -dims'
 
 # AWS
 ### AWs SSO Login
