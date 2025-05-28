@@ -1,6 +1,7 @@
 # ---------- CONFIG -------------------------------------------------
+TEMPFILE	 := /tmp/dotfiles-secrets-$(shell date +%s)
 # clear-text file you edit
-PLAINTEXT  := /tmp/.exports
+PLAINTEXT  := /tmp/dotfiles-secrets-exports
 # encrypted blob you commit
 CIPHERTEXT := .exports.enc
 # PBKDF2 iteration count
@@ -11,12 +12,13 @@ OPENSSL    := openssl enc $(CIPHER) -salt -pbkdf2 -iter $(KDF_ITERS)
 EXPORTS_OVERWRITE := .exports-overwrite
 # ------------------------------------------------------------------
 
-.PHONY: help load-secrets encrypt-secrets rotate-secrets decrypt-secrets remove-secrets
+.PHONY: help load-secrets encrypt-secrets rotate-secrets decrypt-secrets
 
 help:
 	@echo "Usage: make [target]"
 	@echo
 	@echo "Targets:"
+	@echo "- load-secrets         link $(PLAINTEXT) to ~/.exports (decrypts if needed)"
 	@echo "- encrypt-secrets      encrypt $(PLAINTEXT) → $(CIPHERTEXT) with a new passphrase"
 	@echo "- rotate-secrets       re-encrypt $(CIPHERTEXT) with a *new* passphrase (no cleartext on disk)"
 	@echo "- decrypt-secrets      decrypt $(CIPHERTEXT) → $(PLAINTEXT) (local inspection/editing)"
@@ -27,7 +29,9 @@ load-secrets:
 	if [ ! -f "$(PLAINTEXT)" ]; then \
 		make decrypt-secrets ; \
 	fi ; \
-	ln -snf $(PLAINTEXT) ~/.exports ; \
+	if [ -f "$(PLAINTEXT)" ]; then \
+		ln -snf $(PLAINTEXT) ~/.exports ; \
+	fi ; \
 	if [ -f "$(CURDIR)/$(EXPORTS_OVERWRITE)" ]; then \
 		ln -snf $(CURDIR)/$(EXPORTS_OVERWRITE) ~/$(EXPORTS_OVERWRITE) ; \
 	fi
@@ -55,5 +59,7 @@ decrypt-secrets:
 	@set -e ; set -o pipefail ; \
 	printf "Current passphrase: " ; \
 	read -r -s CUR_PASS ; echo ; \
-	env CUR_PASS="$$CUR_PASS" $(OPENSSL) -d \
-		-pass env:CUR_PASS -in $(CIPHERTEXT) -out $(PLAINTEXT)
+	if env CUR_PASS="$$CUR_PASS" $(OPENSSL) -d \
+		-pass env:CUR_PASS -in $(CIPHERTEXT) -out $(TEMPFILE) ; then \
+		mv $(TEMPFILE) $(PLAINTEXT) ; \
+	fi
