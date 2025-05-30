@@ -137,7 +137,14 @@ M.config = function()
       mode = "n",
       "<leader>aa",
       "<cmd>CodeCompanionActions<CR>",
-      desc = "Bookmark Toggle",
+      desc = "Code Companion Actions",
+      nowait = true,
+    },
+    {
+      mode = "n",
+      "<leader>at",
+      "<cmd>CodeCompanionChat Toggle<CR>",
+      desc = "Code Companion Toggle",
       nowait = true,
     },
 
@@ -228,7 +235,7 @@ M.config = function()
     {
       mode = "n",
       "<leader>f",
-      group = "Telescope Find",
+      group = "Telescope",
       nowait = true,
     },
     {
@@ -416,8 +423,28 @@ M.config = function()
 
     {
       mode = "v",
+      "<leader>a",
+      group = "AI",
+      nowait = false,
+    },
+    {
+      mode = "v",
+      "<leader>aa",
+      "<cmd>CodeCompanionActions<CR>",
+      desc = "Code Companion Actions",
+      nowait = true,
+    },
+
+    {
+      mode = "v",
       "<leader>f",
-      group = "Telescope Find",
+      group = "Telescope",
+      nowait = true,
+    },
+    {
+      mode = "v",
+      "<leader>ff",
+      desc = "Telescope Find",
       nowait = true,
     },
     {
@@ -427,6 +454,7 @@ M.config = function()
       desc = "Find Grep",
       nowait = true,
     },
+
     {
       mode = "v",
       "<leader>s",
