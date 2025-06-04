@@ -22,7 +22,7 @@ M.config = function()
 
     if #selections > 1 then
       for _, entry in ipairs(selections) do
-        vim.cmd(string.format("%s %s", ":tabnew!", entry.filename))
+        vim.cmd(string.format("%s %s", ":e!", entry.value))
       end
       vim.cmd ":stopinsert"
     else
@@ -58,12 +58,6 @@ M.config = function()
     extensions = {
       emoji = {
         action = function(emoji)
-          -- argument emoji is a table.
-          -- {name="", value="", cagegory="", description=""}
-
-          -- vim.fn.setreg("*", emoji.value)
-          -- print([[Press p or "*p to paste this emoji]] .. emoji.value)
-
           -- insert emoji when picked
           vim.api.nvim_put({ ":" .. emoji.name .. ":" }, "c", false, true)
         end,
