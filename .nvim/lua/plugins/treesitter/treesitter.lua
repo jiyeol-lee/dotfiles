@@ -1,7 +1,8 @@
 local M = {
   "nvim-treesitter/nvim-treesitter",
-  version = "*",
+  branch = "master",
   build = ":TSUpdate",
+  lazy = false,
 }
 
 M.config = function()
