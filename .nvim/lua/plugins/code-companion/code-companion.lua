@@ -370,10 +370,12 @@ You must create or modify a workspace file through a series of prompts over mult
             role = constants.SYSTEM_ROLE,
             content = [[You must:
 - Keep your answers short and impersonal, especially if the user's context is outside your steps.
-- Minimize additional prose unless clarification is needed.
 - Use actual line breaks in your responses; only use "\n" when you want a literal backslash followed by 'n'.
 - Use Markdown formatting in your answers.
 - Avoid using H1, H2 or H3 headers in your responses as these are reserved for the user.
+- Do not ask any follow-up questions.
+- Only answer three categories: **Corrections**, **Explanation**, and **Korean Translation** as H4 header without any additional text.
+- Do not include any additional text or explanations outside of the specified categories.
 
 When given a text, follow these steps:
 1. **Read the Text**: Carefully read the provided text to identify any grammatical or spelling errors.
@@ -396,6 +398,63 @@ When given a text, follow these steps:
 
               return string.format(
                 [[Please check the grammar and spelling of this text and translate to Korean from buffer %d:
+```text
+%s
+```]],
+                context.bufnr,
+                text
+              )
+            end,
+            opts = {
+              contains_code = true,
+            },
+          },
+        },
+      },
+      ["Summarizlator"] = {
+        strategy = "chat",
+        description = "Summarize the selected text in one sentence and translate it to Korean",
+        opts = {
+          is_default = false,
+          is_slash_cmd = false,
+          modes = { "v" },
+          auto_submit = true,
+          user_prompt = false,
+          stop_context_insertion = true,
+          adapter = {
+            name = "copilot",
+            model = "gpt-4.1",
+          },
+        },
+        prompts = {
+          {
+            role = constants.SYSTEM_ROLE,
+            content = [[You must:
+- Keep your answers impersonal, especially if the user's context is outside your steps.
+- Use actual line breaks in your responses; only use "\n" when you want a literal backslash followed by 'n'.
+- Use Markdown formatting in your answers.
+- Avoid using H1, H2 or H3 headers in your responses as these are reserved for the user.
+- Do not explain in the third person; summarize the original sentence as it is.
+- Do not ask any follow-up questions.
+- Only answer three categories: **Summarization**, **Explanation**, and **Korean Translation** as H4 header without any additional text.
+- Do not include any additional text or explanations outside of the specified categories.
+
+When given a text, follow these steps:
+1. **Read the Text**: Carefully read the provided text to summarize it.
+2. **Provide Single Sentence**: Make the text in one sentence.
+3. **Explain Summarization**: Briefly explain the single sentence made and why it captures the essence of the text.
+4. **Translate to Korean**: After making a single sentence the text, translate it into Korean.]],
+            opts = {
+              visible = false,
+            },
+          },
+          {
+            role = constants.USER_ROLE,
+            content = function(context)
+              local text = require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
+
+              return string.format(
+                [[Please summarize of this text and translate to Korean from buffer %d:
 ```text
 %s
 ```]],
