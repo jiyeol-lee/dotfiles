@@ -4,14 +4,14 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
 
 # File to store the last known working directory
-LAST_DIR_FILE="/tmp/jiyeollee_last_pwd"
+LAST_DIR_FILE="${TMPDIR}__jiyeollee_last_pwd"
 
 precmd() {
 	# Get the current working directory
 	CURRENT_DIR=$(pwd)
 
 	# If the file doesn't exist or the directory has changed
-	if [ ! -f "$LAST_DIR_FILE" ] || [ "$CURRENT_DIR" != "$(cat $LAST_DIR_FILE)" ]; then
+	if [ ! -f "$LAST_DIR_FILE" ] || [ "$CURRENT_DIR" != "$(cat "$LAST_DIR_FILE")" ]; then
 		# Update the stored directory
 		echo "$CURRENT_DIR" >"$LAST_DIR_FILE"
 
