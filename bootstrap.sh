@@ -116,15 +116,15 @@ function doIt() {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   # Create symbolic links
-  ln -s ~/dotfiles/.tmux.conf ~/.config/tmux/tmux.conf
-  ln -s ~/dotfiles/.shorten_current_path.sh ~/.config/tmux/.__shorten_current_path.sh
-  ln -s ~/dotfiles/.activated_gh_account.sh ~/.config/tmux/.__activated_gh_account.sh
-  ln -s ~/dotfiles/.alacritty.toml ~/.config/alacritty/alacritty.toml
-  ln -s ~/dotfiles/.nvim ~/.config/nvim
-  ln -s ~/dotfiles/.aliases ~/.aliases
-  ln -s ~/dotfiles/.extras ~/.extras
-  ln -s ~/dotfiles/.profile ~/.zshrc
-  ln -s ~/dotfiles/.__editorconfig ~/.editorconfig
+  ln -sf ~/dotfiles/.tmux.conf ~/.config/tmux/tmux.conf
+  ln -sf ~/dotfiles/.shorten_current_path.sh ~/.config/tmux/.__shorten_current_path.sh
+  ln -sf ~/dotfiles/.activated_gh_account.sh ~/.config/tmux/.__activated_gh_account.sh
+  ln -sf ~/dotfiles/.alacritty.toml ~/.config/alacritty/alacritty.toml
+  ln -sf ~/dotfiles/.nvim ~/.config/nvim
+  ln -sf ~/dotfiles/.aliases ~/.aliases
+  ln -sf ~/dotfiles/.extras ~/.extras
+  ln -sf ~/dotfiles/.profile ~/.zshrc
+  ln -sf ~/dotfiles/.__editorconfig ~/.editorconfig
 
   source ~/.zshrc
 
