@@ -16,16 +16,16 @@ M.config = function()
     use_lspsaga = false,
     hi_parameter = "LspSignatureActiveParameter",
     max_height = 12,
-    max_width = function()
-      local width = vim.api.nvim_win_get_width(0)
-
-      -- Ensure it's a number, fallback to 80 if not
-      if type(width) ~= "number" then
-        width = 80 -- fallback width
-      end
-
-      return width * 0.8
-    end,
+    -- max_width = function()
+    --   local width = vim.api.nvim_win_get_width(0)
+    --
+    --   -- Ensure it's a number, fallback to 80 if not
+    --   if type(width) ~= "number" then
+    --     width = 80 -- fallback width
+    --   end
+    --
+    --   return width * 0.8
+    -- end,
     handler_opts = {
       border = "rounded",
       relative = "editor",
