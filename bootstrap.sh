@@ -125,6 +125,7 @@ function doIt() {
   ln -sf ~/dotfiles/.extras ~/.extras
   ln -sf ~/dotfiles/.profile ~/.zshrc
   ln -sf ~/dotfiles/.__editorconfig ~/.editorconfig
+  ln -sf ~/dotfiles/.ssh_config ~/.ssh/config
 
   source ~/.zshrc
 
