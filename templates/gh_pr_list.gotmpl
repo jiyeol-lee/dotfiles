@@ -1,0 +1,38 @@
+{{tablerow ("TITLE" | color "blue") ("AUTHOR" | color "blue") ("REVIEW DECISION" | autocolor "blue") ("UPDATED AT" | autocolor "blue")}}
+{{tablerow "─────" "──────" "───────────────" "──────────"}}
+{{range .}}
+  {{- /* Format review decision with color */}}
+  {{- $review := "" }}
+  {{- if eq .reviewDecision "APPROVED" }}
+    {{- $review = (autocolor "green" "Approved") }}
+  {{- else if eq .reviewDecision "CHANGES_REQUESTED" }}
+    {{- $review = (autocolor "red" "Changes Requested") }}
+  {{- else if eq .reviewDecision "REVIEW_REQUIRED" }}
+    {{- $review = (autocolor "yellow" "Review Required") }}
+  {{- else }}
+    {{- $review = "—" }}
+  {{- end }}
+
+  {{- /* Format number with color based on state */}}
+  {{- $number := "" }}
+  {{- if eq .state "MERGED" }}
+    {{- $number = (printf "#%v" .number | autocolor "magenta") }}
+  {{- else if eq .state "CLOSED" }}
+    {{- $number = (printf "#%v" .number | autocolor "red") }}
+  {{- else if eq .state "OPEN" }}
+    {{- $number = (printf "#%v" .number | autocolor "green") }}
+  {{- else }}
+    {{- $number = (printf "#%v" .number) }}
+  {{- end }}
+
+  {{- /* Use .author.name if set and non-empty, else .author.login */}}
+  {{- $author := "" }}
+  {{- if and .author.name (gt (len .author.name) 0) }}
+    {{- $author = .author.name }}
+  {{- else }}
+    {{- $author = .author.login }}
+  {{- end }}
+
+  {{tablerow (hyperlink .url (printf "%v: %s" $number .title)) $author $review (timeago .updatedAt)}}
+{{end}}
+{{tablerender}}
