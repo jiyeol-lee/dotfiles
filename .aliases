@@ -54,10 +54,13 @@ alias dcsp='docker compose down --remove-orphans --rmi all'
 ### Docker Compose Hard Purge
 alias dchp='docker compose down --remove-orphans -v --rmi all'
 
-# Git
+# Git, Github
 ### Git Remote Prune Origin
 alias grpo='git remote prune origin'
+## Git Switch User
 alias gsu='gh auth switch && gh auth setup-git'
+## Github PRS
+alias gprs='~/dotfiles/scripts/github_prs.sh'
 
 # Terraform
 ### TerraForm Plan
