@@ -117,7 +117,6 @@ function doIt() {
 
   # Create symbolic links
   ln -sf ~/dotfiles/.tmux.conf ~/.config/tmux/tmux.conf
-  ln -sf ~/dotfiles/.shorten_current_path.sh ~/.config/tmux/.__shorten_current_path.sh
   ln -sf ~/dotfiles/.activated_gh_account.sh ~/.config/tmux/.__activated_gh_account.sh
   ln -sf ~/dotfiles/.alacritty.toml ~/.config/alacritty/alacritty.toml
   ln -sf ~/dotfiles/.nvim ~/.config/nvim
