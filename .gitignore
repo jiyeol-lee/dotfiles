@@ -1,2 +1,3 @@
 .git
-.exports-overwrite
+.override-exports
+.decrypted-exports

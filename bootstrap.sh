@@ -120,8 +120,6 @@ function doIt() {
   ln -sf ~/dotfiles/.activated_gh_account.sh ~/.config/tmux/.__activated_gh_account.sh
   ln -sf ~/dotfiles/.alacritty.toml ~/.config/alacritty/alacritty.toml
   ln -sf ~/dotfiles/.nvim ~/.config/nvim
-  ln -sf ~/dotfiles/.aliases ~/.aliases
-  ln -sf ~/dotfiles/.extras ~/.extras
   ln -sf ~/dotfiles/.profile ~/.zshrc
   ln -sf ~/dotfiles/.__editorconfig ~/.editorconfig
   ln -sf ~/dotfiles/.ssh_config ~/.ssh/config
