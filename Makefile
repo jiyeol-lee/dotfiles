@@ -9,7 +9,7 @@ KDF_ITERS  := 100000
 # algorithm + 256-bit key
 CIPHER     := -aes-256-cbc
 OPENSSL    := openssl enc $(CIPHER) -salt -pbkdf2 -iter $(KDF_ITERS)
-EXPORTS_OVERWRITE := .exports-overwrite
+DECRYPTED_TEXT := .decrypted-exports
 # ------------------------------------------------------------------
 
 .PHONY: help load-secrets encrypt-secrets rotate-secrets decrypt-secrets
@@ -18,7 +18,7 @@ help:
 	@echo "Usage: make [target]"
 	@echo
 	@echo "Targets:"
-	@echo "- load-secrets         link $(PLAINTEXT) to ~/.exports (decrypts if needed)"
+	@echo "- load-secrets         link $(PLAINTEXT) to ~/.$(DECRYPTED_TEXT) (decrypts if needed)"
 	@echo "- encrypt-secrets      encrypt $(PLAINTEXT) → $(CIPHERTEXT) with a new passphrase"
 	@echo "- rotate-secrets       re-encrypt $(CIPHERTEXT) with a *new* passphrase (no cleartext on disk)"
 	@echo "- decrypt-secrets      decrypt $(CIPHERTEXT) → $(PLAINTEXT) (local inspection/editing)"
@@ -30,11 +30,8 @@ load-secrets:
 		make decrypt-secrets ; \
 	fi ; \
 	if [ -f "$(PLAINTEXT)" ]; then \
-		ln -snf $(PLAINTEXT) ~/.exports ; \
+		ln -sf $(PLAINTEXT) $(DECRYPTED_TEXT) ; \
 	fi ; \
-	if [ -f "$(CURDIR)/$(EXPORTS_OVERWRITE)" ]; then \
-		ln -snf $(CURDIR)/$(EXPORTS_OVERWRITE) ~/$(EXPORTS_OVERWRITE) ; \
-	fi
 
 encrypt-secrets:
 	@set -e ; set -o pipefail ; \
