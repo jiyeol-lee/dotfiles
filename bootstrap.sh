@@ -1,5 +1,27 @@
 #!/usr/bin/env bash
 
+# Get the current shell name
+current_shell=$(basename "$SHELL")
+
+function executeByShell() {
+  local zsh_command="$1"
+  local bash_command="$2"
+
+  case "$current_shell" in
+  zsh)
+    echo "Executing zsh command: $zsh_command"
+    eval "$zsh_command"
+    ;;
+  bash)
+    echo "Executing bash command: $bash_command"
+    eval "$bash_command"
+    ;;
+  *)
+    echo "Error: Unsupported shell '$current_shell'. Only zsh and bash are supported."
+    ;;
+  esac
+}
+
 function installPackages() {
   # Add additional taps
   # ref: https://github.com/Homebrew/homebrew-cask/blob/master/USAGE.md#additional-taps-optional
@@ -120,11 +142,15 @@ function doIt() {
   ln -sf ~/dotfiles/.activated_gh_account.sh ~/.config/tmux/.__activated_gh_account.sh
   ln -sf ~/dotfiles/.alacritty.toml ~/.config/alacritty/alacritty.toml
   ln -sf ~/dotfiles/.nvim ~/.config/nvim
-  ln -sf ~/dotfiles/.profile ~/.zshrc
   ln -sf ~/dotfiles/.__editorconfig ~/.editorconfig
   ln -sf ~/dotfiles/.ssh_config ~/.ssh/config
 
-  source ~/.zshrc
+  executeByShell \
+    "ln -sf ~/dotfiles/.profile ~/.zshrc" \
+    "ln -sf ~/dotfiles/.profile ~/.bashrc"
+  executeByShell \
+    "source ~/.zshrc" \
+    "source ~/.bashrc"
 
   # Make sure we’re using the latest Homebrew.
   brew update
@@ -136,7 +162,9 @@ function doIt() {
   # Configure docker
   echo -e "{\n\t\"cliPluginsExtraDirs\": [\n\t\t\"/opt/homebrew/lib/docker/cli-plugins\"\n\t],\n\t\"currentContext\": \"colima\"\n}" >~/.docker/config.json
 
-  source ~/.zshrc
+  executeByShell \
+    "source ~/.zshrc" \
+    "source ~/.bashrc"
 }
 
 doIt
