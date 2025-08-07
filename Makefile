@@ -1,7 +1,8 @@
 # ---------- CONFIG -------------------------------------------------
-TEMPFILE	 := $(TMPDIR)__jiyeollee_dotfiles_secrets_$(shell date +%s)
+TMPDIR_SAFE := $(or $(TMPDIR),/tmp/)
+TEMPFILE	 := $(TMPDIR_SAFE)__jiyeollee_dotfiles_secrets_$(shell date +%s)
 # clear-text file you edit
-PLAINTEXT  := $(TMPDIR)__jiyeollee_dotfiles_secrets_exports
+PLAINTEXT  := $(TMPDIR_SAFE)__jiyeollee_dotfiles_secrets_exports
 # encrypted blob you commit
 CIPHERTEXT := .exports.enc
 # PBKDF2 iteration count
