@@ -3,7 +3,7 @@
 if [ -f "/opt/homebrew/bin/brew" ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
-if command -v /opt/homebrew/bin/brew >/dev/null 2>&1; then
+if command -v starship >/dev/null 2>&1; then
   eval "$(starship init "$(basename "$SHELL")")"
 fi
 
