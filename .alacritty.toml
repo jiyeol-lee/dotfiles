@@ -1,5 +1,6 @@
 [general]
 live_config_reload = true
+import = ["alacritty-bindings.toml"]
 
 [colors]
 draw_bold_text_with_bright_colors = false
@@ -37,13 +38,3 @@ startup_mode = "Maximized"
 [window.padding]
 x = 0
 y = 0
-
-[[keyboard.bindings]]
-key = "C"
-mods = "Super"
-action = "Copy"
-
-[[keyboard.bindings]]
-key = "V"
-mods = "Super"
-action = "Paste"

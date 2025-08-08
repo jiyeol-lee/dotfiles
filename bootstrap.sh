@@ -138,12 +138,7 @@ function doIt() {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   # Create symbolic links
-  ln -sf ~/dotfiles/.tmux.conf ~/.config/tmux/tmux.conf
-  ln -sf ~/dotfiles/.activated_gh_account.sh ~/.config/tmux/.__activated_gh_account.sh
-  ln -sf ~/dotfiles/.alacritty.toml ~/.config/alacritty/alacritty.toml
-  ln -sf ~/dotfiles/.nvim ~/.config/nvim
-  ln -sf ~/dotfiles/.__editorconfig ~/.editorconfig
-  ln -sf ~/dotfiles/.ssh_config ~/.ssh/config
+  ~/dotfiles/link_symbolic.sh
 
   executeByShell \
     "ln -sf ~/dotfiles/.profile ~/.zshrc" \

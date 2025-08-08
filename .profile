@@ -5,4 +5,9 @@ for file in ~/dotfiles/.{extras,default-exports,decryped-exports,override-export
     source "$file"
   fi
 done
+# This could be called from bootstrap.sh for the first time setup
+# and then from .profile for subsequent logins.
+# It doesn't hurt to run it multiple times.
+# This can prevent issues when the dotfiles are updated
+~/dotfiles/link_symbolic.sh
 unset file
