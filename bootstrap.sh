@@ -119,15 +119,7 @@ function installPackages() {
 }
 
 function doIt() {
-  # Create config directories
-  mkdir -p ~/.config/alacritty
-  mkdir -p ~/.config/tmux
-  mkdir -p ~/.docker
-
-  # Create vault directories
-  mkdir -p ~/vaults/vpersonal
-  mkdir -p ~/vaults/vwork2
-  mkdir -p ~/vaults/vwork3
+  ~/dotfiles/create_config_folders.sh
 
   # Configure git
   git config --global user.name "Jiyeol Lee"
