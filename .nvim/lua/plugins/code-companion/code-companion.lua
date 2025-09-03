@@ -84,16 +84,24 @@ function M.config()
               role = constants.USER_ROLE,
               opts = { auto_submit = false },
               content = function()
+                -- Enable YOLO mode!
+                vim.g.codecompanion_yolo_mode = true
+
                 return [[### Instructions
 
-Your instructions here
+- Do not care about type. Feel free to use `as any` or `@ts-ignore` if needed
+- If you need to mock data, mock as little as possible
+- Make sure you cover all edge cases
+- Update test descriptions if necessary
+- Follow existing test style
+- If you need to understand the code, use @{file_search} and @{read_file} tools to find the type definition
 
 ### Steps to Follow
 
 You are required to write code following the instructions provided above and test the correctness by running the designated test suite. Follow these steps exactly:
 
-1. Update the code in #buffer{watch} using the @editor tool
-2. Then use the @cmd_runner tool to run the test suite with `<test_cmd>` (do this after you have updated the code)
+1. Update the code in #{buffer} using the @{insert_edit_into_file} tool
+2. Then use the @{cmd_runner} tool to run the test suite with `<test_cmd>` (do this after you have updated the code)
 3. Make sure you trigger both tools in the same response
 
 We'll repeat this cycle until the tests pass. Ensure no deviations from these steps.]]
@@ -107,13 +115,12 @@ We'll repeat this cycle until the tests pass. Ensure no deviations from these st
               opts = { auto_submit = true },
               -- Scope this prompt to the cmd_runner tool
               condition = function()
-                ---@diagnostic disable-next-line: undefined-field
                 return _G.codecompanion_current_tool == "cmd_runner"
               end,
               -- Repeat until the tests pass, as indicated by the testing flag
               -- which the cmd_runner tool sets on the chat buffer
               repeat_until = function(chat)
-                return chat.tools.flags.testing == true
+                return chat.tool_registry.flags.testing == true
               end,
               content = "The tests have failed. Can you edit the buffer and run the test suite again?",
             },
@@ -141,9 +148,6 @@ We'll repeat this cycle until the tests pass. Ensure no deviations from these st
 3. Explain each function or significant block of code, including parameters and return values.
 4. Highlight any specific functions or methods used and their roles.
 5. Provide context on how the code fits into a larger application if applicable.]],
-            opts = {
-              visible = false,
-            },
           },
           {
             role = constants.USER_ROLE,
@@ -155,61 +159,8 @@ We'll repeat this cycle until the tests pass. Ensure no deviations from these st
 
 ```%s
 %s
-```]],
-                context.bufnr,
-                context.filetype,
-                code
-              )
-            end,
-            opts = {
-              contains_code = true,
-            },
-          },
-        },
-      },
-      ["Unit Tests"] = {
-        strategy = "inline",
-        description = "Generate unit tests for the selected code",
-        opts = {
-          is_default = false,
-          is_slash_cmd = false,
-          modes = { "v" },
-          auto_submit = true,
-          user_prompt = false,
-          placement = "new",
-          stop_context_insertion = true,
-        },
-        prompts = {
-          {
-            role = constants.SYSTEM_ROLE,
-            content = [[When generating unit tests, follow these steps:
-
-1. Identify the programming language.
-2. Identify the purpose of the function or module to be tested.
-3. List the edge cases and typical use cases that should be covered in the tests and share the plan with the user.
-4. Generate unit tests using an appropriate testing framework for the identified programming language.
-5. Ensure the tests cover:
-      - Normal cases
-      - Edge cases
-      - Error handling (if applicable)
-6. Provide the generated unit tests in a clear and organized manner without additional explanations or chat.]],
-            opts = {
-              visible = false,
-            },
-          },
-          {
-            role = constants.USER_ROLE,
-            content = function(context)
-              local code = require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
-
-              return string.format(
-                [[<user_prompt>
-Please generate unit tests for this code from buffer %d:
-
-```%s
-%s
 ```
-</user_prompt>]],
+]],
                 context.bufnr,
                 context.filetype,
                 code
@@ -218,130 +169,6 @@ Please generate unit tests for this code from buffer %d:
             opts = {
               contains_code = true,
             },
-          },
-        },
-      },
-      ["Fix code"] = {
-        strategy = "chat",
-        description = "Fix the selected code",
-        opts = {
-          is_default = false,
-          is_slash_cmd = false,
-          modes = { "v" },
-          auto_submit = true,
-          user_prompt = false,
-          stop_context_insertion = true,
-        },
-        prompts = {
-          {
-            role = constants.SYSTEM_ROLE,
-            content = [[When asked to fix code, follow these steps:
-
-1. **Identify the Issues**: Carefully read the provided code and identify any potential issues or improvements.
-2. **Plan the Fix**: Describe the plan for fixing the code in pseudocode, detailing each step.
-3. **Implement the Fix**: Write the corrected code in a single code block.
-4. **Explain the Fix**: Briefly explain what changes were made and why.
-
-Ensure the fixed code:
-
-- Includes necessary imports.
-- Handles potential errors.
-- Follows best practices for readability and maintainability.
-- Is formatted correctly.
-
-Use Markdown formatting and include the programming language name at the start of the code block.]],
-            opts = {
-              visible = false,
-            },
-          },
-          {
-            role = constants.USER_ROLE,
-            content = function(context)
-              local code = require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
-
-              return string.format(
-                [[Please fix this code from buffer %d:
-
-```%s
-%s
-```]],
-                context.bufnr,
-                context.filetype,
-                code
-              )
-            end,
-            opts = {
-              contains_code = true,
-            },
-          },
-        },
-      },
-      ["Workspace File"] = {
-        strategy = "chat",
-        description = "Generate a Workspace file/group",
-        opts = {
-          ignore_system_prompt = true,
-          is_default = false,
-        },
-        references = {
-          {
-            type = "file",
-            path = {
-              vim.fs.joinpath(vim.fn.getcwd(), "codecompanion-workspace.json"),
-            },
-          },
-        },
-        prompts = {
-          {
-            role = constants.SYSTEM_ROLE,
-            opts = { visible = false },
-            content = function()
-              local schema = require("codecompanion").workspace_schema()
-
-              return string.format(
-                [[## CONTEXT
-
-A workspace is a JSON configuration file that organizes your codebase into related groups to help LLMs understand your project structure. Each group contains files, symbols, or URLs that provide context about specific functionality or features.
-
-The workspace file follows this structure:
-
-```json
-%s
-```
-
-## OBJECTIVE
-
-Create or modify a workspace file that effectively organizes the user's codebase to provide optimal context for LLM interactions.
-
-## RESPONSE
-
-You must create or modify a workspace file through a series of prompts over multiple turns:
-
-1. First, ask the user about the project's overall purpose and structure if not already known
-2. Then ask the user to identify key functional groups in your codebase
-3. For each group, ask the user select relevant files, symbols, or URLs to include. Or, use your own knowledge to identify them
-4. Generate the workspace JSON structure based on the input
-5. Review and refine the workspace configuration together with the user]],
-                schema
-              )
-            end,
-          },
-          {
-            role = constants.USER_ROLE,
-            content = function()
-              local prompt = ""
-              if vim.fn.filereadable(vim.fs.joinpath(vim.fn.getcwd(), "codecompanion-workspace.json")) == 1 then
-                prompt = [[Can you help me add a group to an existing workspace file?]]
-              else
-                prompt = [[Can you help me create a workspace file?]]
-              end
-
-              local ok, _ = pcall(require, "vectorcode")
-              if ok then
-                prompt = prompt .. " Use the @vectorcode tool to help identify groupings of files"
-              end
-              return prompt
-            end,
           },
         },
       },
