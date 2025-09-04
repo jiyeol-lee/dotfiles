@@ -45,22 +45,21 @@ function M.config()
       },
     },
     adapters = {
-      copilot = function()
-        return require("codecompanion.adapters").extend("copilot", {
-          schema = {
-            model = {
-              default = "gpt-5",
-              -- default = "claude-sonnet-4",
-              -- default = "gemini-2.5-pro",
-              -- default = "claude-3.7-sonnet",
-              -- default = "claude-3.7-sonnet-thought",
+      http = {
+        copilot = function()
+          return require("codecompanion.adapters").extend("copilot", {
+            schema = {
+              model = {
+                default = "gpt-5",
+                -- default = "claude-sonnet-4",
+                -- default = "gemini-2.5-pro",
+                -- default = "claude-3.7-sonnet",
+                -- default = "claude-3.7-sonnet-thought",
+              },
             },
-            max_tokens = {
-              default = 65536,
-            },
-          },
-        })
-      end,
+          })
+        end,
+      },
     },
     display = {
       action_palette = {
