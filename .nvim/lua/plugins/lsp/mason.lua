@@ -115,8 +115,6 @@ M.config = function()
   require("mason").setup(mason_setup)
   require("mason-lspconfig").setup(mason_lspconfig_setup)
 
-  local lspconfig = require "lspconfig"
-
   for _, server in pairs(servers) do
     local lsp_options = {
       on_init = on_init,
@@ -129,7 +127,8 @@ M.config = function()
       lsp_options = vim.tbl_deep_extend("force", lsp_options, server_custom_options)
     end
 
-    lspconfig[server].setup(lsp_options)
+    vim.lsp.config(server, lsp_options)
+    vim.lsp.enable(server)
   end
 end
 
