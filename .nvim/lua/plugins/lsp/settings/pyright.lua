@@ -3,7 +3,7 @@ local opts = {
     python = {
       analysis = {
         diagnosticMode = "workspace",
-        typeCheckingMode = "off",
+        typeCheckingMode = "basic",          -- "basic" / "strict" / "off"
       },
     },
   },
