@@ -2,8 +2,8 @@ local opts = {
   settings = {
     python = {
       analysis = {
-        diagnosticMode = "workspace",
-        typeCheckingMode = "basic",          -- "basic" / "strict" / "off"
+        diagnosticMode = "openFilesOnly",
+        typeCheckingMode = "basic", -- "basic" / "strict" / "off"
       },
     },
   },
