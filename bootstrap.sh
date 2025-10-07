@@ -77,11 +77,11 @@ function installPackages() {
   # ref: https://github.com/neovim/neovim/blob/master/INSTALL.md#install-from-package
   brew install neovim
 
-  # Install docker
-  brew install docker docker-compose
+  # Install podman
+  brew install podman
 
-  # Install colima
-  brew install colima
+  # Install docker-compose
+  brew install docker-compose
 
   # Install nodejs
   brew install node@22
@@ -145,9 +145,6 @@ function doIt() {
   brew upgrade
 
   installPackages
-
-  # Configure docker
-  echo -e "{\n\t\"cliPluginsExtraDirs\": [\n\t\t\"/opt/homebrew/lib/docker/cli-plugins\"\n\t],\n\t\"currentContext\": \"colima\"\n}" >~/.docker/config.json
 
   executeByShell \
     "source ~/.zshrc" \
