@@ -11,6 +11,8 @@ alias c='clear'
 alias ..='cd ..'
 ### do not turn off the screen
 alias cafe='caffeinate -dims'
+### Show ALIASes
+alias salias='less ~/dotfiles/.aliases'
 
 # AWS
 ### AWs SSO Login
@@ -36,13 +38,17 @@ alias cnc='cd ~/dotfiles/.nvim && v'
 ### shell ReLoad zshrc
 alias rlc='source ~/.zshrc'
 
-# Colima
-### COlima Start
-alias cos='colima start --cpu 4 --memory 8'
-### COlima Start with Kubernetes
-alias cosk='colima start --cpu 4 --memory 8 --kubernetes'
-### COlima Terminate
-alias cot='colima stop'
+# Podman
+### Podman System Prune (all, volumes)
+alias psp='podman system prune -a --volumes'
+### Podman Machine Init
+alias pmi='podman machine init --cpus=4 --memory=8192 --disk-size=50'
+### Podman Machine Remove
+alias pmr='podman machine rm'
+### Podman Machine Start
+alias pms='podman machine start'
+### Podman Machine sTop
+alias pmt='podman machine stop'
 
 # Docker Compose
 ### Docker Compose Up
