@@ -21,4 +21,6 @@ if [ -f "/opt/homebrew/bin/brew" ]; then
 	export CPPFLAGS="-I/opt/homebrew/opt/node@22/include"
 fi
 
+export PODMAN_COMPOSE_WARNING_LOGS=false
+
 export XDG_CONFIG_HOME="$HOME/.config"
