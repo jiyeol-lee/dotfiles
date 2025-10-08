@@ -44,7 +44,7 @@ alias rlc='source ~/.zshrc'
 ### Podman System Prune (all, volumes)
 alias psp='podman system prune -a --volumes'
 ### Podman Machine Init
-alias pmi='podman machine init --cpus=4 --memory=8192 --disk-size=50'
+alias pmi='podman machine init --cpus=4 --memory=8192 --arch x86_64 --disk-size=50'
 ### Podman Machine Remove
 alias pmr='podman machine rm'
 ### Podman Machine Start
