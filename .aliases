@@ -13,6 +13,10 @@ alias ..='cd ..'
 alias cafe='caffeinate -dims'
 ### Show ALIASes
 alias salias='less ~/dotfiles/.aliases'
+### List files in Long format with human-readable file sizes and colorized output
+alias ll='ls -hl --color=auto'
+### Display disk Usage in Human-readable format, depth 1, sorted by size
+alias duh='du -h -d 1 | sort -hr'
 
 # AWS
 ### AWs SSO Login
@@ -33,8 +37,6 @@ alias cvw3='cd ~/vaults/vwork3'
 # Config/Dotfiles
 ### Change directory to Config folder
 alias cc='cd ~/dotfiles'
-### Change directory to Neovim Config folder
-alias cnc='cd ~/dotfiles/.nvim && v'
 ### shell ReLoad zshrc
 alias rlc='source ~/.zshrc'
 
@@ -49,16 +51,6 @@ alias pmr='podman machine rm'
 alias pms='podman machine start'
 ### Podman Machine sTop
 alias pmt='podman machine stop'
-
-# Docker Compose
-### Docker Compose Up
-alias dcu='docker compose up'
-### Docker Compose Down
-alias dcd='docker compose down --remove-orphans'
-### Docker Compose Soft Purge
-alias dcsp='docker compose down --remove-orphans --rmi all'
-### Docker Compose Hard Purge
-alias dchp='docker compose down --remove-orphans -v --rmi all'
 
 # Git, Github
 ### Git Remote Prune Origin
