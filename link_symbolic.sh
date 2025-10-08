@@ -1,5 +1,6 @@
 #!/bin/bash
 
+ln -snf ~/.config/containers/auth.json ~/.config/containers/config.json
 ln -snf ~/dotfiles/.tmux.conf ~/.config/tmux/tmux.conf
 ln -snf ~/dotfiles/.activated_gh_account.sh ~/.config/tmux/.__activated_gh_account.sh
 ln -snf ~/dotfiles/.alacritty.toml ~/.config/alacritty/alacritty.toml

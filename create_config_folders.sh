@@ -3,7 +3,7 @@
 # Create config directories
 mkdir -p ~/.config/alacritty
 mkdir -p ~/.config/tmux
-mkdir -p ~/.docker
+mkdir -p ~/.config/docker
 mkdir -p ~/.ssh
 
 # Create vault directories
