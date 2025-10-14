@@ -21,10 +21,8 @@ alias duh='du -h -d 1 | sort -hr'
 # AWS
 ### AWs SSO Login
 alias awssol='aws sso login --profile '
-### AWs aws-Vault Execute
-alias awve='aws-vault exec '
-### AWs aws-Vault Execute Default
-alias awved='aws-vault exec jiyeol-lee'
+### aws Select Profile
+alias awsp='source ~/dotfiles/scripts/aws_select_profile.sh'
 
 # Vaults
 ### Change directory to Vault Personal
