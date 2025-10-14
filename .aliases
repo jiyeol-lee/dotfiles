@@ -59,6 +59,8 @@ alias grpo='git remote prune origin'
 alias gsu='gh auth switch && gh auth setup-git'
 ## Github PRS
 alias gprs='~/dotfiles/scripts/github_prs.sh'
+## Github Repos
+alias grepos='~/dotfiles/scripts/github_repos.sh'
 
 # Terraform
 ### TerraForm Plan
