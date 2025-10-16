@@ -80,6 +80,9 @@ function installPackages() {
   # Install podman
   brew install podman
 
+  # Install uv (python package manager)
+  brew install uv
+
   # Install docker-compose
   brew install docker-compose
 
