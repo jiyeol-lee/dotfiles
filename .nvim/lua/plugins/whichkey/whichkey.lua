@@ -304,8 +304,15 @@ M.config = function()
     {
       mode = "n",
       "<leader>os",
+      ":ObsidianAlias<CR>",
+      desc = "Search by alias in workspace",
+      nowait = true,
+    },
+    {
+      mode = "n",
+      "<leader>og",
       ":ObsidianSearch<CR>",
-      desc = "Search in workspace",
+      desc = "Grep in workspace",
       nowait = true,
     },
     {
