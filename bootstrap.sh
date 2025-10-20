@@ -27,6 +27,9 @@ function installPackages() {
   # ref: https://github.com/Homebrew/homebrew-cask/blob/master/USAGE.md#additional-taps-optional
   # brew tap homebrew/cask-versions
 
+  # Install bash shell
+  brew install bash
+
   # Install fonts for 'Hack Nerd Front Mono'
   brew install --cask font-hack-nerd-font
 
