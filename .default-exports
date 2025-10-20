@@ -14,11 +14,14 @@ export EDITOR=nvim
 GO_BIN=$(go env GOPATH)/bin
 export PATH="$PATH:$GO_BIN"
 
-# nodejs 22
 if [ -f "/opt/homebrew/bin/brew" ]; then
+  # nodejs 22
   export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
   export LDFLAGS="-L/opt/homebrew/opt/node@22/lib"
   export CPPFLAGS="-I/opt/homebrew/opt/node@22/include"
+
+  # bash
+  export PATH="/opt/homebrew/bin/bash:$PATH"
 fi
 
 export PODMAN_COMPOSE_WARNING_LOGS=false
