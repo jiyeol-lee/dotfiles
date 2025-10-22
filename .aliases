@@ -59,6 +59,8 @@ alias gsu='gh auth switch && gh auth setup-git'
 alias gprs='~/dotfiles/scripts/github_prs.sh'
 ## Github Repos
 alias grepos='~/dotfiles/scripts/github_repos.sh'
+## Github Pull request Regression Review
+alias gprr='~/dotfiles/scripts/github_pr_find_regressions.sh'
 
 # Terraform
 ### TerraForm Plan
