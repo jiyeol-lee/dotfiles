@@ -40,6 +40,15 @@ function M.config()
             },
           })
         end,
+        openai_minimal_effort = function()
+          return require("codecompanion.adapters").extend("openai", {
+            schema = {
+              reasoning_effort = {
+                default = "minimal",
+              },
+            },
+          })
+        end,
       },
     },
     extensions = {
@@ -134,8 +143,8 @@ We'll repeat this cycle until the tests pass. Ensure no deviations from these st
           user_prompt = false,
           stop_context_insertion = true,
           adapter = {
-            name = "copilot",
-            model = "gpt-4.1",
+            name = "openai_minimal_effort",
+            model = "gpt-5-nano",
           },
         },
         prompts = {
@@ -195,8 +204,8 @@ When given a text, follow these steps:
           user_prompt = false,
           stop_context_insertion = true,
           adapter = {
-            name = "copilot",
-            model = "gpt-4.1",
+            name = "openai_minimal_effort",
+            model = "gpt-5-nano",
           },
         },
         prompts = {
