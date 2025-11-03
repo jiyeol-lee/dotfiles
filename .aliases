@@ -56,7 +56,7 @@ alias grpo='git remote prune origin'
 ## Git Switch User
 alias gsu='gh auth switch && gh auth setup-git'
 ## Github PRS
-alias gprs='~/dotfiles/scripts/github_prs.sh'
+alias gprs='GH_FORCE_TTY=1 ~/dotfiles/scripts/github_prs.sh | less -R'
 ## Github Repos
 alias grepos='~/dotfiles/scripts/github_repos.sh'
 ## Github Pull request Regression Review

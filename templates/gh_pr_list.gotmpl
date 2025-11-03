@@ -1,38 +1,117 @@
-{{tablerow ("TITLE" | color "blue") ("AUTHOR" | color "blue") ("REVIEW DECISION" | autocolor "blue") ("UPDATED AT" | autocolor "blue")}}
-{{tablerow "─────" "──────" "───────────────" "──────────"}}
-{{range .}}
-  {{- /* Format review decision with color */}}
-  {{- $review := "" }}
-  {{- if eq .reviewDecision "APPROVED" }}
-    {{- $review = (autocolor "green" "Approved") }}
-  {{- else if eq .reviewDecision "CHANGES_REQUESTED" }}
-    {{- $review = (autocolor "red" "Changes Requested") }}
-  {{- else if eq .reviewDecision "REVIEW_REQUIRED" }}
-    {{- $review = (autocolor "yellow" "Review Required") }}
-  {{- else }}
-    {{- $review = "—" }}
-  {{- end }}
+{{- /* ANSI color helpers */ -}}
+{{- $bold := "\033[1m" -}}
+{{- $reset := "\033[0m" -}}
+{{- $blue := "\033[34m" -}}
+{{- $cyan := "\033[36m" -}}
+{{- $green := "\033[32m" -}}
+{{- $yellow := "\033[33m" -}}
 
-  {{- /* Format number with color based on state */}}
-  {{- $number := "" }}
-  {{- if eq .state "MERGED" }}
-    {{- $number = (printf "#%v" .number | autocolor "magenta") }}
-  {{- else if eq .state "CLOSED" }}
-    {{- $number = (printf "#%v" .number | autocolor "red") }}
-  {{- else if eq .state "OPEN" }}
-    {{- $number = (printf "#%v" .number | autocolor "green") }}
-  {{- else }}
-    {{- $number = (printf "#%v" .number) }}
-  {{- end }}
+{{- range .data.search.nodes }}
+{{- $repo := .repository.name }}
+{{- $number := .number }}
 
-  {{- /* Use .author.name if set and non-empty, else .author.login */}}
-  {{- $author := "" }}
-  {{- if and .author.name (gt (len .author.name) 0) }}
-    {{- $author = .author.name }}
-  {{- else }}
-    {{- $author = .author.login }}
-  {{- end }}
+{{- /* HEADER: repo (plain), title as a blue hyperlink */ -}}
+{{ printf "%s\n" (hyperlink .url (color "blue" (printf "%s/%s - #%v %s" .repository.owner.login $repo $number .title))) }}
 
-  {{tablerow (hyperlink .url (printf "%v: %s" $number .title)) $author $review (timeago .updatedAt)}}
-{{end}}
-{{tablerender}}
+{{- /* PR BODY (only when present, full text, with spacing) */ -}}
+{{- if .bodyText }}{{ printf "\n%s\n\n" .bodyText }}{{- end }}
+
+{{- /* PR-LEVEL REVIEW DECISION */ -}}
+{{- if .reviewDecision }}
+  {{- printf "Review Decision: " -}}
+  {{- if eq .reviewDecision "APPROVED" -}}
+    {{ color "green" "✅ APPROVED" }}
+  {{- else if eq .reviewDecision "CHANGES_REQUESTED" -}}
+    {{ color "red" "❌ CHANGES_REQUESTED" }}
+  {{- else if eq .reviewDecision "REVIEW_REQUIRED" -}}
+    {{ color "magenta" "🟣 REVIEW_REQUIRED" }}
+  {{- else -}}
+    {{ .reviewDecision }}
+  {{- end }}
+{{ end }}
+
+{{- /* ===== Reviews ===== */ -}}
+{{ printf "\n%s\n" (color "yellow" "Reviews") -}}
+{{- if gt (len .reviews.nodes) 0 }}
+{{- range $i, $r := .reviews.nodes }}
+  {{- $firstLine := true -}}
+
+  {{- $author := or $r.author.name $r.author.login "unknown" -}}
+  {{- $time := "" -}}
+  {{- if $r.submittedAt -}}
+    {{- $time = timefmt "2006-01-02 03:04PM" $r.submittedAt -}}
+  {{- else -}}
+    {{- $time = "PENDING SUBMISSION" -}}
+  {{- end -}}
+
+  {{- $label := "" -}}
+  {{- if eq $r.state "APPROVED" -}}
+    {{- $label = color "green" (printf "✅ %s" $author) -}}
+  {{- else if eq $r.state "CHANGES_REQUESTED" -}}
+    {{- $label = color "red" (printf "❌ %s" $author) -}}
+  {{- else if eq $r.state "COMMENTED" -}}
+    {{- $label = color "yellow" (printf "🟡 %s" $author) -}}
+  {{- else -}}
+    {{- $label = (printf "%s" $author) -}}
+  {{- end -}}
+
+  {{- if and (eq $r.state "COMMENTED") (not $r.bodyText) -}}
+    {{- /* skip empty COMMENTED reviews */ -}}
+  {{- else -}}
+    {{- if eq $firstLine false }}{{ printf "\n" }}{{- end }}
+    {{- if $r.bodyText -}}{{ printf "%s\n" (hyperlink $r.url (printf "[%s]\n%s: %s" $time $label $r.bodyText)) }}
+    {{- else -}}{{ printf "%s\n" (hyperlink $r.url (printf "[%s]\n%s" $time $label)) }}
+    {{- $firstLine = false }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- else }}(none){{ "\n" }}
+{{- end }}
+
+{{- /* ===== Review Threads (inline comments) ===== */ -}}
+{{ printf "\n%s\n" (color "yellow" "Review Threads (inline)") -}}
+{{- if gt (len .reviewThreads.nodes) 0 }}
+  {{- range $ti, $t := .reviewThreads.nodes }}
+    {{- if $ti }}{{ printf "\n" }}{{- end }}
+
+    {{- $status := "" -}}
+    {{- if $t.isResolved }}{{- $status = (color "green" "[RESOLVED]") -}}
+    {{- else -}}{{- $status = (color "magenta" "[OPEN]") -}}
+    {{- end }}{{ printf "%s\n" $status }}
+
+    {{- range $ci, $c := $t.comments.nodes }}
+      {{- $author := or $c.author.name $c.author.login "unknown" -}}
+      {{- $author := printf "[%s]" $author -}}
+      {{- $time := timefmt "2006-01-02 03:04PM" $c.createdAt -}}
+      {{- $path := or $c.path "unknown" -}}
+      {{- $prefix := printf "[%s]\n%s (%s)" $time $author $path -}}
+      {{- if $c.outdated }}
+        {{- $prefix = printf "%s [outdated]" $prefix -}}
+      {{- end }}
+
+      {{- if $c.bodyText -}}
+        {{ printf "%s\n" (hyperlink $c.url (printf "%s: %s" $prefix $c.bodyText))  }}
+      {{- else -}}
+        {{ printf "%s\n" (hyperlink $c.url $prefix) }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- else }}(none){{ "\n" }}
+{{- end }}
+
+{{- /* ===== Comments ===== */ -}}
+{{ printf "\n%s\n" (color "yellow" "Comments") -}}
+{{- if gt (len .comments.nodes) 0 }}
+{{- range $i, $c := .comments.nodes }}
+  {{- if $i }}  {{ printf "\n" }}{{- end }}
+  {{- $author := or $c.author.name $c.author.login "unknown" -}}
+  {{- $time := timefmt "2006-01-02 03:04PM" $c.createdAt -}}
+  {{- $label := printf "[%s]" $author -}}
+
+  {{- if $c.bodyText -}}{{ printf "%s\n" (hyperlink $c.url (printf "[%s]\n%s: %s" $time $label $c.bodyText)) }}
+  {{- else -}}{{ printf "%s\n" (hyperlink $c.url (printf "[%s]\n%s" $time $label)) }}
+  {{- end }}
+{{- end }}
+{{- else }}(none){{ "\n" }}
+{{- end }}{{ "\n" }}
+{{- end -}}
