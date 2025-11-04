@@ -31,6 +31,9 @@ local options = {
   signcolumn = "yes",                      -- always show the sign column, otherwise it would shift the text each time
   wrap = false,                            -- display lines as one long line
   laststatus = 3,                          -- single statusline across the bottom of the entire Neovim interface
+  foldmethod = "expr",                     -- set fold method to expression
+  foldexpr = "nvim_treesitter#foldexpr()", -- set fold expression to treesitter
+  foldlevelstart = 99,                     -- start with all folds open
 }
 
 vim.loader.enable()

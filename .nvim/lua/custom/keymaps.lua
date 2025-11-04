@@ -38,6 +38,11 @@ keymap("n", "}", ":+tabmove<CR>", opts)
 keymap("n", "{", ":-tabmove<CR>", opts)
 -- Navigate tab end --
 
+-- Code folding start --
+keymap("n", "+", "<cmd>foldopen<CR>", opts)
+keymap("n", "-", "<cmd>foldclose<CR>", opts)
+-- Code folding end --
+
 -- Visual mode start --
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
