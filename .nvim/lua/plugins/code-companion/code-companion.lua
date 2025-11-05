@@ -144,7 +144,7 @@ We'll repeat this cycle until the tests pass. Ensure no deviations from these st
           stop_context_insertion = true,
           adapter = {
             name = "openai_minimal_effort",
-            model = "gpt-5-nano",
+            model = "gpt-5-mini",
           },
         },
         prompts = {
@@ -201,7 +201,7 @@ Working steps:
           stop_context_insertion = true,
           adapter = {
             name = "openai_minimal_effort",
-            model = "gpt-5-nano",
+            model = "gpt-5-mini",
           },
         },
         prompts = {
