@@ -10,10 +10,6 @@ export HISTCONTROL='ignoreboth'
 # Change default editor to neovim
 export EDITOR=nvim
 
-# Add go path to PATH
-GO_BIN=$(go env GOPATH)/bin
-export PATH="$PATH:$GO_BIN"
-
 if [ -f "/opt/homebrew/bin/brew" ]; then
   # nodejs 22
   export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
@@ -31,4 +27,44 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
-export OPENAI_API_KEY="$(pass show openai/api_key | head -n1)"
+# ================================
+# Handle heavy loading commands with temp files and TTL
+TMP_TEMP_DIR="${TMPDIR:-/tmp}/shell_temp_$USER"
+TEMP_TTL=18000 # 5 hours in seconds
+
+# Create temp directory with secure permissions
+if [ ! -d "$TMP_TEMP_DIR" ]; then
+  mkdir -p "$TMP_TEMP_DIR"
+  chmod 700 "$TMP_TEMP_DIR"
+fi
+
+# Function to temp command output with TTL
+temp_command() {
+  local temp_file="$1"
+  local ttl="$2"
+  local command="$3"
+  local result
+
+  if [ -f "$temp_file" ] && [ $(($(date +%s) - $(stat -f %m "$temp_file"))) -lt "$ttl" ]; then
+    cat "$temp_file"
+  else
+    result="$(eval "$command")"
+    if [ -n "$result" ]; then
+      echo "$result" >"$temp_file"
+      chmod 600 "$temp_file"
+      echo "$result"
+    fi
+  fi
+}
+
+# Add go path to PATH
+GO_BIN="$(temp_command "$TMP_TEMP_DIR/go_bin_path" "$TEMP_TTL" "go env GOPATH")/bin"
+export PATH="$PATH:$GO_BIN"
+
+OPENAI_API_KEY="$(temp_command "$TMP_TEMP_DIR/openai_api_key" "$TEMP_TTL" "pass show openai/api_key | head -n1")"
+if [ -n "$OPENAI_API_KEY" ]; then
+  export OPENAI_API_KEY
+fi
+
+# Clean up function from environment
+unset -f temp_command
