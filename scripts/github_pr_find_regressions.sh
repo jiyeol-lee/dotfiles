@@ -21,6 +21,7 @@ check_command() {
 # Check if required commands are available
 check_command "gh" "GitHub CLI"
 check_command "codex" "Codex CLI"
+check_command "jq" "jq JSON processor"
 
 # Usage function
 usage() {
@@ -82,42 +83,57 @@ if ! [[ "$PR_NUMBER" =~ ^[0-9]+$ ]]; then
 fi
 
 TMPDIR=$(mktemp -d)
+
+# Fetch PR details
+echo "Fetching PR details..."
+PR_DATA=$(gh pr view "$PR_NUMBER" --repo "$REPO_FULL" --json title,body,comments,reviews)
+PR_TITLE=$(echo "$PR_DATA" | jq -r '.title')
+PR_BODY=$(echo "$PR_DATA" | jq -r 'if .body == "" or .body == null then "There is no description for this PR." else .body end')
+PR_COMMENTS=$(echo "$PR_DATA" | jq -r 'if (.comments | length) == 0 then "There are no comments on this PR." else .comments[] | "Author: \(.author.login)\nCreated: \(.createdAt)\nBody:\n\(.body)\n---" end')
+PR_REVIEWS=$(echo "$PR_DATA" | jq -r 'if (.reviews | length) == 0 then "There are no reviews on this PR." else (.reviews[] | "Reviewer: \(.author.login)\nState: \(.state)\nSubmitted: \(.submittedAt)\nBody:\n\(.body)\n---") end')
+
+# Fetch review comments separately using gh api
+echo "Fetching review comments..."
+PR_REVIEW_COMMENTS=$(gh api "repos/${REPO_FULL}/pulls/${PR_NUMBER}/comments" --jq 'if length == 0 then "There are no review comments on this PR." else .[] | "Author: \(.user.login)\nPath: \(.path)\nLine: \(.line // .original_line)\nCreated: \(.created_at)\nBody:\n\(.body)\n---" end' 2>/dev/null || echo "There are no review comments on this PR.")
+
 # Construct the prompt
-PROMPT="review pull request ${PR_NUMBER}
-from ${REPOSITORY} repository in ${ORGANIZATION} organization \
-and let me know if there is any regression. \
-Use \$(gh) command for investigation. \
-When you need to read code files, clone the repository first \
+PROMPT="Review pull request ${PR_NUMBER} from ${REPOSITORY} repository in ${ORGANIZATION} organization and identify any regressions.
 
-Steps: \
-1. Clone the repository with depth 1 to minimize data transfer with the following command: \
-  \$(gh repo clone ${ORGANIZATION}/${REPOSITORY} ${TMPDIR}/${REPOSITORY} -- --depth=1) \
-2. Checkout the pull request branch with: \
-  \$(git fetch origin pull/${PR_NUMBER}/head:pr-${PR_NUMBER} && git checkout pr-${PR_NUMBER}) \
-3. Analyze the code changes in the pull request to identify any regressions. \
-4. Summarize your findings according to the rules below. \
+PR Context:
+===========
+Title: ${PR_TITLE}
 
-Rules: \
-1. Provide a concise summary of the regressions found with bullet points. \
-2. If no regressions are found, respond with 'No regressions found.' \
-3. Do not include any explanations or additional information beyond the summary. \
-4. Do not perform any actions outside of the specified repository and PR. \
-5. Make sure not to do anything that would modify the repository or PR except leaving a comment with the summary. \
-5. Leave a comment on the PR with the summary using \
-  \$(gh pr comment ${PR_NUMBER} --body '<your summary here>' --repo ${ORGANIZATION}/${REPOSITORY}) command. \
-6. Do not use \in the comment body. Use actual new lines for formatting. \
+Description:
+${PR_BODY}
 
-Note: \
-- You can get <user_login> using \$(gh pr view ${PR_NUMBER} --repo ${ORGANIZATION}/${REPOSITORY} --json author --jq '.author.login') \
+Comments:
+${PR_COMMENTS}
 
-Comment template: \
-When there are regressions: \
-@<user_login>, here is the summary of the regressions found in this PR: \
-- <bullet point 1> \
-- <bullet point 2> \
-... \
-When there are no regressions: \
-@<user_login>, No regressions found."
+Reviews:
+${PR_REVIEWS}
+
+Review Comments:
+${PR_REVIEW_COMMENTS}
+===========
+
+Use \$(gh) command for investigation.
+When you need to read code files, clone the repository first.
+
+Steps:
+1. Clone the repository with depth 1 to minimize data transfer with the following command:
+   \$(gh repo clone ${ORGANIZATION}/${REPOSITORY} ${TMPDIR}/${REPOSITORY} -- --depth=1)
+2. Checkout the pull request branch with:
+   \$(git fetch origin pull/${PR_NUMBER}/head:pr-${PR_NUMBER} && git checkout pr-${PR_NUMBER})
+3. Analyze the code changes in the pull request to identify any regressions.
+4. Report your findings in a clear, concise summary.
+
+Rules:
+1. Provide a concise summary of the regressions found with bullet points.
+2. If no regressions are found, respond with 'No regressions found.'
+3. Do not include any explanations or additional information beyond the summary.
+4. Do not perform any actions outside of the specified repository and PR.
+5. Make sure not to do anything that would modify the repository or PR.
+6. Consider the PR context provided above when analyzing the changes."
 
 echo "Running PR review for:"
 echo "  Organization: ${ORGANIZATION}"
