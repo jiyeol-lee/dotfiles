@@ -2,3 +2,9 @@
 key = "V"
 mods = "Control"
 action = "Paste"
+
+# to make the Shift+Enter as Enter
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001b\r"
