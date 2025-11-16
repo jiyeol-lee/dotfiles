@@ -31,7 +31,6 @@ spec "plugins.bufferline"
 spec "plugins.gitsigns"
 spec "plugins.floaterm"
 spec "plugins.copilot"
-spec "plugins.mcphub"
 spec "plugins.code-companion"
 spec "plugins.cmp"
 spec "plugins.autopairs" -- this should be after cmp

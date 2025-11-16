@@ -10,8 +10,6 @@ ln -snf ~/dotfiles/.activated_gh_account.sh ~/.config/tmux/.__activated_gh_accou
 mkdir -p ~/.config/alacritty
 ln -snf ~/dotfiles/.alacritty.toml ~/.config/alacritty/alacritty.toml
 
-mkdir -p ~/.config/mcphub
-ln -snf ~/dotfiles/.mcphub.json ~/.config/mcphub/servers.json
 case "$(uname -s)" in
 Linux*) ln -snf ~/dotfiles/.alacritty-bindings-nonmacos.toml ~/.config/alacritty/alacritty-bindings.toml ;;
 Darwin*) ln -snf ~/dotfiles/.alacritty-bindings-macos.toml ~/.config/alacritty/alacritty-bindings.toml ;;
