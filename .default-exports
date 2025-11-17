@@ -66,5 +66,9 @@ if [ -n "$OPENAI_API_KEY" ]; then
   export OPENAI_API_KEY
 fi
 
-# Clean up function from environment
+LINEAR_API_KEY="$(temp_command "$TMP_TEMP_DIR/linear_api_key" "$TEMP_TTL" "pass show linear/api_key | head -n1")"
+if [ -n "$LINEAR_API_KEY" ]; then
+  export LINEAR_API_KEY
+fi
+
 unset -f temp_command
