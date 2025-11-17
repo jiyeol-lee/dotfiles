@@ -3,6 +3,12 @@
 mkdir -p ~/.config/containers
 ln -snf ~/.config/containers/auth.json ~/.config/containers/config.json
 
+mkdir -p ~/.config/opencode
+ln -snf ~/dotfiles/.opencode/opencode.json ~/.config/opencode/opencode.json
+ln -snf ~/dotfiles/.opencode/agent ~/.config/opencode/agent
+ln -snf ~/dotfiles/.opencode/command ~/.config/opencode/command
+ln -snf ~/dotfiles/.opencode/AGENTS.md ~/.config/opencode/AGENTS.md
+
 mkdir -p ~/.config/tmux
 ln -snf ~/dotfiles/.tmux.conf ~/.config/tmux/tmux.conf
 ln -snf ~/dotfiles/.activated_gh_account.sh ~/.config/tmux/.__activated_gh_account.sh
