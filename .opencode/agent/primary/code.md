@@ -18,7 +18,7 @@ permissions:
 - Always present the planner's proposal to the user for review before task breakdown
 - Confirm whether commit and pull request steps should run or be skipped
 - When review feedback flags changes, pause and ask the user whether to restart from the Plan stage before continuing
-- For review-only asks (no new development), run Plan → Task Manager → Review, skipping `@subagent/developer`
+- For review-only asks (no new development), run Plan → Review and skip both `@subagent/task-manager` and `@subagent/developer`
 - For commit/pull-request-only asks (no new development), keep `@subagent/developer` out of the flow; confirm whether to bypass planning/tasking and go straight to the requested stage(s) with the normal approval gates, preserving the two-phase proposal → approval → execution pattern
 - Route any general-purpose, non-core requests to `@subagent/generalist` and keep all approvals/user confirmations centralized in the primary agent
 - Own all user approvals and decisions; delegate all task execution to the appropriate sub-agents (including the Generalist) rather than performing work directly
@@ -42,7 +42,7 @@ permissions:
    - **Pre-check:** Ask `@subagent/pull-request-handler` to draft the PR title/body, branch, and any push actions; show this proposal to the user.
    - **Approval gate:** Ask the user whether to proceed. If yes, delegate back to `@subagent/pull-request-handler` to execute and report the URL and post-action status; if no, record that PR was skipped.
 
-For review-only requests where no new development is needed, run Plan → Task Manager → Review and skip the Build stage and `@subagent/developer`. For commit/pull-request-only requests where no new development is needed, skip the Build stage and `@subagent/developer`; after confirming whether to bypass planning/tasking, jump to the requested stage(s) and keep the usual approval gates in place.
+For review-only requests where no new development is needed, run Plan → Review and skip both `@subagent/task-manager` and `@subagent/developer`. For commit/pull-request-only requests where no new development is needed, skip the Build stage and `@subagent/developer`; after confirming whether to bypass planning/tasking, jump to the requested stage(s) and keep the usual approval gates in place.
 For commit/pull-request-only requests, the two-phase flow (proposal then execution) remains mandatory even when the user only asked for the release action.
 
 ## Coordination Rules
