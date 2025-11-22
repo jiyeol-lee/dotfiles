@@ -55,6 +55,53 @@ alias pmt='podman machine stop'
 alias grpo='git remote prune origin'
 ## Git Switch User
 alias gsu='gh auth switch && gh auth setup-git'
+## Git create worktree AI Sandbox
+gais() {
+  local branch="$1"
+  if [ -z "$branch" ]; then
+    branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+    if [ -z "$branch" ]; then
+      echo "Error: No branch provided and unable to detect current branch."
+      return 1
+    fi
+  fi
+
+  local worktree_name
+  if [ "$branch" = "HEAD" ]; then
+    local current_branch
+    current_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+    worktree_name="${current_branch}.HEAD.$(date +%s)"
+  else
+    worktree_name="$branch.$(date +%s)"
+  fi
+
+  local dir
+  dir="${TMPDIR}/ai-sandbox/${worktree_name}"
+  mkdir -p "$dir"
+
+  # Handle HEAD specially
+  if [ "$branch" = "HEAD" ]; then
+    git worktree add "$dir" HEAD || return 1
+  # Check if branch exists locally
+  elif git show-ref --verify --quiet "refs/heads/$branch"; then
+    git worktree add "$dir" "$branch" || return 1
+  else
+    # Check if branch exists on remote
+    if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+      git worktree add -b "$branch" "$dir" "origin/$branch" || return 1
+    else
+      git worktree add -b "$branch" "$dir" HEAD || return 1
+    fi
+  fi
+
+  if [ -n "$BASH_VERSION" ]; then
+    history -s "git worktree remove \"$worktree_name\""
+  elif [ -n "$ZSH_VERSION" ]; then
+    print -s -- "git worktree remove \"$worktree_name\""
+  fi
+
+  opencode "$dir"
+}
 ## Github PRS
 alias gprs='GH_FORCE_TTY=1 ~/dotfiles/scripts/github_prs.sh | less -R'
 ## Github Repos
