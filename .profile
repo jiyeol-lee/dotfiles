@@ -11,5 +11,6 @@ unset file
 # and then from .profile for subsequent logins.
 # It doesn't hurt to run it multiple times.
 # This can prevent issues when the dotfiles are updated
+~/dotfiles/git_config.sh
 ~/dotfiles/create_config_folders.sh
 ~/dotfiles/link_symbolic.sh

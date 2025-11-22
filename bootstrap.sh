@@ -127,11 +127,6 @@ function installPackages() {
 function doIt() {
   ~/dotfiles/create_config_folders.sh
 
-  # Configure git
-  git config --global user.name "Jiyeol Lee"
-  git config --global user.email "jiyeol.tech@gmail.com"
-  git config --global rerere.enabled true # Enable rerere to make my life easier
-
   # Install Homebrew.
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 

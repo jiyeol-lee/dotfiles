@@ -25,7 +25,7 @@ Single source of truth for how agents work together across projects. Written to 
 4. **Review (@subagent/reviewer):** Severity-ordered findings; if changes are needed, primary asks user whether to restart planning before more work.
 5. **Release (optional):** Commit and/or PR creation only after explicit user approval; if declined or skipped, downstream steps are skipped.
 6. **Default flow applies unless explicitly skipped:** All work starts at Plan. If the user requests a shortcut (e.g., `@subagent/commiter`, check the current changes and commit), the primary must ask whether to skip planning/tasking; absent an explicit "yes, skip," run the full lifecycle and pause until approved.
-7. **Review-only requests:** If the user asks solely for a review with no new development, still run Plan → Task Manager → Review, but skip `@subagent/developer`.
+7. **Review-only requests:** If the user asks solely for a review with no new development, run Plan → Review and skip both `@subagent/task-manager` and `@subagent/developer`.
 8. **Commit/PR-only requests:** If the user asks solely for commit or PR actions with no new development, keep `@subagent/developer` out of scope; ask whether to bypass planning/tasking, then proceed to the requested stage(s) with the usual approval gates. Commit/PR agents still run in two phases (proposal then execution) with an explicit approval in between.
 
 ## Approvals & Delegation
