@@ -5,6 +5,7 @@ ln -snf ~/.config/containers/auth.json ~/.config/containers/config.json
 
 mkdir -p ~/.config/opencode
 ln -snf ~/dotfiles/.opencode/opencode.json ~/.config/opencode/opencode.json
+ln -snf ~/dotfiles/.opencode/themes ~/.config/opencode/themes
 ln -snf ~/dotfiles/.opencode/agent ~/.config/opencode/agent
 ln -snf ~/dotfiles/.opencode/command ~/.config/opencode/command
 ln -snf ~/dotfiles/.opencode/AGENTS.md ~/.config/opencode/AGENTS.md

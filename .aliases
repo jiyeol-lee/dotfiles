@@ -18,6 +18,10 @@ alias ll='ls -hl --color=auto'
 ### Display disk Usage in Human-readable format, depth 1, sorted by size
 alias duh='du -h -d 1 | sort -hr'
 
+# Opencode (AI)
+### Open opencode in current directory
+alias oc='opencode'
+
 # AWS
 ### AWs SSO Login
 alias awssol='aws sso login --profile '
@@ -57,47 +61,35 @@ alias grpo='git remote prune origin'
 alias gsu='gh auth switch && gh auth setup-git'
 ## Git create worktree AI Sandbox
 gais() {
-  local branch="$1"
-  if [ -z "$branch" ]; then
-    branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
-    if [ -z "$branch" ]; then
-      echo "Error: No branch provided and unable to detect current branch."
-      return 1
-    fi
+  if [ -z "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
+    echo "Error: Not inside a Git repository."
+    return 1
+  fi
+
+  local current_branch
+  current_branch="$(git branch --show-current)"
+
+  local remote_branch
+  remote_branch="$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null)"
+
+  if [ -z "$remote_branch" ]; then
+    echo "Error: No upstream branch set for the current branch."
+    return 1
   fi
 
   local worktree_name
-  if [ "$branch" = "HEAD" ]; then
-    local current_branch
-    current_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
-    worktree_name="${current_branch}.HEAD.$(date +%s)"
-  else
-    worktree_name="$branch.$(date +%s)"
-  fi
+  worktree_name="$current_branch.$(date +%s)"
 
   local dir
-  dir="${TMPDIR}/ai-sandbox/${worktree_name}"
+  dir="./sandbox/${worktree_name}"
   mkdir -p "$dir"
 
-  # Handle HEAD specially
-  if [ "$branch" = "HEAD" ]; then
-    git worktree add "$dir" HEAD || return 1
-  # Check if branch exists locally
-  elif git show-ref --verify --quiet "refs/heads/$branch"; then
-    git worktree add "$dir" "$branch" || return 1
-  else
-    # Check if branch exists on remote
-    if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
-      git worktree add -b "$branch" "$dir" "origin/$branch" || return 1
-    else
-      git worktree add -b "$branch" "$dir" HEAD || return 1
-    fi
-  fi
+  git worktree add "$dir" -b "$worktree_name" "$remote_branch" || return 1
 
   if [ -n "$BASH_VERSION" ]; then
-    history -s "git worktree remove \"$worktree_name\""
+    history -s "git worktree remove \"$worktree_name\" && rm -rf \"$dir\" && git branch -D \"$worktree_name\""
   elif [ -n "$ZSH_VERSION" ]; then
-    print -s -- "git worktree remove \"$worktree_name\""
+    print -s -- "git worktree remove \"$worktree_name\" && rm -rf \"$dir\" && git branch -D \"$worktree_name\""
   fi
 
   opencode "$dir"
