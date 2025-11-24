@@ -2,45 +2,92 @@
 description: Inspect the latest commits of a branch for shipped regressions.
 ---
 
-You are orchestrating the GitHub Branch Regression subagent defined at `@agent__github-branch-regression.md`.
+You are coordinating the GitHub Branch Regression flow: delegate input collection, markdown rendering, and the final summary to `@subagent/generalist`; assign all workspace/range/teardown work to `@subagent/developer`; and reserve `@subagent/reviewer` for the regression analysis. Do not perform these steps yourself—always hand them off.
 
-Goal: regression-test the latest commits on a branch by comparing the branch head to the commit immediately before the requested span, ensuring previously reverted regressions are ignored (only net changes in the aggregated diff), and report any remaining risks alongside the commit that introduced them.
+Goal: regression-test the latest commits on a branch by comparing the branch head to the commit immediately before the requested span, ensuring reverted regressions inside that span are ignored (only net changes in the squashed diff), and report remaining risks with the commit that introduced them.
+
+Output handling: `@subagent/reviewer` returns JSON; do not request a schema. Render with this markdown (fill "N/A" when empty):
+
+```markdown
+## Branch Regression Report for <owner>/<name> on `<branch>`
+
+### Header
+
+- **Repo:** <repo>
+- **Branch:** <branch>
+- **Range:** <BASE_COMMIT..HEAD_COMMIT> (requested <COUNT>, actual <ACTUAL_COUNT>)
+- **Timestamp:** <ISO time>
+
+### Commit Range
+
+<COMMIT_SUMMARY>
+
+### Diff Stat
+
+<DIFF_STAT or "N/A">
+
+### Regression Risks
+
+- **Finding:** <severity> — <title> (<location>)
+  - **Details:** <details>
+  - **Suggestion:** <suggestion>
+  - **Tests:** <tests or "N/A">
+- **Risks noted:** <risks array or "N/A">
+- **Tests Summary:** passed <passed> · missing <missing> · failing <failing>
+- **Follow-ups:** <follow_ups or "N/A">
+
+### Summary
+
+- **Key takeaways:** <concise summary>
+```
+
+Safeguards:
+
+- Work only in a disposable workspace; never push or modify remote state.
+- All outputs stream to STDOUT; do not write files outside the workspace.
 
 Steps:
 
-1. **Collect Inputs**
-   - Treat `$1` as the number of latest commits to inspect (`COUNT`). It must be a positive integer. If missing/invalid, request clarification before proceeding.
-   - Treat `$2` as the branch name to analyze (`BRANCH_NAME`, e.g., `main`, `release/v1`). If absent, stop and ask for it.
-   - Determine `REPO_FULL` (owner/name):
-     1. If `$3` is provided, treat it as the repo slug and validate it matches `<owner>/<name>`.
-     2. Otherwise attempt `gh repo view --json nameWithOwner -q .nameWithOwner`.
-     3. If both steps fail (e.g., running outside a git repo), request the repo slug explicitly before proceeding.
-2. **Prepare Workspace**
-   - Set `workspace="./branch-regression-${REPO_FULL//\//-}-${BRANCH_NAME}-$(date +%s%N)"` and create it for all work.
-   - Clone the repo read-only: `gh repo clone "$REPO_FULL" "$workspace/repo" -- --filter=blob:none --depth=$((COUNT + 50))` (deepen later if the span exceeds the depth).
-   - Inside the clone run:
+1. **Collect Inputs** (delegate to `@subagent/generalist`)
+   - `$1` → `COUNT` (latest commits to inspect). Must be a positive integer; if missing/invalid, stop and ask.
+   - `$2` → `BRANCH_NAME` (e.g., `main`, `release/v1`). If missing, request it.
+   - Determine `REPO_FULL` (`owner/name`):
+     - If `$3` exists, treat it as the slug and validate it matches `<owner>/<name>`.
+     - Else try `gh repo view --json nameWithOwner -q .nameWithOwner`.
+     - If unresolved, ask for the repo slug before continuing.
+2. **Prepare Workspace** (delegate to `@subagent/developer`)
+   - `workspace="./branch-regression-${REPO_FULL//\//-}-${BRANCH_NAME}-$(date +%s%N)"`; create it.
+   - Clone read-only with buffer depth into the workspace root: `gh repo clone "$REPO_FULL" "$workspace" -- --filter=blob:none --depth=$((COUNT + 50))` (deepen later if needed).
+   - In the clone:
      ```
-     cd "$workspace/repo"
+     cd $workspace
      git fetch origin "$BRANCH_NAME" --deepen=$((COUNT + 50)) || git fetch origin "$BRANCH_NAME"
      git checkout -B "${BRANCH_NAME}-analysis" "origin/${BRANCH_NAME}"
      ```
-3. **Define Range (squashed diff)**
-   - Let `HEAD_COMMIT=$(git rev-parse HEAD)`.
-   - Determine `BASE_COMMIT` by moving `COUNT` commits back: `BASE_COMMIT=$(git rev-list --skip="$COUNT" -n 1 HEAD 2>/dev/null || git rev-list --max-parents=0 HEAD)`. When the branch contains fewer commits than requested, this falls back to the initial commit so the diff covers everything available.
-   - Compute `ACTUAL_COUNT=$(git rev-list --count "${BASE_COMMIT}..${HEAD_COMMIT}")`. If `ACTUAL_COUNT < COUNT`, call this out later so users know the span was truncated.
-   - Collect helper data:
-     - `COMMIT_SUMMARY=$(git log --no-merges --pretty=format:'%h %H %an %ad %s' "${BASE_COMMIT}..${HEAD_COMMIT}")` (captures both short and full SHA plus title/author/date so findings can reference the responsible commit).
+3. **Define Range** (delegate to `@subagent/developer`)
+   - `HEAD_COMMIT=$(git rev-parse HEAD)`.
+   - `BASE_COMMIT=$(git rev-list --skip="$COUNT" -n 1 HEAD 2>/dev/null || git rev-list --max-parents=0 HEAD)` (fallback to root if fewer commits exist).
+   - `ACTUAL_COUNT=$(git rev-list --count "${BASE_COMMIT}..${HEAD_COMMIT}")`; note later if `ACTUAL_COUNT < COUNT` to explain truncation.
+   - Gather helpers:
+     - `COMMIT_SUMMARY=$(git log --no-merges --pretty=format:'%h %H %an %ad %s' "${BASE_COMMIT}..${HEAD_COMMIT}")`
      - `DIFF_STAT=$(git diff --stat "${BASE_COMMIT}" "${HEAD_COMMIT}")`
-4. **Run Regression Agent**
-   - Build a context payload containing: `REPO_FULL`, `BRANCH_NAME`, `BASE_COMMIT`, `HEAD_COMMIT`, requested vs actual commit counts, `${COMMIT_SUMMARY}` (explicitly note that findings must cite the commit responsible), `${DIFF_STAT}`, and any notable files/authors you observed.
-   - Invoke `@agent__github-branch-regression.md` once with that payload. Emphasize that the agent should analyze the squashed diff (`BASE_COMMIT..HEAD_COMMIT`) so regressions resolved within the range are not reported, and that every reported risk must reference the originating commit from `COMMIT_SUMMARY`. Capture its output verbatim (regression bullets or `No regressions found.`).
-5. **Return Results**
-   - Compose a markdown response containing:
-     - Summary header (repo, branch, requested vs actual count, timestamp, `BASE_COMMIT..HEAD_COMMIT`).
-     - "Commit Range" section with `${COMMIT_SUMMARY}`.
-     - Optional "Diff Stat" section for `${DIFF_STAT}` when non-empty.
-     - "Regression Risks" section containing the subagent output.
-   - Print this response directly so the caller sees it immediately; do not write additional files.
-6. **Teardown and Summary**
-   - Remove the temporary workspace after the response is emitted.
-   - Close with a concise CLI summary reiterating the range inspected and whether regressions were detected.
+
+- **Capture Diff Payload** (delegate to `@subagent/developer`)
+  - Run `git diff --unified=2000 "${BASE_COMMIT}" "${HEAD_COMMIT}"` to capture the full patch and `git diff --name-only "${BASE_COMMIT}" "${HEAD_COMMIT}"` to list impacted files.
+  - Store or summarize both outputs so they can be attached to the reviewer payload without rerunning expensive commands.
+
+4. **Run Regression Review** (delegate to `@subagent/reviewer`)
+   - Build a payload with `REPO_FULL`, `BRANCH_NAME`, `BASE_COMMIT`, `HEAD_COMMIT`, requested vs actual counts, `${COMMIT_SUMMARY}` (tell it to cite the responsible commit), `${DIFF_STAT}`, the captured patch output, the file list, and any notable files/authors.
+   - Remind the reviewer that the program expects three distinct focus areas per `.opencode/AGENTS.md` (Regression Risk, Quality Opportunities, Documentation Accuracy). This command requires a single reviewer invocation scoped strictly to the **Regression Risk** focus area because it is a regression-only sweep; note that Quality Opportunities and Documentation Accuracy are out of scope for this command.
+   - Call `@subagent/reviewer` once with that payload, explicitly requesting the Regression Risk focus and instructing it to analyze the squashed diff (`BASE_COMMIT..HEAD_COMMIT`) so reverted changes within the window are ignored. Require that every reported risk is tied back to its originating commit from `${COMMIT_SUMMARY}`, then render the returned JSON with the markdown template.
+
+5. **Return Results** (delegate to `@subagent/generalist`)
+   - Emit markdown to STDOUT with:
+     - Header: repo, branch, requested vs actual count, timestamp, `BASE_COMMIT..HEAD_COMMIT`.
+     - "Commit Range" section → `${COMMIT_SUMMARY}`.
+     - Optional "Diff Stat" section when `${DIFF_STAT}` exists.
+     - "Regression Risks" section → items rendered from the JSON (`findings`, `risks`, `tests_summary`, `follow_ups`).
+   - Close with a short CLI line repeating the inspected range and whether regressions were reported.
+
+6. **Teardown** (delegate to `@subagent/developer`)
+   - Remove the temporary workspace.
