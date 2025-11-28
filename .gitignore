@@ -1,3 +1,7 @@
 .git
 .override-exports
 .decrypted-exports
+
+.tmux/plugins
+.tmux/tpm
+.alacritty/alacritty-bindings.toml

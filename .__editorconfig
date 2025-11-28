@@ -1,6 +1,0 @@
-[*.sh]
-indent_style = space
-indent_size = 2
-
-[third_party/**]
-ignore = true

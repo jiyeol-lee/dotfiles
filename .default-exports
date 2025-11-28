@@ -57,18 +57,22 @@ temp_command() {
   fi
 }
 
-# Add go path to PATH
-GO_BIN="$(temp_command "$TMP_TEMP_DIR/go_bin_path" "$TEMP_TTL" "go env GOPATH")/bin"
-export PATH="$PATH:$GO_BIN"
-
-OPENAI_API_KEY="$(temp_command "$TMP_TEMP_DIR/openai_api_key" "$TEMP_TTL" "pass show openai/api_key | head -n1")"
-if [ -n "$OPENAI_API_KEY" ]; then
-  export OPENAI_API_KEY
+if command -v go &>/dev/null; then
+  # Add go path to PATH
+  GO_BIN="$(temp_command "$TMP_TEMP_DIR/go_bin_path" "$TEMP_TTL" "go env GOPATH")/bin"
+  export PATH="$PATH:$GO_BIN"
 fi
 
-LINEAR_API_KEY="$(temp_command "$TMP_TEMP_DIR/linear_api_key" "$TEMP_TTL" "pass show linear/api_key | head -n1")"
-if [ -n "$LINEAR_API_KEY" ]; then
-  export LINEAR_API_KEY
+if command -v pass &>/dev/null; then
+  OPENAI_API_KEY="$(temp_command "$TMP_TEMP_DIR/openai_api_key" "$TEMP_TTL" "pass show openai/api_key | head -n1")"
+  if [ -n "$OPENAI_API_KEY" ]; then
+    export OPENAI_API_KEY
+  fi
+
+  LINEAR_API_KEY="$(temp_command "$TMP_TEMP_DIR/linear_api_key" "$TEMP_TTL" "pass show linear/api_key | head -n1")"
+  if [ -n "$LINEAR_API_KEY" ]; then
+    export LINEAR_API_KEY
+  fi
 fi
 
 unset -f temp_command

@@ -1,0 +1,6 @@
+[{*.sh,.profile,.bashrc,.zshrc,.extras,.aliases,.default_exports,.override_exports}]
+indent_style = space
+indent_size = 2
+
+[third_party/**]
+ignore = true

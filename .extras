@@ -6,15 +6,3 @@ fi
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init "$(basename "$SHELL")")"
 fi
-
-# Define cleanup logic
-function _zsh_cleanup() {
-  if ! pgrep -u "$USER" -f zsh | grep -v -q $$; then
-    cd ~/dotfiles || return
-    make remove-secrets
-  fi
-}
-
-zshexit() {
-  _zsh_cleanup
-}
