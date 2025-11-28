@@ -23,10 +23,6 @@ function executeByShell() {
 }
 
 function installPackages() {
-  # Add additional taps
-  # ref: https://github.com/Homebrew/homebrew-cask/blob/master/USAGE.md#additional-taps-optional
-  # brew tap homebrew/cask-versions
-
   # Install bash shell
   brew install bash
 
@@ -43,20 +39,20 @@ function installPackages() {
   # Install starship
   brew install starship
 
-  # Install chatgpt
-  brew install --cask chatgpt
+  # Install claude
+  brew install --cask claude
 
-  # Install notion
-  brew install --cask notion
+  # Install opencode
+  brew install sst/tap/opencode
+
+  # Install pass
+  brew install pass
 
   # Install pngpaste for pasting image to markdown using obsidian.nvim
   brew install pngpaste
 
-  # Install google chrome
-  brew install --cask google-chrome
-
-  # Install alfred
-  brew install --cask google-drive
+  # Install firefox
+  brew install --cask firefox
 
   # Install alfred
   brew install --cask alfred
@@ -64,17 +60,12 @@ function installPackages() {
   # Install alacritty
   brew install --cask --no-quarantine alacritty
 
-  # Install slack
-  brew install --cask slack
-
-  # Install KeePassXC
-  brew install --cask keepassxc
-
   # Install tmux
   # ref1: https://github.com/tmux/tmux/wiki/Installing
   # ref2: https://github.com/tmux-plugins/tpm
   brew install tmux
-  git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/tpm/
+  # git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/tpm/
+  git clone https://github.com/tmux-plugins/tpm ~/dotfiles/.tmux/tpm
 
   # Install neovim
   # ref: https://github.com/neovim/neovim/blob/master/INSTALL.md#install-from-package
@@ -82,12 +73,6 @@ function installPackages() {
 
   # Install podman
   brew install podman
-
-  # Install uv (python package manager)
-  brew install uv
-
-  # Install docker-compose
-  brew install docker-compose
 
   # Install nodejs
   brew install node@22
@@ -121,17 +106,18 @@ function installPackages() {
   # Install gnu sed
   brew install gnu-sed
 
-  go install github.com/coding-for-fun-org/gcli@latest
+  # For tmux google calendar
+  go install github.com/jiyeol-lee/gcli@latest
 }
 
 function doIt() {
-  ~/dotfiles/create_config_folders.sh
+  ~/dotfiles/scripts/create_config_folders.sh
 
   # Install Homebrew.
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   # Create symbolic links
-  ~/dotfiles/link_symbolic.sh
+  ~/dotfiles/scripts/link_symbolic.sh
 
   executeByShell \
     "ln -sf ~/dotfiles/.profile ~/.zshrc" \

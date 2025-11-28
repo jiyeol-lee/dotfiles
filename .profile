@@ -1,9 +1,9 @@
 # Load the shell dotfiles, and then some:
-for file in ~/dotfiles/.{extras,default-exports,decryped-exports,override-exports,aliases}; do
-	if [ -f "$file" ]; then
-		# shellcheck disable=SC1090
-		source "$file"
-	fi
+for file in ~/dotfiles/.{extras,default-exports,override-exports,aliases}; do
+  if [ -f "$file" ]; then
+    # shellcheck disable=SC1090
+    source "$file"
+  fi
 done
 unset file
 
@@ -11,6 +11,6 @@ unset file
 # and then from .profile for subsequent logins.
 # It doesn't hurt to run it multiple times.
 # This can prevent issues when the dotfiles are updated
-~/dotfiles/git_config.sh
-~/dotfiles/create_config_folders.sh
-~/dotfiles/link_symbolic.sh
+~/dotfiles/scripts/git_config.sh
+~/dotfiles/scripts/create_config_folders.sh
+~/dotfiles/scripts/link_symbolic.sh

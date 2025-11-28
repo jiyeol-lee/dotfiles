@@ -1,6 +1,6 @@
 [general]
 live_config_reload = true
-import = ["alacritty-bindings.toml"]
+import = ["key-bindings.toml"]
 
 [colors]
 draw_bold_text_with_bright_colors = false
