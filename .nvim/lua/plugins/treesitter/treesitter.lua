@@ -38,6 +38,7 @@ M.config = function()
       "ssh_config",
       "terraform",
       "hcl",
+      "svelte",
     },
     highlight = {
       enable = true,
