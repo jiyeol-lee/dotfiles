@@ -93,6 +93,7 @@ M.config = function()
     "terraformls",
     "tflint",
     "yamlls",
+    "svelte",
   }
   local mason_setup = {
     ui = {
