@@ -59,40 +59,11 @@ alias pmt='podman machine stop'
 alias grpo='git remote prune origin'
 ## Git Switch User
 alias gsu='gh auth switch && gh auth setup-git'
-## Git create worktree AI Sandbox
-gais() {
-  if [ -z "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
-    echo "Error: Not inside a Git repository."
-    return 1
-  fi
-
-  local current_branch
-  current_branch="$(git branch --show-current)"
-
-  local remote_branch
-  remote_branch="$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null)"
-
-  if [ -z "$remote_branch" ]; then
-    echo "Error: No upstream branch set for the current branch."
-    return 1
-  fi
-
-  local worktree_name
-  worktree_name="$current_branch.$(date +%s)"
-
-  local dir
-  dir="./sandbox/${worktree_name}"
-  mkdir -p "$dir"
-
-  git worktree add "$dir" -b "$worktree_name" "$remote_branch" || return 1
-
-  if [ -n "$BASH_VERSION" ]; then
-    history -s "git worktree remove \"$worktree_name\" && rm -rf \"$dir\" && git branch -D \"$worktree_name\""
-  elif [ -n "$ZSH_VERSION" ]; then
-    print -s -- "git worktree remove \"$worktree_name\" && rm -rf \"$dir\" && git branch -D \"$worktree_name\""
-  fi
-
-  opencode "$dir"
+## Git Worktree Sandbox
+gws() {
+  ### Create worktree in ~/dev/sandbox from branch (-r for remote)
+  # shellcheck source=scripts/git_worktree_sandbox.sh
+  source ~/dotfiles/scripts/git_worktree_sandbox.sh "$@"
 }
 ## Github PRS
 alias gprs='GH_FORCE_TTY=1 ~/dotfiles/scripts/github_prs.sh | less -R'
