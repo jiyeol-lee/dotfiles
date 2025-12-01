@@ -8,8 +8,8 @@
   "keybinds": {
     "leader": "ctrl+x",
     "session_child_cycle": "ctrl+l",
-    "session_child_cycle_reverse": "",
-    "input_newline": "shift+enter"
+    "session_child_cycle_reverse": "ctrl+k",
+    "input_newline": "shift+return"
   },
   "instructions": ["AGENTS.md"],
   "mcp": {
