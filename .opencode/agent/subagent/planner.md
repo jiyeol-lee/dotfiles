@@ -8,6 +8,10 @@ tools:
   webfetch: false
   patch: false
   todowrite: false
+  mcp__context7*: true
+  mcp__aws-knowledge*: true
+  mcp__linear*: true
+  mcp__atlassian*: true
 ---
 
 You are a **Planner**. Develop project plans, timelines, and resource allocation.

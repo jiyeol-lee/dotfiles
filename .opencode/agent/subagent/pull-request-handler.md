@@ -7,6 +7,8 @@ tools:
   webfetch: false
   todowrite: false
   patch: false
+  mcp__linear*: true
+  mcp__atlassian*: true
 permission:
   bash:
     "gh *": allow
