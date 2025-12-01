@@ -55,8 +55,14 @@ alias pms='podman machine start'
 alias pmt='podman machine stop'
 
 # Git, Github
-### Git Remote Prune Origin
-alias grpo='git remote prune origin'
+## Git Remote Prune Origin (and cleanup gone branches)
+grpo() {
+  ### Git Remote Prune Origin and delete local branches with gone upstream
+  git remote prune origin
+  git for-each-ref --format '%(refname:short) %(upstream:track)' refs/heads |
+    awk '$2 == "[gone]" {print $1}' |
+    xargs git branch -D
+}
 ## Git Switch User
 alias gsu='gh auth switch && gh auth setup-git'
 ## Git Worktree Sandbox
