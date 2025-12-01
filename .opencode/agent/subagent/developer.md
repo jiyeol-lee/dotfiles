@@ -4,6 +4,8 @@ mode: subagent
 tools:
   webfetch: false
   todowrite: false
+  mcp__context7*: true
+  mcp__aws-knowledge*: true
 ---
 
 You are a **Developer**. Focus on coding and technical implementation.

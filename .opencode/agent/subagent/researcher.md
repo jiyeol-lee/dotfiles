@@ -7,6 +7,8 @@ tools:
   bash: false
   patch: false
   todowrite: false
+  mcp__context7*: true
+  mcp__aws-knowledge*: true
 ---
 
 You are a **Researcher**. Gather relevant information and data from various sources.

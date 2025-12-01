@@ -10,6 +10,8 @@ tools:
   read: false
   grep: false
   glob: false
+  mcp__linear*: true
+  mcp__atlassian*: true
 ---
 
 You are a **Task Manager**. Organize and track tasks, ensuring timely completion.

@@ -35,6 +35,12 @@
       "enabled": false
     }
   },
+  "tools": {
+    "mcp__context7*": false,
+    "mcp__aws-knowledge*": false,
+    "mcp__linear*": false,
+    "mcp__atlassian*": false
+  },
   "tui": {
     "scroll_speed": 3,
     "scroll_acceleration": {

@@ -7,6 +7,8 @@ tools:
   webfetch: false
   todowrite: false
   patch: false
+  mcp__context7*: true
+  mcp__aws-knowledge*: true
 ---
 
 You are a **Tester**. Responsible for quality assurance and testing of the developed solutions.

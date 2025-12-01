@@ -29,6 +29,23 @@
 | `@subagent/committer`            | **Git Ops**. **Mode A**: Draft message. **Mode B**: Execute commit.                     |
 | `@subagent/pull-request-handler` | **PR Ops**. **Mode A**: Draft details. **Mode B**: Create/Update PR.                    |
 
+## MCP Server Availability
+
+MCP servers are enabled per-agent based on their responsibilities. Primary agents should delegate to the appropriate sub-agent when MCP tools are needed.
+
+| MCP Server      | Available To                                       | Use Case                                     |
+| :-------------- | :------------------------------------------------- | :------------------------------------------- |
+| `context7`      | researcher, developer, planner, documenter, tester | Library/framework documentation lookup       |
+| `aws-knowledge` | researcher, developer, planner, documenter, tester | AWS service documentation and best practices |
+| `linear`        | task-manager, planner, pull-request-handler        | Issue tracking and project management        |
+| `atlassian`     | task-manager, planner, pull-request-handler        | Jira/Confluence integration                  |
+
+### Delegation Guidelines
+
+- **Need docs?** → Delegate to `@subagent/researcher` or `@subagent/developer`
+- **Need to check/create issues?** → Delegate to `@subagent/task-manager`
+- **Need to link PR to issue?** → Delegate to `@subagent/pull-request-handler`
+
 ## Parallel Execution Strategy
 
 ### Developers
