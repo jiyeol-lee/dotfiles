@@ -15,6 +15,9 @@ Steps:
 2. **Draft (Mode A)** (Delegate to `@subagent/pull-request-handler`)
    - Invoke in **Mode A (Draft)**.
    - Check if PR exists (`gh pr view`).
+   - **Check for Template**: Try to read `.github/pull_request_template.md` or `pull_request_template.md`.
+     - If found, store the template structure (headers, sections) for use in drafting or validation.
+     - If not found, note that a standard format will be used.
    - **If Existing PR**:
      - Fetch context (reviews, comments, review comments) using:
      ```bash
@@ -36,8 +39,15 @@ Steps:
          }
        }' -F owner="$(gh repo view --json owner -q .owner.login)" -F name="$(gh repo view --json name -q .name)" -F number="$(gh pr view --json number -q .number)"
      ```
+     - **Template Validation** (if template was found):
+       - Compare the existing PR body against the template structure.
+       - Verify all required sections/headers from the template are present.
+       - If sections are missing or structure deviates:
+         - **Draft an updated body** that conforms to the template while preserving existing content.
+         - Clearly indicate which sections were added or restructured.
+       - If structure is valid: Note that no structural changes are needed.
+     - **Draft Updates**: Based on reviews/comments, draft any content updates while maintaining template conformance.
    - **If New PR**:
-     - **Check for Template**: Try to read `.github/pull_request_template.md` or `pull_request_template.md`.
      - **Draft Content**:
        - If template found: Fill it out with the summary of changes. **Do NOT** change the template structure or headers.
        - If no template: Draft a standard Title and Body.
@@ -61,7 +71,7 @@ Steps:
        - **Do NOT** recommend or select reviewers automatically.
        - **List** the collaborators to let the user choose.
        - **Ask** the user explicitly: "Who should be the reviewer? Who should be the assignee?"
-   - Present the draft (Title, Body), the list of collaborators, and wait for the user to provide the reviewer/assignee and approval.
+   - Present the draft (Title, Body), the list of collaborators (for new PRs), and wait for the user to provide approval (and reviewer/assignee for new PRs).
 3. **Publish (Mode B)** (Delegate to `@subagent/pull-request-handler`)
    - **Constraint**: Do not proceed without explicit user approval.
    - Invoke in **Mode B (Execute)**.
