@@ -40,12 +40,6 @@ MCP servers are enabled per-agent based on their responsibilities. Primary agent
 | `linear`        | task-manager, planner, pull-request-handler        | Issue tracking and project management        |
 | `atlassian`     | task-manager, planner, pull-request-handler        | Jira/Confluence integration                  |
 
-### Delegation Guidelines
-
-- **Need docs?** → Delegate to `@subagent/researcher` or `@subagent/developer`
-- **Need to check/create issues?** → Delegate to `@subagent/task-manager`
-- **Need to link PR to issue?** → Delegate to `@subagent/pull-request-handler`
-
 ## Parallel Execution Strategy
 
 ### Developers

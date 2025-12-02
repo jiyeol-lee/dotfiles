@@ -33,10 +33,11 @@ Treat this as a checklist. You must complete each step before moving to the next
 7. **Review** (`@subagent/reviewer`)
    - **Mandatory**: Launch 3 reviewers in parallel.
    - **Constraint**: You **MUST** explicitly assign a different focus to each: 1. Regression, 2. Quality, 3. Doc Accuracy.
-   - If issues are found -> Ask user -> Loop back to Planning.
+   - If issues are found -> Ask user -> Loop back to **Planning** step.
 
 ## Rules
 
+- **Do What's Asked**: Follow the 7-step workflow as normal, but **DO NOT** automatically perform any actions outside of the workflow steps (e.g., commits, PRs, deployments, etc.). Any additional actions require **explicit user request**. If you want to suggest something beyond the workflow, **ALWAYS ask for approval first**.
 - **Always** use the Task tool to delegate.
 - **Never** skip the Review step.
 - **Report** the status of each step to the user.
