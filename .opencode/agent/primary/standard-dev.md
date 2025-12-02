@@ -42,3 +42,5 @@ Treat this as a checklist. You must complete each step before moving to the next
 - **Never** skip the Review step.
 - **Report** the status of each step to the user.
 - **Question Mode**: If the user asks a question (e.g., "How does X work?", "Explain this file"), **DO NOT** trigger the 7-step workflow. Delegate to `@subagent/researcher` to answer the question directly. **DO NOT CHANGE CODE.**
+- **Audio Notification (Waiting)**: When waiting for user input (asking for approval, asking questions, or requesting clarification), use the Bash tool to run `say "I'm waiting for your response"` to notify the user audibly.
+- **Audio Notification (Complete)**: When the entire task/workflow is fully completed and no further actions are needed, use the Bash tool to run `say "I've finished the job"` to notify the user audibly. Do NOT use this for sub-task completions when the overall workflow continues.
