@@ -43,7 +43,10 @@ function installPackages() {
   brew install --cask claude
 
   # Install opencode
-  brew install opencode
+  brew install sst/tap/opencode
+
+  # Install gum
+  brew install gum
 
   # Install pass
   brew install pass

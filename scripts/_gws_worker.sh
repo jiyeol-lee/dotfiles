@@ -12,6 +12,9 @@ _gws_worker() {
   local create_new_branch="$4"
   local needs_local_tracking_branch="$5"
   local resolved_source
+  # Extract worktree name for cleanup command (requires running from repo root)
+  local worktree_name
+  worktree_name="$(basename "$worktree_dir")"
 
   # Resolve the source branch to an explicit ref
   if git show-ref --verify --quiet "refs/heads/$source_branch"; then
@@ -51,20 +54,28 @@ _gws_worker() {
   local cleanup_cmd
   if [ "$create_new_branch" = "true" ]; then
     # Include branch deletion for sandbox branches (uses sandbox_branch name)
-    cleanup_cmd="git worktree remove \"$worktree_dir\" --force && git branch -D \"$sandbox_branch\" && exit"
+    cleanup_cmd="git worktree remove \"$worktree_name\" --force && git branch -D \"$sandbox_branch\""
   elif [ "$needs_local_tracking_branch" = "true" ]; then
     # Include branch deletion for newly created local tracking branches (uses source_branch name)
-    cleanup_cmd="git worktree remove \"$worktree_dir\" --force && git branch -D \"$source_branch\" && exit"
+    cleanup_cmd="git worktree remove \"$worktree_name\" --force && git branch -D \"$source_branch\""
   else
     # No branch deletion for pre-existing local branches
-    cleanup_cmd="git worktree remove \"$worktree_dir\" --force && exit"
+    cleanup_cmd="git worktree remove \"$worktree_name\" --force"
   fi
 
-  echo "To clean up the worktree later, run the following command:"
+  echo ""
+  echo "Start code editor in the new worktree:"
+  echo "cd \"$worktree_dir\" && nvim"
+
+  echo ""
+  echo "Start opencode in the new worktree:"
+  echo "opencode \"$worktree_dir\""
+
+  echo ""
+  echo "To clean up the worktree later, run the following command(Make sure you are in the root of the original repository when running this command) :"
   echo "$cleanup_cmd"
 
-  echo "Worktree created at:"
-  echo "$worktree_dir"
+  opencode "$worktree_dir"
 
   # Save the worktree_dir in clipboard
   if command -v pbcopy &>/dev/null; then

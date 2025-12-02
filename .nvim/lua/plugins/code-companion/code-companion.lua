@@ -32,18 +32,7 @@ function M.config()
           return require("codecompanion.adapters").extend("copilot", {
             schema = {
               model = {
-                default = "claude-sonnet-4.5",
-                -- default = "gpt-5",
-                -- default = "gemini-2.5-pro",
-              },
-            },
-          })
-        end,
-        openai_minimal_effort = function()
-          return require("codecompanion.adapters").extend("openai", {
-            schema = {
-              reasoning_effort = {
-                default = "minimal",
+                default = "gpt-5.2",
               },
             },
           })
@@ -59,62 +48,6 @@ function M.config()
       },
     },
     prompt_library = {
-      ["Edit<->Test workflow"] = {
-        strategy = "workflow",
-        description = "Use a workflow to repeatedly edit then test code",
-        opts = {
-          is_default = false,
-        },
-        prompts = {
-          {
-            {
-              name = "Setup Test",
-              role = constants.USER_ROLE,
-              opts = { auto_submit = false },
-              content = function()
-                -- Enable YOLO mode!
-                vim.g.codecompanion_yolo_mode = true
-
-                return [[### Instructions
-
-- Do not care about type. Feel free to use `as any` or `@ts-ignore` if needed
-- If you need to mock data, mock as little as possible
-- Make sure you cover all edge cases
-- Update test descriptions if necessary
-- Follow existing test style
-- If you need to understand the code, use @{file_search} and @{read_file} tools to find the type definition
-
-### Steps to Follow
-
-You are required to write code following the instructions provided above and test the correctness by running the designated test suite. Follow these steps exactly:
-
-1. Update the code in #{buffer} using the @{insert_edit_into_file} tool
-2. Then use the @{cmd_runner} tool to run the test suite with `<test_cmd>` (do this after you have updated the code)
-3. Make sure you trigger both tools in the same response
-
-We'll repeat this cycle until the tests pass. Ensure no deviations from these steps.]]
-              end,
-            },
-          },
-          {
-            {
-              name = "Repeat On Failure",
-              role = constants.USER_ROLE,
-              opts = { auto_submit = true },
-              -- Scope this prompt to the cmd_runner tool
-              condition = function()
-                return _G.codecompanion_current_tool == "cmd_runner"
-              end,
-              -- Repeat until the tests pass, as indicated by the testing flag
-              -- which the cmd_runner tool sets on the chat buffer
-              repeat_until = function(chat)
-                return chat.tool_registry.flags.testing == true
-              end,
-              content = "The tests have failed. Can you edit the buffer and run the test suite again?",
-            },
-          },
-        },
-      },
       ["Gramslator"] = {
         strategy = "chat",
         description = "Check grammar and spelling in the selected text and traslate it to Korean",
@@ -125,10 +58,6 @@ We'll repeat this cycle until the tests pass. Ensure no deviations from these st
           auto_submit = true,
           user_prompt = false,
           stop_context_insertion = true,
-          adapter = {
-            name = "openai_minimal_effort",
-            model = "gpt-5-mini",
-          },
         },
         prompts = {
           {
@@ -141,6 +70,11 @@ Output rules:
 - Never use H1–H3 headings or any text outside the three required sections.
 - Produce exactly three sections with H4 headings in this order and nothing else: `#### Corrections`, `#### Explanation`, `#### Korean Translation`.
 - Keep the tone impersonal and avoid follow-up questions.
+- Write in impersonal, subject-less form—omit 'I', 'we', 'the author', etc.
+
+Example:
+Input: "I migrated database after I had fixed the bug in the server."
+Output: "Migrated the database after I had fixed the bug in the server."
 
 Working steps:
 1. Read the provided text carefully, treating code snippets as plain text that should remain untouched unless they contain spelling mistakes.
@@ -182,21 +116,27 @@ Working steps:
           auto_submit = true,
           user_prompt = false,
           stop_context_insertion = true,
-          adapter = {
-            name = "openai_minimal_effort",
-            model = "gpt-5-mini",
-          },
         },
         prompts = {
           {
             role = constants.SYSTEM_ROLE,
-            content =
-            [[You are **Summarizlator**, an analytical editor who distills text into one precise English sentence and provides a Korean translation.
+            content = [[You are **Summarizlator**, an analytical editor who distills text into one precise English sentence and provides a Korean translation.
 
 Output rules:
 - Use Markdown and real line breaks.
 - Respond with exactly three sections using H4 headings in this order: `#### Summarization`, `#### Explanation`, `#### Korean Translation`.
 - No additional prose, headers, or follow-up questions outside those sections.
+- Write in impersonal, subject-less form—omit 'I', 'we', 'the author', etc.
+
+Example:
+Input:
+- We updated the API rate limiting configuration to handle higher traffic loads.
+  - The previous limit of 100 requests per minute was causing issues for power users.
+  - Increased the limit to 500 requests per minute for authenticated users.
+- I also added Redis caching to reduce database load.
+- The team documented the new rate limiting behavior in the API docs.
+
+Output: "Updated API rate limiting from 100 to 500 requests per minute for authenticated users, added Redis caching to reduce database load, and documented the changes."
 
 Working steps:
 1. Read the provided text end-to-end and identify its central claim, action, or outcome.
