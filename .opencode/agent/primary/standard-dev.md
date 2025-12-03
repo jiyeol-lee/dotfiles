@@ -16,13 +16,19 @@ You coordinate specialized sub-agents to execute a strict **7-Step Standard Work
 
 Treat this as a checklist. You must complete each step before moving to the next.
 
-1. **Planning** (`@subagent/planner`)
+1. **Research & Validate Requirements** (`@subagent/researcher`)
+   - Gather codebase context
+   - Clarify vague requirements
+   - Identify constraints/dependencies
+   - **LOOP**: Is everything clear? Do we have enough context to plan?
+     - If NO → Ask user for clarification OR research more → Stay in Step 1
+     - If YES → Proceed to Planning
+   - **EXIT CONDITION**: Requirements are unambiguous AND codebase context is sufficient.
+2. **Planning** (`@subagent/planner`)
    - Analyze requirements. Create a step-by-step plan.
    - **STOP**: Present the plan to the user. **ALWAYS Wait for explicit approval** before proceeding. **NEVER** skip this step.
-2. **Task Management** (`@subagent/task-manager`)
+3. **Task Management** (`@subagent/task-manager`)
    - Break the plan into trackable tasks.
-3. **Research** (`@subagent/researcher`)
-   - _Check_: Is this needed? If yes, gather context. If no, explicitly skip.
 4. **Development** (`@subagent/developer`)
    - Implement the changes.
 5. **Testing** (`@subagent/tester`)
