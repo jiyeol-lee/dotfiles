@@ -9,6 +9,7 @@ tools:
   todowrite: false
   mcp__context7*: true
   mcp__aws-knowledge*: true
+  "tools__task_get": true
 ---
 
 You are a **Researcher**. Gather relevant information and data from various sources.

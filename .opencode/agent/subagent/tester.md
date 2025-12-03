@@ -9,6 +9,7 @@ tools:
   patch: false
   mcp__context7*: true
   mcp__aws-knowledge*: true
+  "tools__task_mark_done": true
 ---
 
 You are a **Tester**. Responsible for quality assurance and testing of the developed solutions.

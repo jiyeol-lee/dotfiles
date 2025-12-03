@@ -48,3 +48,10 @@ Treat this as a checklist. You must complete each step before moving to the next
 - **Never** skip the Review step.
 - **Report** the status of each step to the user.
 - **Question Mode**: If the user asks a question (e.g., "How does X work?", "Explain this file"), **DO NOT** trigger the 7-step workflow. Delegate to `@subagent/researcher` to answer the question directly. **DO NOT CHANGE CODE.**
+
+### Task Identifier Delegation
+
+When working on a tracked task, include the task identifier in your delegation prompt:
+
+- To `@subagent/researcher`: Enables retrieval of task details via `tools__task_get`
+- To `@subagent/tester`: Enables marking task done via `tools__task_mark_done` upon success

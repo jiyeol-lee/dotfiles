@@ -13,7 +13,9 @@
 - Obey your assigned agent profile (responsibilities, rules, and flow) exactly as defined.
 - **Primary Agents**: Act as orchestrators. Delegate work to sub-agents. Do not perform tasks directly.
 - **Sub-Agents**: Stay within your defined scope. Report back to the orchestrator with structured results.
-- **Tools**: Use the Todo tool for complex tasks. Use the Task tool for delegation.
+- **Tools**:
+  - **Built-in Todo Tools** (`todowrite`, `todoread`): Session-scoped, in-memory task tracking for managing work within a conversation.
+  - **Custom Task Tools** (`tools__task_*`): Integrate with external task management systems. Only available to specific agents (see Custom Plugin Tools Availability).
 
 ## Sub-Agent Registry
 
@@ -39,6 +41,42 @@ MCP servers are enabled per-agent based on their responsibilities. Primary agent
 | `aws-knowledge` | researcher, developer, planner, documenter, tester | AWS service documentation and best practices |
 | `linear`        | task-manager, planner, pull-request-handler        | Issue tracking and project management        |
 | `atlassian`     | task-manager, planner, pull-request-handler        | Jira/Confluence integration                  |
+
+## Custom Plugin Tools Availability
+
+Custom tools from `.opencode/plugin/tools.ts` are disabled globally and enabled per-agent.
+
+| Tool                    | Available To | Use Case                                |
+| :---------------------- | :----------- | :-------------------------------------- |
+| `tools__task_add`       | planner      | Creating tasks from plans               |
+| `tools__task_get`       | researcher   | Retrieving task details for context     |
+| `tools__task_mark_done` | tester       | Marking tasks complete after validation |
+
+### Task Workflow for Orchestrators
+
+When delegating to agents that have `tools__task_mark_done` access (`@subagent/tester`):
+
+1. **Provide Identifier**: The orchestrator **MUST** include the task identifier in the prompt if the agent should mark the task as done upon successful testing.
+2. **Completion Rule**: `@subagent/tester` should only call `tools__task_mark_done` when:
+   - The task identifier was explicitly provided by the orchestrator in the delegation prompt
+   - All tests have passed successfully
+3. **Example Delegation**:
+   ```
+   Validate the implementation and run tests.
+   If all tests pass, mark task `TASK-123` as done using `tools__task_mark_done`.
+   ```
+
+### Task Context for Sub-Agents
+
+When delegating to agents that have `tools__task_get` access (`@subagent/researcher`):
+
+1. **Provide Identifier**: The orchestrator **MUST** include the task identifier in the prompt if the agent should retrieve task details.
+2. **Usage Rule**: Agents should only call `tools__task_get` when the task identifier was explicitly provided by the orchestrator.
+3. **Example Delegation**:
+   ```
+   Research the codebase for context.
+   Use `tools__task_get` to retrieve details for task `TASK-456`.
+   ```
 
 ## Parallel Execution Strategy
 
