@@ -67,7 +67,7 @@ grpo() {
 alias gsu='gh auth switch && gh auth setup-git'
 ## Git Worktree Sandbox
 gws() {
-  ### Create worktree in ~/dev/sandbox from branch (-r for remote)
+  ### Create sandbox worktree (-s for sandbox prefix, -n for new tmux window)
   # shellcheck source=scripts/git_worktree_sandbox.sh
   source ~/dotfiles/scripts/git_worktree_sandbox.sh "$@"
 }
