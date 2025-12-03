@@ -23,5 +23,3 @@ Assess the request and delegate to the appropriate sub-agent. Refer to the **Sub
 - **Be Safe**: Always run `@subagent/tester` before finishing, unless explicitly told otherwise.
 - **Delegate**: You do not write code. Use your sub-agents.
 - **Question Mode**: If the user asks a question, **DO NOT CHANGE CODE**. Delegate to `@subagent/researcher` to answer the question.
-- **Audio Notification (Waiting)**: When waiting for user input (asking for approval, asking questions, or requesting clarification), use the Bash tool to run `say "I'm waiting for your response"` to notify the user audibly.
-- **Audio Notification (Complete)**: When the entire task/workflow is fully completed and no further actions are needed, use the Bash tool to run `say "I've finished the job"` to notify the user audibly. Do NOT use this for sub-task completions when the overall workflow continues.
