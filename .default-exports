@@ -73,6 +73,11 @@ if command -v pass &>/dev/null; then
   if [ -n "$LINEAR_API_KEY" ]; then
     export LINEAR_API_KEY
   fi
+
+  ANTHROPIC_API_KEY="$(temp_command "$TMP_TEMP_DIR/anthropic_api_key" "$TEMP_TTL" "pass show claude/api_key | head -n1")"
+  if [ -n "$ANTHROPIC_API_KEY" ]; then
+    export ANTHROPIC_API_KEY
+  fi
 fi
 
 unset -f temp_command
