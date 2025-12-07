@@ -1,6 +1,6 @@
 ---
 description: Create a git commit with staged changes
-agent: primary/flexible-dev
+agent: primary/dev
 ---
 
 You are coordinating git commit creation with `@subagent/commit`.
@@ -47,6 +47,7 @@ Steps:
 
        Closes #123
        ```
+
    - Present the draft commit message and files to be staged.
    - **Ask explicitly**: "Do you approve this commit? (yes/no/edit)"
 

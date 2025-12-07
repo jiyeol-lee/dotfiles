@@ -16,8 +16,7 @@
 | Type    | Agent                    | Role                                    |
 | ------- | ------------------------ | --------------------------------------- |
 | Primary | `@primary/plan`          | Research and task planning orchestrator |
-| Primary | `@primary/standard-dev`  | Structured development workflow         |
-| Primary | `@primary/flexible-dev`  | Adaptive development workflow           |
+| Primary | `@primary/dev`           | Development workflow orchestrator       |
 | Sub     | `@subagent/research`     | Information gathering                   |
 | Sub     | `@subagent/task`         | Task breakdown and planning             |
 | Sub     | `@subagent/code`         | Code implementation                     |
@@ -38,8 +37,7 @@
 ├── agent/
 │   ├── primary/                        # Primary agents (orchestrators)
 │   │   ├── plan.md                     # @primary/plan
-│   │   ├── standard-dev.md             # @primary/standard-dev
-│   │   └── flexible-dev.md             # @primary/flexible-dev
+│   │   └── dev.md                      # @primary/dev
 │   │
 │   └── subagent/                       # Sub-agents (specialists)
 │       ├── research.md                 # @subagent/research
@@ -73,21 +71,18 @@
 │                                   USER REQUEST                                      │
 └─────────────────────────────────────────────────────────────────────────────────────┘
                                           │
-            ┌─────────────────────────────┼─────────────────────────────┐
-            ▼                             ▼                             ▼
-┌─────────────────────┐       ┌─────────────────────┐       ┌─────────────────────┐
-│   @primary/plan     │       │ @primary/           │       │ @primary/           │
-│                     │       │ standard-dev        │       │ flexible-dev        │
-│  (Research &        │       │                     │       │                     │
-│   Planning)         │       │  (Structured)       │       │   (Adaptive)        │
-└──────────┬──────────┘       └──────────┬──────────┘       └──────────┬──────────┘
-           │                             │                             │
-           │                             └──────────────┬──────────────┘
-           │                                            │
-           ▼                                            ▼
+                    ┌─────────────────────┴─────────────────────┐
+                    ▼                                           ▼
+┌─────────────────────────────────┐       ┌─────────────────────────────────┐
+│         @primary/plan           │       │           @primary/dev          │
+│                                 │       │                                 │
+│   (Research & Planning)         │       │   (Development Workflow)        │
+└────────────────┬────────────────┘       └────────────────┬────────────────┘
+                 │                                         │
+                 ▼                                         ▼
 ┌───────────────────────────────────────────────┐   ┌───────────────────────────────────────────────────────────────────────────┐
 │              PLANNING SUB-AGENTS              │   │                          DEVELOPMENT SUB-AGENTS                           │
-│         (Dedicated to @primary/plan)          │   │         (Shared by @primary/standard-dev & @primary/flexible-dev)         │
+│         (Dedicated to @primary/plan)          │   │                          (Used by @primary/dev)                           │
 ├───────────────────────────────────────────────┤   ├───────────────────────────────────────────────────────────────────────────┤
 │                                               │   │                                                                           │
 │  ┌────────────────────┐  ┌────────────────┐   │   │  ┌────────────────┐  ┌──────────────┐  ┌────────────────────┐             │
@@ -121,14 +116,14 @@
 ### Key Points
 
 - `@primary/plan` has its own dedicated sub-agents (`@subagent/research`, `@subagent/task`) and does NOT use development sub-agents
-- `@primary/standard-dev` and `@primary/flexible-dev` share the same development sub-agents (`@subagent/code`, `@subagent/qa`, `@subagent/document`, `@subagent/devops`, `@subagent/review`)
+- `@primary/dev` uses the development sub-agents (`@subagent/code`, `@subagent/qa`, `@subagent/document`, `@subagent/devops`, `@subagent/review`)
 - Sub-agents never call other sub-agents; they only report to their orchestrator
 - `@subagent/commit` and `@subagent/pull-request` are ONLY invoked via commands (`/command__commit`, `/command__pull-request`)
 - `@subagent/review` is invoked by orchestrators AND available via `/command__review` command
 
 ### Parallel Execution in Phase 1
 
-Both `@primary/standard-dev` and `@primary/flexible-dev` support parallel sub-agent execution in Phase 1 when work items are **isolated**:
+`@primary/dev` supports parallel sub-agent execution in Phase 1 when work items are **isolated**:
 
 **Isolation Criteria:**
 
@@ -173,14 +168,14 @@ These agents are exclusively triggered by user commands, not by orchestrators:
 
 These agents are invoked by primary agents as part of workflows:
 
-| Agent                | Used By                                          |
-| -------------------- | ------------------------------------------------ |
-| `@subagent/research` | `@primary/plan` only                             |
-| `@subagent/task`     | `@primary/plan` only                             |
-| `@subagent/code`     | `@primary/standard-dev`, `@primary/flexible-dev` |
-| `@subagent/qa`       | `@primary/standard-dev`, `@primary/flexible-dev` |
-| `@subagent/document` | `@primary/standard-dev`, `@primary/flexible-dev` |
-| `@subagent/devops`   | `@primary/standard-dev`, `@primary/flexible-dev` |
+| Agent                | Used By              |
+| -------------------- | -------------------- |
+| `@subagent/research` | `@primary/plan` only |
+| `@subagent/task`     | `@primary/plan` only |
+| `@subagent/code`     | `@primary/dev`       |
+| `@subagent/qa`       | `@primary/dev`       |
+| `@subagent/document` | `@primary/dev`       |
+| `@subagent/devops`   | `@primary/dev`       |
 
 ## Workflow Diagrams
 
@@ -236,194 +231,12 @@ These agents are invoked by primary agents as part of workflows:
 LOOP LIMIT: Max 3 research ↔ task cycles before asking user
 ```
 
-### Standard Dev Agent Workflow
+### Dev Agent Workflow
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────────┐
-│                           @primary/standard-dev                               │
-│                       (Structured Development Workflow)                       │
-└───────────────────────────────────────────────────────────────────────────────┘
-                                        │
-                                        │ 1. Receive development task
-                                        ▼
-┌───────────────────────────────────────────────────────────────────────────────┐
-│                              PHASE 1: WORK                                    │
-├───────────────────────────────────────────────────────────────────────────────┤
-│                                                                               │
-│    Step 1: DECOMPOSE TASK                                                     │
-│    ┌─────────────────────────────────────────────────────────────────────┐    │
-│    │  • Break task into discrete work items                              │    │
-│    │  • Classify each: code, document, or devops                         │    │
-│    │  • Check isolation criteria (no file overlap, no dependencies)      │    │
-│    │  • Decide: PARALLEL or SEQUENTIAL                                   │    │
-│    └─────────────────────────────────────────────────────────────────────┘    │
-│                                                                               │
-│    Step 2: DELEGATE WORK                                                      │
-│                                                                               │
-│    Single/Dependent Items:              Multiple Isolated Items:              │
-│    ┌───────────────────┐                ┌───────────────────┐                 │
-│    │     @subagent/    │                │  @subagent/code   │  ┐              │
-│    │   code/doc/devops │                └─────────┬─────────┘  │ PARALLEL     │
-│    └─────────┬─────────┘                ┌─────────┴─────────┐  │              │
-│              │                          │ @subagent/devops  │  ┘              │
-│              │                          └─────────┬─────────┘                 │
-│              │                                    │                           │
-│              │    work_agent = "code"             │    work_agents =          │
-│              │                                    │    ["code", "devops"]     │
-│              └────────────────────────────────────┘                           │
-│                                                                               │
-│    Step 3: COLLECT RESULTS                                                    │
-│    • Wait for all sub-agents to complete                                      │
-│    • Aggregate results and file lists                                         │
-│    • Track work_agent (single) or work_agents (array)                         │
-│                                                                               │
-└───────────────────────────────────────────────────────────────────────────────┘
-                                        │
-                                        ▼
-┌───────────────────────────────────────────────────────────────────────────────┐
-│                     PHASE 1 → PHASE 2 ROUTING LOGIC                           │
-├───────────────────────────────────────────────────────────────────────────────┤
-│                                                                               │
-│    ┌─────────────────────────────────────────────────────────────────────┐    │
-│    │  What was the Phase 1 work_agent(s)?                                │    │
-│    │                                                                     │    │
-│    │  "document" only ─► SKIP Phase 2 ────────────► Go to Phase 2.5      │    │
-│    │  (Single work_agent == "document" OR                                │    │
-│    │   work_agents contains ONLY "document")                             │    │
-│    │                                                                     │    │
-│    │  "code" OR "devops" ─► Execute Phase 2 (Documentation Check)        │    │
-│    │  (Single work_agent is code/devops OR                               │    │
-│    │   work_agents contains code/devops)                                 │    │
-│    │                                                                     │    │
-│    └─────────────────────────────────────────────────────────────────────┘    │
-│                                                                               │
-└───────────────────────────────────────────────────────────────────────────────┘
-                                        │
-                        ┌───────────────┴───────────────┐
-                        │                               │
-            (code/devops work)                 (document work)
-                        │                               │
-                        ▼                               │
-┌───────────────────────────────────────────────────────│───────────────────────┐
-│                        PHASE 2: DOCUMENTATION CHECK   │                       │
-│                   (Only for code/devops work)         │                       │
-├───────────────────────────────────────────────────────│───────────────────────┤
-│                                                       │                       │
-│    ┌──────────────────────────────────────────────┐   │                       │
-│    │  Did behavior change?                        │   │                       │
-│    │                                              │   │                       │
-│    │  YES ─► Draft documentation changes          │   │                       │
-│    │         ┌────────────────────────────────┐   │   │                       │
-│    │         │ @subagent/document (Draft Mode)│   │   │                       │
-│    │         └────────────────────────────────┘   │   │                       │
-│    │                                              │   │                       │
-│    │         ╔═══════════════════════════════╗    │   │                       │
-│    │         ║ STOP: Present draft to user   ║    │   │                       │
-│    │         ║ "Apply these doc changes?"    ║    │   │                       │
-│    │         ║ WAIT for explicit approval    ║    │   │                       │
-│    │         ╚═══════════════════════════════╝    │   │                       │
-│    │                                              │   │                       │
-│    │  NO  ─► Skip to Phase 2.5                    │   │                       │
-│    └──────────────────────────────────────────────┘   │                       │
-│                                                       │                       │
-└───────────────────────────────────────────────────────│───────────────────────┘
-                        │                               │
-                        └───────────────┬───────────────┘
-                                        │
-                                        ▼
-┌───────────────────────────────────────────────────────────────────────────────┐
-│                     PHASE 2.5: QA/TESTING (Conditional)                       │
-├───────────────────────────────────────────────────────────────────────────────┤
-│                                                                               │
-│    ┌─────────────────────────────────────────────────────────────────────┐    │
-│    │  What was the Phase 1 work_agent(s)?                                │    │
-│    │                                                                     │    │
-│    │  "document" only ─► SKIP Phase 2.5 ───────────► Go to Phase 3       │    │
-│    │  (No tests needed for documentation-only changes)                   │    │
-│    │                                                                     │    │
-│    │  "code" OR "devops" ─► Execute Phase 2.5 (QA/Testing)               │    │
-│    │  (Validates ALL changes from Phase 1, including parallel items)     │    │
-│    │                                                                     │    │
-│    └─────────────────────────────────────────────────────────────────────┘    │
-│                                                                               │
-│    Invoke @subagent/qa to validate implementation:                            │
-│                                                                               │
-│    ┌─────────────────────────────────────────────────────────────────────┐    │
-│    │                                                                     │    │
-│    │  ┌─────────────────────────────────────────────────────────────┐    │    │
-│    │  │                      @subagent/qa                           │    │    │
-│    │  │                                                             │    │    │
-│    │  │  • Run existing tests                                       │    │    │
-│    │  │  • Write new tests if needed                                │    │    │
-│    │  │  • Validate functionality                                   │    │    │
-│    │  │  • Can use Playwright MCP for E2E testing                   │    │    │
-│    │  │  • Can write/run scripts to verify functionality            │    │    │
-│    │  └─────────────────────────────────────────────────────────────┘    │    │
-│    │                                                                     │    │
-│    │  ┌──────────────────────────────────────────────────────────────┐   │    │
-│    │  │  Tests pass?                                                 │   │    │
-│    │  │                                                              │   │    │
-│    │  │  YES ─► Proceed to Review Phase                              │   │    │
-│    │  │                                                              │   │    │
-│    │  │  NO  ─► Report failures, recommend loop back to Phase 1      │   │    │
-│    │  │         WAIT for user decision                               │   │    │
-│    │  └──────────────────────────────────────────────────────────────┘   │    │
-│    │                                                                     │    │
-│    └─────────────────────────────────────────────────────────────────────┘    │
-│                                                                               │
-└───────────────────────────────────────────────────────────────────────────────┘
-                                        │
-                                        ▼
-┌───────────────────────────────────────────────────────────────────────────────┐
-│                          PHASE 3: PARALLEL REVIEW                             │
-├───────────────────────────────────────────────────────────────────────────────┤
-│                                                                               │
-│    Run 3 reviewers in PARALLEL with assigned focus areas:                     │
-│                                                                               │
-│    ┌─────────────────────────────────────────────────────────────────────┐    │
-│    │                                                                     │    │
-│    │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐      │    │
-│    │  │   @subagent/    │  │   @subagent/    │  │   @subagent/    │      │    │
-│    │  │     review      │  │     review      │  │     review      │      │    │
-│    │  │                 │  │                 │  │                 │      │    │
-│    │  │  Focus Area:    │  │  Focus Area:    │  │  Focus Area:    │      │    │
-│    │  │    QUALITY      │  │   REGRESSION    │  │  DOCUMENTATION  │      │    │
-│    │  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘      │    │
-│    │           │                    │                    │               │    │
-│    │           └────────────────────┼────────────────────┘               │    │
-│    │                                ▼                                    │    │
-│    │                   Aggregate review findings                         │    │
-│    │                                                                     │    │
-│    └─────────────────────────────────────────────────────────────────────┘    │
-│                                                                               │
-└───────────────────────────────────────────────────────────────────────────────┘
-                                        │
-                                        ▼
-┌───────────────────────────────────────────────────────────────────────────────┐
-│                         PHASE 4: ISSUE RESOLUTION                             │
-├───────────────────────────────────────────────────────────────────────────────┤
-│                                                                               │
-│    ┌─────────────────────────────────────────────────────────────────────┐    │
-│    │  Issues found?                                                      │    │
-│    │                                                                     │    │
-│    │  YES ─► Present issues to user                                      │    │
-│    │         Recommend loop back to Phase 1                              │    │
-│    │         WAIT for user decision                                      │    │
-│    │                                                                     │    │
-│    │  NO  ─► Report success, workflow complete                           │    │
-│    └─────────────────────────────────────────────────────────────────────┘    │
-│                                                                               │
-│    NOTE: Workflow ENDS here. Commit/PR are invoked separately via commands.   │
-│                                                                               │
-└───────────────────────────────────────────────────────────────────────────────┘
-```
-
-### Flexible Dev Agent Workflow
-
-```
-┌───────────────────────────────────────────────────────────────────────────────┐
-│                           @primary/flexible-dev                               │
-│                        (Adaptive Development Workflow)                        │
+│                              @primary/dev                                     │
+│                        (Development Workflow)                                 │
 └───────────────────────────────────────────────────────────────────────────────┘
                                         │
                                         │ 1. Receive development task
@@ -453,32 +266,33 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
     └─────────────┬─────────────┘               └─────────────┬─────────────┘
                   │                                           │
                   ▼                                           ▼
-    ┌───────────────────────────────────┐       ┌───────────────────────────┐
-    │       TRIVIAL WORKFLOW            │       │      FULL WORKFLOW        │
-    │                                   │       │    (like standard-dev)    │
-    │   1. Work Phase                   │       │                           │
-    │      • Decompose task             │       │   1. Work Phase           │
-    │      • Check isolation criteria   │       │      (with parallel       │
-    │      • Parallel if isolated       │       │       execution support)  │
-    │      • Sequential if dependent    │       │   2. Doc Check            │
-    │                                   │       │   3. QA Phase (2.5)       │
-    │   2. QA Phase (2.5)               │       │   4. Review Phase         │
-    │      SKIP if work_agent="document"│       │   5. Resolution           │
-    │      or work_agents=["document"]  │       │                           │
-    │      RUN @subagent/qa otherwise   │       │   Same as standard-dev    │
-    │                                   │       │   workflow                │
-    │   3. FULL 3x Review               │       │                           │
-    │      Quality                      │       │                           │
-    │      Regression                   │       │                           │
-    │      Documentation                │       │                           │
-    │                                   │       │                           │
-    │   4. Report done                  │       │                           │
-    │                                   │       │                           │
-    │   NOTE: No Doc Check              │       │                           │
-    │   (no behavior change)            │       │                           │
-    │   Supports parallel execution     │       │                           │
-    │   for isolated work items         │       │                           │
-    └───────────────────────────────────┘       └───────────────────────────┘
+    ┌───────────────────────────────────┐       ┌───────────────────────────────────┐
+    │       TRIVIAL WORKFLOW            │       │         FULL WORKFLOW             │
+    │                                   │       │                                   │
+    │   1. Work Phase                   │       │   1. Work Phase                   │
+    │      • Decompose task             │       │      • Decompose into work items  │
+    │      • Check isolation criteria   │       │      • Check isolation criteria   │
+    │      • Parallel if isolated       │       │      • Parallel if isolated       │
+    │      • Sequential if dependent    │       │      • Invoke sub-agents          │
+    │                                   │       │                                   │
+    │   2. QA Phase (Conditional)       │       │   2. Doc Check (Conditional)      │
+    │      SKIP if document-only        │       │      • Skip if document-only      │
+    │      RUN @subagent/qa otherwise   │       │      • Draft via @subagent/doc    │
+    │                                   │       │      • MANDATORY user approval    │
+    │   3. Parallel Review (3x)         │       │                                   │
+    │      • Quality                    │       │   3. QA Phase (Conditional)       │
+    │      • Regression                 │       │      • Skip if document-only      │
+    │      • Documentation              │       │      • Run @subagent/qa           │
+    │                                   │       │                                   │
+    │   4. Report completion            │       │   4. Parallel Review (3x)         │
+    │                                   │       │      • Quality                    │
+    │   NOTE: No Doc Check              │       │      • Regression                 │
+    │   (no behavior change expected)   │       │      • Documentation              │
+    │                                   │       │                                   │
+    │                                   │       │   5. Issue Resolution             │
+    │                                   │       │      • Present issues to user     │
+    │                                   │       │      • Wait for decision          │
+    └───────────────────────────────────┘       └───────────────────────────────────┘
 
     ╔═══════════════════════════════════════════════════════════════════════╗
     ║  ADAPTIVE RULES:                                                      ║
@@ -538,20 +352,20 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
 
 ### Primary Agents Permissions
 
-| Tool        | plan | standard-dev | flexible-dev |
-| ----------- | :--: | :----------: | :----------: |
-| `bash`      |  ❌  |      ❌      |      ❌      |
-| `edit`      |  ❌  |      ❌      |      ❌      |
-| `write`     |  ❌  |      ❌      |      ❌      |
-| `read`      |  ❌  |      ❌      |      ❌      |
-| `grep`      |  ❌  |      ❌      |      ❌      |
-| `glob`      |  ❌  |      ❌      |      ❌      |
-| `list`      |  ❌  |      ❌      |      ❌      |
-| `patch`     |  ❌  |      ❌      |      ❌      |
-| `todowrite` |  ✅  |      ✅      |      ✅      |
-| `todoread`  |  ✅  |      ✅      |      ✅      |
-| `webfetch`  |  ❌  |      ❌      |      ❌      |
-| MCP tools   |  ❌  |      ❌      |      ❌      |
+| Tool        | plan | dev |
+| ----------- | :--: | :-: |
+| `bash`      |  ❌  | ❌  |
+| `edit`      |  ❌  | ❌  |
+| `write`     |  ❌  | ❌  |
+| `read`      |  ❌  | ❌  |
+| `grep`      |  ❌  | ❌  |
+| `glob`      |  ❌  | ❌  |
+| `list`      |  ❌  | ❌  |
+| `patch`     |  ❌  | ❌  |
+| `todowrite` |  ✅  | ✅  |
+| `todoread`  |  ✅  | ✅  |
+| `webfetch`  |  ❌  | ❌  |
+| MCP tools   |  ❌  | ❌  |
 
 **Primary agents can ONLY directly use `todowrite` and `todoread`. ALL other tools must go through sub-agents.**
 
@@ -590,11 +404,10 @@ Each agent has granular bash permissions configured via `permission.bash` in the
 
 All primary agents have `permission.bash: deny` - they delegate to sub-agents.
 
-| Agent                   | Bash Permission |
-| ----------------------- | --------------- |
-| `@primary/plan`         | `deny`          |
-| `@primary/standard-dev` | `deny`          |
-| `@primary/flexible-dev` | `deny`          |
+| Agent           | Bash Permission |
+| --------------- | --------------- |
+| `@primary/plan` | `deny`          |
+| `@primary/dev`  | `deny`          |
 
 #### Sub-Agents (Specialists)
 
@@ -638,8 +451,7 @@ See [OpenCode Permissions Documentation](https://opencode.ai/docs/permissions/#b
 | Agent        | ID                       | Type    | Invocation                                  |
 | ------------ | ------------------------ | ------- | ------------------------------------------- |
 | Plan         | `@primary/plan`          | Primary | User selection                              |
-| Standard Dev | `@primary/standard-dev`  | Primary | User selection                              |
-| Flexible Dev | `@primary/flexible-dev`  | Primary | User selection                              |
+| Dev          | `@primary/dev`           | Primary | User selection                              |
 | Research     | `@subagent/research`     | Sub     | Orchestrator                                |
 | Task         | `@subagent/task`         | Sub     | Orchestrator                                |
 | Code         | `@subagent/code`         | Sub     | Orchestrator                                |
@@ -660,7 +472,7 @@ See [OpenCode Permissions Documentation](https://opencode.ai/docs/permissions/#b
 | Research Mode | research             | Structured findings for planning             |
 | Question Mode | research             | Conversational answers (no workflow trigger) |
 
-### Phase Reference (Standard/Flexible Dev)
+### Phase Reference (Dev)
 
 | Phase     | Description                                                                       | Conditional?                                                         |
 | --------- | --------------------------------------------------------------------------------- | -------------------------------------------------------------------- |

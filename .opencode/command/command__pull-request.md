@@ -1,6 +1,6 @@
 ---
 description: Create or update a pull request with explicit approval.
-agent: primary/flexible-dev
+agent: primary/dev
 ---
 
 You are coordinating pull request drafting and publication with `@subagent/pull-request`.

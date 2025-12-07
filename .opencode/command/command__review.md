@@ -1,6 +1,6 @@
 ---
 description: Review code changes with comprehensive analysis.
-agent: primary/flexible-dev
+agent: primary/dev
 ---
 
 You are coordinating code review with `@subagent/review`.
@@ -32,6 +32,7 @@ Steps:
      - Identify the file type and language.
      - Note the change type (added, modified, deleted).
    - **For PR reviews** (`pr:<number>`), fetch full context using:
+
      ```bash
      gh api graphql -f query='
        query($owner: String!, $name: String!, $number: Int!) {
