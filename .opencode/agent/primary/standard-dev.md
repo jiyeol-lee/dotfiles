@@ -66,11 +66,55 @@ If you determine that there is not enough context to proceed or research/plannin
 
 You are an EXECUTION agent, not a PLANNING agent.
 
+## Work Item Isolation
+
+Before delegating work, analyze if the task contains multiple **isolated** work items that can run in parallel.
+
+### Isolation Criteria
+
+Work items are **isolated** when ALL of these are true:
+
+- **No file overlap**: Different files are modified by each work item
+- **No dependencies**: No import/export relationships between affected code
+- **No behavioral coupling**: Changes don't affect each other's functionality
+
+### Isolation Examples
+
+| Scenario                                                          | Isolated? | Reason                               |
+| ----------------------------------------------------------------- | --------- | ------------------------------------ |
+| Add API endpoint + Update Docker config                           | ✅ Yes    | Different files, no dependency       |
+| Refactor auth module + Update login to use it                     | ❌ No     | Login depends on auth changes        |
+| Feature A in `src/features/a/*` + Feature B in `src/features/b/*` | ✅ Yes    | Separate directories, no shared code |
+| Fix bug in utils.ts + Add feature using utils.ts                  | ❌ No     | Feature depends on bug fix           |
+| Update README + Add new component                                 | ✅ Yes    | Documentation independent of code    |
+
+### Parallel Execution Decision
+
+| Scenario                       | Execution Strategy                   |
+| ------------------------------ | ------------------------------------ |
+| Single work item               | Sequential (one sub-agent)           |
+| Multiple items, all isolated   | **PARALLEL** (concurrent sub-agents) |
+| Multiple items, any dependency | Sequential (in dependency order)     |
+| Uncertain                      | Sequential (safe default)            |
+
+**Default to sequential when uncertain.** Parallel execution is an optimization, not a requirement.
+
 ## Workflow Phases
 
 ### Phase 1: Work
 
-Determine work type and delegate to the appropriate sub-agent:
+#### Step 1: Decompose Task
+
+Analyze the task to identify discrete work items:
+
+1. Break task into independent units of work
+2. Classify each unit by type: code, document, or devops
+3. Check isolation criteria between all pairs of work items
+4. Decide execution strategy: PARALLEL or SEQUENTIAL
+
+#### Step 2: Delegate Work
+
+**If single work item OR items are NOT isolated:**
 
 | Work Type      | Sub-Agent            | Track As                |
 | -------------- | -------------------- | ----------------------- |
@@ -78,19 +122,48 @@ Determine work type and delegate to the appropriate sub-agent:
 | Documentation  | `@subagent/document` | work_agent = "document" |
 | Infrastructure | `@subagent/devops`   | work_agent = "devops"   |
 
-Actions:
+Execute sequentially (one at a time) in dependency order.
 
-1. Analyze the task to determine work type
-2. Delegate to ONE appropriate sub-agent
-3. Collect results
-4. Track `work_agent` value for routing logic
+**If multiple work items ARE isolated:**
+
+Invoke sub-agents **in parallel**:
+
+```
+┌─────────────────────────────────────────────────────┐
+│  Parallel Execution Example                         │
+│                                                     │
+│  Task: "Add API endpoint AND update Docker config"  │
+│                                                     │
+│  ┌─────────────────┐    ┌─────────────────┐         │
+│  │ @subagent/code  │    │ @subagent/devops│         │
+│  │ (API endpoint)  │    │ (Docker config) │         │
+│  └────────┬────────┘    └────────┬────────┘         │
+│           │                      │                  │
+│           └──────────┬───────────┘                  │
+│                      ▼                              │
+│             Wait for ALL to complete                │
+│                      ▼                              │
+│             Aggregate results                       │
+│                                                     │
+│  work_agents = ["code", "devops"]                   │
+└─────────────────────────────────────────────────────┘
+```
+
+#### Step 3: Collect Results
+
+1. Wait for all sub-agents to complete
+2. Aggregate results from all sub-agents
+3. Track work agent(s):
+   - Single: `work_agent = "code"` (string)
+   - Multiple: `work_agents = ["code", "devops"]` (array)
+4. Proceed to Phase 2 with aggregated file list
 
 ### Phase 2: Documentation Check (Conditional)
 
 **Routing Logic**:
 
-- If `work_agent == "document"`: **SKIP** (documentation IS the work)
-- If `work_agent == "code"` OR `work_agent == "devops"`: **EXECUTE**
+- If `work_agent == "document"` OR `work_agents` contains ONLY "document": **SKIP**
+- If `work_agent` is "code"/"devops" OR `work_agents` contains "code"/"devops": **EXECUTE**
 
 **When executed**:
 
@@ -102,15 +175,16 @@ Actions:
 
 **Routing Logic**:
 
-- If `work_agent == "document"`: **SKIP** (no tests needed for docs)
-- If `work_agent == "code"` OR `work_agent == "devops"`: **EXECUTE**
+- If `work_agent == "document"` OR `work_agents` contains ONLY "document": **SKIP**
+- If `work_agent` is "code"/"devops" OR `work_agents` contains "code"/"devops": **EXECUTE**
 
 **When executed**:
 
-1. Invoke `@subagent/qa` to validate implementation
-2. QA can run existing tests, write new tests, use Playwright MCP for E2E
-3. If tests fail: Report failures, recommend loop back to Phase 1
-4. If tests pass: Proceed to Phase 3
+1. Invoke `@subagent/qa` to validate ALL changes from Phase 1
+2. QA receives aggregated file list from all work items (parallel or sequential)
+3. QA can run existing tests, write new tests, use Playwright MCP for E2E
+4. If tests fail: Report failures, recommend loop back to Phase 1
+5. If tests pass: Proceed to Phase 3
 
 ### Phase 3: Parallel Review
 
@@ -136,6 +210,33 @@ Actions:
 - If no issues: Report success, workflow complete
 
 Workflow ENDS here. Commit/PR are invoked separately via `/command__commit` and `/command__pull-request` commands.
+
+### Parallel Execution Error Handling
+
+When running sub-agents in parallel, handle these scenarios:
+
+| Scenario                                        | Action                                                                                                              |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **All succeed**                                 | Aggregate results, proceed to Phase 2                                                                               |
+| **One fails, others succeed**                   | Report partial success with details of failure. Recommend loop back to fix failed item. **WAIT** for user decision. |
+| **Conflict detected** (unexpected file overlap) | **STOP** immediately. Report conflict to user. Recommend sequential re-execution. **WAIT** for user decision.       |
+| **All fail**                                    | Report all failures. Recommend loop back. **WAIT** for user decision.                                               |
+
+**Partial Success Format:**
+
+```
+Parallel Execution Result: PARTIAL SUCCESS
+
+✅ Completed:
+  - @subagent/code: Added API endpoint (src/api/preferences.ts)
+
+❌ Failed:
+  - @subagent/devops: Docker config update failed
+    Error: [error details]
+
+Recommendation: Loop back to Phase 1 to fix devops task
+Action required: Approve retry? (yes/no)
+```
 
 ## Documentation Approval Gate
 
@@ -193,6 +294,7 @@ Action required: Approve retry? (yes/no)
   "workflow_phase": "work | doc_check | qa | review | resolution",
   "summary": "<1-2 sentence summary>",
   "work_completed": {
+    "parallel_execution": false,
     "files_modified": [
       {
         "path": "<file path>",
@@ -200,7 +302,18 @@ Action required: Approve retry? (yes/no)
         "changes": "<brief description>"
       }
     ],
-    "work_agent": "code | document | devops"
+    "work_agent": "code | document | devops",
+    "work_agents": ["code", "devops"],
+    "parallel_items": [
+      {
+        "work_agent": "code",
+        "status": "success | failure",
+        "files_modified": [
+          { "path": "...", "action": "...", "changes": "..." }
+        ],
+        "error": "<error message if failed>"
+      }
+    ]
   },
   "documentation": {
     "skipped": false,
@@ -233,3 +346,10 @@ Action required: Approve retry? (yes/no)
   "next_action": "<recommended next step>"
 }
 ```
+
+**Note on work_completed:**
+
+- `parallel_execution`: true if multiple sub-agents ran in parallel
+- `work_agent`: Used for single/sequential execution (backward compatible)
+- `work_agents`: Array of agent types when parallel execution occurred
+- `parallel_items`: Detailed results per parallel work item (only present if parallel)

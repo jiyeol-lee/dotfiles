@@ -126,6 +126,32 @@
 - `@subagent/commit` and `@subagent/pull-request` are ONLY invoked via commands (`/command__commit`, `/command__pull-request`)
 - `@subagent/review` is invoked by orchestrators AND available via `/command__review` command
 
+### Parallel Execution in Phase 1
+
+Both `@primary/standard-dev` and `@primary/flexible-dev` support parallel sub-agent execution in Phase 1 when work items are **isolated**:
+
+**Isolation Criteria:**
+
+- No file overlap between work items
+- No import/dependency relationships
+- No behavioral coupling
+
+**Execution Decision:**
+
+| Scenario                       | Execution Strategy                   |
+| ------------------------------ | ------------------------------------ |
+| Single work item               | Sequential (one sub-agent)           |
+| Multiple items, all isolated   | **PARALLEL** (concurrent sub-agents) |
+| Multiple items, any dependency | Sequential (in dependency order)     |
+| Uncertain                      | Sequential (safe default)            |
+
+**Default to sequential when uncertain.** Parallel execution is an optimization, not a requirement.
+
+**Tracking:**
+
+- Single execution: `work_agent = "code"` (string)
+- Parallel execution: `work_agents = ["code", "devops"]` (array)
+
 ## Agent Invocation Reference
 
 ### Command-Triggered Only
@@ -224,18 +250,32 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
 │                              PHASE 1: WORK                                    │
 ├───────────────────────────────────────────────────────────────────────────────┤
 │                                                                               │
-│    Determine work type and delegate to ONE of:                                │
+│    Step 1: DECOMPOSE TASK                                                     │
+│    ┌─────────────────────────────────────────────────────────────────────┐    │
+│    │  • Break task into discrete work items                              │    │
+│    │  • Classify each: code, document, or devops                         │    │
+│    │  • Check isolation criteria (no file overlap, no dependencies)      │    │
+│    │  • Decide: PARALLEL or SEQUENTIAL                                   │    │
+│    └─────────────────────────────────────────────────────────────────────┘    │
 │                                                                               │
-│    ┌───────────────────┐  ┌───────────────────┐  ┌───────────────────┐        │
-│    │     @subagent/    │  │     @subagent/    │  │     @subagent/    │        │
-│    │       code        │  │      document     │  │       devops      │        │
-│    └─────────┬─────────┘  └─────────┬─────────┘  └─────────┬─────────┘        │
-│              │                      │                      │                  │
-│              │    work_agent =      │    work_agent =      │    work_agent =  │
-│              │      "code"          │     "document"       │      "devops"    │
-│              └──────────────────────┴──────────────────────┘                  │
-│                                     │                                         │
-│                        Work agent reports back with changes                   │
+│    Step 2: DELEGATE WORK                                                      │
+│                                                                               │
+│    Single/Dependent Items:              Multiple Isolated Items:              │
+│    ┌───────────────────┐                ┌───────────────────┐                 │
+│    │     @subagent/    │                │  @subagent/code   │  ┐              │
+│    │   code/doc/devops │                └─────────┬─────────┘  │ PARALLEL     │
+│    └─────────┬─────────┘                ┌─────────┴─────────┐  │              │
+│              │                          │ @subagent/devops  │  ┘              │
+│              │                          └─────────┬─────────┘                 │
+│              │                                    │                           │
+│              │    work_agent = "code"             │    work_agents =          │
+│              │                                    │    ["code", "devops"]     │
+│              └────────────────────────────────────┘                           │
+│                                                                               │
+│    Step 3: COLLECT RESULTS                                                    │
+│    • Wait for all sub-agents to complete                                      │
+│    • Aggregate results and file lists                                         │
+│    • Track work_agent (single) or work_agents (array)                         │
 │                                                                               │
 └───────────────────────────────────────────────────────────────────────────────┘
                                         │
@@ -245,12 +285,15 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
 ├───────────────────────────────────────────────────────────────────────────────┤
 │                                                                               │
 │    ┌─────────────────────────────────────────────────────────────────────┐    │
-│    │  What was the Phase 1 work_agent?                                   │    │
+│    │  What was the Phase 1 work_agent(s)?                                │    │
 │    │                                                                     │    │
-│    │  "document" ─► SKIP Phase 2 ──────────────────► Go to Phase 2.5     │    │
-│    │                (Documentation is the work itself)                   │    │
+│    │  "document" only ─► SKIP Phase 2 ────────────► Go to Phase 2.5      │    │
+│    │  (Single work_agent == "document" OR                                │    │
+│    │   work_agents contains ONLY "document")                             │    │
 │    │                                                                     │    │
 │    │  "code" OR "devops" ─► Execute Phase 2 (Documentation Check)        │    │
+│    │  (Single work_agent is code/devops OR                               │    │
+│    │   work_agents contains code/devops)                                 │    │
 │    │                                                                     │    │
 │    └─────────────────────────────────────────────────────────────────────┘    │
 │                                                                               │
@@ -293,12 +336,13 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
 ├───────────────────────────────────────────────────────────────────────────────┤
 │                                                                               │
 │    ┌─────────────────────────────────────────────────────────────────────┐    │
-│    │  What was the Phase 1 work_agent?                                   │    │
+│    │  What was the Phase 1 work_agent(s)?                                │    │
 │    │                                                                     │    │
-│    │  "document" ─► SKIP Phase 2.5 ──────────────────► Go to Phase 3     │    │
-│    │                (No tests needed for documentation changes)          │    │
+│    │  "document" only ─► SKIP Phase 2.5 ───────────► Go to Phase 3       │    │
+│    │  (No tests needed for documentation-only changes)                   │    │
 │    │                                                                     │    │
 │    │  "code" OR "devops" ─► Execute Phase 2.5 (QA/Testing)               │    │
+│    │  (Validates ALL changes from Phase 1, including parallel items)     │    │
 │    │                                                                     │    │
 │    └─────────────────────────────────────────────────────────────────────┘    │
 │                                                                               │
@@ -412,19 +456,17 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
     ┌───────────────────────────────────┐       ┌───────────────────────────┐
     │       TRIVIAL WORKFLOW            │       │      FULL WORKFLOW        │
     │                                   │       │    (like standard-dev)    │
-    │   1. Work Phase via appropriate   │       │                           │
-    │      sub-agent:                   │       │   1. Work Phase           │
-    │      • @subagent/code             │       │   2. Doc Check            │
-    │        (for code fixes)           │       │   3. QA Phase (2.5)       │
-    │      • @subagent/document         │       │   4. Review Phase         │
-    │        (for doc fixes like typo)  │       │   5. Resolution           │
-    │      • @subagent/devops           │       │                           │
-    │        (for simple config)        │       │   Same as standard-dev    │
+    │   1. Work Phase                   │       │                           │
+    │      • Decompose task             │       │   1. Work Phase           │
+    │      • Check isolation criteria   │       │      (with parallel       │
+    │      • Parallel if isolated       │       │       execution support)  │
+    │      • Sequential if dependent    │       │   2. Doc Check            │
+    │                                   │       │   3. QA Phase (2.5)       │
+    │   2. QA Phase (2.5)               │       │   4. Review Phase         │
+    │      SKIP if work_agent="document"│       │   5. Resolution           │
+    │      or work_agents=["document"]  │       │                           │
+    │      RUN @subagent/qa otherwise   │       │   Same as standard-dev    │
     │                                   │       │   workflow                │
-    │   2. QA Phase (2.5)               │       │                           │
-    │      SKIP if work_agent="document"│       │                           │
-    │      RUN @subagent/qa otherwise   │       │                           │
-    │                                   │       │                           │
     │   3. FULL 3x Review               │       │                           │
     │      Quality                      │       │                           │
     │      Regression                   │       │                           │
@@ -434,6 +476,8 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
     │                                   │       │                           │
     │   NOTE: No Doc Check              │       │                           │
     │   (no behavior change)            │       │                           │
+    │   Supports parallel execution     │       │                           │
+    │   for isolated work items         │       │                           │
     └───────────────────────────────────┘       └───────────────────────────┘
 
     ╔═══════════════════════════════════════════════════════════════════════╗
@@ -618,13 +662,13 @@ See [OpenCode Permissions Documentation](https://opencode.ai/docs/permissions/#b
 
 ### Phase Reference (Standard/Flexible Dev)
 
-| Phase     | Description                      | Conditional?                                          |
-| --------- | -------------------------------- | ----------------------------------------------------- |
-| Phase 1   | Work (code, document, or devops) | Always                                                |
-| Phase 2   | Documentation Check              | Skip if work_agent == "document"                      |
-| Phase 2.5 | QA/Testing                       | Skip if work_agent == "document"; run for code/devops |
-| Phase 3   | Parallel Review (3x)             | Always                                                |
-| Phase 4   | Issue Resolution                 | Always                                                |
+| Phase     | Description                                                                       | Conditional?                                                         |
+| --------- | --------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Phase 1   | Work (code, document, or devops) - supports parallel execution for isolated items | Always                                                               |
+| Phase 2   | Documentation Check                                                               | Skip if work_agent(s) is document only                               |
+| Phase 2.5 | QA/Testing                                                                        | Skip if work_agent(s) is document only; validates all parallel items |
+| Phase 3   | Parallel Review (3x)                                                              | Always                                                               |
+| Phase 4   | Issue Resolution                                                                  | Always                                                               |
 
 ### Status Reference
 

@@ -106,17 +106,73 @@ Input may include `hint_complexity`:
 
 Hints are suggestions, not commands. Override if your assessment differs, but document your reasoning.
 
+## Work Item Isolation
+
+Before delegating work, analyze if the task contains multiple **isolated** work items that can run in parallel.
+
+### Isolation Criteria
+
+Work items are **isolated** when ALL of these are true:
+
+- **No file overlap**: Different files are modified by each work item
+- **No dependencies**: No import/export relationships between affected code
+- **No behavioral coupling**: Changes don't affect each other's functionality
+
+### Isolation Examples
+
+| Scenario                                                          | Isolated? | Reason                               |
+| ----------------------------------------------------------------- | --------- | ------------------------------------ |
+| Add API endpoint + Update Docker config                           | ✅ Yes    | Different files, no dependency       |
+| Refactor auth module + Update login to use it                     | ❌ No     | Login depends on auth changes        |
+| Feature A in `src/features/a/*` + Feature B in `src/features/b/*` | ✅ Yes    | Separate directories, no shared code |
+| Fix bug in utils.ts + Add feature using utils.ts                  | ❌ No     | Feature depends on bug fix           |
+| Update README + Add new component                                 | ✅ Yes    | Documentation independent of code    |
+
+### Parallel Execution Decision
+
+| Scenario                       | Execution Strategy                   |
+| ------------------------------ | ------------------------------------ |
+| Single work item               | Sequential (one sub-agent)           |
+| Multiple items, all isolated   | **PARALLEL** (concurrent sub-agents) |
+| Multiple items, any dependency | Sequential (in dependency order)     |
+| Uncertain                      | Sequential (safe default)            |
+
+**Default to sequential when uncertain.** Parallel execution is an optimization, not a requirement.
+
 ## Workflow: TRIVIAL
 
 For trivial tasks (skips Documentation Check):
 
 1. **Work Phase**
-   - Delegate to appropriate sub-agent (`@subagent/code`, `@subagent/document`, or `@subagent/devops`)
-   - Track `work_agent` for routing
+
+   **Step 1: Decompose Task**
+   - Identify discrete work items
+   - Check isolation criteria
+   - Decide: PARALLEL or SEQUENTIAL
+
+   **Step 2: Delegate Work**
+   - Single/dependent items: Delegate to ONE sub-agent at a time
+   - Multiple isolated items: Delegate to sub-agents **in parallel**
+
+   ```
+   Parallel Example:
+   ┌─────────────────┐    ┌─────────────────┐
+   │ @subagent/code  │    │ @subagent/devops│
+   │ (fix typo)      │    │ (update config) │
+   └────────┬────────┘    └────────┬────────┘
+            └──────────┬───────────┘
+                       ▼
+              Aggregate results
+   work_agents = ["code", "devops"]
+   ```
+
+   **Step 3: Track Results**
+   - Single: `work_agent = "code"`
+   - Multiple: `work_agents = ["code", "devops"]`
 
 2. **QA Phase** (Conditional)
-   - SKIP if `work_agent == "document"`
-   - OTHERWISE: Invoke `@subagent/qa`
+   - SKIP if `work_agent == "document"` OR `work_agents` contains ONLY "document"
+   - OTHERWISE: Invoke `@subagent/qa` with aggregated file list
 
 3. **Parallel Review** (3x - ALWAYS)
    - Quality: Code style, readability, performance
@@ -131,24 +187,47 @@ Trivial workflow **SKIPS** Documentation Check (no behavior change expected) but
 
 ## Workflow: COMPLEX
 
-Execute the full standard-dev workflow:
+Execute the full standard-dev workflow with parallel execution support:
 
 1. **Work Phase**
-   - Determine work type (code, document, OR devops)
-   - Delegate to appropriate sub-agent
-   - Track `work_agent` for routing logic
+
+   **Step 1: Decompose Task**
+   - Break task into discrete work items
+   - Classify each: code, document, or devops
+   - Check isolation criteria between all pairs
+   - Decide: PARALLEL or SEQUENTIAL
+
+   **Step 2: Delegate Work**
+   - Single/dependent items: Delegate sequentially
+   - Multiple isolated items: Delegate **in parallel**
+
+   ```
+   Parallel Example:
+   ┌─────────────────┐    ┌─────────────────┐
+   │ @subagent/code  │    │ @subagent/code  │
+   │ (Feature A)     │    │ (Feature B)     │
+   └────────┬────────┘    └────────┬────────┘
+            └──────────┬───────────┘
+                       ▼
+              Aggregate results
+   work_agents = ["code", "code"]
+   ```
+
+   **Step 3: Track Results**
+   - Single: `work_agent = "code"` (string)
+   - Multiple: `work_agents = ["code", "devops"]` (array)
 
 2. **Documentation Check** (Conditional)
-   - ONLY if `work_agent` was "code" or "devops"
-   - SKIP if `work_agent` was "document"
+   - SKIP if `work_agent == "document"` OR `work_agents` contains ONLY "document"
+   - EXECUTE if `work_agent` is "code"/"devops" OR `work_agents` contains "code"/"devops"
    - If behavior changed:
      - Draft documentation via `@subagent/document`
      - STOP and present draft to user
      - WAIT for explicit approval
 
 3. **QA Phase** (Conditional)
-   - SKIP if `work_agent` was "document"
-   - OTHERWISE: Invoke `@subagent/qa`
+   - SKIP if `work_agent == "document"` OR `work_agents` contains ONLY "document"
+   - OTHERWISE: Invoke `@subagent/qa` with aggregated file list from ALL work items
    - If tests fail: Report failures, recommend loop back
 
 4. **Parallel Review** (3x)
@@ -194,6 +273,33 @@ Recommendation: [suggested action]
 Action required: Approve retry? (yes/no)
 ```
 
+## Parallel Execution Error Handling
+
+When running sub-agents in parallel, handle these scenarios:
+
+| Scenario                      | Action                                                                                    |
+| ----------------------------- | ----------------------------------------------------------------------------------------- |
+| **All succeed**               | Aggregate results, proceed to next phase                                                  |
+| **One fails, others succeed** | Report partial success. Recommend loop back for failed item. **WAIT** for user decision.  |
+| **Conflict detected**         | **STOP**. Report conflict. Recommend sequential re-execution. **WAIT** for user decision. |
+| **All fail**                  | Report all failures. Recommend loop back. **WAIT** for user decision.                     |
+
+**Partial Success Format:**
+
+```
+Parallel Execution Result: PARTIAL SUCCESS
+
+✅ Completed:
+  - @subagent/code: Added Feature A (src/features/a/*)
+
+❌ Failed:
+  - @subagent/code: Feature B implementation failed
+    Error: [error details]
+
+Recommendation: Loop back to Work Phase to fix Feature B
+Action required: Approve retry? (yes/no)
+```
+
 ## Input Schema
 
 ```json
@@ -226,6 +332,7 @@ Action required: Approve retry? (yes/no)
   "phases_skipped": ["doc_check"],
   "summary": "<1-2 sentence summary>",
   "work_completed": {
+    "parallel_execution": false,
     "files_modified": [
       {
         "path": "<file path>",
@@ -233,7 +340,18 @@ Action required: Approve retry? (yes/no)
         "changes": "<brief description>"
       }
     ],
-    "work_agent": "code | document | devops"
+    "work_agent": "code | document | devops",
+    "work_agents": ["code", "devops"],
+    "parallel_items": [
+      {
+        "work_agent": "code",
+        "status": "success | failure",
+        "files_modified": [
+          { "path": "...", "action": "...", "changes": "..." }
+        ],
+        "error": "<error message if failed>"
+      }
+    ]
   },
   "qa_results": {
     "tests_run": 5,
@@ -256,6 +374,13 @@ Action required: Approve retry? (yes/no)
   "next_action": "<recommended next step>"
 }
 ```
+
+**Note on work_completed:**
+
+- `parallel_execution`: true if multiple sub-agents ran in parallel
+- `work_agent`: Used for single/sequential execution (backward compatible)
+- `work_agents`: Array of agent types when parallel execution occurred
+- `parallel_items`: Detailed results per parallel work item (only present if parallel)
 
 ## Error Handling
 
