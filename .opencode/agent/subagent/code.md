@@ -80,18 +80,6 @@ You are the **Code Agent**, a specialist that writes clean, efficient, and maint
 | `context7`      | Library documentation lookup |
 | `aws-knowledge` | AWS service documentation    |
 
-## Input Schema
-
-```json
-{
-  "task": "<description of what to implement>",
-  "files": ["<relevant file paths>"],
-  "requirements": ["<specific requirements>"],
-  "constraints": ["<technical constraints>"],
-  "context": "<optional: additional context>"
-}
-```
-
 ## Output Schema
 
 ```json

@@ -327,18 +327,6 @@ Recommendation: Loop back to Work Phase to fix Feature B
 Action required: Approve retry? (yes/no)
 ```
 
-## Input Schema
-
-```json
-{
-  "request_type": "dev",
-  "task": "<task description>",
-  "hint_complexity": "trivial | complex | auto",
-  "files": ["<relevant file paths>"],
-  "requirements": ["<specific requirements>"]
-}
-```
-
 ## Output Schema
 
 ```json

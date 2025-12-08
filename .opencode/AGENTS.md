@@ -19,6 +19,37 @@ This file provides global context and rules inherited by all agent system prompt
 
 **Rule**: Never dump raw JSON to users. Always translate to readable markdown.
 
+## Agent Input/Output Philosophy
+
+### What Callers Should Include in Prompts
+
+When delegating to a sub-agent, include:
+
+| Element             | Description                                      | Required      |
+| ------------------- | ------------------------------------------------ | ------------- |
+| **Goal**            | What needs to be accomplished                    | Yes           |
+| **Context**         | Relevant file paths, constraints, prior findings | Yes           |
+| **Mode**            | draft \|\| apply (if agent supports modes)       | If applicable |
+| **Expected output** | What information to return                       | Recommended   |
+
+### Sub-Agent Context Requirements
+
+Primary agents must provide the following context when delegating:
+
+| Sub-Agent                | Required Context                                                                        |
+| ------------------------ | --------------------------------------------------------------------------------------- |
+| `@subagent/code`         | Goal, file paths to modify, requirements, technical constraints                         |
+| `@subagent/document`     | Task description, mode (draft/apply), target file paths, related code context           |
+| `@subagent/devops`       | Task description, infrastructure files, deployment context                              |
+| `@subagent/qa`           | What to test, source file paths, test type (unit/integration/e2e), requirements         |
+| `@subagent/review`       | **Focus area** (quality/regression/documentation), file paths to review, change context |
+| `@subagent/commit`       | Mode (draft/apply), scope of changes to commit                                          |
+| `@subagent/pull-request` | Mode (draft/apply), PR title/description context, target branch                         |
+| `@subagent/research`     | Research question or topic, scope boundaries, what information to return                |
+| `@subagent/task`         | Goal to decompose, context from research, constraints                                   |
+
+**Note**: This table is the shared contract. Primary agents use this to construct prompts; sub-agents use this to validate they received sufficient context.
+
 ## Global Constraints
 
 ### Never Allowed

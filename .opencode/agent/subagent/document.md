@@ -49,18 +49,6 @@ By default, operate in **Draft Mode**:
 | `context7`      | Reference documentation lookup |
 | `aws-knowledge` | AWS documentation patterns     |
 
-## Input Schema
-
-```json
-{
-  "task": "<documentation task description>",
-  "mode": "draft | apply",
-  "files": ["<target file paths>"],
-  "context": "<project context or related code>",
-  "style_guide": "<optional: documentation style preferences>"
-}
-```
-
 ## Output Schema
 
 ### Draft Mode (Default)

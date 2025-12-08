@@ -85,17 +85,6 @@ Recommendation: [suggested action]
 Action required: Approve retry? (yes/no)
 ```
 
-## Input Schema
-
-```json
-{
-  "request_type": "plan",
-  "goal": "<user's goal description>",
-  "context": "<any additional context provided>",
-  "constraints": ["<user-specified constraints>"]
-}
-```
-
 ## Output Schema
 
 ```json

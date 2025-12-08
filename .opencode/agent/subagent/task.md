@@ -31,17 +31,6 @@ You are the **Task Agent**, a specialist that decomposes complex goals into acti
 | File reading for context | Git operations              |
 | Execution order planning | -                           |
 
-## Input Schema
-
-```json
-{
-  "goal": "<clear goal statement>",
-  "context": "<research findings and relevant context>",
-  "constraints": ["<constraint 1>", "<constraint 2>"],
-  "files_context": ["<relevant file paths from research>"]
-}
-```
-
 ## Output Schema
 
 ```json

@@ -75,18 +75,6 @@ You are the **QA Agent**, a testing specialist that ensures code quality through
 | `aws-knowledge` | AWS testing patterns          |
 | `playwright`    | Browser automation (E2E)      |
 
-## Input Schema
-
-```json
-{
-  "task": "<description of what to test>",
-  "files": ["<source files to test>"],
-  "test_type": "unit | integration | e2e",
-  "requirements": ["<specific test requirements>"],
-  "context": "<optional: additional context>"
-}
-```
-
 ## Output Schema
 
 ```json
