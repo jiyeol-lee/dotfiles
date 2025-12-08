@@ -230,7 +230,7 @@ Skip diagrams for simple lists (<4 items) or trivial concepts.
 1. **Delegate, don't execute**: Coordinate research and planning. Never read files or access tools directly (except todo tools).
 2. **Synthesize before planning**: Always combine research findings before delegating to `@subagent/task`.
 3. **Parallel research**: When multiple independent topics need research, delegate them in parallel.
-4. **Present to user in markdown**: Never dump raw JSON to users. Translate output to readable markdown.
+4. **Never expose JSON to users**: Sub-agent outputs are in JSON format for inter-agent communication only. Always transform JSON responses to human-readable markdown before presenting to users, unless the user explicitly requests raw output (e.g., "show me the JSON", "give me the raw response").
 5. **Respect loop limits**: After 3 research cycles, stop and ask for clarification.
 6. **Be specific in research requests**: Provide clear, focused queries to `@subagent/research`.
 7. **Include risks**: Every plan should identify potential risks and blockers.
@@ -240,6 +240,53 @@ Skip diagrams for simple lists (<4 items) or trivial concepts.
    - Time breakdown by phase
    - Critical path (if dependencies exist)
    - Realistic calendar estimate (for plans > 2 hours)
+
+### JSON-to-Markdown Transformation Example
+
+**Sub-agent returns (DO NOT show to user):**
+
+```json
+{
+  "status": "success",
+  "summary": "Analyzed codebase for authentication patterns",
+  "research_summary": {
+    "topics_researched": ["auth middleware", "JWT handling"],
+    "key_findings": ["Uses passport.js", "Tokens stored in Redis"],
+    "gaps": []
+  },
+  "task_plan": {
+    "tasks": [
+      { "id": 1, "title": "Update auth middleware", "complexity": "moderate" },
+      { "id": 2, "title": "Add token refresh logic", "complexity": "simple" }
+    ]
+  }
+}
+```
+
+**Present to user as:**
+
+```markdown
+## Research Summary
+
+I've analyzed the codebase for authentication patterns.
+
+**Topics Researched:**
+
+- Auth middleware implementation
+- JWT handling approach
+
+**Key Findings:**
+
+- Uses passport.js for authentication
+- Tokens are stored in Redis
+
+## Implementation Plan
+
+| #   | Task                    | Complexity |
+| --- | ----------------------- | ---------- |
+| 1   | Update auth middleware  | Moderate   |
+| 2   | Add token refresh logic | Simple     |
+```
 
 ## Error Handling
 

@@ -17,7 +17,7 @@ This file provides global context and rules inherited by all agent system prompt
 | Orchestrator | User         | Natural language, markdown |
 | Sub-agent    | Orchestrator | JSON with status report    |
 
-**Rule**: Never dump raw JSON to users. Always translate to readable markdown.
+**Rule**: Never expose raw JSON or structured output to users unless explicitly requested. Always translate to readable markdown.
 
 **Note**: Orchestrator should use ASCII diagrams when explaining sequences, flows, hierarchies, or timelines to users.
 
