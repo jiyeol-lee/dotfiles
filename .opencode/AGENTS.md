@@ -52,6 +52,34 @@ Primary agents must provide the following context when delegating:
 
 **Note**: This table is the shared contract. Primary agents use this to construct prompts; sub-agents use this to validate they received sufficient context.
 
+## Sub-Agent Capabilities
+
+Primary agents should be aware of what specialized capabilities each sub-agent has access to when delegating tasks.
+
+### MCP Server Access Matrix
+
+| Sub-Agent                | MCP Servers Available                              |
+| ------------------------ | -------------------------------------------------- |
+| `@subagent/code`         | `context7`, `aws-knowledge`                        |
+| `@subagent/document`     | `context7`, `aws-knowledge`                        |
+| `@subagent/devops`       | `context7`, `aws-knowledge`                        |
+| `@subagent/qa`           | `context7`, `aws-knowledge`, **`playwright`**      |
+| `@subagent/research`     | `context7`, `aws-knowledge`, `linear`, `atlassian` |
+| `@subagent/pull-request` | `linear`, `atlassian`                              |
+| `@subagent/review`       | None                                               |
+| `@subagent/commit`       | None                                               |
+| `@subagent/task`         | None                                               |
+
+### MCP Server Purposes
+
+| MCP Server      | Purpose                                           |
+| --------------- | ------------------------------------------------- |
+| `context7`      | Library documentation lookup                      |
+| `aws-knowledge` | AWS documentation and best practices              |
+| `playwright`    | Browser automation for E2E testing, UI validation |
+| `linear`        | Issue tracking integration                        |
+| `atlassian`     | Jira/Confluence integration                       |
+
 ## Global Constraints
 
 ### Never Allowed
