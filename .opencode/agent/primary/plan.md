@@ -99,6 +99,7 @@ Action required: Approve retry? (yes/no)
   },
   "task_plan": {
     "goal": "<clear goal statement>",
+    "total_estimated_time": "<sum of all task estimates>",
     "tasks": [
       {
         "id": 1,
@@ -106,10 +107,26 @@ Action required: Approve retry? (yes/no)
         "description": "<detailed description>",
         "dependencies": [],
         "estimated_complexity": "trivial | simple | moderate | complex",
+        "estimated_time": "<time range>",
         "files_likely_affected": ["<file paths>"]
       }
     ],
     "risks": ["<identified risks>"]
+  },
+  "time_summary": {
+    "total_estimated": "<total time range>",
+    "by_phase": [
+      {
+        "phase": "<phase name>",
+        "time": "<time range>",
+        "task_ids": [1, 2]
+      }
+    ],
+    "critical_path": {
+      "task_ids": [1, 3, 5],
+      "minimum_time": "<minimum sequential time>"
+    },
+    "realistic_estimate": "<calendar time with context switches>"
   },
   "recommendations": ["<suggestions for execution>"]
 }
@@ -121,13 +138,14 @@ When presenting plans and information to users, use ASCII diagrams to improve cl
 
 ### Use Diagrams For
 
-| Concept | Example |
-|---------|---------|
-| Sequential workflows (>3 steps) | Plan phases, pipelines |
-| Hierarchies | Task trees, dependencies |
-| Flows with branches | Decision points, alternatives |
-| Timelines | Project phases, milestones |
-| Relationships | Component dependencies |
+| Concept                         | Example                       |
+| ------------------------------- | ----------------------------- |
+| Sequential workflows (>3 steps) | Plan phases, pipelines        |
+| Hierarchies                     | Task trees, dependencies      |
+| Flows with branches             | Decision points, alternatives |
+| Timelines                       | Project phases, milestones    |
+| Relationships                   | Component dependencies        |
+| Time estimates                  | Time summaries, progress bars |
 
 ### Formatting
 
@@ -178,6 +196,33 @@ Task Breakdown
           └──────────────┘
 ```
 
+### Example: Time Summary
+
+```
+⏱️  Time Estimate Summary
+─────────────────────────────────────────────────────
+Total: 4-6 hours
+
+By Phase:
+├── Setup (parallel)        │ 30 min     ░░
+├── Implementation          │ 2-3 hrs    ░░░░░░░░░░░
+├── Testing                 │ 1 hr       ░░░░
+└── Documentation           │ 30 min     ░░
+                            └────────────────────────
+
+Critical Path: Tasks 1 → 2 → 4 → 5  (minimum 3.5 hrs)
+
+📅 Realistic estimate: ~1 day (with meetings/interruptions)
+```
+
+**Guidelines for time summary**:
+
+- Use `░` blocks proportional to time (1 block ≈ 15 min)
+- Show phases in execution order
+- Indicate parallel phases with "(parallel)" suffix
+- Always include critical path for plans with dependencies
+- Provide realistic calendar estimate for plans > 2 hours
+
 Skip diagrams for simple lists (<4 items) or trivial concepts.
 
 ## Rules
@@ -190,6 +235,11 @@ Skip diagrams for simple lists (<4 items) or trivial concepts.
 6. **Be specific in research requests**: Provide clear, focused queries to `@subagent/research`.
 7. **Include risks**: Every plan should identify potential risks and blockers.
 8. **Estimate complexity**: Each task should have a complexity estimate.
+9. **Include time summary**: Always present a visual time summary showing:
+   - Total estimated time
+   - Time breakdown by phase
+   - Critical path (if dependencies exist)
+   - Realistic calendar estimate (for plans > 2 hours)
 
 ## Error Handling
 
