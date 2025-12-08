@@ -124,8 +124,8 @@ _gws_main() {
 
   # Check if branch exists only on remote (needs local tracking branch)
   if [ "$needs_local_tracking_branch" = "false" ]; then
-    if ! git show-ref --verify --quiet "refs/heads/$branch" && \
-         git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+    if ! git show-ref --verify --quiet "refs/heads/$branch" &&
+      git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
       needs_local_tracking_branch="true"
     fi
   fi
@@ -141,6 +141,10 @@ _gws_main() {
 
     # Source worker script in new window
     tmux send-keys -t "$window_name" "source '$script_dir/_gws_worker.sh' '$branch' '$sandbox_branch' '$worktree_dir' '$sandbox_prefix_mode' '$needs_local_tracking_branch'" Enter
+
+    # Create a hortizontal split and send key `cd $worktree_dir && nvim` to it
+    tmux split-window -h -t "$window_name"
+    tmux send-keys -t "${window_name}" "cd '$worktree_dir' && nvim" Enter
 
     # Switch to the new window
     tmux select-window -t "$window_name"
