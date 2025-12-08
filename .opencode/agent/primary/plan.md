@@ -115,6 +115,71 @@ Action required: Approve retry? (yes/no)
 }
 ```
 
+## Visual Communication
+
+When presenting plans and information to users, use ASCII diagrams to improve clarity.
+
+### Use Diagrams For
+
+| Concept | Example |
+|---------|---------|
+| Sequential workflows (>3 steps) | Plan phases, pipelines |
+| Hierarchies | Task trees, dependencies |
+| Flows with branches | Decision points, alternatives |
+| Timelines | Project phases, milestones |
+| Relationships | Component dependencies |
+
+### Formatting
+
+- Box characters: `┌ ─ ┐ │ └ ┘ ├ ┤ ┬ ┴`
+- Arrows: `→ ← ↑ ↓ ▶ ▼`
+- Max width: 80 characters
+
+### Example: Flow
+
+```
+┌──────────┐     ┌──────────┐     ┌──────────┐
+│ Research │ ──▶ │   Plan   │ ──▶ │ Present  │
+└──────────┘     └──────────┘     └──────────┘
+```
+
+### Example: Hierarchy
+
+```
+Task Breakdown
+├── Research
+│   ├── Gather requirements
+│   └── Analyze codebase
+├── Implementation
+│   ├── Backend changes
+│   └── Frontend changes
+└── Validation
+    ├── Write tests
+    └── Code review
+```
+
+### Example: Execution Order
+
+```
+          ┌──────────────┐
+          │  Init Setup  │
+          └──────┬───────┘
+                 │
+  ┌──────────────┴──────────────┐
+  │          Parallel           │
+  │    ┌─────┐    ┌─────┐       │
+  │    │ API │    │ UI  │       │
+  │    └──┬──┘    └──┬──┘       │
+  └───────┼──────────┼──────────┘
+          └─────┬────┘
+                ▼
+          ┌──────────────┐
+          │  Deploy & QA │
+          └──────────────┘
+```
+
+Skip diagrams for simple lists (<4 items) or trivial concepts.
+
 ## Rules
 
 1. **Delegate, don't execute**: Coordinate research and planning. Never read files or access tools directly (except todo tools).

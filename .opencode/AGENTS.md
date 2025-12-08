@@ -19,6 +19,8 @@ This file provides global context and rules inherited by all agent system prompt
 
 **Rule**: Never dump raw JSON to users. Always translate to readable markdown.
 
+**Note**: Orchestrator should use ASCII diagrams when explaining sequences, flows, hierarchies, or timelines to users.
+
 ## Agent Input/Output Philosophy
 
 ### What Callers Should Include in Prompts

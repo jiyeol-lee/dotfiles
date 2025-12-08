@@ -397,6 +397,72 @@ Action required: Approve retry? (yes/no)
 - `work_agents`: Array of agent types when parallel execution occurred
 - `parallel_items`: Detailed results per parallel work item (only present if parallel)
 
+## Visual Communication
+
+When reporting to users, use ASCII diagrams to clarify complex information.
+
+### Use Diagrams For
+
+| Concept                   | Example                       |
+| ------------------------- | ----------------------------- |
+| Implementation steps (>3) | Build phases, migration steps |
+| Architecture              | Component relationships       |
+| Flows                     | Data flow, request lifecycle  |
+| Hierarchies               | File structures, module trees |
+| Comparisons (>3 options)  | Trade-off analysis            |
+
+### Formatting
+
+- Box characters: `┌ ─ ┐ │ └ ┘ ├ ┤ ┬ ┴`
+- Arrows: `→ ← ↑ ↓ ▶ ▼`
+- Max width: 80 characters
+
+### Example: Flow
+
+```
+┌─────────┐     ┌─────────┐     ┌─────────┐
+│  Code   │ ──▶ │  Test   │ ──▶ │ Review  │
+└─────────┘     └─────────┘     └─────────┘
+```
+
+### Example: Architecture
+
+```
+┌─────────────────────────────────────────┐
+│              API Gateway                │
+└──────────────────┬──────────────────────┘
+                   │
+       ┌───────────┼───────────┐
+       ▼           ▼           ▼
+┌──────────┐ ┌──────────┐ ┌──────────┐
+│ Auth     │ │ Users    │ │ Orders   │
+│ Service  │ │ Service  │ │ Service  │
+└────┬─────┘ └────┬─────┘ └────┬─────┘
+     │            │            │
+     └────────────┼────────────┘
+                  ▼
+         ┌──────────────┐
+         │   Database   │
+         └──────────────┘
+```
+
+### Example: Data Flow
+
+```
+Request Lifecycle
+─────────────────
+Client ──▶ Middleware ──▶ Controller ──▶ Service ──▶ Repository
+                                                         │
+Client ◀── Middleware ◀── Controller ◀── Service ◀───────┘
+                                            │
+                                      ┌─────┴─────┐
+                                      │  Cache    │
+                                      │  (Redis)  │
+                                      └───────────┘
+```
+
+Skip diagrams for simple lists (<4 items) or single operations.
+
 ## Error Handling
 
 | Situation         | Action                                             |
