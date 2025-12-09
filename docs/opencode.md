@@ -13,20 +13,20 @@
 
 ## Agent Summary
 
-| Type    | Agent                         | Role                                                     |
-| ------- | ----------------------------- | -------------------------------------------------------- |
-| Primary | `@primary/plan`               | Research and task planning orchestrator                  |
-| Primary | `@primary/dev`                | Development workflow orchestrator                        |
-| Sub     | `@subagent/research`          | Information gathering                                    |
-| Sub     | `@subagent/task`              | Task breakdown and planning                              |
-| Sub     | `@subagent/code`              | Code implementation                                      |
-| Sub     | `@subagent/qa`                | Testing and validation                                   |
-| Sub     | `@subagent/commit`            | Git commits (Draft/Apply Mode)                           |
-| Sub     | `@subagent/pull-request`      | PR management (Draft/Apply Mode)                         |
-| Sub     | `@subagent/document`          | Documentation (Draft Mode)                               |
-| Sub     | `@subagent/devops`            | DevOps and infrastructure                                |
-| Sub     | `@subagent/review`            | Code review (3 focus areas)                              |
-| Sub     | `@subagent/review-validation` | Validates PR review comment accuracy against actual code |
+| Type    | Agent                         | Role                                                             |
+| ------- | ----------------------------- | ---------------------------------------------------------------- |
+| Primary | `@primary/plan`               | Research and task planning orchestrator                          |
+| Primary | `@primary/dev`                | Development workflow orchestrator                                |
+| Sub     | `@subagent/research`          | Information gathering                                            |
+| Sub     | `@subagent/task`              | Task breakdown and planning                                      |
+| Sub     | `@subagent/code`              | Code implementation                                              |
+| Sub     | `@subagent/qa`                | Quality assurance (test, lint, type-check, analyze, scan, build) |
+| Sub     | `@subagent/commit`            | Git commits (Draft/Apply Mode)                                   |
+| Sub     | `@subagent/pull-request`      | PR management (Draft/Apply Mode)                                 |
+| Sub     | `@subagent/document`          | Documentation (Draft Mode)                                       |
+| Sub     | `@subagent/devops`            | DevOps and infrastructure                                        |
+| Sub     | `@subagent/review`            | Code review (3 focus areas)                                      |
+| Sub     | `@subagent/review-validation` | Validates PR review comment accuracy against actual code         |
 
 ## Directory Structure
 
@@ -386,13 +386,13 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
 | Tool        | research | task | code | qa  | commit | pull-request | document | devops | review | review-validation |
 | ----------- | :------: | :--: | :--: | :-: | :----: | :----------: | :------: | :----: | :----: | :---------------: |
 | `bash`      |    ❌    |  ❌  |  ✅  | ✅  |   ✅   |      ✅      |    ❌    |   ✅   |   ✅   |        ✅         |
-| `edit`      |    ❌    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
-| `write`     |    ❌    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
+| `edit`      |    ❌    |  ❌  |  ✅  | ❌  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
+| `write`     |    ❌    |  ❌  |  ✅  | ❌  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
 | `read`      |    ✅    |  ✅  |  ✅  | ✅  |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |        ✅         |
 | `grep`      |    ✅    |  ✅  |  ✅  | ✅  |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |        ✅         |
 | `glob`      |    ✅    |  ✅  |  ✅  | ✅  |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |        ✅         |
 | `list`      |    ✅    |  ✅  |  ✅  | ✅  |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |        ✅         |
-| `patch`     |    ❌    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
+| `patch`     |    ❌    |  ❌  |  ✅  | ❌  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
 | `todowrite` |    ❌    |  ❌  |  ❌  | ❌  |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |        ❌         |
 | `todoread`  |    ❌    |  ❌  |  ❌  | ❌  |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |        ❌         |
 | `webfetch`  |    ✅    |  ❌  |  ❌  | ❌  |   ❌   |      ❌      |    ✅    |   ❌   |   ❌   |        ❌         |
@@ -421,18 +421,18 @@ All primary agents have `permission.bash: deny` - they delegate to sub-agents.
 
 #### Sub-Agents (Specialists)
 
-| Agent                         | Default | Allowed Commands                                                                                                                                          | Ask Commands                                  |
-| ----------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| `@subagent/code`              | `deny`  | ls, pwd, cat, head, tail, find, npm/pnpm/yarn/bun, go, cargo, pip, poetry, make, eslint, prettier, tsc, git (read)                                        | rm, mv                                        |
-| `@subagent/commit`            | `deny`  | git status/diff/log/show/branch, git add/reset, git commit                                                                                                | git push                                      |
-| `@subagent/devops`            | `deny`  | ls, pwd, cat, head, tail, find, yamllint, hadolint, shellcheck, actionlint, terraform init/validate/fmt, aws validate, docker build/images/ps, git (read) | terraform plan/apply, docker run/push, rm, mv |
-| `@subagent/document`          | `deny`  | (none)                                                                                                                                                    | (none)                                        |
-| `@subagent/pull-request`      | `deny`  | git (read), git push, gh pr list/view/diff/status/checks, gh api                                                                                          | gh pr create/edit/merge                       |
-| `@subagent/qa`                | `deny`  | ls, pwd, cat, head, tail, find, npm/pnpm/yarn/bun test, jest, vitest, playwright, cypress, go test, pytest, cargo test, coverage tools, git (read)        | (none)                                        |
-| `@subagent/research`          | `deny`  | (none)                                                                                                                                                    | (none)                                        |
-| `@subagent/review`            | `deny`  | git status/diff/log/show/branch, gh pr diff/view/checks/api                                                                                               | (none)                                        |
-| `@subagent/review-validation` | `deny`  | gh api \*, gh repo view \*, gh pr view \*, gh pr diff \*, git diff \*, git show \*                                                                        | (none)                                        |
-| `@subagent/task`              | `deny`  | (none)                                                                                                                                                    | (none)                                        |
+| Agent                         | Default | Allowed Commands                                                                                                                                                                                          | Ask Commands                                  |
+| ----------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| `@subagent/code`              | `deny`  | ls, pwd, cat, head, tail, find, npm/pnpm/yarn/bun, go, cargo, pip, poetry, make, eslint, prettier, tsc, git (read)                                                                                        | rm, mv                                        |
+| `@subagent/commit`            | `deny`  | git status/diff/log/show/branch, git add/reset, git commit                                                                                                                                                | git push                                      |
+| `@subagent/devops`            | `deny`  | ls, pwd, cat, head, tail, find, yamllint, hadolint, shellcheck, actionlint, terraform init/validate/fmt, aws validate, docker build/images/ps, git (read)                                                 | terraform plan/apply, docker run/push, rm, mv |
+| `@subagent/document`          | `deny`  | (none)                                                                                                                                                                                                    | (none)                                        |
+| `@subagent/pull-request`      | `deny`  | git (read), git push, gh pr list/view/diff/status/checks, gh api                                                                                                                                          | gh pr create/edit/merge                       |
+| `@subagent/qa`                | `deny`  | ls, pwd, cat, find, npm/pnpm/yarn/bun (full), eslint, tsc, jest, vitest, playwright, cypress, go (test/build/vet), golangci-lint, poetry run (pytest/ruff/mypy/pyright/build), coverage tools, git (read) | (none)                                        |
+| `@subagent/research`          | `deny`  | (none)                                                                                                                                                                                                    | (none)                                        |
+| `@subagent/review`            | `deny`  | git status/diff/log/show/branch, gh pr diff/view/checks/api                                                                                                                                               | (none)                                        |
+| `@subagent/review-validation` | `deny`  | gh api \*, gh repo view \*, gh pr view \*, gh pr diff \*, git diff \*, git show \*                                                                                                                        | (none)                                        |
+| `@subagent/task`              | `deny`  | (none)                                                                                                                                                                                                    | (none)                                        |
 
 #### Configuration Reference
 
