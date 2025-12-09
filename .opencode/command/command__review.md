@@ -95,7 +95,7 @@ Steps:
 5. **Present Report**
    - Format the report as follows:
 
-     ```
+     ```markdown
      ## Code Review Summary
 
      **Target**: [PR #X / Last N commits / Branch diff]
@@ -107,6 +107,7 @@ Steps:
      ### 🔴 Critical Issues (X)
 
      #### File: `path/to/file.ts`
+
      - **Line X**: [Issue description]
        - **Why**: [Explanation of the problem]
        - **Fix**: [Suggested resolution]
@@ -126,6 +127,7 @@ Steps:
      ---
 
      ### ✅ What Looks Good
+
      - [Positive observations about the code]
      ```
 

@@ -13,19 +13,20 @@
 
 ## Agent Summary
 
-| Type    | Agent                    | Role                                    |
-| ------- | ------------------------ | --------------------------------------- |
-| Primary | `@primary/plan`          | Research and task planning orchestrator |
-| Primary | `@primary/dev`           | Development workflow orchestrator       |
-| Sub     | `@subagent/research`     | Information gathering                   |
-| Sub     | `@subagent/task`         | Task breakdown and planning             |
-| Sub     | `@subagent/code`         | Code implementation                     |
-| Sub     | `@subagent/qa`           | Testing and validation                  |
-| Sub     | `@subagent/commit`       | Git commits (Draft/Apply Mode)          |
-| Sub     | `@subagent/pull-request` | PR management (Draft/Apply Mode)        |
-| Sub     | `@subagent/document`     | Documentation (Draft Mode)              |
-| Sub     | `@subagent/devops`       | DevOps and infrastructure               |
-| Sub     | `@subagent/review`       | Code review (3 focus areas)             |
+| Type    | Agent                         | Role                                                     |
+| ------- | ----------------------------- | -------------------------------------------------------- |
+| Primary | `@primary/plan`               | Research and task planning orchestrator                  |
+| Primary | `@primary/dev`                | Development workflow orchestrator                        |
+| Sub     | `@subagent/research`          | Information gathering                                    |
+| Sub     | `@subagent/task`              | Task breakdown and planning                              |
+| Sub     | `@subagent/code`              | Code implementation                                      |
+| Sub     | `@subagent/qa`                | Testing and validation                                   |
+| Sub     | `@subagent/commit`            | Git commits (Draft/Apply Mode)                           |
+| Sub     | `@subagent/pull-request`      | PR management (Draft/Apply Mode)                         |
+| Sub     | `@subagent/document`          | Documentation (Draft Mode)                               |
+| Sub     | `@subagent/devops`            | DevOps and infrastructure                                |
+| Sub     | `@subagent/review`            | Code review (3 focus areas)                              |
+| Sub     | `@subagent/review-validation` | Validates PR review comment accuracy against actual code |
 
 ## Directory Structure
 
@@ -48,12 +49,14 @@
 │       ├── pull-request.md             # @subagent/pull-request
 │       ├── document.md                 # @subagent/document
 │       ├── devops.md                   # @subagent/devops
-│       └── review.md                   # @subagent/review
+│       ├── review.md                   # @subagent/review
+│       └── review-validation.md        # @subagent/review-validation
 │
 ├── command/                            # Commands
 │   ├── command__commit.md              # Shortcut for commit workflow
 │   ├── command__pull-request.md        # Shortcut for PR workflow
-│   └── command__review.md              # Shortcut for code review
+│   ├── command__review.md              # Shortcut for code review
+│   └── command__validate-review.md     # Shortcut for PR review validation
 │
 ├── plugin/                             # Plugins
 │   └── notifications.ts
@@ -107,6 +110,12 @@
 │    │      /command__commit              │    │      /command__pull-request        │ │
 │    └────────────────────────────────────┘    └────────────────────────────────────┘ │
 │                                                                                     │
+│    ┌────────────────────────────────────┐                                           │
+│    │      @subagent/review-validation   │                                           │
+│    │                                    │                                           │
+│    │      /command__validate-review     │                                           │
+│    └────────────────────────────────────┘                                           │
+│                                                                                     │
 │    NOTE: These agents are ONLY invoked via user commands, not automatically         │
 │          by orchestrators. See "Agent Invocation Reference" section.                │
 │                                                                                     │
@@ -153,10 +162,11 @@
 
 These agents are exclusively triggered by user commands, not by orchestrators:
 
-| Agent                    | Command                  | Flow                               |
-| ------------------------ | ------------------------ | ---------------------------------- |
-| `@subagent/commit`       | `/command__commit`       | Draft Mode → Approval → Apply Mode |
-| `@subagent/pull-request` | `/command__pull-request` | Draft Mode → Approval → Apply Mode |
+| Agent                         | Command                     | Flow                               |
+| ----------------------------- | --------------------------- | ---------------------------------- |
+| `@subagent/commit`            | `/command__commit`          | Draft Mode → Approval → Apply Mode |
+| `@subagent/pull-request`      | `/command__pull-request`    | Draft Mode → Approval → Apply Mode |
+| `@subagent/review-validation` | `/command__validate-review` | Fetch → Analyze → Report           |
 
 ### Orchestrator-Invoked (also available via command)
 
@@ -314,13 +324,13 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
 
 > **Note**: Short names refer to `@subagent/*` agents (e.g., "research" = `@subagent/research`).
 
-| MCP Server      | research | task | code | qa  | commit | pull-request | document | devops | review |
-| --------------- | :------: | :--: | :--: | :-: | :----: | :----------: | :------: | :----: | :----: |
-| `context7`      |    ✅    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |
-| `aws-knowledge` |    ✅    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |
-| `linear`        |    ✅    |  ❌  |  ❌  | ❌  |   ❌   |      ✅      |    ❌    |   ❌   |   ❌   |
-| `atlassian`     |    ✅    |  ❌  |  ❌  | ❌  |   ❌   |      ✅      |    ❌    |   ❌   |   ❌   |
-| `playwright`    |    ❌    |  ❌  |  ❌  | ✅  |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |
+| MCP Server      | research | task | code | qa  | commit | pull-request | document | devops | review | review-validation |
+| --------------- | :------: | :--: | :--: | :-: | :----: | :----------: | :------: | :----: | :----: | :---------------: |
+| `context7`      |    ✅    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
+| `aws-knowledge` |    ✅    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
+| `linear`        |    ✅    |  ❌  |  ❌  | ❌  |   ❌   |      ✅      |    ❌    |   ❌   |   ❌   |        ❌         |
+| `atlassian`     |    ✅    |  ❌  |  ❌  | ❌  |   ❌   |      ✅      |    ❌    |   ❌   |   ❌   |        ❌         |
+| `playwright`    |    ❌    |  ❌  |  ❌  | ✅  |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |        ❌         |
 
 ### Server Purposes
 
@@ -373,20 +383,20 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
 
 > **Note**: Short names refer to `@subagent/*` agents (e.g., "research" = `@subagent/research`).
 
-| Tool        | research | task | code | qa  | commit | pull-request | document | devops | review |
-| ----------- | :------: | :--: | :--: | :-: | :----: | :----------: | :------: | :----: | :----: |
-| `bash`      |    ❌    |  ❌  |  ✅  | ✅  |   ✅   |      ✅      |    ❌    |   ✅   |   ✅   |
-| `edit`      |    ❌    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |
-| `write`     |    ❌    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |
-| `read`      |    ✅    |  ✅  |  ✅  | ✅  |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |
-| `grep`      |    ✅    |  ✅  |  ✅  | ✅  |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |
-| `glob`      |    ✅    |  ✅  |  ✅  | ✅  |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |
-| `list`      |    ✅    |  ✅  |  ✅  | ✅  |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |
-| `patch`     |    ❌    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |
-| `todowrite` |    ❌    |  ❌  |  ❌  | ❌  |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |
-| `todoread`  |    ❌    |  ❌  |  ❌  | ❌  |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |
-| `webfetch`  |    ✅    |  ❌  |  ❌  | ❌  |   ❌   |      ❌      |    ✅    |   ❌   |   ❌   |
-| MCP tools   |    ✅    |  ❌  |  ✅  | ✅  |   ❌   |      ✅      |    ✅    |   ✅   |   ❌   |
+| Tool        | research | task | code | qa  | commit | pull-request | document | devops | review | review-validation |
+| ----------- | :------: | :--: | :--: | :-: | :----: | :----------: | :------: | :----: | :----: | :---------------: |
+| `bash`      |    ❌    |  ❌  |  ✅  | ✅  |   ✅   |      ✅      |    ❌    |   ✅   |   ✅   |        ✅         |
+| `edit`      |    ❌    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
+| `write`     |    ❌    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
+| `read`      |    ✅    |  ✅  |  ✅  | ✅  |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |        ✅         |
+| `grep`      |    ✅    |  ✅  |  ✅  | ✅  |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |        ✅         |
+| `glob`      |    ✅    |  ✅  |  ✅  | ✅  |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |        ✅         |
+| `list`      |    ✅    |  ✅  |  ✅  | ✅  |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |        ✅         |
+| `patch`     |    ❌    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
+| `todowrite` |    ❌    |  ❌  |  ❌  | ❌  |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |        ❌         |
+| `todoread`  |    ❌    |  ❌  |  ❌  | ❌  |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |        ❌         |
+| `webfetch`  |    ✅    |  ❌  |  ❌  | ❌  |   ❌   |      ❌      |    ✅    |   ❌   |   ❌   |        ❌         |
+| MCP tools   |    ✅    |  ❌  |  ✅  | ✅  |   ❌   |      ✅      |    ✅    |   ✅   |   ❌   |        ❌         |
 
 ### Bash Permission Matrix (Granular)
 
@@ -411,17 +421,18 @@ All primary agents have `permission.bash: deny` - they delegate to sub-agents.
 
 #### Sub-Agents (Specialists)
 
-| Agent                    | Default | Allowed Commands                                                                                                                                          | Ask Commands                                  |
-| ------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| `@subagent/code`         | `deny`  | ls, pwd, cat, head, tail, find, npm/pnpm/yarn/bun, go, cargo, pip, poetry, make, eslint, prettier, tsc, git (read)                                        | rm, mv                                        |
-| `@subagent/commit`       | `deny`  | git status/diff/log/show/branch, git add/reset, git commit                                                                                                | git push                                      |
-| `@subagent/devops`       | `deny`  | ls, pwd, cat, head, tail, find, yamllint, hadolint, shellcheck, actionlint, terraform init/validate/fmt, aws validate, docker build/images/ps, git (read) | terraform plan/apply, docker run/push, rm, mv |
-| `@subagent/document`     | `deny`  | (none)                                                                                                                                                    | (none)                                        |
-| `@subagent/pull-request` | `deny`  | git (read), git push, gh pr list/view/diff/status/checks, gh api                                                                                          | gh pr create/edit/merge                       |
-| `@subagent/qa`           | `deny`  | ls, pwd, cat, head, tail, find, npm/pnpm/yarn/bun test, jest, vitest, playwright, cypress, go test, pytest, cargo test, coverage tools, git (read)        | (none)                                        |
-| `@subagent/research`     | `deny`  | (none)                                                                                                                                                    | (none)                                        |
-| `@subagent/review`       | `deny`  | git status/diff/log/show/branch, gh pr diff/view/checks/api                                                                                               | (none)                                        |
-| `@subagent/task`         | `deny`  | (none)                                                                                                                                                    | (none)                                        |
+| Agent                         | Default | Allowed Commands                                                                                                                                          | Ask Commands                                  |
+| ----------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| `@subagent/code`              | `deny`  | ls, pwd, cat, head, tail, find, npm/pnpm/yarn/bun, go, cargo, pip, poetry, make, eslint, prettier, tsc, git (read)                                        | rm, mv                                        |
+| `@subagent/commit`            | `deny`  | git status/diff/log/show/branch, git add/reset, git commit                                                                                                | git push                                      |
+| `@subagent/devops`            | `deny`  | ls, pwd, cat, head, tail, find, yamllint, hadolint, shellcheck, actionlint, terraform init/validate/fmt, aws validate, docker build/images/ps, git (read) | terraform plan/apply, docker run/push, rm, mv |
+| `@subagent/document`          | `deny`  | (none)                                                                                                                                                    | (none)                                        |
+| `@subagent/pull-request`      | `deny`  | git (read), git push, gh pr list/view/diff/status/checks, gh api                                                                                          | gh pr create/edit/merge                       |
+| `@subagent/qa`                | `deny`  | ls, pwd, cat, head, tail, find, npm/pnpm/yarn/bun test, jest, vitest, playwright, cypress, go test, pytest, cargo test, coverage tools, git (read)        | (none)                                        |
+| `@subagent/research`          | `deny`  | (none)                                                                                                                                                    | (none)                                        |
+| `@subagent/review`            | `deny`  | git status/diff/log/show/branch, gh pr diff/view/checks/api                                                                                               | (none)                                        |
+| `@subagent/review-validation` | `deny`  | gh api \*, gh repo view \*, gh pr view \*, gh pr diff \*, git diff \*, git show \*                                                                        | (none)                                        |
+| `@subagent/task`              | `deny`  | (none)                                                                                                                                                    | (none)                                        |
 
 #### Configuration Reference
 
@@ -448,19 +459,20 @@ See [OpenCode Permissions Documentation](https://opencode.ai/docs/permissions/#b
 
 ### Agent ID Reference
 
-| Agent        | ID                       | Type    | Invocation                                  |
-| ------------ | ------------------------ | ------- | ------------------------------------------- |
-| Plan         | `@primary/plan`          | Primary | User selection                              |
-| Dev          | `@primary/dev`           | Primary | User selection                              |
-| Research     | `@subagent/research`     | Sub     | Orchestrator                                |
-| Task         | `@subagent/task`         | Sub     | Orchestrator                                |
-| Code         | `@subagent/code`         | Sub     | Orchestrator                                |
-| QA           | `@subagent/qa`           | Sub     | Orchestrator                                |
-| Commit       | `@subagent/commit`       | Sub     | **Command only** (`/command__commit`)       |
-| Pull Request | `@subagent/pull-request` | Sub     | **Command only** (`/command__pull-request`) |
-| Document     | `@subagent/document`     | Sub     | Orchestrator                                |
-| DevOps       | `@subagent/devops`       | Sub     | Orchestrator                                |
-| Review       | `@subagent/review`       | Sub     | Orchestrator or `/command__review`          |
+| Agent             | ID                            | Type    | Invocation                                     |
+| ----------------- | ----------------------------- | ------- | ---------------------------------------------- |
+| Plan              | `@primary/plan`               | Primary | User selection                                 |
+| Dev               | `@primary/dev`                | Primary | User selection                                 |
+| Research          | `@subagent/research`          | Sub     | Orchestrator                                   |
+| Task              | `@subagent/task`              | Sub     | Orchestrator                                   |
+| Code              | `@subagent/code`              | Sub     | Orchestrator                                   |
+| QA                | `@subagent/qa`                | Sub     | Orchestrator                                   |
+| Commit            | `@subagent/commit`            | Sub     | **Command only** (`/command__commit`)          |
+| Pull Request      | `@subagent/pull-request`      | Sub     | **Command only** (`/command__pull-request`)    |
+| Document          | `@subagent/document`          | Sub     | Orchestrator                                   |
+| DevOps            | `@subagent/devops`            | Sub     | Orchestrator                                   |
+| Review            | `@subagent/review`            | Sub     | Orchestrator or `/command__review`             |
+| Review Validation | `@subagent/review-validation` | Sub     | **Command only** (`/command__validate-review`) |
 
 ### Mode Reference
 
