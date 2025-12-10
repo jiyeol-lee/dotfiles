@@ -21,6 +21,7 @@ tools:
 permission:
   bash:
     "*": deny
+    "jq": allow
     # Git read commands
     "git status": allow
     "git diff *": allow
@@ -32,6 +33,7 @@ permission:
     "git push *": allow
     # GitHub CLI - read
     "gh pr list *": allow
+    "gh repo view *": allow
     "gh pr view *": allow
     "gh pr diff *": allow
     "gh pr status *": allow
