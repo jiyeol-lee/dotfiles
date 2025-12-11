@@ -41,7 +41,8 @@
     }
   },
   "tools": {
-    "mcp__*": false
+    "mcp__*": false,
+    "tool_*": false
   },
   "tui": {
     "scroll_speed": 3,
