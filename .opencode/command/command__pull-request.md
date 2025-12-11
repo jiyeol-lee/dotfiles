@@ -17,33 +17,13 @@ Steps:
 
 2. **Draft (Mode A)** (Delegate to `@subagent/pull-request`)
    - Invoke in **Mode A (Draft)**.
-   - Check if PR exists (`gh pr view`).
+   - Use `tool__git--retrieve-current-branch-diff` to analyze commits since diverging from target branch.
+   - **Extract Linked Issues**: Scan commit messages for issue references (e.g., `LINEAR-123`, `JIRA-456`, `#123`).
    - **Check for Template**: Try to read `.github/pull_request_template.md` or `pull_request_template.md`.
      - If found, store the template structure (headers, sections) for use in drafting or validation.
      - If not found, note that a standard format will be used.
    - **If Existing PR**:
-     - Fetch context (reviews, comments, review comments) using:
-
-     ```bash
-     gh api graphql -f query='
-       query($owner: String!, $name: String!, $number: Int!) {
-         repository(owner: $owner, name: $name) {
-           pullRequest(number: $number) {
-             state
-             title
-             body
-             comments(first: 100) { nodes { author { login } body } }
-             reviews(first: 30) { nodes { author { login } body state } }
-             reviewThreads(first: 100) {
-               nodes {
-                 comments(first: 20) { nodes { author { login } body path } }
-               }
-             }
-           }
-         }
-       }' -F owner="$(gh repo view --json owner -q .owner.login)" -F name="$(gh repo view --json name -q .name)" -F number="$(gh pr view --json number -q .number)"
-     ```
-
+     - Fetch context (reviews, comments, review comments) using `tool__gh--retrieve-pull-request-info` tool.
      - **Template Validation** (if template was found):
        - Compare the existing PR body against the template structure.
        - Verify all required sections/headers from the template are present.
@@ -57,22 +37,7 @@ Steps:
      - **Draft Content**:
        - If template found: Fill it out with the summary of changes. **Do NOT** change the template structure or headers.
        - If no template: Draft a standard Title and Body.
-     - **List Collaborators**: Run the following to see available reviewers:
-       ```bash
-       gh api graphql -f query='
-       query($owner: String!, $name: String!) {
-         repository(owner: $owner, name: $name) {
-           collaborators(first: 100) {
-             edges {
-               node {
-                 login
-                 name
-               }
-             }
-           }
-         }
-       }' -F owner="$(gh repo view --json owner -q .owner.login)" -F name="$(gh repo view --json name -q .name)" | jq '[.data.repository.collaborators.edges[].node | {login, name}]'
-       ```
+     - **List Collaborators**: Use `tool__gh--retrieve-repository-collaborators` to list available reviewers.
      - **Constraint**:
        - **Do NOT** recommend or select reviewers automatically.
        - **List** the collaborators to let the user choose.
@@ -82,15 +47,13 @@ Steps:
 3. **Publish (Mode B)** (Delegate to `@subagent/pull-request`)
    - **Constraint**: Do not proceed without explicit user approval.
    - Invoke in **Mode B (Execute)**.
-   - Push commits (if needed): `git push origin <branch>`.
-   - Create (`gh pr create`) or Update (`gh pr edit`) the PR.
-     - Always use `--assignee @me`. Use the user-provided `--reviewer` flag.
-     - Do not add any other flags unless explicitly requested.
+   - Push commits (if needed): Use `tool__git--push` to push the branch to remote.
+   - Use `tool__gh--create-pull-request` to create the PR or `tool__gh--edit-pull-request` to update an existing PR.
+   - Use the user-provided reviewers.
    - Report the final URL.
 
 4. **Safety**
    - Never push or open a PR without explicit approval.
-   - Never auto-select reviewers. Always assign to `@me`.
-   - Never modify PR labels or milestones without explicit request.
+   - Never auto-select reviewers.
 
 $ARGUMENTS

@@ -10,16 +10,16 @@ Goal: analyze changes, draft a commit message, confirm with user, then commit on
 Steps:
 
 1. **Preflight** (Delegate to `@subagent/commit`)
-   - Run `git status` to check repository state.
-   - Identify staged and unstaged changes.
+   - Use `tool__git--status` to check repository state (staged, unstaged, untracked files).
    - If no changes exist, report and stop.
    - Summarize the changes (files modified, added, deleted).
 
 2. **Draft (Mode A)** (Delegate to `@subagent/commit`)
    - Invoke in **Mode A (Draft)**.
    - **Analyze Changes**:
-     - Run `git diff --cached` for staged changes.
-     - Run `git diff` for unstaged changes.
+     - Use `tool__git--status` to identify staged files, then use `read` tool to examine specific file contents if needed.
+     - Use `tool__git--retrieve-current-branch-diff` to view all changes compared to the base branch.
+     - Use `tool__git--status` to identify unstaged files.
      - Categorize changes by type (feature, fix, refactor, docs, test, chore, etc.).
    - **Propose Staging**:
      - If there are unstaged changes, ask the user which files to stage.
@@ -41,11 +41,11 @@ Steps:
        ```
        feat(auth): add OAuth2 login support
 
-       - Implement Google OAuth2 provider
-       - Add token refresh mechanism
-       - Update user session handling
+       - implement Google OAuth2 provider
+       - add token refresh mechanism
+       - update user session handling
 
-       Closes #123
+       closes #123
        ```
 
    - Present the draft commit message and files to be staged.
@@ -54,13 +54,17 @@ Steps:
 3. **Apply (Mode B)** (Delegate to `@subagent/commit`)
    - **Constraint**: Do not proceed without explicit user approval.
    - Invoke in **Mode B (Execute)**.
-   - Stage the approved files: `git add <files>`.
-   - Create the commit: `git commit -m "<message>"`.
+   - Use `tool__git--stage-files` with the list of files to stage.
+   - Use `tool__git--commit` with the commit message (and optional body).
+   - **Pre-commit Hook Handling**:
+     - If commit fails due to pre-commit hooks that modify files:
+       1. Stage the modified files with `tool__git--stage-files`
+       2. Retry the commit **once** with `tool__git--commit`
+       3. If still fails, report the hook error to user
+   - **Push Option**: After successful commit, offer to push (requires explicit user approval).
    - Report the commit SHA and summary.
 
 4. **Safety**
    - Never stage or commit without explicit user approval.
-   - Never use `git commit -a` or `git add .` without user confirmation.
-   - Never amend commits without explicit request.
 
 $ARGUMENTS

@@ -17,13 +17,9 @@ Steps:
 
 1. **Parse Target** (Delegate to `@subagent/review`)
    - Parse the argument to determine review target:
-     - If `pr:<number>`: Fetch PR diff using `gh pr diff <number>`.
-     - If `commit:<count>`: Get diff using `git diff HEAD~<count>`.
-     - If no argument: Detect base branch and use `git diff <base>...HEAD`.
-   - Identify the base branch:
-     ```bash
-     git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@' || echo "main"
-     ```
+     - If `pr:<number>`: Use `tool__git--retrieve-pull-request-diff` with the PR number to fetch the diff.
+     - If `commit:<count>`: Use `tool__git--retrieve-latest-n-commits-diff` with the count to get the diff.
+     - If no argument: Use `tool__git--retrieve-current-branch-diff` to get current branch changes vs base.
    - Gather the list of modified files.
 
 2. **Gather Context** (Delegate to `@subagent/review`)
@@ -31,33 +27,11 @@ Steps:
      - Read the full file content (not just the diff).
      - Identify the file type and language.
      - Note the change type (added, modified, deleted).
-   - **For PR reviews** (`pr:<number>`), fetch full context using:
-
-     ```bash
-     gh api graphql -f query='
-       query($owner: String!, $name: String!, $number: Int!) {
-         repository(owner: $owner, name: $name) {
-           pullRequest(number: $number) {
-             state
-             title
-             body
-             comments(first: 100) { nodes { author { login } body } }
-             reviews(first: 30) { nodes { author { login } body state } }
-             reviewThreads(first: 100) {
-               nodes {
-                 comments(first: 20) { nodes { author { login } body path } }
-               }
-             }
-           }
-         }
-       }' -F owner="$(gh repo view --json owner -q .owner.login)" -F name="$(gh repo view --json name -q .name)" -F number=<number>
-     ```
-
+   - **For PR reviews** (`pr:<number>`), use `tool__gh--retrieve-pull-request-info` with the PR number to fetch full PR context (state, title, body, comments, reviews, reviewThreads).
      - Use this context to:
        - Understand PR description and goals.
        - Avoid duplicating existing review feedback.
        - Consider responses to previous review comments.
-     - Also check CI/test status if available: `gh pr checks <number>`.
 
 3. **Parallel Review** (Delegate to `@subagent/review` - 3 parallel streams)
    - Launch three parallel review streams:
@@ -135,8 +109,6 @@ Steps:
    - Provide actionable fix suggestions, not just problem descriptions.
 
 6. **Safety**
-   - This is a READ-ONLY operation. Never modify files during review.
-   - Never auto-approve or merge PRs.
    - Always present findings for human decision-making.
 
 $ARGUMENTS

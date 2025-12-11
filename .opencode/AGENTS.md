@@ -82,6 +82,19 @@ Primary agents should be aware of what specialized capabilities each sub-agent h
 | `linear`        | Issue tracking integration                        |
 | `atlassian`     | Jira/Confluence integration                       |
 
+### Custom Tools
+
+Some sub-agents use custom tools from plugins (`tools__gh.ts`, `tools__git.ts`) instead of bash commands for safer operation.
+
+| Sub-Agent                     | Custom Tools Available                                                                                        |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `@subagent/commit`            | `tool__git--status`, `tool__git--stage-files`, `tool__git--commit`, `tool__git--retrieve-current-branch-diff` |
+| `@subagent/pull-request`      | `tool__gh--*` (PR info, collaborators, create, edit), `tool__git--retrieve-current-branch-diff`, `tool__git--push` |
+| `@subagent/review`            | `tool__gh--retrieve-pull-request-info`, `tool__git--*` (diff tools)                                           |
+| `@subagent/review-validation` | `tool__gh--retrieve-pull-request-info`                                                                        |
+
+See `docs/opencode.md` **Custom Tools Permission Matrix** for complete tool permissions.
+
 ## Global Constraints
 
 ### Never Allowed

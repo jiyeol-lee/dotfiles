@@ -72,7 +72,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
                 -F owner="$(gh repo view --json owner -q .owner.login)" \
                 -F name="$(gh repo view --json name -q .name)" \
                 -F number=${pullRequestNumberArg} \
-                | jq '.data.repository.pullRequest.reviewThreads.nodes |= map(select(.isResolved == ${withResolved}))'`.text();
+                | jq '.data.repository.pullRequest.reviewThreads.nodes |= map(select(.isResolved == ${{ raw: withResolved ? "true" : "false" }}))'`.text();
             return result;
           } catch (error) {
             throw new Error(`Failed to retrieve pull request info: ${error}`);
@@ -127,12 +127,12 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
           const { title, body, reviewers } = args;
 
           try {
-            const reviewersArg = reviewers
+            const reviewersArg = reviewers?.length
               ? `--reviewer ${reviewers.join(",")}`
               : "";
 
             const result =
-              await $`gh pr create --title "${title}" --body "${body}" ${reviewersArg} --json url | jq -r .url`.text();
+              await $`gh pr create --title ${title} --body ${body} ${reviewersArg} --json url | jq -r .url`.text();
             return result;
           } catch (error) {
             throw new Error(`Failed to create pull request: ${error}`);
@@ -160,13 +160,18 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
             .describe("List of reviewers' GitHub usernames"),
         },
         async execute(args) {
-          const { pull_request_number: pullRequestNumber, title, body } = args;
+          const {
+            pull_request_number: pullRequestNumber,
+            title,
+            body,
+            reviewers,
+          } = args;
 
           try {
-            const titleArg = title ? `--title "${title}"` : "";
-            const bodyArg = body ? `--body "${body}"` : "";
-            const reviewersArg = args.reviewers
-              ? `--reviewer ${args.reviewers.join(",")}`
+            const titleArg = title ? `--title ${title}` : "";
+            const bodyArg = body ? `--body ${body}` : "";
+            const reviewersArg = reviewers?.length
+              ? `--reviewer ${reviewers.join(",")}`
               : "";
 
             const result =

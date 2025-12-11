@@ -17,55 +17,9 @@ Steps:
 1. **Parse Target** (Delegate to `@subagent/review-validation`)
    - Parse the argument to determine target PR:
      - If `pr:<number>`: Use the specified PR number.
-     - If no argument: Detect current branch's PR using `gh pr view --json number -q .number`.
-   - Retrieve repository context dynamically:
-     ```bash
-     gh repo view --json owner -q .owner.login  # Get owner
-     gh repo view --json name -q .name          # Get repo name
-     ```
-   - Verify PR exists and has review comments.
 
 2. **Fetch Review Data** (Delegate to `@subagent/review-validation`)
-   - Query GitHub GraphQL API for reviews and review threads with URLs:
-
-     ```bash
-     gh api graphql -f query='
-       query($owner: String!, $repo: String!, $pr: Int!) {
-         repository(owner: $owner, name: $repo) {
-           pullRequest(number: $pr) {
-             reviews(first: 50) {
-               nodes {
-                 url
-                 author { login }
-                 state
-                 body
-                 submittedAt
-               }
-             }
-             reviewThreads(first: 50) {
-               nodes {
-                 path
-                 line
-                 isResolved
-                 comments(first: 10) {
-                   nodes {
-                     body
-                     author { login }
-                     url
-                   }
-                 }
-               }
-             }
-           }
-         }
-       }
-     ' -F owner="$(gh repo view --json owner -q .owner.login)" \
-       -F name="$(gh repo view --json name -q .name)" \
-       -F pr=<number> \
-       | jq '.data.repository.pullRequest.reviewThreads.nodes |= map(select(.isResolved == false))'
-     ```
-
-   - Filter to unresolved review threads only.
+   - Use `tool__gh--retrieve-pull-request-info` with the PR number (if provided) and `with_resolved: false` to fetch only unresolved review threads.
    - Extract file paths, line numbers, comment bodies, and URLs.
 
 3. **Gather Code Context** (Delegate to `@subagent/review-validation`)
@@ -82,6 +36,10 @@ Steps:
      - **Determine Verdict**:
        - ✅ **VALID**: Reviewer's concern is accurate and actionable.
        - ❌ **INVALID**: Reviewer misunderstood the code; no change needed.
+     - **Assess Confidence**: Rate the verdict confidence:
+       - **High**: Code clearly supports or contradicts the claim
+       - **Medium**: Code context is somewhat ambiguous
+       - **Low**: Limited context or complex logic requires interpretation
      - **Document Evidence**: Include relevant code snippets and reasoning.
 
 5. **Present Report**
@@ -142,9 +100,7 @@ Steps:
    - Provide clear reasoning for each verdict.
 
 6. **Safety**
-   - This is a READ-ONLY operation. Never modify files.
    - Never respond to or dismiss review comments on GitHub.
-   - Never approve, request changes, or merge PRs.
    - Always present findings for human decision-making.
 
 $ARGUMENTS

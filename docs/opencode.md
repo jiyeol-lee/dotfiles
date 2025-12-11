@@ -385,7 +385,7 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
 
 | Tool        | research | task | code | qa  | commit | pull-request | document | devops | review | review-validation |
 | ----------- | :------: | :--: | :--: | :-: | :----: | :----------: | :------: | :----: | :----: | :---------------: |
-| `bash`      |    ❌    |  ❌  |  ✅  | ✅  |   ✅   |      ✅      |    ❌    |   ✅   |   ✅   |        ✅         |
+| `bash`      |    ❌    |  ❌  |  ✅  | ✅  |   ❌   |      ❌      |    ❌    |   ✅   |   ❌   |        ❌         |
 | `edit`      |    ❌    |  ❌  |  ✅  | ❌  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
 | `write`     |    ❌    |  ❌  |  ✅  | ❌  |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
 | `read`      |    ✅    |  ✅  |  ✅  | ✅  |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |        ✅         |
@@ -397,6 +397,40 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
 | `todoread`  |    ❌    |  ❌  |  ❌  | ❌  |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |        ❌         |
 | `webfetch`  |    ✅    |  ❌  |  ❌  | ❌  |   ❌   |      ❌      |    ✅    |   ❌   |   ❌   |        ❌         |
 | MCP tools   |    ✅    |  ❌  |  ✅  | ✅  |   ❌   |      ✅      |    ✅    |   ✅   |   ❌   |        ❌         |
+
+### Custom Tools Permission Matrix
+
+Custom tools from `tools__gh.ts` and `tools__git.ts` plugins replace hardcoded bash commands for safer operation.
+
+| Tool                                          | commit | pull-request | review | review-validation |
+| --------------------------------------------- | :----: | :----------: | :----: | :---------------: |
+| `tool__gh--retrieve-pull-request-info`        |   ❌   |      ✅      |   ✅   |        ✅         |
+| `tool__gh--retrieve-repository-collaborators` |   ❌   |      ✅      |   ❌   |        ❌         |
+| `tool__gh--create-pull-request`               |   ❌   |      ✅      |   ❌   |        ❌         |
+| `tool__gh--edit-pull-request`                 |   ❌   |      ✅      |   ❌   |        ❌         |
+| `tool__git--retrieve-pull-request-diff`       |   ❌   |      ❌      |   ✅   |        ❌         |
+| `tool__git--retrieve-latest-n-commits-diff`   |   ❌   |      ❌      |   ✅   |        ❌         |
+| `tool__git--retrieve-current-branch-diff`     |   ✅   |      ✅      |   ✅   |        ❌         |
+| `tool__git--status`                           |   ✅   |      ❌      |   ❌   |        ❌         |
+| `tool__git--stage-files`                      |   ✅   |      ❌      |   ❌   |        ❌         |
+| `tool__git--commit`                           |   ✅   |      ❌      |   ❌   |        ❌         |
+| `tool__git--push`                             |   ❌   |      ✅      |   ❌   |        ❌         |
+
+#### Custom Tool Purposes
+
+| Tool                                          | Purpose                                                        | Type  |
+| --------------------------------------------- | -------------------------------------------------------------- | ----- |
+| `tool__gh--retrieve-pull-request-info`        | Fetch PR state, title, body, comments, reviews, review threads | Read  |
+| `tool__gh--retrieve-repository-collaborators` | List repository collaborators for reviewer selection           | Read  |
+| `tool__gh--create-pull-request`               | Create new pull request                                        | Write |
+| `tool__gh--edit-pull-request`                 | Edit existing pull request                                     | Write |
+| `tool__git--retrieve-pull-request-diff`       | Fetch diff of a GitHub PR                                      | Read  |
+| `tool__git--retrieve-latest-n-commits-diff`   | Fetch diff of last N commits                                   | Read  |
+| `tool__git--retrieve-current-branch-diff`     | Fetch diff of current branch vs main                           | Read  |
+| `tool__git--status`                           | Retrieve git status (staged, unstaged, untracked files)        | Read  |
+| `tool__git--stage-files`                      | Stage files for commit                                         | Write |
+| `tool__git--commit`                           | Create a git commit with staged changes                        | Write |
+| `tool__git--push`                             | Push current branch to remote repository                       | Write |
 
 ### Bash Permission Matrix (Granular)
 
@@ -424,14 +458,14 @@ All primary agents have `permission.bash: deny` - they delegate to sub-agents.
 | Agent                         | Default | Allowed Commands                                                                                                                                                                                          | Ask Commands                                  |
 | ----------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
 | `@subagent/code`              | `deny`  | ls, pwd, cat, head, tail, find, npm/pnpm/yarn/bun, go, cargo, pip, poetry, make, eslint, prettier, tsc, git (read)                                                                                        | rm, mv                                        |
-| `@subagent/commit`            | `deny`  | git status/diff/log/show/branch, git add/reset, git commit                                                                                                                                                | git push                                      |
+| `@subagent/commit`            | `deny`  | (none - uses custom tools)                                                                                                                                                                                | git push                                      |
 | `@subagent/devops`            | `deny`  | ls, pwd, cat, head, tail, find, yamllint, hadolint, shellcheck, actionlint, terraform init/validate/fmt, aws validate, docker build/images/ps, git (read)                                                 | terraform plan/apply, docker run/push, rm, mv |
 | `@subagent/document`          | `deny`  | (none)                                                                                                                                                                                                    | (none)                                        |
-| `@subagent/pull-request`      | `deny`  | git (read), git push, gh pr list/view/diff/status/checks, gh api                                                                                                                                          | gh pr create/edit/merge                       |
+| `@subagent/pull-request`      | `deny`  | (none - uses custom tools)                                                                                                                                                                                | (none)                                        |
 | `@subagent/qa`                | `deny`  | ls, pwd, cat, find, npm/pnpm/yarn/bun (full), eslint, tsc, jest, vitest, playwright, cypress, go (test/build/vet), golangci-lint, poetry run (pytest/ruff/mypy/pyright/build), coverage tools, git (read) | (none)                                        |
 | `@subagent/research`          | `deny`  | (none)                                                                                                                                                                                                    | (none)                                        |
-| `@subagent/review`            | `deny`  | git status/diff/log/show/branch, gh pr diff/view/checks/api                                                                                                                                               | (none)                                        |
-| `@subagent/review-validation` | `deny`  | gh api \*, gh repo view \*, gh pr view \*, gh pr diff \*, git diff \*, git show \*                                                                                                                        | (none)                                        |
+| `@subagent/review`            | `deny`  | (none - uses custom tools)                                                                                                                                                                                | (none)                                        |
+| `@subagent/review-validation` | `deny`  | (none - uses custom tools)                                                                                                                                                                                | (none)                                        |
 | `@subagent/task`              | `deny`  | (none)                                                                                                                                                                                                    | (none)                                        |
 
 #### Configuration Reference
