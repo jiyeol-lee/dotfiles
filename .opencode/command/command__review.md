@@ -17,7 +17,7 @@ Steps:
 
 1. **Parse Target** (Delegate to `@subagent/review`)
    - Parse the argument to determine review target:
-     - If `pr:<number>`: Use `tool__git--retrieve-pull-request-diff` with the PR number to fetch the diff.
+     - If `pr:<number>`: Use `tool__gh--retrieve-pull-request-diff` with the PR number to fetch the diff.
      - If `commit:<count>`: Use `tool__git--retrieve-latest-n-commits-diff` with the count to get the diff.
      - If no argument: Use `tool__git--retrieve-current-branch-diff` to get current branch changes vs base.
    - Gather the list of modified files.

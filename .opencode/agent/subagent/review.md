@@ -15,7 +15,7 @@ tools:
   webfetch: false
   mcp__*: false
   tool__gh--retrieve-pull-request-info: true
-  tool__git--retrieve-pull-request-diff: true
+  tool__gh--retrieve-pull-request-diff: true
   tool__git--retrieve-latest-n-commits-diff: true
   tool__git--retrieve-current-branch-diff: true
 ---

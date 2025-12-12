@@ -191,7 +191,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
           }
         },
       }),
-      "tool__git--retrieve-pull-request-diff": tool({
+      "tool__gh--retrieve-pull-request-diff": tool({
         description:
           "Retrieve the diff of a GitHub pull request in the current repository.",
         args: {
