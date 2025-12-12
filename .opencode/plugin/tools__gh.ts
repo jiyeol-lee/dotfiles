@@ -127,12 +127,11 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
           const { title, body, reviewers } = args;
 
           try {
-            const reviewersArg = reviewers?.length
-              ? `--reviewer ${reviewers.join(",")}`
-              : "";
+            const reviewersList = reviewers?.join(",");
 
-            const result =
-              await $`gh pr create --title ${title} --body ${body} ${reviewersArg} --json url | jq -r .url`.text();
+            const result = reviewersList
+              ? await $`gh pr create --title ${title} --body-file - --reviewer ${reviewersList} < ${new Response(body)}`.text()
+              : await $`gh pr create --title ${title} --body-file - < ${new Response(body)}`.text();
             return result;
           } catch (error) {
             throw new Error(`Failed to create pull request: ${error}`);
@@ -168,14 +167,24 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
           } = args;
 
           try {
-            const titleArg = title ? `--title ${title}` : "";
-            const bodyArg = body ? `--body ${body}` : "";
-            const reviewersArg = reviewers?.length
-              ? `--reviewer ${reviewers.join(",")}`
-              : "";
+            const reviewersList = reviewers?.join(",");
 
-            const result =
-              await $`gh pr edit ${pullRequestNumber} ${titleArg} ${bodyArg} ${reviewersArg} --json url | jq -r .url`.text();
+            let result: string;
+
+            if (body && title) {
+              result = await $`gh pr edit ${pullRequestNumber} --title ${title} --body-file - < ${new Response(body)}`.text();
+            } else if (body) {
+              result = await $`gh pr edit ${pullRequestNumber} --body-file - < ${new Response(body)}`.text();
+            } else if (title) {
+              result = await $`gh pr edit ${pullRequestNumber} --title ${title}`.text();
+            } else {
+              result = "No changes specified";
+            }
+
+            if (reviewersList) {
+              await $`gh pr edit ${pullRequestNumber} --add-reviewer ${reviewersList}`.text();
+            }
+
             return result;
           } catch (error) {
             throw new Error(`Failed to edit pull request: ${error}`);
