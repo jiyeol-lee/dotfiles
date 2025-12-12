@@ -25,7 +25,7 @@
 | Sub     | `@subagent/pull-request`      | PR management (Draft/Apply Mode)                                 |
 | Sub     | `@subagent/document`          | Documentation (Draft Mode)                                       |
 | Sub     | `@subagent/devops`            | DevOps and infrastructure                                        |
-| Sub     | `@subagent/review`            | Code review (3 focus areas)                                      |
+| Sub     | `@subagent/review`            | Code review (4 focus areas)                                      |
 | Sub     | `@subagent/review-validation` | Validates PR review comment accuracy against actual code         |
 
 ## Directory Structure
@@ -289,15 +289,16 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
     │      SKIP if document-only        │       │      • Skip if document-only      │
     │      RUN @subagent/qa otherwise   │       │      • Draft via @subagent/doc    │
     │                                   │       │      • MANDATORY user approval    │
-    │   3. Parallel Review (3x)         │       │                                   │
+    │   3. Parallel Review (4x)         │       │                                   │
     │      • Quality                    │       │   3. QA Phase (Conditional)       │
     │      • Regression                 │       │      • Skip if document-only      │
     │      • Documentation              │       │      • Run @subagent/qa           │
-    │                                   │       │                                   │
-    │   4. Report completion            │       │   4. Parallel Review (3x)         │
-    │                                   │       │      • Quality                    │
-    │   NOTE: No Doc Check              │       │      • Regression                 │
-    │   (no behavior change expected)   │       │      • Documentation              │
+    │      • Performance                │       │                                   │
+    │                                   │       │   4. Parallel Review (4x)         │
+    │   4. Report completion            │       │      • Quality                    │
+    │                                   │       │      • Regression                 │
+    │   NOTE: No Doc Check              │       │      • Documentation              │
+    │   (no behavior change expected)   │       │      • Performance                │
     │                                   │       │                                   │
     │                                   │       │   5. Issue Resolution             │
     │                                   │       │      • Present issues to user     │
@@ -525,7 +526,7 @@ See [OpenCode Permissions Documentation](https://opencode.ai/docs/permissions/#b
 | Phase 1   | Work (code, document, or devops) - supports parallel execution for isolated items | Always                                                               |
 | Phase 2   | Documentation Check                                                               | Skip if work_agent(s) is document only                               |
 | Phase 2.5 | QA/Testing                                                                        | Skip if work_agent(s) is document only; validates all parallel items |
-| Phase 3   | Parallel Review (3x)                                                              | Always                                                               |
+| Phase 3   | Parallel Review (4x)                                                              | Always                                                               |
 | Phase 4   | Issue Resolution                                                                  | Always                                                               |
 
 ### Status Reference

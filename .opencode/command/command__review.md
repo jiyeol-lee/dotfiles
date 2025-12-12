@@ -33,8 +33,8 @@ Steps:
        - Avoid duplicating existing review feedback.
        - Consider responses to previous review comments.
 
-3. **Parallel Review** (Delegate to `@subagent/review` - 3 parallel streams)
-   - Launch three parallel review streams:
+3. **Parallel Review** (Delegate to `@subagent/review` - 4 parallel streams)
+   - Launch four parallel review streams:
 
    **Stream 1: Quality Review**
    - Code style and formatting consistency.
@@ -57,8 +57,17 @@ Steps:
    - Are complex algorithms explained?
    - Changelog entries needed?
 
+   **Stream 4: Performance Review**
+   - Algorithm complexity (O(n²) patterns, inefficient loops).
+   - Memory usage (large allocations, potential leaks).
+   - Network/IO efficiency (batching, parallelization).
+   - Caching opportunities.
+   - Bundle size impact (frontend).
+   - Database queries (N+1 patterns, index hints).
+   - Async/await patterns (blocking, Promise.all opportunities).
+
 4. **Aggregate Findings** (Delegate to `@subagent/review`)
-   - Collect results from all three streams.
+   - Collect results from all four streams.
    - Deduplicate overlapping findings.
    - Categorize by severity:
      - 🔴 **Critical**: Must fix before merge (security, data loss, breaking changes).

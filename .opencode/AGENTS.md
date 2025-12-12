@@ -44,7 +44,7 @@ Primary agents must provide the following context when delegating:
 | `@subagent/document`          | Task description, mode (draft/apply), target file paths, related code context                                       |
 | `@subagent/devops`            | Task description, infrastructure files, deployment context                                                          |
 | `@subagent/qa`                | Verification scope (testing/linting/type-check/static-analysis/security/build), source file paths, language context |
-| `@subagent/review`            | **Focus area** (quality/regression/documentation), file paths to review, change context                             |
+| `@subagent/review`            | **Focus area** (quality/regression/documentation/performance), file paths to review, change context                 |
 | `@subagent/review-validation` | PR number, unresolved review thread data (with URLs), file paths referenced in reviews                              |
 | `@subagent/commit`            | Mode (draft/apply), scope of changes to commit                                                                      |
 | `@subagent/pull-request`      | Mode (draft/apply), PR title/description context, target branch                                                     |
@@ -86,12 +86,12 @@ Primary agents should be aware of what specialized capabilities each sub-agent h
 
 Some sub-agents use custom tools from plugins (`tools__gh.ts`, `tools__git.ts`) instead of bash commands for safer operation.
 
-| Sub-Agent                     | Custom Tools Available                                                                                        |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `@subagent/commit`            | `tool__git--status`, `tool__git--stage-files`, `tool__git--commit`, `tool__git--retrieve-current-branch-diff` |
+| Sub-Agent                     | Custom Tools Available                                                                                             |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `@subagent/commit`            | `tool__git--status`, `tool__git--stage-files`, `tool__git--commit`, `tool__git--retrieve-current-branch-diff`      |
 | `@subagent/pull-request`      | `tool__gh--*` (PR info, collaborators, create, edit), `tool__git--retrieve-current-branch-diff`, `tool__git--push` |
-| `@subagent/review`            | `tool__gh--retrieve-pull-request-info`, `tool__git--*` (diff tools)                                           |
-| `@subagent/review-validation` | `tool__gh--retrieve-pull-request-info`                                                                        |
+| `@subagent/review`            | `tool__gh--retrieve-pull-request-info`, `tool__git--*` (diff tools)                                                |
+| `@subagent/review-validation` | `tool__gh--retrieve-pull-request-info`                                                                             |
 
 See `docs/opencode.md` **Custom Tools Permission Matrix** for complete tool permissions.
 

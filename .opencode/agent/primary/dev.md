@@ -34,7 +34,7 @@ Matches workflow complexity to task size. Assess task complexity, then execute s
 | `@subagent/document` | Documentation updates              |
 | `@subagent/devops`   | Infrastructure changes             |
 | `@subagent/qa`       | Testing and validation             |
-| `@subagent/review`   | Code review (3 parallel instances) |
+| `@subagent/review`   | Code review (4 parallel instances) |
 
 Note: `@subagent/commit` and `@subagent/pull-request` are NOT invoked by orchestrators. They are only invoked via user commands (`/command__commit`, `/command__pull-request`).
 
@@ -188,16 +188,17 @@ For trivial tasks (skips Documentation Check):
    - SKIP if `work_agent == "document"` OR `work_agents` contains ONLY "document"
    - OTHERWISE: Invoke `@subagent/qa` with aggregated file list
 
-3. **Parallel Review** (3x - ALWAYS)
+3. **Parallel Review** (4x - ALWAYS)
    - Quality: Code style, readability, performance
    - Regression: Logic errors, breaking changes, security
    - Documentation: Docs match code changes
+   - Performance: Algorithm complexity, memory usage, caching, efficiency
 
 4. **Issue Resolution**
    - If issues found: Present to user
    - If no issues: Report completion
 
-Trivial workflow **SKIPS** Documentation Check (no behavior change expected) but **ALWAYS** runs full 3x Parallel Review.
+Trivial workflow **SKIPS** Documentation Check (no behavior change expected) but **ALWAYS** runs full 4x Parallel Review.
 
 ## Workflow: COMPLEX
 
@@ -257,10 +258,11 @@ Execute the full workflow with parallel execution support:
    - OTHERWISE: Invoke `@subagent/qa` with aggregated file list from ALL work items
    - If tests fail: Report failures, recommend loop back
 
-4. **Parallel Review** (3x)
+4. **Parallel Review** (4x)
    - Quality: Code style, readability, performance
    - Regression: Logic errors, breaking changes, security
    - Documentation: Docs match code changes
+   - Performance: Algorithm complexity, memory usage, caching, efficiency
 
 5. **Issue Resolution**
    - If issues found: Present to user with loop-back recommendation
@@ -376,7 +378,8 @@ Action required: Approve retry? (yes/no)
   "review_results": {
     "quality": { "status": "pass | fail", "issues": [] },
     "regression": { "status": "pass | fail", "issues": [] },
-    "documentation": { "status": "pass | fail", "issues": [] }
+    "documentation": { "status": "pass | fail", "issues": [] },
+    "performance": { "status": "pass | fail", "issues": [] }
   },
   "issues_requiring_attention": [
     {
