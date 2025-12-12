@@ -1,5 +1,7 @@
 # Global Agent Context
 
+test
+
 This file provides global context and rules inherited by all agent system prompts.
 
 ## Core Principles
