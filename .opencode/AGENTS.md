@@ -82,18 +82,35 @@ Primary agents should be aware of what specialized capabilities each sub-agent h
 | `linear`        | Issue tracking integration                        |
 | `atlassian`     | Jira/Confluence integration                       |
 
-### Custom Tools
+### Custom Tool Access Matrix
 
 Some sub-agents use custom tools from plugins (`tools__gh.ts`, `tools__git.ts`) instead of bash commands for safer operation.
 
-| Sub-Agent                     | Custom Tools Available                                                                                             |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `@subagent/commit`            | `tool__git--status`, `tool__git--stage-files`, `tool__git--commit`, `tool__git--retrieve-current-branch-diff`      |
-| `@subagent/pull-request`      | `tool__gh--*` (PR info, collaborators, create, edit), `tool__git--retrieve-current-branch-diff`, `tool__git--push` |
-| `@subagent/review`            | `tool__gh--retrieve-pull-request-info`, `tool__git--*` (diff tools)                                                |
-| `@subagent/review-validation` | `tool__gh--retrieve-pull-request-info`                                                                             |
+| Sub-Agent                     | Custom Tools Available                                                                                                    |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `@subagent/commit`            | `tool__git--status`, `tool__git--stage-files`, `tool__git--commit`, `tool__git--retrieve-current-branch-diff`             |
+| `@subagent/pull-request`      | `tool__gh--*` (PR info, collaborators, create, edit), `tool__git--retrieve-current-branch-diff`, `tool__git--push`        |
+| `@subagent/review`            | `tool__gh--retrieve-pull-request-info`, `tool__git--*` (diff tools)                                                       |
+| `@subagent/review-validation` | `tool__gh--retrieve-pull-request-info`                                                                                    |
+| `@subagent/research`          | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__git--retrieve-current-branch-diff` |
 
 See `docs/opencode.md` **Custom Tools Permission Matrix** for complete tool permissions.
+
+### Custom Tool Purposes
+
+| Tool                                          | Purpose                                                              |
+| --------------------------------------------- | -------------------------------------------------------------------- |
+| `tool__gh--retrieve-pull-request-info`        | Get comprehensive PR details (state, title, body, comments, reviews) |
+| `tool__gh--retrieve-repository-collaborators` | List repository collaborators (login and name)                       |
+| `tool__gh--create-pull-request`               | Create PR with title, body, and optional reviewers                   |
+| `tool__gh--edit-pull-request`                 | Edit PR title, body, or add reviewers                                |
+| `tool__gh--retrieve-pull-request-diff`        | Get the diff content of a specific PR                                |
+| `tool__git--retrieve-latest-n-commits-diff`   | Get diff for last N commits (1-100)                                  |
+| `tool__git--retrieve-current-branch-diff`     | Compare current branch against default branch                        |
+| `tool__git--status`                           | Get structured git status (staged, unstaged, untracked)              |
+| `tool__git--commit`                           | Create commit with message and optional body                         |
+| `tool__git--stage-files`                      | Stage files for commit (specific files or all)                       |
+| `tool__git--push`                             | Push current branch with upstream tracking                           |
 
 ## Global Constraints
 
