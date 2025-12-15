@@ -15,9 +15,6 @@ tools:
   webfetch: false
   mcp__context7_*: true
   mcp__aws-knowledge_*: true
-  mcp__linear_*: false
-  mcp__atlassian_*: false
-  mcp__playwright_*: false
 permission:
   bash:
     "*": deny

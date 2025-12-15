@@ -1,6 +1,6 @@
 ---
 description: Create or update a pull request with explicit approval.
-agent: primary/dev
+agent: primary/build
 ---
 
 You are coordinating pull request drafting and publication with `@subagent/pull-request`.
@@ -13,7 +13,7 @@ Steps:
    - Confirm git repo, branch, and commits exist.
    - Ensure current branch is not `main` or `master`.
    - Check if there are unpushed commits.
-   - Summarize recent test results (delegate to `@subagent/qa` if needed).
+   - Summarize recent test results (delegate to `@subagent/check` if needed).
 
 2. **Draft (Mode A)** (Delegate to `@subagent/pull-request`)
    - Invoke in **Mode A (Draft)**.

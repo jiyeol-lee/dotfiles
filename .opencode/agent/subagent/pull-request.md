@@ -15,9 +15,6 @@ tools:
   webfetch: false
   mcp__linear_*: true
   mcp__atlassian_*: true
-  mcp__context7_*: false
-  mcp__aws-knowledge_*: false
-  mcp__playwright_*: false
   tool__gh--retrieve-pull-request-info: true
   tool__gh--retrieve-repository-collaborators: true
   tool__gh--create-pull-request: true

@@ -38,18 +38,19 @@ When delegating to a sub-agent, include:
 
 Primary agents must provide the following context when delegating:
 
-| Sub-Agent                     | Required Context                                                                                                    |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `@subagent/code`              | Goal, file paths to modify, requirements, technical constraints                                                     |
-| `@subagent/document`          | Task description, mode (draft/apply), target file paths, related code context                                       |
-| `@subagent/devops`            | Task description, infrastructure files, deployment context                                                          |
-| `@subagent/qa`                | Verification scope (testing/linting/type-check/static-analysis/security/build), source file paths, language context |
-| `@subagent/review`            | **Focus area** (quality/regression/documentation/performance), file paths to review, change context                 |
-| `@subagent/review-validation` | PR number, unresolved review thread data (with URLs), file paths referenced in reviews                              |
-| `@subagent/commit`            | Mode (draft/apply), scope of changes to commit                                                                      |
-| `@subagent/pull-request`      | Mode (draft/apply), PR title/description context, target branch                                                     |
-| `@subagent/research`          | Research question or topic, scope boundaries, what information to return                                            |
-| `@subagent/task`              | Goal to decompose, context from research, constraints                                                               |
+| Sub-Agent                     | Required Context                                                                                    |
+| ----------------------------- | --------------------------------------------------------------------------------------------------- |
+| `@subagent/code`              | Goal, file paths to modify, requirements, technical constraints                                     |
+| `@subagent/document`          | Task description, mode (draft/apply), target file paths, related code context                       |
+| `@subagent/devops`            | Task description, infrastructure files, deployment context                                          |
+| `@subagent/e2e-test`          | Test scope, target pages/flows, existing test file paths, Playwright configuration context          |
+| `@subagent/check`             | Verification scope (lint/type-check/format/test), source file paths, language context               |
+| `@subagent/review`            | **Focus area** (quality/regression/documentation/performance), file paths to review, change context |
+| `@subagent/review-validation` | PR number, unresolved review thread data (with URLs), file paths referenced in reviews              |
+| `@subagent/commit`            | Mode (draft/apply), scope of changes to commit                                                      |
+| `@subagent/pull-request`      | Mode (draft/apply), PR title/description context, target branch                                     |
+| `@subagent/research`          | Research question or topic, scope boundaries, what information to return                            |
+| `@subagent/task`              | Goal to decompose, context from research, constraints                                               |
 
 **Note**: This table is the shared contract. Primary agents use this to construct prompts; sub-agents use this to validate they received sufficient context.
 
@@ -64,7 +65,8 @@ Primary agents should be aware of what specialized capabilities each sub-agent h
 | `@subagent/code`              | `context7`, `aws-knowledge`                        |
 | `@subagent/document`          | `context7`, `aws-knowledge`                        |
 | `@subagent/devops`            | `context7`, `aws-knowledge`                        |
-| `@subagent/qa`                | `context7`, `aws-knowledge`, **`playwright`**      |
+| `@subagent/e2e-test`          | `context7`, **`playwright`**                       |
+| `@subagent/check`             | None                                               |
 | `@subagent/research`          | `context7`, `aws-knowledge`, `linear`, `atlassian` |
 | `@subagent/pull-request`      | `linear`, `atlassian`                              |
 | `@subagent/review`            | None                                               |

@@ -1,6 +1,6 @@
 ---
 description: Validate PR review comments against actual code.
-agent: primary/plan
+agent: primary/build
 ---
 
 You are coordinating review comment validation with `@subagent/review-validation`.

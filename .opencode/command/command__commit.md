@@ -1,6 +1,6 @@
 ---
 description: Create a git commit with staged changes
-agent: primary/dev
+agent: primary/build
 ---
 
 You are coordinating git commit creation with `@subagent/commit`.

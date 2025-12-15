@@ -13,7 +13,6 @@ tools:
   todowrite: false
   todoread: false
   webfetch: false
-  mcp__*: false
   tool__gh--retrieve-pull-request-info: true
 ---
 
@@ -114,7 +113,6 @@ When validating a reviewer's claim:
 - Responding to or dismissing review comments
 - Approving, requesting changes, or merging PRs
 - Pushing commits
-- Calling other sub-agents
 
 **Always Required:**
 

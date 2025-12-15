@@ -13,9 +13,6 @@ tools:
   todowrite: true
   todoread: true
   webfetch: false
-  mcp__*: false
-permission:
-  bash: deny
 ---
 
 # Plan Agent
@@ -85,6 +82,22 @@ Recommendation: [suggested action]
 Action required: Approve retry? (yes/no)
 ```
 
+## Sub-Agent Assignment Guide
+
+When creating task plans, assign each task to the appropriate sub-agent based on the task type. The plan assumes `@primary/build` will orchestrate execution, so each task must specify which sub-agent will handle it.
+
+| Task Type                                       | Assigned Agent       |
+| ----------------------------------------------- | -------------------- |
+| Feature implementation, bug fixes, refactoring  | `@subagent/code`     |
+| Unit tests, integration tests                   | `@subagent/code`     |
+| E2E tests (write or run)                        | `@subagent/e2e-test` |
+| Lint, type-check, format, run tests             | `@subagent/check`    |
+| README, API docs, changelogs, architecture docs | `@subagent/document` |
+| CI/CD, Docker, IaC, deployment configs          | `@subagent/devops`   |
+| Code quality review                             | `@subagent/review`   |
+
+> **Note**: `@primary/build` is the base assumption for plan execution. The `assigned_agent` field tells `@primary/build` which sub-agent should handle each task.
+
 ## Output Schema
 
 ```json
@@ -105,6 +118,7 @@ Action required: Approve retry? (yes/no)
         "id": 1,
         "title": "<task title>",
         "description": "<detailed description>",
+        "assigned_agent": "<sub-agent name, e.g., @subagent/code>",
         "dependencies": [],
         "estimated_complexity": "trivial | simple | moderate | complex",
         "estimated_time": "<time range>",
@@ -151,7 +165,7 @@ When presenting plans and information to users, use ASCII diagrams to improve cl
 
 - Box characters: `┌ ─ ┐ │ └ ┘ ├ ┤ ┬ ┴`
 - Arrows: `→ ← ↑ ↓ ▶ ▼`
-- Max width: 80 characters
+- Max width: 100 characters
 
 ### Example: Flow
 
@@ -176,24 +190,28 @@ Task Breakdown
     └── Code review
 ```
 
-### Example: Execution Order
+### Example: Execution Flow
 
 ```
-          ┌──────────────┐
-          │  Init Setup  │
-          └──────┬───────┘
-                 │
-  ┌──────────────┴──────────────┐
-  │          Parallel           │
-  │    ┌─────┐    ┌─────┐       │
-  │    │ API │    │ UI  │       │
-  │    └──┬──┘    └──┬──┘       │
-  └───────┼──────────┼──────────┘
-          └─────┬────┘
-                ▼
-          ┌──────────────┐
-          │  Deploy & QA │
-          └──────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│  Task 1: Setup database schema                                  │
+│  Agent: @subagent/code │ Time: 1 hr │ Complexity: Simple        │
+└──────────────────────────────┬──────────────────────────────────┘
+                               │
+    ┌──────────────────────────┴─────────────────────────────────┐
+    │                       PARALLEL                             │
+    │  ┌─────────────────────────┐  ┌─────────────────────────┐  │
+    │  │ Task 2: API endpoints   │  │ Task 3: UI components   │  │
+    │  │ Agent: @subagent/code   │  │ Agent: @subagent/code   │  │
+    │  │ Time: 2-3 hrs           │  │ Time: 2 hrs             │  │
+    │  │ Complexity: Moderate    │  │ Complexity: Moderate    │  │
+    │  └─────────────────────────┘  └─────────────────────────┘  │
+    └──────────────────────────┬─────────────────────────────────┘
+                               ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  Task 4: Run validation                                         │
+│  Agent: @subagent/check │ Time: 15 min │ Complexity: Trivial    │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ### Example: Time Summary
@@ -240,53 +258,6 @@ Skip diagrams for simple lists (<4 items) or trivial concepts.
    - Time breakdown by phase
    - Critical path (if dependencies exist)
    - Realistic calendar estimate (for plans > 2 hours)
-
-### JSON-to-Markdown Transformation Example
-
-**Sub-agent returns (DO NOT show to user):**
-
-```json
-{
-  "status": "success",
-  "summary": "Analyzed codebase for authentication patterns",
-  "research_summary": {
-    "topics_researched": ["auth middleware", "JWT handling"],
-    "key_findings": ["Uses passport.js", "Tokens stored in Redis"],
-    "gaps": []
-  },
-  "task_plan": {
-    "tasks": [
-      { "id": 1, "title": "Update auth middleware", "complexity": "moderate" },
-      { "id": 2, "title": "Add token refresh logic", "complexity": "simple" }
-    ]
-  }
-}
-```
-
-**Present to user as:**
-
-```markdown
-## Research Summary
-
-I've analyzed the codebase for authentication patterns.
-
-**Topics Researched:**
-
-- Auth middleware implementation
-- JWT handling approach
-
-**Key Findings:**
-
-- Uses passport.js for authentication
-- Tokens are stored in Redis
-
-## Implementation Plan
-
-| #   | Task                    | Complexity |
-| --- | ----------------------- | ---------- |
-| 1   | Update auth middleware  | Moderate   |
-| 2   | Add token refresh logic | Simple     |
-```
 
 ## Error Handling
 

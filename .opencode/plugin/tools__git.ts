@@ -20,7 +20,14 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
             const result = await $`git diff HEAD~${numberOfCommits}`.text();
             return result;
           } catch (error) {
-            throw new Error(`Failed to retrieve latest commits diff: ${error}`);
+            return JSON.stringify(
+              {
+                success: false,
+                error: `Failed to retrieve latest commits diff: ${error instanceof Error ? error.message : String(error)}`,
+              },
+              null,
+              2,
+            );
           }
         },
       }),
@@ -34,13 +41,27 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
               await $`basename $(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null) 2>/dev/null`.text()
             ).trim();
             if (!defaultBranch) {
-              throw new Error("Could not determine the default branch name.");
+              return JSON.stringify(
+                {
+                  success: false,
+                  error: "Could not determine the default branch name.",
+                },
+                null,
+                2,
+              );
             }
 
             const result = await $`git --no-pager diff ${defaultBranch}`.text();
             return result;
           } catch (error) {
-            throw new Error(`Failed to retrieve current branch diff: ${error}`);
+            return JSON.stringify(
+              {
+                success: false,
+                error: `Failed to retrieve current branch diff: ${error instanceof Error ? error.message : String(error)}`,
+              },
+              null,
+              2,
+            );
           }
         },
       }),
@@ -93,7 +114,14 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
               2,
             );
           } catch (error) {
-            throw new Error(`Failed to retrieve git status: ${error}`);
+            return JSON.stringify(
+              {
+                success: false,
+                error: `Failed to retrieve git status: ${error instanceof Error ? error.message : String(error)}`,
+              },
+              null,
+              2,
+            );
           }
         },
       }),
@@ -114,7 +142,14 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
           try {
             // Validate message is not empty
             if (!message || message.trim().length === 0) {
-              throw new Error("Commit message cannot be empty");
+              return JSON.stringify(
+                {
+                  success: false,
+                  error: "Commit message cannot be empty",
+                },
+                null,
+                2,
+              );
             }
 
             // Check if there are staged changes
@@ -127,8 +162,14 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
               );
 
             if (!hasStagedChanges) {
-              throw new Error(
-                "No staged changes to commit. Use tool__git--stage-files first.",
+              return JSON.stringify(
+                {
+                  success: false,
+                  error:
+                    "No staged changes to commit. Use tool__git--stage-files first.",
+                },
+                null,
+                2,
               );
             }
 
@@ -157,7 +198,14 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
               2,
             );
           } catch (error) {
-            throw new Error(`Failed to create commit: ${error}`);
+            return JSON.stringify(
+              {
+                success: false,
+                error: `Failed to create commit: ${error instanceof Error ? error.message : String(error)}`,
+              },
+              null,
+              2,
+            );
           }
         },
       }),
@@ -177,14 +225,26 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
           try {
             // Validate files array is not empty
             if (!files || files.length === 0) {
-              throw new Error("No files specified to stage");
+              return JSON.stringify(
+                {
+                  success: false,
+                  error: "No files specified to stage",
+                },
+                null,
+                2,
+              );
             }
 
             // Validate file paths (allow alphanumeric, dash, underscore, dot, slash, and '.')
             for (const file of files) {
               if (file !== "." && !/^[\w\-./]+$/.test(file)) {
-                throw new Error(
-                  `Invalid file path: ${file}. Only alphanumeric characters, dashes, underscores, dots, and forward slashes are allowed.`,
+                return JSON.stringify(
+                  {
+                    success: false,
+                    error: `Invalid file path: ${file}. Only alphanumeric characters, dashes, underscores, dots, and forward slashes are allowed.`,
+                  },
+                  null,
+                  2,
                 );
               }
             }
@@ -212,7 +272,14 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
               2,
             );
           } catch (error) {
-            throw new Error(`Failed to stage files: ${error}`);
+            return JSON.stringify(
+              {
+                success: false,
+                error: `Failed to stage files: ${error instanceof Error ? error.message : String(error)}`,
+              },
+              null,
+              2,
+            );
           }
         },
       }),
@@ -233,7 +300,14 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
               2,
             );
           } catch (error) {
-            throw new Error(`Failed to push: ${error}`);
+            return JSON.stringify(
+              {
+                success: false,
+                error: `Failed to push: ${error instanceof Error ? error.message : String(error)}`,
+              },
+              null,
+              2,
+            );
           }
         },
       }),

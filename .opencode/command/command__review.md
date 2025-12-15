@@ -1,6 +1,6 @@
 ---
 description: Review code changes with comprehensive analysis.
-agent: primary/dev
+agent: primary/build
 ---
 
 You are coordinating code review with `@subagent/review`.
@@ -35,6 +35,7 @@ Steps:
 
 3. **Parallel Review** (Delegate to `@subagent/review` - 4 parallel streams)
    - Launch four parallel review streams:
+   - Pass all context from Step 2 (file contents, file types, change types, and PR context if available) to each stream to avoid redundant file reads.
 
    **Stream 1: Quality Review**
    - Code style and formatting consistency.

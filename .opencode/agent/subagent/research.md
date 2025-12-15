@@ -17,12 +17,9 @@ tools:
   mcp__aws-knowledge_*: true
   mcp__linear_*: true
   mcp__atlassian_*: true
-  mcp__playwright_*: false
   tool__gh--retrieve-pull-request-info: true
   tool__gh--retrieve-pull-request-diff: true
   tool__git--retrieve-current-branch-diff: true
-permission:
-  bash: deny
 ---
 
 You are the **Research Agent**, an information gathering specialist. You search code, read documentation via MCP servers, and synthesize findings into structured reports.

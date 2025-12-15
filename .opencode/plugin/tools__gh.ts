@@ -5,12 +5,14 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
     tool: {
       "tool__gh--retrieve-pull-request-info": tool({
         description:
-          "Retrieve detailed information about a GitHub pull request, including its state, title, body, comments, reviews, and review threads. If no pull request number is provided, it retrieves info for the current branch's pull request.",
+          "Retrieve detailed information about a GitHub pull request, including its state, title, body, comments, reviews, and review threads.",
         args: {
           pull_request_number: tool.schema
             .number()
             .optional()
-            .describe("The pull request number to retrieve info for"),
+            .describe(
+              "The pull request number to retrieve info for (default: current branch's PR)",
+            ),
           with_resolved: tool.schema
             .boolean()
             .optional()
@@ -28,7 +30,9 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
           try {
             const pullRequestNumberArg =
               pullRequestNumber ??
-              (await $`gh pr view --json number -q .number`).json();
+              Number(
+                (await $`gh pr view --json number -q .number`).text().trim(),
+              );
 
             const result = await $`gh api graphql -f query='
               query($owner: String!, $name: String!, $number: Int!) {
@@ -72,10 +76,17 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
                 -F owner="$(gh repo view --json owner -q .owner.login)" \
                 -F name="$(gh repo view --json name -q .name)" \
                 -F number=${pullRequestNumberArg} \
-                | jq '.data.repository.pullRequest.reviewThreads.nodes |= map(select(.isResolved == ${{ raw: withResolved ? "true" : "false" }}))'`.text();
+                | jq --argjson resolved ${withResolved} '.data.repository.pullRequest.reviewThreads.nodes |= map(select(.isResolved == $resolved))'`.text();
             return result;
           } catch (error) {
-            throw new Error(`Failed to retrieve pull request info: ${error}`);
+            return JSON.stringify(
+              {
+                success: false,
+                error: `Failed to retrieve pull request info: ${error instanceof Error ? error.message : String(error)}`,
+              },
+              null,
+              2,
+            );
           }
         },
       }),
@@ -104,8 +115,13 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
 
             return result;
           } catch (error) {
-            throw new Error(
-              `Failed to retrieve repository collaborators: ${error}`,
+            return JSON.stringify(
+              {
+                success: false,
+                error: `Failed to retrieve repository collaborators: ${error instanceof Error ? error.message : String(error)}`,
+              },
+              null,
+              2,
             );
           }
         },
@@ -130,11 +146,18 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
             const reviewersList = reviewers?.join(",");
 
             const result = reviewersList
-              ? await $`gh pr create --title ${title} --body-file - --reviewer ${reviewersList} < ${new Response(body)}`.text()
-              : await $`gh pr create --title ${title} --body-file - < ${new Response(body)}`.text();
+              ? await $`gh pr create --title ${title} --assignee @me --body-file - --reviewer ${reviewersList} < ${new Response(body)}`.text()
+              : await $`gh pr create --title ${title} --assignee @me --body-file - < ${new Response(body)}`.text();
             return result;
           } catch (error) {
-            throw new Error(`Failed to create pull request: ${error}`);
+            return JSON.stringify(
+              {
+                success: false,
+                error: `Failed to create pull request: ${error instanceof Error ? error.message : String(error)}`,
+              },
+              null,
+              2,
+            );
           }
         },
       }),
@@ -172,11 +195,14 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
             let result: string;
 
             if (body && title) {
-              result = await $`gh pr edit ${pullRequestNumber} --title ${title} --body-file - < ${new Response(body)}`.text();
+              result =
+                await $`gh pr edit ${pullRequestNumber} --title ${title} --body-file - < ${new Response(body)}`.text();
             } else if (body) {
-              result = await $`gh pr edit ${pullRequestNumber} --body-file - < ${new Response(body)}`.text();
+              result =
+                await $`gh pr edit ${pullRequestNumber} --body-file - < ${new Response(body)}`.text();
             } else if (title) {
-              result = await $`gh pr edit ${pullRequestNumber} --title ${title}`.text();
+              result =
+                await $`gh pr edit ${pullRequestNumber} --title ${title}`.text();
             } else {
               result = "No changes specified";
             }
@@ -187,7 +213,14 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
 
             return result;
           } catch (error) {
-            throw new Error(`Failed to edit pull request: ${error}`);
+            return JSON.stringify(
+              {
+                success: false,
+                error: `Failed to edit pull request: ${error instanceof Error ? error.message : String(error)}`,
+              },
+              null,
+              2,
+            );
           }
         },
       }),
@@ -206,7 +239,14 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
             const result = await $`gh pr diff ${pullRequestNumber}`.text();
             return result;
           } catch (error) {
-            throw new Error(`Failed to retrieve pull request diff: ${error}`);
+            return JSON.stringify(
+              {
+                success: false,
+                error: `Failed to retrieve pull request diff: ${error instanceof Error ? error.message : String(error)}`,
+              },
+              null,
+              2,
+            );
           }
         },
       }),
