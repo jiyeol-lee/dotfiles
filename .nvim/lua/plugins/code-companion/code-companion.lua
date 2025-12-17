@@ -32,18 +32,7 @@ function M.config()
           return require("codecompanion.adapters").extend("copilot", {
             schema = {
               model = {
-                default = "claude-sonnet-4.5",
-                -- default = "gpt-5",
-                -- default = "gemini-2.5-pro",
-              },
-            },
-          })
-        end,
-        openai_minimal_effort = function()
-          return require("codecompanion.adapters").extend("openai", {
-            schema = {
-              reasoning_effort = {
-                default = "minimal",
+                default = "gpt-4.1",
               },
             },
           })
@@ -59,62 +48,6 @@ function M.config()
       },
     },
     prompt_library = {
-      ["Edit<->Test workflow"] = {
-        strategy = "workflow",
-        description = "Use a workflow to repeatedly edit then test code",
-        opts = {
-          is_default = false,
-        },
-        prompts = {
-          {
-            {
-              name = "Setup Test",
-              role = constants.USER_ROLE,
-              opts = { auto_submit = false },
-              content = function()
-                -- Enable YOLO mode!
-                vim.g.codecompanion_yolo_mode = true
-
-                return [[### Instructions
-
-- Do not care about type. Feel free to use `as any` or `@ts-ignore` if needed
-- If you need to mock data, mock as little as possible
-- Make sure you cover all edge cases
-- Update test descriptions if necessary
-- Follow existing test style
-- If you need to understand the code, use @{file_search} and @{read_file} tools to find the type definition
-
-### Steps to Follow
-
-You are required to write code following the instructions provided above and test the correctness by running the designated test suite. Follow these steps exactly:
-
-1. Update the code in #{buffer} using the @{insert_edit_into_file} tool
-2. Then use the @{cmd_runner} tool to run the test suite with `<test_cmd>` (do this after you have updated the code)
-3. Make sure you trigger both tools in the same response
-
-We'll repeat this cycle until the tests pass. Ensure no deviations from these steps.]]
-              end,
-            },
-          },
-          {
-            {
-              name = "Repeat On Failure",
-              role = constants.USER_ROLE,
-              opts = { auto_submit = true },
-              -- Scope this prompt to the cmd_runner tool
-              condition = function()
-                return _G.codecompanion_current_tool == "cmd_runner"
-              end,
-              -- Repeat until the tests pass, as indicated by the testing flag
-              -- which the cmd_runner tool sets on the chat buffer
-              repeat_until = function(chat)
-                return chat.tool_registry.flags.testing == true
-              end,
-              content = "The tests have failed. Can you edit the buffer and run the test suite again?",
-            },
-          },
-        },
-      },
       ["Gramslator"] = {
         strategy = "chat",
         description = "Check grammar and spelling in the selected text and traslate it to Korean",
@@ -125,10 +58,6 @@ We'll repeat this cycle until the tests pass. Ensure no deviations from these st
           auto_submit = true,
           user_prompt = false,
           stop_context_insertion = true,
-          adapter = {
-            name = "openai_minimal_effort",
-            model = "gpt-5-mini",
-          },
         },
         prompts = {
           {
@@ -182,10 +111,6 @@ Working steps:
           auto_submit = true,
           user_prompt = false,
           stop_context_insertion = true,
-          adapter = {
-            name = "openai_minimal_effort",
-            model = "gpt-5-mini",
-          },
         },
         prompts = {
           {
