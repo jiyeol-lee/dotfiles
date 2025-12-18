@@ -87,13 +87,13 @@ Because `bash` is no longer restricted by a granular allow/deny list, the rules 
 
 ### Not Allowed by Policy (E2E Tests)
 
-| Command            | Reason                 |
-| ------------------ | ---------------------- |
-| `playwright *`     | Use @subagent/e2e-test |
-| `npx playwright *` | Use @subagent/e2e-test |
-| `cypress *`        | Use @subagent/e2e-test |
-| `npx cypress *`    | Use @subagent/e2e-test |
-| `*test:e2e*`       | Use @subagent/e2e-test |
+| Command            | Reason                  |
+| ------------------ | ----------------------- |
+| `playwright *`     | Use `subagent/e2e-test` |
+| `npx playwright *` | Use `subagent/e2e-test` |
+| `cypress *`        | Use `subagent/e2e-test` |
+| `npx cypress *`    | Use `subagent/e2e-test` |
+| `*test:e2e*`       | Use `subagent/e2e-test` |
 
 ## Output Schema
 

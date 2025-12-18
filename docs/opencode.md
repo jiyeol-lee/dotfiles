@@ -15,21 +15,21 @@
 
 ## Agent Summary
 
-| Type    | Agent                         | Role                                                           |
-| ------- | ----------------------------- | -------------------------------------------------------------- |
-| Primary | `@primary/plan`               | Research and task planning orchestrator                        |
-| Primary | `@primary/build`              | Development workflow orchestrator                              |
-| Sub     | `@subagent/research`          | Information gathering                                          |
-| Sub     | `@subagent/task`              | Task breakdown and planning                                    |
-| Sub     | `@subagent/code`              | Code implementation                                            |
-| Sub     | `@subagent/e2e-test`          | E2E testing specialist (Playwright), writes and runs E2E tests |
-| Sub     | `@subagent/check`             | Validation specialist (lint, type-check, format, tests)        |
-| Sub     | `@subagent/commit`            | Git commits (Draft/Apply Mode)                                 |
-| Sub     | `@subagent/pull-request`      | PR management (Draft/Apply Mode)                               |
-| Sub     | `@subagent/document`          | Documentation (Draft Mode)                                     |
-| Sub     | `@subagent/devops`            | DevOps and infrastructure                                      |
-| Sub     | `@subagent/review`            | Code review (scoped; single focus area per invocation)         |
-| Sub     | `@subagent/review-validation` | Validates PR review comment accuracy against actual code       |
+| Type    | Agent                        | Role                                                           |
+| ------- | ---------------------------- | -------------------------------------------------------------- |
+| Primary | `primary/plan`               | Research and task planning orchestrator                        |
+| Primary | `primary/build`              | Development workflow orchestrator                              |
+| Sub     | `subagent/research`          | Information gathering                                          |
+| Sub     | `subagent/task`              | Task breakdown and planning                                    |
+| Sub     | `subagent/code`              | Code implementation                                            |
+| Sub     | `subagent/e2e-test`          | E2E testing specialist (Playwright), writes and runs E2E tests |
+| Sub     | `subagent/check`             | Validation specialist (lint, type-check, format, tests)        |
+| Sub     | `subagent/commit`            | Git commits (Draft/Apply Mode)                                 |
+| Sub     | `subagent/pull-request`      | PR management (Draft/Apply Mode)                               |
+| Sub     | `subagent/document`          | Documentation (Draft Mode)                                     |
+| Sub     | `subagent/devops`            | DevOps and infrastructure                                      |
+| Sub     | `subagent/review`            | Code review (scoped; single focus area per invocation)         |
+| Sub     | `subagent/review-validation` | Validates PR review comment accuracy against actual code       |
 
 ## Directory Structure
 
@@ -40,21 +40,21 @@
 │
 ├── agent/
 │   ├── primary/                        # Primary agents (orchestrators)
-│   │   ├── plan.md                     # @primary/plan
-│   │   └── build.md                    # @primary/build
+│   │   ├── plan.md                     # primary/plan
+│   │   └── build.md                    # primary/build
 │   │
 │   └── subagent/                       # Sub-agents (specialists)
-│       ├── research.md                 # @subagent/research
-│       ├── task.md                     # @subagent/task
-│       ├── code.md                     # @subagent/code
-│       ├── e2e-test.md                 # @subagent/e2e-test
-│       ├── check.md                    # @subagent/check
-│       ├── commit.md                   # @subagent/commit
-│       ├── pull-request.md             # @subagent/pull-request
-│       ├── document.md                 # @subagent/document
-│       ├── devops.md                   # @subagent/devops
-│       ├── review.md                   # @subagent/review
-│       └── review-validation.md        # @subagent/review-validation
+│       ├── research.md                 # subagent/research
+│       ├── task.md                     # subagent/task
+│       ├── code.md                     # subagent/code
+│       ├── e2e-test.md                 # subagent/e2e-test
+│       ├── check.md                    # subagent/check
+│       ├── commit.md                   # subagent/commit
+│       ├── pull-request.md             # subagent/pull-request
+│       ├── document.md                 # subagent/document
+│       ├── devops.md                   # subagent/devops
+│       ├── review.md                   # subagent/review
+│       └── review-validation.md        # subagent/review-validation
 │
 ├── command/                            # Commands
 │   ├── command__commit.md              # Shortcut for commit workflow
@@ -83,7 +83,7 @@
                     ┌─────────────────────┴─────────────────────┐
                     ▼                                           ▼
 ┌─────────────────────────────────┐       ┌─────────────────────────────────┐
-│         @primary/plan           │       │          @primary/build         │
+│         primary/plan           │       │          primary/build         │
 │                                 │       │                                 │
 │   (Research & Planning)         │       │   (Development Workflow)        │
 └────────────────┬────────────────┘       └────────────────┬────────────────┘
@@ -91,15 +91,15 @@
                  ▼                                         ▼
 ┌───────────────────────────────────────────────┐   ┌───────────────────────────────────────────────────────────────────────────┐
 │              PLANNING SUB-AGENTS              │   │                          DEVELOPMENT SUB-AGENTS                           │
-│         (Dedicated to @primary/plan)          │   │                         (Used by @primary/build)                          │
+│         (Dedicated to primary/plan)          │   │                         (Used by primary/build)                          │
 ├───────────────────────────────────────────────┤   ├───────────────────────────────────────────────────────────────────────────┤
 │                                               │   │                                                                           │
 │  ┌────────────────────┐  ┌────────────────┐   │   │  ┌────────────────┐  ┌───────────────────┐  ┌────────────────────┐        │
-│  │ @subagent/research │  │ @subagent/task │   │   │  │ @subagent/code │  │ @subagent/e2e-test│  │ @subagent/document │        │
+│  │ subagent/research │  │ subagent/task │   │   │  │ subagent/code │  │ subagent/e2e-test│  │ subagent/document │        │
 │  └────────────────────┘  └────────────────┘   │   │  └────────────────┘  └───────────────────┘  └────────────────────┘        │
 │                                               │   │                                                                           │
 │                                               │   │  ┌─────────────────┐ ┌──────────────────┐  ┌───────────────────┐          │
-│                                               │   │  │ @subagent/check │ │ @subagent/devops │  │ @subagent/review* │          │
+│                                               │   │  │ subagent/check │ │ subagent/devops │  │ subagent/review* │          │
 │                                               │   │  └─────────────────┘ └──────────────────┘  └───────────────────┘          │
 │                                               │   │                                                                           │
 │                                               │   │  * review also available via /command__review                             │
@@ -111,13 +111,13 @@
 ├─────────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                     │
 │    ┌────────────────────────────────────┐    ┌────────────────────────────────────┐ │
-│    │      @subagent/commit              │    │      @subagent/pull-request        │ │
+│    │      subagent/commit              │    │      subagent/pull-request        │ │
 │    │                                    │    │                                    │ │
 │    │      /command__commit              │    │      /command__pull-request        │ │
 │    └────────────────────────────────────┘    └────────────────────────────────────┘ │
 │                                                                                     │
 │    ┌────────────────────────────────────┐                                           │
-│    │      @subagent/review-validation   │                                           │
+│    │      subagent/review-validation   │                                           │
 │    │                                    │                                           │
 │    │      /command__validate-review     │                                           │
 │    └────────────────────────────────────┘                                           │
@@ -130,15 +130,15 @@
 
 ### Key Points
 
-- `@primary/plan` has its own dedicated sub-agents (`@subagent/research`, `@subagent/task`) and does NOT use development sub-agents
-- `@primary/build` uses the development sub-agents (`@subagent/code`, `@subagent/e2e-test`, `@subagent/check`, `@subagent/document`, `@subagent/devops`, `@subagent/review`)
+- `primary/plan` has its own dedicated sub-agents (`subagent/research`, `subagent/task`) and does NOT use development sub-agents
+- `primary/build` uses the development sub-agents (`subagent/code`, `subagent/e2e-test`, `subagent/check`, `subagent/document`, `subagent/devops`, `subagent/review`)
 - Sub-agents never call other sub-agents; they only report to their orchestrator
-- `@subagent/commit` and `@subagent/pull-request` are ONLY invoked via commands (`/command__commit`, `/command__pull-request`)
-- `@subagent/review` is invoked by orchestrators AND available via `/command__review` command
+- `subagent/commit` and `subagent/pull-request` are ONLY invoked via commands (`/command__commit`, `/command__pull-request`)
+- `subagent/review` is invoked by orchestrators AND available via `/command__review` command
 
 ### Parallel Execution in Phase 1
 
-`@primary/build` supports parallel sub-agent execution in Phase 1 when work items are **isolated**:
+`primary/build` supports parallel sub-agent execution in Phase 1 when work items are **isolated**:
 
 **Isolation Criteria:**
 
@@ -168,31 +168,31 @@
 
 These agents are exclusively triggered by user commands, not by orchestrators:
 
-| Agent                         | Command                     | Flow                               |
-| ----------------------------- | --------------------------- | ---------------------------------- |
-| `@subagent/commit`            | `/command__commit`          | Draft Mode → Approval → Apply Mode |
-| `@subagent/pull-request`      | `/command__pull-request`    | Draft Mode → Approval → Apply Mode |
-| `@subagent/review-validation` | `/command__validate-review` | Fetch → Analyze → Report           |
+| Agent                        | Command                     | Flow                               |
+| ---------------------------- | --------------------------- | ---------------------------------- |
+| `subagent/commit`            | `/command__commit`          | Draft Mode → Approval → Apply Mode |
+| `subagent/pull-request`      | `/command__pull-request`    | Draft Mode → Approval → Apply Mode |
+| `subagent/review-validation` | `/command__validate-review` | Fetch → Analyze → Report           |
 
 ### Orchestrator-Invoked (also available via command)
 
-| Agent              | Invoked By                                 |
-| ------------------ | ------------------------------------------ |
-| `@subagent/review` | Orchestrator OR `/command__review` command |
+| Agent             | Invoked By                                 |
+| ----------------- | ------------------------------------------ |
+| `subagent/review` | Orchestrator OR `/command__review` command |
 
 ### Orchestrator-Invoked Only
 
 These agents are invoked by primary agents as part of workflows:
 
-| Agent                | Used By              |
-| -------------------- | -------------------- |
-| `@subagent/research` | `@primary/plan` only |
-| `@subagent/task`     | `@primary/plan` only |
-| `@subagent/code`     | `@primary/build`     |
-| `@subagent/e2e-test` | `@primary/build`     |
-| `@subagent/check`    | `@primary/build`     |
-| `@subagent/document` | `@primary/build`     |
-| `@subagent/devops`   | `@primary/build`     |
+| Agent               | Used By             |
+| ------------------- | ------------------- |
+| `subagent/research` | `primary/plan` only |
+| `subagent/task`     | `primary/plan` only |
+| `subagent/code`     | `primary/build`     |
+| `subagent/e2e-test` | `primary/build`     |
+| `subagent/check`    | `primary/build`     |
+| `subagent/document` | `primary/build`     |
+| `subagent/devops`   | `primary/build`     |
 
 ## Workflow Diagrams
 
@@ -200,7 +200,7 @@ These agents are invoked by primary agents as part of workflows:
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────────┐
-│                              @primary/plan                                    │
+│                              primary/plan                                    │
 │                       (Research & Planning Orchestrator)                      │
 └───────────────────────────────────────────────────────────────────────────────┘
                                         │
@@ -217,7 +217,7 @@ These agents are invoked by primary agents as part of workflows:
               │    (if multiple topics)                           │
               ▼                                                   ▼
     ┌───────────────────┐                           ┌───────────────────┐
-    │    @subagent/     │                           │    @subagent/     │
+    │    subagent/     │                           │    subagent/     │
     │     research      │                           │     research      │
     │    (Topic A)      │                           │    (Topic B)      │
     └─────────┬─────────┘                           └─────────┬─────────┘
@@ -228,13 +228,13 @@ These agents are invoked by primary agents as part of workflows:
                                       ▼
                           ┌───────────────────────────────┐
                           │     Synthesize Research       │
-                          │        @primary/plan          │
+                          │        primary/plan          │
                           └───────────────────────────────┘
                                         │
                                         │ 3. Delegate task breakdown
                                         ▼
                               ┌───────────────────┐
-                              │    @subagent/     │
+                              │    subagent/     │
                               │       task        │
                               └─────────┬─────────┘
                                         │
@@ -252,7 +252,7 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────────┐
-│                             @primary/build                                    │
+│                             primary/build                                    │
 │                       (Development Workflow)                                  │
 └───────────────────────────────────────────────────────────────────────────────┘
                                         │
@@ -261,7 +261,7 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
                           ┌───────────────────────────────┐
                           │    SIMPLE DELEGATOR MODEL     │
                           │                               │
-                          │    @primary/build delegates   │
+                          │    primary/build delegates   │
                           │    to appropriate sub-agents  │
                           │    based on task type         │
                           └───────────────────────────────┘
@@ -270,7 +270,7 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
           ┌───────────────────┬─────────┴──────────────┬───────────────────┐
           ▼                   ▼                        ▼                   ▼
 ┌───────────────────┐ ┌───────────────────┐ ┌───────────────────┐ ┌───────────────────┐
-│  @subagent/code   │ │ @subagent/e2e-test│ │@subagent/document │ │ @subagent/devops  │
+│  subagent/code   │ │ subagent/e2e-test│ │subagent/document │ │ subagent/devops  │
 │                   │ │                   │ │                   │ │                   │
 │  Implementation   │ │  E2E Testing      │ │  Documentation    │ │  Infrastructure   │
 │  Bug fixes        │ │  Playwright tests │ │  User-facing docs │ │  CI/CD, Docker    │
@@ -281,7 +281,7 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
                                           ▼
                           ┌───────────────────────────────┐
                           │ Phase 2: Validation (check)   │
-                          │   @subagent/check             │
+                          │   subagent/check             │
                           │   • lint / format             │
                           │   • type-check / tests        │
                           │   (skipped for document-only) │
@@ -301,7 +301,7 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
                          │                               │
                      YES ▼                               ▼ NO
        ┌───────────────────────────────────┐   ┌─────────────────────┐
-       │ @subagent/review (scoped)         │   │   Report to User    │
+       │ subagent/review (scoped)         │   │   Report to User    │
        │ (single focus area per invocation)│   └─────────────────────┘
        └──────────────────┬────────────────┘
                           │
@@ -323,27 +323,27 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
 
 ### Review Logic
 
-`@primary/build` treats `@subagent/review` as an **optional** phase. Each invocation covers a **single focus area**; multiple scopes require multiple invocations (optionally parallel). Review scope selection follows these rules:
+`primary/build` treats `subagent/review` as an **optional** phase. Each invocation covers a **single focus area**; multiple scopes require multiple invocations (optionally parallel). Review scope selection follows these rules:
 
 1. **User instructs "run review" (general)**
    - Run **all 4** scopes: **quality**, **regression**, **documentation**, **performance**.
-   - Invoke `@subagent/review` **once per scope** (4 invocations).
+   - Invoke `subagent/review` **once per scope** (4 invocations).
 
 2. **User instructs specific scope(s)**
    - Run **only** the explicitly requested scope(s).
-   - Invoke `@subagent/review` **once per scope** (N invocations).
+   - Invoke `subagent/review` **once per scope** (N invocations).
 
 3. **Build recommends review**
    - Build recommends scope(s) based on the changes.
    - Build asks for user approval.
    - Build runs **only** the approved scope(s) (otherwise review is skipped).
-   - Invoke `@subagent/review` **once per approved scope**.
+   - Invoke `subagent/review` **once per approved scope**.
 
 If none of the above applies, build skips review entirely.
 
 ## MCP Server Matrix
 
-> **Note**: Short names refer to `@subagent/*` agents (e.g., "research" = `@subagent/research`).
+> **Note**: Short names refer to `subagent/*` agents (e.g., "research" = `subagent/research`).
 
 | MCP Server      | research | task | code | e2e-test | check | commit | pull-request | document | devops | review | review-validation |
 | --------------- | :------: | :--: | :--: | :------: | :---: | :----: | :----------: | :------: | :----: | :----: | :---------------: |
@@ -402,7 +402,7 @@ If none of the above applies, build skips review entirely.
 
 ### Sub-Agents Permissions
 
-> **Note**: Short names refer to `@subagent/*` agents (e.g., "research" = `@subagent/research`).
+> **Note**: Short names refer to `subagent/*` agents (e.g., "research" = `subagent/research`).
 
 | Tool        | research | task | code | e2e-test | check | commit | pull-request | document | devops | review | review-validation |
 | ----------- | :------: | :--: | :--: | :------: | :---: | :----: | :----------: | :------: | :----: | :----: | :---------------: |
@@ -455,7 +455,7 @@ Custom tools from `tools__gh.ts` and `tools__git.ts` plugins replace hardcoded b
 
 ### Bash Permission Matrix (Granular)
 
-Some agents have granular bash permissions configured via `permission.bash` in their YAML frontmatter (least privilege). Agents without a per-agent allowlist (e.g. `@subagent/check`) rely on default OpenCode permissions, but are constrained by role (validation only).
+Some agents have granular bash permissions configured via `permission.bash` in their YAML frontmatter (least privilege). Agents without a per-agent allowlist (e.g. `subagent/check`) rely on default OpenCode permissions, but are constrained by role (validation only).
 
 #### Permission Levels
 
@@ -469,26 +469,26 @@ Some agents have granular bash permissions configured via `permission.bash` in t
 
 All primary agents have `permission.bash: deny` - they delegate to sub-agents.
 
-| Agent            | Bash Permission |
-| ---------------- | --------------- |
-| `@primary/plan`  | `deny`          |
-| `@primary/build` | `deny`          |
+| Agent           | Bash Permission |
+| --------------- | --------------- |
+| `primary/plan`  | `deny`          |
+| `primary/build` | `deny`          |
 
 #### Sub-Agents (Specialists)
 
-| Agent                         | Default            | Allowed Commands                                                                                                                                          | Ask Commands                                  |
-| ----------------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| `@subagent/code`              | `deny`             | ls, pwd, cat, head, tail, find, npm/pnpm/yarn/bun, go, cargo, pip, poetry, make, eslint, prettier, tsc, git (read)                                        | rm, mv                                        |
-| `@subagent/commit`            | `deny`             | (none - uses custom tools)                                                                                                                                | (none)                                        |
-| `@subagent/devops`            | `deny`             | ls, pwd, cat, head, tail, find, yamllint, hadolint, shellcheck, actionlint, terraform init/validate/fmt, aws validate, docker build/images/ps, git (read) | terraform plan/apply, docker run/push, rm, mv |
-| `@subagent/document`          | `deny`             | (none)                                                                                                                                                    | (none)                                        |
-| `@subagent/e2e-test`          | `deny`             | `yarn run test:e2e *`, `npm run test:e2e *`                                                                                                               | (none)                                        |
-| `@subagent/check`             | (OpenCode default) | (no per-agent allowlist configured; validation-only commands)                                                                                             | (none)                                        |
-| `@subagent/pull-request`      | `deny`             | (none - uses custom tools)                                                                                                                                | (none)                                        |
-| `@subagent/research`          | `deny`             | (none - uses custom tools)                                                                                                                                | (none)                                        |
-| `@subagent/review`            | `deny`             | (none - uses custom tools)                                                                                                                                | (none)                                        |
-| `@subagent/review-validation` | `deny`             | (none - uses custom tools)                                                                                                                                | (none)                                        |
-| `@subagent/task`              | `deny`             | (none)                                                                                                                                                    | (none)                                        |
+| Agent                        | Default            | Allowed Commands                                                                                                                                          | Ask Commands                                  |
+| ---------------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| `subagent/code`              | `deny`             | ls, pwd, cat, head, tail, find, npm/pnpm/yarn/bun, go, cargo, pip, poetry, make, eslint, prettier, tsc, git (read)                                        | rm, mv                                        |
+| `subagent/commit`            | `deny`             | (none - uses custom tools)                                                                                                                                | (none)                                        |
+| `subagent/devops`            | `deny`             | ls, pwd, cat, head, tail, find, yamllint, hadolint, shellcheck, actionlint, terraform init/validate/fmt, aws validate, docker build/images/ps, git (read) | terraform plan/apply, docker run/push, rm, mv |
+| `subagent/document`          | `deny`             | (none)                                                                                                                                                    | (none)                                        |
+| `subagent/e2e-test`          | `deny`             | `yarn run test:e2e *`, `npm run test:e2e *`                                                                                                               | (none)                                        |
+| `subagent/check`             | (OpenCode default) | (no per-agent allowlist configured; validation-only commands)                                                                                             | (none)                                        |
+| `subagent/pull-request`      | `deny`             | (none - uses custom tools)                                                                                                                                | (none)                                        |
+| `subagent/research`          | `deny`             | (none - uses custom tools)                                                                                                                                | (none)                                        |
+| `subagent/review`            | `deny`             | (none - uses custom tools)                                                                                                                                | (none)                                        |
+| `subagent/review-validation` | `deny`             | (none - uses custom tools)                                                                                                                                | (none)                                        |
+| `subagent/task`              | `deny`             | (none)                                                                                                                                                    | (none)                                        |
 
 #### Configuration Reference
 
@@ -515,21 +515,21 @@ See [OpenCode Permissions Documentation](https://opencode.ai/docs/permissions/#b
 
 ### Agent ID Reference
 
-| Agent             | ID                            | Type    | Invocation                                     |
-| ----------------- | ----------------------------- | ------- | ---------------------------------------------- |
-| Plan              | `@primary/plan`               | Primary | User selection                                 |
-| Build             | `@primary/build`              | Primary | User selection                                 |
-| Research          | `@subagent/research`          | Sub     | Orchestrator                                   |
-| Task              | `@subagent/task`              | Sub     | Orchestrator                                   |
-| Code              | `@subagent/code`              | Sub     | Orchestrator                                   |
-| E2E Test          | `@subagent/e2e-test`          | Sub     | Orchestrator                                   |
-| Check             | `@subagent/check`             | Sub     | Orchestrator                                   |
-| Commit            | `@subagent/commit`            | Sub     | **Command only** (`/command__commit`)          |
-| Pull Request      | `@subagent/pull-request`      | Sub     | **Command only** (`/command__pull-request`)    |
-| Document          | `@subagent/document`          | Sub     | Orchestrator                                   |
-| DevOps            | `@subagent/devops`            | Sub     | Orchestrator                                   |
-| Review            | `@subagent/review`            | Sub     | Orchestrator or `/command__review`             |
-| Review Validation | `@subagent/review-validation` | Sub     | **Command only** (`/command__validate-review`) |
+| Agent             | ID                           | Type    | Invocation                                     |
+| ----------------- | ---------------------------- | ------- | ---------------------------------------------- |
+| Plan              | `primary/plan`               | Primary | User selection                                 |
+| Build             | `primary/build`              | Primary | User selection                                 |
+| Research          | `subagent/research`          | Sub     | Orchestrator                                   |
+| Task              | `subagent/task`              | Sub     | Orchestrator                                   |
+| Code              | `subagent/code`              | Sub     | Orchestrator                                   |
+| E2E Test          | `subagent/e2e-test`          | Sub     | Orchestrator                                   |
+| Check             | `subagent/check`             | Sub     | Orchestrator                                   |
+| Commit            | `subagent/commit`            | Sub     | **Command only** (`/command__commit`)          |
+| Pull Request      | `subagent/pull-request`      | Sub     | **Command only** (`/command__pull-request`)    |
+| Document          | `subagent/document`          | Sub     | Orchestrator                                   |
+| DevOps            | `subagent/devops`            | Sub     | Orchestrator                                   |
+| Review            | `subagent/review`            | Sub     | Orchestrator or `/command__review`             |
+| Review Validation | `subagent/review-validation` | Sub     | **Command only** (`/command__validate-review`) |
 
 ### Mode Reference
 
@@ -583,18 +583,18 @@ Recommendations for which model tier to use for each sub-agent based on task com
 
 ### Sub-Agent Recommendations
 
-| Sub-Agent                     | Tier         | Reasoning                                                                                   |
-| ----------------------------- | ------------ | ------------------------------------------------------------------------------------------- |
-| `@subagent/commit`            | 💰 Cheap     | Follows strict Conventional Commits format. Input=diff, output=message. Minimal creativity. |
-| `@subagent/check`             | 💰 Cheap     | Executes predefined commands, parses output, reports results. No code generation.           |
-| `@subagent/task`              | 💰 Cheap     | Structured decomposition using templates. Highly structured JSON output.                    |
-| `@subagent/document`          | 💵 Medium    | Writes docs with moderate creativity but follows established patterns.                      |
-| `@subagent/devops`            | 💵 Medium    | Creates config files from known patterns. Docker, CI/CD, IaC are mostly templated.          |
-| `@subagent/pull-request`      | 💵 Medium    | Summarizes changes, writes PR descriptions. Synthesis without deep reasoning.               |
-| `@subagent/review-validation` | 💵 Medium    | Compares claims against code. Pattern matching with evidence gathering.                     |
-| `@subagent/e2e-test`          | 💵 Medium    | Writes E2E tests following Playwright patterns. More structured than app code.              |
-| `@subagent/code`              | 💎 Expensive | Writes production code, architecture decisions, debugging. Deep reasoning needed.           |
-| `@subagent/research`          | 💎 Expensive | Analyzes codebases, synthesizes from multiple sources. Deep analytical reasoning.           |
-| `@subagent/review`            | 💎 Expensive | Evaluates quality, identifies regressions, security, performance. Expert judgment.          |
+| Sub-Agent                    | Tier         | Reasoning                                                                                   |
+| ---------------------------- | ------------ | ------------------------------------------------------------------------------------------- |
+| `subagent/commit`            | 💰 Cheap     | Follows strict Conventional Commits format. Input=diff, output=message. Minimal creativity. |
+| `subagent/check`             | 💰 Cheap     | Executes predefined commands, parses output, reports results. No code generation.           |
+| `subagent/task`              | 💰 Cheap     | Structured decomposition using templates. Highly structured JSON output.                    |
+| `subagent/document`          | 💵 Medium    | Writes docs with moderate creativity but follows established patterns.                      |
+| `subagent/devops`            | 💵 Medium    | Creates config files from known patterns. Docker, CI/CD, IaC are mostly templated.          |
+| `subagent/pull-request`      | 💵 Medium    | Summarizes changes, writes PR descriptions. Synthesis without deep reasoning.               |
+| `subagent/review-validation` | 💵 Medium    | Compares claims against code. Pattern matching with evidence gathering.                     |
+| `subagent/e2e-test`          | 💵 Medium    | Writes E2E tests following Playwright patterns. More structured than app code.              |
+| `subagent/code`              | 💎 Expensive | Writes production code, architecture decisions, debugging. Deep reasoning needed.           |
+| `subagent/research`          | 💎 Expensive | Analyzes codebases, synthesizes from multiple sources. Deep analytical reasoning.           |
+| `subagent/review`            | 💎 Expensive | Evaluates quality, identifies regressions, security, performance. Expert judgment.          |
 
 > **Note**: These are recommendations only. Model selection can be configured per-agent in `opencode.json`.

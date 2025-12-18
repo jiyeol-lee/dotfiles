@@ -3,19 +3,19 @@ description: Create or update a pull request with explicit approval.
 agent: primary/build
 ---
 
-You are coordinating pull request drafting and publication with `@subagent/pull-request`.
+You are coordinating pull request drafting and publication with `subagent/pull-request`.
 
 Goal: draft the PR content, confirm readiness, then push and open/update the PR only after explicit approval.
 
 Steps:
 
-1. **Preflight** (Delegate to `@subagent/pull-request`)
+1. **Preflight** (Delegate to `subagent/pull-request`)
    - Confirm git repo, branch, and commits exist.
    - Ensure current branch is not `main` or `master`.
    - Check if there are unpushed commits.
-   - Summarize recent test results (delegate to `@subagent/check` if needed).
+   - Summarize recent test results (delegate to `subagent/check` if needed).
 
-2. **Draft (Mode A)** (Delegate to `@subagent/pull-request`)
+2. **Draft (Mode A)** (Delegate to `subagent/pull-request`)
    - Invoke in **Mode A (Draft)**.
    - Use `tool__git--retrieve-current-branch-diff` to analyze commits since diverging from target branch.
    - **Extract Linked Issues**: Scan commit messages for issue references (e.g., `LINEAR-123`, `JIRA-456`, `#123`).
@@ -44,7 +44,7 @@ Steps:
        - **Ask** the user explicitly: "Who should be the reviewer?"
    - Present the draft (Title, Body), the list of collaborators (for new PRs), and wait for the user to provide approval (and reviewer for new PRs).
 
-3. **Publish (Mode B)** (Delegate to `@subagent/pull-request`)
+3. **Publish (Mode B)** (Delegate to `subagent/pull-request`)
    - **Constraint**: Do not proceed without explicit user approval.
    - Invoke in **Mode B (Execute)**.
    - Push commits (if needed): Use `tool__git--push` to push the branch to remote.

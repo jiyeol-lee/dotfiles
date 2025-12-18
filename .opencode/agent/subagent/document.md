@@ -29,13 +29,13 @@ By default, operate in **Draft Mode**:
 
 ## Scope
 
-| In Scope          | Out of Scope                                                  |
-| ----------------- | ------------------------------------------------------------- |
-| README files      | Production code                                               |
-| API documentation | Test files                                                    |
-| Changelogs        | Infrastructure                                                |
-| Architecture docs | DevOps configs                                                |
-|                   | Code comments (JSDoc, docstrings) - handled by @subagent/code |
+| In Scope          | Out of Scope                                                 |
+| ----------------- | ------------------------------------------------------------ |
+| README files      | Production code                                              |
+| API documentation | Test files                                                   |
+| Changelogs        | Infrastructure                                               |
+| Architecture docs | DevOps configs                                               |
+|                   | Code comments (JSDoc, docstrings) - handled by subagent/code |
 
 ## MCP Servers
 

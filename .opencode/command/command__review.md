@@ -3,7 +3,7 @@ description: Review code changes with comprehensive analysis.
 agent: primary/build
 ---
 
-You are coordinating code review with `@subagent/review`.
+You are coordinating code review with `subagent/review`.
 
 Goal: perform comprehensive code review with parallel analysis streams, then present findings with actionable recommendations.
 
@@ -15,14 +15,14 @@ Arguments:
 
 Steps:
 
-1. **Parse Target** (Delegate to `@subagent/review`)
+1. **Parse Target** (Delegate to `subagent/review`)
    - Parse the argument to determine review target:
      - If `pr:<number>`: Use `tool__gh--retrieve-pull-request-diff` with the PR number to fetch the diff.
      - If `commit:<count>`: Use `tool__git--retrieve-latest-n-commits-diff` with the count to get the diff.
      - If no argument: Use `tool__git--retrieve-current-branch-diff` to get current branch changes vs base.
    - Gather the list of modified files.
 
-2. **Gather Context** (Delegate to `@subagent/review`)
+2. **Gather Context** (Delegate to `subagent/review`)
    - For each modified file:
      - Read the full file content (not just the diff).
      - Identify the file type and language.
@@ -33,7 +33,7 @@ Steps:
        - Avoid duplicating existing review feedback.
        - Consider responses to previous review comments.
 
-3. **Parallel Review** (Delegate to `@subagent/review` - 4 parallel streams)
+3. **Parallel Review** (Delegate to `subagent/review` - 4 parallel streams)
    - Launch four parallel review streams:
    - Pass all context from Step 2 (file contents, file types, change types, and PR context if available) to each stream to avoid redundant file reads.
 
@@ -67,7 +67,7 @@ Steps:
    - Database queries (N+1 patterns, index hints).
    - Async/await patterns (blocking, Promise.all opportunities).
 
-4. **Aggregate Findings** (Delegate to `@subagent/review`)
+4. **Aggregate Findings** (Delegate to `subagent/review`)
    - Collect results from all four streams.
    - Deduplicate overlapping findings.
    - Categorize by severity:

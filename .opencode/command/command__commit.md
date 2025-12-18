@@ -3,18 +3,18 @@ description: Create a git commit with staged changes
 agent: primary/build
 ---
 
-You are coordinating git commit creation with `@subagent/commit`.
+You are coordinating git commit creation with `subagent/commit`.
 
 Goal: analyze changes, draft a commit message, confirm with user, then commit only after explicit approval.
 
 Steps:
 
-1. **Preflight** (Delegate to `@subagent/commit`)
+1. **Preflight** (Delegate to `subagent/commit`)
    - Use `tool__git--status` to check repository state (staged, unstaged, untracked files).
    - If no changes exist, report and stop.
    - Summarize the changes (files modified, added, deleted).
 
-2. **Draft (Mode A)** (Delegate to `@subagent/commit`)
+2. **Draft (Mode A)** (Delegate to `subagent/commit`)
    - Invoke in **Mode A (Draft)**.
    - **Analyze Changes**:
      - Use `tool__git--status` to identify staged files, then use `read` tool to examine specific file contents if needed.
@@ -51,7 +51,7 @@ Steps:
    - Present the draft commit message and files to be staged.
    - **Ask explicitly**: "Do you approve this commit? (yes/no/edit)"
 
-3. **Apply (Mode B)** (Delegate to `@subagent/commit`)
+3. **Apply (Mode B)** (Delegate to `subagent/commit`)
    - **Constraint**: Do not proceed without explicit user approval.
    - Invoke in **Mode B (Execute)**.
    - Use `tool__git--stage-files` with the list of files to stage.

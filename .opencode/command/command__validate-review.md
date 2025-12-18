@@ -3,7 +3,7 @@ description: Validate PR review comments against actual code.
 agent: primary/build
 ---
 
-You are coordinating review comment validation with `@subagent/review-validation`.
+You are coordinating review comment validation with `subagent/review-validation`.
 
 Goal: Analyze unresolved PR review comments and determine if each reviewer's claim is valid or invalid by examining the actual code.
 
@@ -14,21 +14,21 @@ Arguments:
 
 Steps:
 
-1. **Parse Target** (Delegate to `@subagent/review-validation`)
+1. **Parse Target** (Delegate to `subagent/review-validation`)
    - Parse the argument to determine target PR:
      - If `pr:<number>`: Use the specified PR number.
 
-2. **Fetch Review Data** (Delegate to `@subagent/review-validation`)
+2. **Fetch Review Data** (Delegate to `subagent/review-validation`)
    - Use `tool__gh--retrieve-pull-request-info` with the PR number (if provided) and `with_resolved: false` to fetch only unresolved review threads.
    - Extract file paths, line numbers, comment bodies, and URLs.
 
-3. **Gather Code Context** (Delegate to `@subagent/review-validation`)
+3. **Gather Code Context** (Delegate to `subagent/review-validation`)
    - For each unresolved review thread:
      - Read the referenced file using the `path` field.
      - Focus on the code around the `line` number (±20 lines context).
      - Understand the code's actual behavior and intent.
 
-4. **Validate Each Issue** (Delegate to `@subagent/review-validation`)
+4. **Validate Each Issue** (Delegate to `subagent/review-validation`)
    - For each review comment:
      - **Extract Claim**: Identify what the reviewer is asserting or concerned about.
      - **Capture URL**: Preserve the comment URL for report linking.
