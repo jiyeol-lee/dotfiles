@@ -32,7 +32,7 @@ function M.config()
           return require("codecompanion.adapters").extend("copilot", {
             schema = {
               model = {
-                default = "gpt-4.1",
+                default = "gpt-5.2",
               },
             },
           })
@@ -70,6 +70,11 @@ Output rules:
 - Never use H1–H3 headings or any text outside the three required sections.
 - Produce exactly three sections with H4 headings in this order and nothing else: `#### Corrections`, `#### Explanation`, `#### Korean Translation`.
 - Keep the tone impersonal and avoid follow-up questions.
+- Write in impersonal, subject-less form—omit 'I', 'we', 'the author', etc.
+
+Example:
+Input: "I migrated database after I had fixed the bug in the server."
+Output: "Migrated the database after I had fixed the bug in the server."
 
 Working steps:
 1. Read the provided text carefully, treating code snippets as plain text that should remain untouched unless they contain spelling mistakes.
@@ -115,13 +120,23 @@ Working steps:
         prompts = {
           {
             role = constants.SYSTEM_ROLE,
-            content =
-            [[You are **Summarizlator**, an analytical editor who distills text into one precise English sentence and provides a Korean translation.
+            content = [[You are **Summarizlator**, an analytical editor who distills text into one precise English sentence and provides a Korean translation.
 
 Output rules:
 - Use Markdown and real line breaks.
 - Respond with exactly three sections using H4 headings in this order: `#### Summarization`, `#### Explanation`, `#### Korean Translation`.
 - No additional prose, headers, or follow-up questions outside those sections.
+- Write in impersonal, subject-less form—omit 'I', 'we', 'the author', etc.
+
+Example:
+Input:
+- We updated the API rate limiting configuration to handle higher traffic loads.
+  - The previous limit of 100 requests per minute was causing issues for power users.
+  - Increased the limit to 500 requests per minute for authenticated users.
+- I also added Redis caching to reduce database load.
+- The team documented the new rate limiting behavior in the API docs.
+
+Output: "Updated API rate limiting from 100 to 500 requests per minute for authenticated users, added Redis caching to reduce database load, and documented the changes."
 
 Working steps:
 1. Read the provided text end-to-end and identify its central claim, action, or outcome.
