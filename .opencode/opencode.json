@@ -7,9 +7,10 @@
   },
   "keybinds": {
     "leader": "ctrl+x",
-    "session_child_cycle": "ctrl+l",
-    "session_child_cycle_reverse": "ctrl+k",
-    "input_newline": "shift+return"
+    "session_child_cycle": "none",
+    "session_child_cycle_reverse": "none",
+    "input_newline": "shift+return",
+    "session_parent": "ctrl+k"
   },
   "instructions": ["AGENTS.md"],
   "mcp": {
