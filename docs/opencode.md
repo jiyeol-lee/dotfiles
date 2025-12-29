@@ -10,8 +10,9 @@
 6. [Review Logic](#review-logic)
 7. [MCP Server Matrix](#mcp-server-matrix)
 8. [Tool Permission Matrix](#tool-permission-matrix)
-9. [Quick Reference](#quick-reference)
-10. [Model Tier Recommendations](#model-tier-recommendations)
+9. [Skills System](#skills-system)
+10. [Quick Reference](#quick-reference)
+11. [Model Tier Recommendations](#model-tier-recommendations)
 
 ## Agent Summary
 
@@ -67,6 +68,15 @@
 │   ├── tools__gh.ts
 │   └── tools__git.ts
 │
+├── skill/                              # Skills (reusable knowledge modules)
+│   └── code-review/
+│       ├── SKILL.md
+│       └── references/
+│           ├── quality.md
+│           ├── regression.md
+│           ├── documentation.md
+│           └── performance.md
+│
 └── themes/                             # Themes
     └── opencode-custom.json
 ```
@@ -83,7 +93,7 @@
                     ┌─────────────────────┴─────────────────────┐
                     ▼                                           ▼
 ┌─────────────────────────────────┐       ┌─────────────────────────────────┐
-│         primary/plan           │       │          primary/build         │
+│         primary/plan            │       │          primary/build          │
 │                                 │       │                                 │
 │   (Research & Planning)         │       │   (Development Workflow)        │
 └────────────────┬────────────────┘       └────────────────┬────────────────┘
@@ -91,15 +101,15 @@
                  ▼                                         ▼
 ┌───────────────────────────────────────────────┐   ┌───────────────────────────────────────────────────────────────────────────┐
 │              PLANNING SUB-AGENTS              │   │                          DEVELOPMENT SUB-AGENTS                           │
-│         (Dedicated to primary/plan)          │   │                         (Used by primary/build)                          │
+│         (Dedicated to primary/plan)           │   │                         (Used by primary/build)                           │
 ├───────────────────────────────────────────────┤   ├───────────────────────────────────────────────────────────────────────────┤
 │                                               │   │                                                                           │
 │  ┌────────────────────┐  ┌────────────────┐   │   │  ┌────────────────┐  ┌───────────────────┐  ┌────────────────────┐        │
-│  │ subagent/research │  │ subagent/task │   │   │  │ subagent/code │  │ subagent/e2e-test│  │ subagent/document │        │
+│  │ subagent/research  │  │ subagent/task  │   │   │  │ subagent/code  │  │ subagent/e2e-test │  │ subagent/document  │        │
 │  └────────────────────┘  └────────────────┘   │   │  └────────────────┘  └───────────────────┘  └────────────────────┘        │
 │                                               │   │                                                                           │
 │                                               │   │  ┌─────────────────┐ ┌──────────────────┐  ┌───────────────────┐          │
-│                                               │   │  │ subagent/check │ │ subagent/devops │  │ subagent/review* │          │
+│                                               │   │  │ subagent/check  │ │ subagent/devops  │  │ subagent/review*  │          │
 │                                               │   │  └─────────────────┘ └──────────────────┘  └───────────────────┘          │
 │                                               │   │                                                                           │
 │                                               │   │  * review also available via /command__review                             │
@@ -111,13 +121,13 @@
 ├─────────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                     │
 │    ┌────────────────────────────────────┐    ┌────────────────────────────────────┐ │
-│    │      subagent/commit              │    │      subagent/pull-request        │ │
+│    │      subagent/commit               │    │      subagent/pull-request         │ │
 │    │                                    │    │                                    │ │
 │    │      /command__commit              │    │      /command__pull-request        │ │
 │    └────────────────────────────────────┘    └────────────────────────────────────┘ │
 │                                                                                     │
 │    ┌────────────────────────────────────┐                                           │
-│    │      subagent/review-validation   │                                           │
+│    │      subagent/review-validation    │                                           │
 │    │                                    │                                           │
 │    │      /command__validate-review     │                                           │
 │    └────────────────────────────────────┘                                           │
@@ -200,7 +210,7 @@ These agents are invoked by primary agents as part of workflows:
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────────┐
-│                              primary/plan                                    │
+│                              primary/plan                                     │
 │                       (Research & Planning Orchestrator)                      │
 └───────────────────────────────────────────────────────────────────────────────┘
                                         │
@@ -217,7 +227,7 @@ These agents are invoked by primary agents as part of workflows:
               │    (if multiple topics)                           │
               ▼                                                   ▼
     ┌───────────────────┐                           ┌───────────────────┐
-    │    subagent/     │                           │    subagent/     │
+    │    subagent/      │                           │    subagent/      │
     │     research      │                           │     research      │
     │    (Topic A)      │                           │    (Topic B)      │
     └─────────┬─────────┘                           └─────────┬─────────┘
@@ -228,13 +238,13 @@ These agents are invoked by primary agents as part of workflows:
                                       ▼
                           ┌───────────────────────────────┐
                           │     Synthesize Research       │
-                          │        primary/plan          │
+                          │        primary/plan           │
                           └───────────────────────────────┘
                                         │
                                         │ 3. Delegate task breakdown
                                         ▼
                               ┌───────────────────┐
-                              │    subagent/     │
+                              │    subagent/      │
                               │       task        │
                               └─────────┬─────────┘
                                         │
@@ -252,7 +262,7 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────────┐
-│                             primary/build                                    │
+│                             primary/build                                     │
 │                       (Development Workflow)                                  │
 └───────────────────────────────────────────────────────────────────────────────┘
                                         │
@@ -261,7 +271,7 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
                           ┌───────────────────────────────┐
                           │    SIMPLE DELEGATOR MODEL     │
                           │                               │
-                          │    primary/build delegates   │
+                          │    primary/build delegates    │
                           │    to appropriate sub-agents  │
                           │    based on task type         │
                           └───────────────────────────────┘
@@ -270,7 +280,7 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
           ┌───────────────────┬─────────┴──────────────┬───────────────────┐
           ▼                   ▼                        ▼                   ▼
 ┌───────────────────┐ ┌───────────────────┐ ┌───────────────────┐ ┌───────────────────┐
-│  subagent/code   │ │ subagent/e2e-test│ │subagent/document │ │ subagent/devops  │
+│  subagent/code    │ │ subagent/e2e-test │ │subagent/document  │ │ subagent/devops   │
 │                   │ │                   │ │                   │ │                   │
 │  Implementation   │ │  E2E Testing      │ │  Documentation    │ │  Infrastructure   │
 │  Bug fixes        │ │  Playwright tests │ │  User-facing docs │ │  CI/CD, Docker    │
@@ -281,7 +291,7 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
                                           ▼
                           ┌───────────────────────────────┐
                           │ Phase 2: Validation (check)   │
-                          │   subagent/check             │
+                          │   subagent/check              │
                           │   • lint / format             │
                           │   • type-check / tests        │
                           │   (skipped for document-only) │
@@ -301,7 +311,7 @@ LOOP LIMIT: Max 3 research ↔ task cycles before asking user
                          │                               │
                      YES ▼                               ▼ NO
        ┌───────────────────────────────────┐   ┌─────────────────────┐
-       │ subagent/review (scoped)         │   │   Report to User    │
+       │ subagent/review (scoped)          │   │   Report to User    │
        │ (single focus area per invocation)│   └─────────────────────┘
        └──────────────────┬────────────────┘
                           │
@@ -510,6 +520,43 @@ permission:
 ```
 
 See [OpenCode Permissions Documentation](https://opencode.ai/docs/permissions/#bash) for full syntax.
+
+## Skills System
+
+Skills are reusable knowledge modules that agents can load on-demand. They externalize domain-specific guidelines, checklists, and reference materials from agent prompts.
+
+### Structure
+
+```
+skill/<skill-name>/
+├── SKILL.md                    # Entry point (frontmatter + overview)
+└── references/                 # Detailed reference materials
+    └── *.md
+```
+
+### Available Skills
+
+| Skill         | Description                                                           | Used By           |
+| ------------- | --------------------------------------------------------------------- | ----------------- |
+| `code-review` | Review checklists for quality, regression, documentation, performance | `subagent/review` |
+
+### Skill Permissions
+
+Agents must have explicit permission to load skills. Configure in agent frontmatter:
+
+```yaml
+permission:
+  skill:
+    code-review: allow
+```
+
+Permission values: `allow`, `deny`, `ask`
+
+### How Agents Load Skills
+
+1. Agent load SKILL.md
+2. Agent reads specific reference files based on task (e.g., `references/quality.md`)
+3. Skill content provides checklists and output format guidance
 
 ## Quick Reference
 
