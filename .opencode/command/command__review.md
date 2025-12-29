@@ -38,34 +38,9 @@ Steps:
    - Pass all context from Step 2 (file contents, file types, change types, and PR context if available) to each stream to avoid redundant file reads.
 
    **Stream 1: Quality Review**
-   - Code style and formatting consistency.
-   - Readability and maintainability.
-   - Performance considerations.
-   - Best practices for the language/framework.
-   - Naming conventions and code organization.
-
    **Stream 2: Regression Review**
-   - Logic errors and edge cases.
-   - Breaking changes to existing functionality.
-   - Security vulnerabilities (injection, auth, data exposure).
-   - Error handling and failure modes.
-   - Race conditions or concurrency issues.
-
    **Stream 3: Documentation Review**
-   - Do code comments match the implementation?
-   - Are public APIs documented?
-   - Do README or docs need updates for behavior changes?
-   - Are complex algorithms explained?
-   - Changelog entries needed?
-
    **Stream 4: Performance Review**
-   - Algorithm complexity (O(n²) patterns, inefficient loops).
-   - Memory usage (large allocations, potential leaks).
-   - Network/IO efficiency (batching, parallelization).
-   - Caching opportunities.
-   - Bundle size impact (frontend).
-   - Database queries (N+1 patterns, index hints).
-   - Async/await patterns (blocking, Promise.all opportunities).
 
 4. **Aggregate Findings** (Delegate to `subagent/review`)
    - Collect results from all four streams.

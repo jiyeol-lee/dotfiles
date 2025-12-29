@@ -3,7 +3,8 @@
   "theme": "opencode-custom",
   "autoupdate": false,
   "permission": {
-    "doom_loop": "deny"
+    "doom_loop": "deny",
+    "skill": "deny"
   },
   "keybinds": {
     "leader": "ctrl+x",
