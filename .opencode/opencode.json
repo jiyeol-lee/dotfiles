@@ -8,8 +8,6 @@
   },
   "keybinds": {
     "leader": "ctrl+x",
-    "session_child_cycle": "none",
-    "session_child_cycle_reverse": "none",
     "input_newline": "shift+return",
     "session_parent": "ctrl+k"
   },
