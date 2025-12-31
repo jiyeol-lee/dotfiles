@@ -2,6 +2,17 @@
   "$schema": "https://opencode.ai/config.json",
   "theme": "opencode-custom",
   "autoupdate": false,
+  "provider": {
+    "opencode": {
+      "models": {
+        "gpt-5.1-codex-mini": {
+          "options": {
+            "reasoningEffort": "high"
+          }
+        }
+      }
+    }
+  },
   "permission": {
     "doom_loop": "deny",
     "skill": "deny"
