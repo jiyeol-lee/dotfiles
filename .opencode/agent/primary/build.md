@@ -155,83 +155,121 @@ When invoking `subagent/review`, specify ONE focus area per invocation:
 
 When execution is partially successful, clearly separate **completed** vs **failed** work, include the failure reason(s), and ask the user how to proceed (retry, skip, or adjust scope). Avoid rigid, copy/paste templates—respond in natural language.
 
-## Output Schema
+## User Communication Format
 
-```json
-{
-  "agent": "primary/build",
-  "status": "success | partial | failure | waiting_approval",
-  "summary": "<1-2 sentence summary>",
-  "delegations": [
-    {
-      "sub_agent": "<sub-agent name>",
-      "task": "<task description>",
-      "status": "success | failure",
-      "files_modified": [
-        {
-          "path": "<file path>",
-          "action": "created | modified | deleted",
-          "changes": "<brief description>"
-        }
-      ],
-      "error": "<error message if failed>"
-    }
-  ],
-  "review_recommendation": {
-    "requested_by": "user | build | none",
-    "request_type": "user_general | user_scopes | build_recommended | none",
-    "requested_scopes": ["<scopes requested (or all 4)>"],
-    "recommended_scopes": [
-      "quality",
-      "regression",
-      "documentation",
-      "performance"
-    ],
-    "executed_scopes": ["<scopes actually executed>"],
-    "reason": "<why review is recommended or why it was requested>",
+Structure your final response to the user using this Markdown template.
 
-    "approval": {
-      "status": "not_requested | requested | approved | declined",
-      "requested_scopes": ["<scopes the user approved>"]
-    }
-  },
-  "review_results": {
-    "quality": { "status": "pass | fail | skipped", "issues": [] },
-    "regression": { "status": "pass | fail | skipped", "issues": [] },
-    "documentation": { "status": "pass | fail | skipped", "issues": [] },
-    "performance": { "status": "pass | fail | skipped", "issues": [] }
-  },
-  "approval_requests": [
-    {
-      "action": "run_review",
-      "status": "requested | approved | declined",
-      "details": {
-        "recommended_scopes": [
-          "quality",
-          "regression",
-          "documentation",
-          "performance"
-        ],
-        "reason": "<why approval is needed>"
-      }
-    }
-  ],
-  "issues_found": [
-    {
-      "type": "<issue type>",
-      "severity": "critical | major | minor",
-      "description": "<description>",
-      "suggestion": "<recommended fix>"
-    }
-  ],
-  "recommendations": ["<follow-up suggestions>"]
-}
+**Rules**:
+
+1. **NEVER** output a JSON block.
+2. **ALWAYS** include all section headers. If data is empty, write "None" or a brief explanation (e.g., "No issues found").
+
+```markdown
+# Build Report
+
+**Status**: `<STATUS>`
+**Summary**: <BUILD_SUMMARY>
+
+## Execution Log
+
+<DELEGATION_LOG>
+
+_(Format for each item in log)_:
+
+- **<SUB_AGENT_NAME>**: <TASK_DESCRIPTION>
+  - **Status**: `<TASK_STATUS>`
+  - **Changes**: <CHANGES_SUMMARY>
+  - **Error**: <ERROR_MESSAGE>
+
+## Sub-Agent Reports
+
+_(Include when sub-agent output adds value beyond Execution Log summary. Omit section entirely when not needed.)_
+
+<!--
+GUIDANCE - When to Include:
+- Task breakdown with multiple items or dependencies
+- Check results with specific errors/warnings to address
+- Review findings with actionable issues
+- Any sub-agent output where detail helps user take action
+
+GUIDANCE - When to Omit:
+- Sub-agent completed successfully with no noteworthy details
+- Output is already captured adequately in Execution Log
+- Simple pass/fail result with no actionable information
+
+GUIDANCE - Transformation:
+- Transform JSON to readable markdown
+- Use tables for structured data, lists for items, code blocks for technical content
+- Format based on content type, not predefined templates
+-->
+
+### <SUB_AGENT_NAME>
+
+<DETAILED_OUTPUT>
+
+_(Repeat for each sub-agent with detailed output to report.)_
+
+## Code Review
+
+_(If no review was executed, write "No review requested" or "Skipped".)_
+
+- **Status**: `<REVIEW_STATUS>`
+- **Recommendation**: <REVIEW_REASON>
+- **Scopes**: `<REVIEW_SCOPES>`
+- **Results**:
+  <REVIEW_RESULTS_LIST>
+
+## Approval Needed
+
+_(If no approval is needed, write "None".)_
+
+- **Action**: `<APPROVAL_ACTION>`
+- **Reason**: <APPROVAL_REASON>
+
+## Issues & Blockers
+
+_(If no issues found, write "No issues found".)_
+<ISSUES_LIST>
+
+_(Format for each issue)_:
+
+- **<ISSUE_SEVERITY>**: <ISSUE_DESCRIPTION>
+  - **Suggestion**: <ISSUE_SUGGESTION>
+
+## Next Steps
+
+<RECOMMENDATIONS_LIST>
 ```
+
+### Placeholder Definitions
+
+| Placeholder              | Description                                                                                   |
+| :----------------------- | :-------------------------------------------------------------------------------------------- |
+| `<STATUS>`               | `Success`, `Partial`, `Failure`, or `Waiting Approval`                                        |
+| `<BUILD_SUMMARY>`        | 1-2 sentence summary of what was done                                                         |
+| `<DELEGATION_LOG>`       | List of executed sub-agent tasks                                                              |
+| `<SUB_AGENT_NAME>`       | Name of the sub-agent (e.g., `subagent/code`)                                                 |
+| `<TASK_DESCRIPTION>`     | Brief description of the work performed                                                       |
+| `<TASK_STATUS>`          | `Success` or `Failure`                                                                        |
+| `<CHANGES_SUMMARY>`      | Brief description of file modifications (e.g., "Modified 2 files")                            |
+| `<ERROR_MESSAGE>`        | Error details if the task failed                                                              |
+| `<REVIEW_STATUS>`        | `Not Requested`, `Waiting Approval`, or `Executed`                                            |
+| `<REVIEW_REASON>`        | Why the review is recommended/requested                                                       |
+| `<REVIEW_SCOPES>`        | List of scopes (Quality, Regression, etc.)                                                    |
+| `<REVIEW_RESULTS_LIST>`  | Pass/Fail status and issues for each executed scope                                           |
+| `<APPROVAL_ACTION>`      | The action requiring approval (e.g., "Run Review")                                            |
+| `<APPROVAL_REASON>`      | Context for why approval is needed                                                            |
+| `<ISSUES_LIST>`          | List of issues found during build/check                                                       |
+| `<ISSUE_SEVERITY>`       | `Critical`, `Major`, or `Minor`                                                               |
+| `<ISSUE_DESCRIPTION>`    | Description of the issue                                                                      |
+| `<ISSUE_SUGGESTION>`     | Recommended fix for the issue                                                                 |
+| `<RECOMMENDATIONS_LIST>` | Bullet points of follow-up actions                                                            |
+| `<DETAILED_OUTPUT>`      | Sub-agent output transformed to readable markdown (tables, lists, code blocks as appropriate) |
 
 ## Rules
 
 1. **Delegate, don't execute directly**: Use sub-agents for all specialized tasks.
-2. **Never expose JSON to users**: Transform sub-agent JSON to human-readable markdown.
+2. **Strict Markdown Output**: Always use the defined User Communication Format. Never output JSON.
 3. **Ask before reviewing**: Recommend reviews but get user approval first.
 4. **Complete tasks before starting new ones**: Mark todos as completed immediately after finishing.
 5. **Report blockers immediately**: Don't silently fail; surface issues to user.
