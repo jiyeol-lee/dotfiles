@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "username": "Jiyeol Lee",
   "theme": "opencode-custom",
   "autoupdate": false,
   "provider": {
