@@ -39,9 +39,6 @@ function installPackages() {
   # Install starship
   brew install starship
 
-  # Install claude
-  brew install --cask claude
-
   # Install opencode
   brew install sst/tap/opencode
 
