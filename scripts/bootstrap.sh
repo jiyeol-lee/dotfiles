@@ -40,7 +40,7 @@ function installPackages() {
   brew install starship
 
   # Install opencode
-  brew install sst/tap/opencode
+  brew install anomalyco/tap/opencode
 
   # Install gum
   brew install gum
