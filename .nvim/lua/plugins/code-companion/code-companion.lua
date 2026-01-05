@@ -20,23 +20,12 @@ function M.config()
   local setup = {
     strategies = {
       chat = {
-        adapter = "copilot",
+        name = "opencode",
+        model = "opencode/minimax-m2.1-free",
       },
       inline = {
-        adapter = "copilot",
-      },
-    },
-    adapters = {
-      http = {
-        copilot = function()
-          return require("codecompanion.adapters").extend("copilot", {
-            schema = {
-              model = {
-                default = "gpt-5.2",
-              },
-            },
-          })
-        end,
+        name = "opencode",
+        model = "opencode/minimax-m2.1-free",
       },
     },
     display = {
@@ -120,7 +109,8 @@ Working steps:
         prompts = {
           {
             role = constants.SYSTEM_ROLE,
-            content = [[You are **Summarizlator**, an analytical editor who distills text into one precise English sentence and provides a Korean translation.
+            content =
+            [[You are **Summarizlator**, an analytical editor who distills text into one precise English sentence and provides a Korean translation.
 
 Output rules:
 - Use Markdown and real line breaks.
