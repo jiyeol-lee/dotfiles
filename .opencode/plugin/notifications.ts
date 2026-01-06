@@ -52,6 +52,11 @@ export const NotificationPlugin: Plugin = async ({ $, client }) => {
           break;
         }
 
+        case "permission.asked": {
+          await $`say I'm waiting for your permission to continue`;
+          break;
+        }
+
         case "session.idle": {
           const sessionID = event.properties.sessionID;
 
