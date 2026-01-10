@@ -13,6 +13,15 @@ tools:
   todowrite: true
   todoread: true
   webfetch: false
+permission:
+  task:
+    "*": deny
+    "subagent/code": allow
+    "subagent/document": allow
+    "subagent/devops": allow
+    "subagent/e2e-test": allow
+    "subagent/check": allow
+    "subagent/review": allow
 ---
 
 # Build Agent

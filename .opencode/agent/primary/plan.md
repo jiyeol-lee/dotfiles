@@ -13,6 +13,11 @@ tools:
   todowrite: true
   todoread: true
   webfetch: false
+permission:
+  task:
+    "*": deny
+    "subagent/research": allow
+    "subagent/task": allow
 ---
 
 # Plan Agent
