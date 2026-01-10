@@ -1,6 +1,7 @@
 ---
 description: Validation specialist for code quality checks (linting, type-checking, formatting, unit/integration tests)
 mode: subagent
+hidden: true
 tools:
   bash: true
   edit: false

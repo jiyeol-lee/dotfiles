@@ -1,6 +1,7 @@
 ---
 description: PR review validation specialist for analyzing reviewer claims against actual code
 mode: subagent
+hidden: true
 tools:
   bash: false
   edit: false

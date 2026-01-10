@@ -1,6 +1,7 @@
 ---
 description: Code review specialist for quality, regression, documentation, and performance analysis
 mode: subagent
+hidden: true
 tools:
   bash: false
   edit: false

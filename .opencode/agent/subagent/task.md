@@ -1,6 +1,7 @@
 ---
 description: Task breakdown specialist for decomposing goals into actionable tasks
 mode: subagent
+hidden: true
 tools:
   bash: false
   edit: false

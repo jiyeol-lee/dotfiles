@@ -1,6 +1,7 @@
 ---
 description: E2E testing specialist for writing and running end-to-end tests using Playwright
 mode: subagent
+hidden: true
 tools:
   bash: true
   edit: true

@@ -1,6 +1,7 @@
 ---
 description: Pull request management specialist for creating and updating PRs
 mode: subagent
+hidden: true
 tools:
   bash: false
   edit: false

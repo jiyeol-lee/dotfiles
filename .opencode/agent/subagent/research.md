@@ -1,6 +1,7 @@
 ---
 description: Information gathering specialist for searching code and documentation
 mode: subagent
+hidden: true
 tools:
   bash: false
   edit: false

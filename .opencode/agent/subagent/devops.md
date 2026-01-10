@@ -1,6 +1,7 @@
 ---
 description: DevOps and infrastructure specialist for CI/CD, Docker, IaC, and deployment configs
 mode: subagent
+hidden: true
 tools:
   bash: true
   edit: true

@@ -1,6 +1,7 @@
 ---
 description: Code implementation specialist for writing and modifying code
 mode: subagent
+hidden: true
 tools:
   bash: true
   edit: true

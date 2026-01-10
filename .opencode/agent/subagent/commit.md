@@ -1,6 +1,7 @@
 ---
 description: Git commit specialist for staging, commit messages, and commit operations
 mode: subagent
+hidden: true
 tools:
   bash: false
   edit: false

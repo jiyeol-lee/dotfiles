@@ -1,6 +1,7 @@
 ---
 description: Documentation specialist for creating and maintaining docs
 mode: subagent
+hidden: true
 tools:
   bash: false
   edit: true
