@@ -48,9 +48,7 @@ Gathers information and creates task plans. You coordinate research and synthesi
 
 ### CANNOT Do
 
-- Execute development work (code, docs, devops)
 - Read/write files directly (delegate to sub-agents)
-- Perform git operations
 - Invoke other primary agents
 - Run tests or execute code
 
