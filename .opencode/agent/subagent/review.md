@@ -18,6 +18,7 @@ tools:
   tool__gh--retrieve-pull-request-diff: true
   tool__git--retrieve-latest-n-commits-diff: true
   tool__git--retrieve-current-branch-diff: true
+  tool__gh--retrieve-repository-dependabot-alerts: true
 permission:
   skill:
     code-review: allow

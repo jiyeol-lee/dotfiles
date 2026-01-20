@@ -433,19 +433,20 @@ If none of the above applies, build skips review entirely.
 
 Custom tools from `tools__gh.ts` and `tools__git.ts` plugins replace hardcoded bash commands for safer operation.
 
-| Tool                                          | commit | pull-request | review | review-validation | research |
-| --------------------------------------------- | :----: | :----------: | :----: | :---------------: | :------: |
-| `tool__gh--retrieve-pull-request-info`        |   ❌   |      ✅      |   ✅   |        ✅         |    ✅    |
-| `tool__gh--retrieve-repository-collaborators` |   ❌   |      ✅      |   ❌   |        ❌         |    ❌    |
-| `tool__gh--create-pull-request`               |   ❌   |      ✅      |   ❌   |        ❌         |    ❌    |
-| `tool__gh--edit-pull-request`                 |   ❌   |      ✅      |   ❌   |        ❌         |    ❌    |
-| `tool__gh--retrieve-pull-request-diff`        |   ❌   |      ❌      |   ✅   |        ❌         |    ✅    |
-| `tool__git--retrieve-latest-n-commits-diff`   |   ❌   |      ❌      |   ✅   |        ❌         |    ❌    |
-| `tool__git--retrieve-current-branch-diff`     |   ✅   |      ✅      |   ✅   |        ❌         |    ✅    |
-| `tool__git--status`                           |   ✅   |      ❌      |   ❌   |        ❌         |    ❌    |
-| `tool__git--stage-files`                      |   ✅   |      ❌      |   ❌   |        ❌         |    ❌    |
-| `tool__git--commit`                           |   ✅   |      ❌      |   ❌   |        ❌         |    ❌    |
-| `tool__git--push`                             |   ❌   |      ✅      |   ❌   |        ❌         |    ❌    |
+| Tool                                              | commit | pull-request | review | review-validation | research |
+| ------------------------------------------------- | :----: | :----------: | :----: | :---------------: | :------: |
+| `tool__gh--retrieve-pull-request-info`            |   ❌   |      ✅      |   ✅   |        ✅         |    ✅    |
+| `tool__gh--retrieve-repository-collaborators`     |   ❌   |      ✅      |   ❌   |        ❌         |    ❌    |
+| `tool__gh--create-pull-request`                   |   ❌   |      ✅      |   ❌   |        ❌         |    ❌    |
+| `tool__gh--edit-pull-request`                     |   ❌   |      ✅      |   ❌   |        ❌         |    ❌    |
+| `tool__gh--retrieve-pull-request-diff`            |   ❌   |      ❌      |   ✅   |        ❌         |    ✅    |
+| `tool__gh--retrieve-repository-dependabot-alerts` |   ❌   |      ❌      |   ✅   |        ❌         |    ✅    |
+| `tool__git--retrieve-latest-n-commits-diff`       |   ❌   |      ❌      |   ✅   |        ❌         |    ❌    |
+| `tool__git--retrieve-current-branch-diff`         |   ✅   |      ✅      |   ✅   |        ❌         |    ✅    |
+| `tool__git--status`                               |   ✅   |      ❌      |   ❌   |        ❌         |    ❌    |
+| `tool__git--stage-files`                          |   ✅   |      ❌      |   ❌   |        ❌         |    ❌    |
+| `tool__git--commit`                               |   ✅   |      ❌      |   ❌   |        ❌         |    ❌    |
+| `tool__git--push`                                 |   ❌   |      ✅      |   ❌   |        ❌         |    ❌    |
 
 #### Custom Tool Purposes
 

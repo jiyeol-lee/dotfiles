@@ -250,6 +250,55 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
           }
         },
       }),
+      "tool__gh--retrieve-repository-dependabot-alerts": tool({
+        description:
+          "Retrieve a list of Dependabot alerts for the current GitHub repository.",
+        args: {
+          state: tool.schema
+            .string()
+            .optional()
+            .describe(
+              "Filter alerts by state (e.g., 'open', 'closed', 'dismissed')",
+            ),
+          severity: tool.schema
+            .string()
+            .optional()
+            .describe(
+              "Filter alerts by severity (e.g., 'low', 'medium', 'high', 'critical')",
+            ),
+        },
+        async execute(args) {
+          const { state = "open", severity } = args;
+
+          try {
+            const owner = (await $`gh repo view --json owner -q .owner.login`)
+              .text()
+              .trim();
+            const repo = (await $`gh repo view --json name -q .name`)
+              .text()
+              .trim();
+            const queryParams = new URLSearchParams();
+            if (state) {
+              queryParams.append("state", state);
+            }
+            if (severity) {
+              queryParams.append("severity", severity);
+            }
+            const result =
+              await $`gh api "/repos/${owner}/${repo}/dependabot/alerts?${queryParams.toString()}"`.text();
+            return result;
+          } catch (error) {
+            return JSON.stringify(
+              {
+                success: false,
+                error: `Failed to retrieve Dependabot alerts: ${error instanceof Error ? error.message : String(error)}`,
+              },
+              null,
+              2,
+            );
+          }
+        },
+      }),
     },
   };
 };

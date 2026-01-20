@@ -100,19 +100,20 @@ See `docs/opencode.md` **Custom Tools Permission Matrix** for complete tool perm
 
 ### Custom Tool Purposes
 
-| Tool                                          | Purpose                                                              |
-| --------------------------------------------- | -------------------------------------------------------------------- |
-| `tool__gh--retrieve-pull-request-info`        | Get comprehensive PR details (state, title, body, comments, reviews) |
-| `tool__gh--retrieve-repository-collaborators` | List repository collaborators (login and name)                       |
-| `tool__gh--create-pull-request`               | Create PR with title, body, and optional reviewers                   |
-| `tool__gh--edit-pull-request`                 | Edit PR title, body, or add reviewers                                |
-| `tool__gh--retrieve-pull-request-diff`        | Get the diff content of a specific PR                                |
-| `tool__git--retrieve-latest-n-commits-diff`   | Get diff for last N commits (1-100)                                  |
-| `tool__git--retrieve-current-branch-diff`     | Compare current branch against default branch                        |
-| `tool__git--status`                           | Get structured git status (staged, unstaged, untracked)              |
-| `tool__git--commit`                           | Create commit with message and optional body                         |
-| `tool__git--stage-files`                      | Stage files for commit (specific files or all)                       |
-| `tool__git--push`                             | Push current branch with upstream tracking                           |
+| Tool                                              | Purpose                                                              |
+| ------------------------------------------------- | -------------------------------------------------------------------- |
+| `tool__gh--retrieve-pull-request-info`            | Get comprehensive PR details (state, title, body, comments, reviews) |
+| `tool__gh--retrieve-repository-collaborators`     | List repository collaborators (login and name)                       |
+| `tool__gh--create-pull-request`                   | Create PR with title, body, and optional reviewers                   |
+| `tool__gh--edit-pull-request`                     | Edit PR title, body, or add reviewers                                |
+| `tool__gh--retrieve-pull-request-diff`            | Get the diff content of a specific PR                                |
+| `tool__gh--retrieve-repository-dependabot-alerts` | Get open Dependabot alerts for the repository                        |
+| `tool__git--retrieve-latest-n-commits-diff`       | Get diff for last N commits (1-100)                                  |
+| `tool__git--retrieve-current-branch-diff`         | Compare current branch against default branch                        |
+| `tool__git--status`                               | Get structured git status (staged, unstaged, untracked)              |
+| `tool__git--commit`                               | Create commit with message and optional body                         |
+| `tool__git--stage-files`                          | Stage files for commit (specific files or all)                       |
+| `tool__git--push`                                 | Push current branch with upstream tracking                           |
 
 ## Global Constraints
 
