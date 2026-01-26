@@ -89,6 +89,13 @@ M.config = function()
     },
     {
       mode = "n",
+      "<leader>W",
+      "<cmd>set wrap! linebreak<CR>",
+      desc = "Toggle wrap",
+      nowait = true,
+    },
+    {
+      mode = "n",
       "<leader>q",
       "<cmd>bdelete!<CR>",
       desc = "Close Buffer",
