@@ -194,7 +194,7 @@ M.config = function()
       ---@return string
       img_name_func = function()
         -- Prefix image names with timestamp.
-        return string.format("%s-", os.time())
+        return string.format("%s", os.time())
       end,
 
       ---@return string
