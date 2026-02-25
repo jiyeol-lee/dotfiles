@@ -487,23 +487,25 @@ All primary agents have `permission.bash: deny` - they delegate to sub-agents.
 
 #### Sub-Agents (Specialists)
 
-| Agent                        | Default | Allowed Commands                            | Ask Commands |
-| ---------------------------- | ------- | ------------------------------------------- | ------------ |
-| `subagent/code`              | `ask`   | —                                           | (all)        |
-| `subagent/commit`            | `deny`  | (none - uses custom tools)                  | (none)       |
-| `subagent/devops`            | `ask`   | —                                           | (all)        |
-| `subagent/document`          | `deny`  | (none)                                      | (none)       |
-| `subagent/e2e-test`          | `deny`  | `yarn run test:e2e *`, `npm run test:e2e *` | (none)       |
-| `subagent/check`             | `allow` | (all)                                       | (none)       |
-| `subagent/pull-request`      | `deny`  | (none - uses custom tools)                  | (none)       |
-| `subagent/research`          | `deny`  | (none - uses custom tools)                  | (none)       |
-| `subagent/review`            | `deny`  | (none - uses custom tools)                  | (none)       |
-| `subagent/review-validation` | `deny`  | (none - uses custom tools)                  | (none)       |
-| `subagent/task`              | `deny`  | (none)                                      | (none)       |
+| Agent                        | Default | Allowed Commands                                                            | Ask Commands |
+| ---------------------------- | ------- | --------------------------------------------------------------------------- | ------------ |
+| `subagent/code`              | `ask`   | `rg *, cat *, head *, tail *, ls *, echo *, wc *, git status *, git diff *` | `(other)`    |
+| `subagent/commit`            | `deny`  | (none - uses custom tools)                                                  | (none)       |
+| `subagent/devops`            | `ask`   | `rg *, cat *, head *, tail *, ls *, echo *, wc *, git status *, git diff *` | `(other)`    |
+| `subagent/document`          | `deny`  | (none)                                                                      | (none)       |
+| `subagent/e2e-test`          | `deny`  | `yarn run test:e2e *`, `npm run test:e2e *`                                 | (none)       |
+| `subagent/check`             | `allow` | (all)                                                                       | (none)       |
+| `subagent/pull-request`      | `deny`  | (none - uses custom tools)                                                  | (none)       |
+| `subagent/research`          | `deny`  | (none - uses custom tools)                                                  | (none)       |
+| `subagent/review`            | `deny`  | (none - uses custom tools)                                                  | (none)       |
+| `subagent/review-validation` | `deny`  | (none - uses custom tools)                                                  | (none)       |
+| `subagent/task`              | `deny`  | (none)                                                                      | (none)       |
 
 #### Configuration Reference
 
 Bash permissions can be configured in an agent's markdown file frontmatter (optional):
+
+**Simple Pattern** (block by default, allow specific):
 
 ```yaml
 ---
@@ -515,10 +517,37 @@ tools:
 permission:
   bash:
     "*": deny
-    "git status": allow
+    "git status *": allow
     "git push *": ask
 ---
 ```
+
+Use this pattern when you want to block most commands by default and only allow specific safe commands.
+
+**Granular Pattern** (ask by default, pre-approve safe commands):
+
+```yaml
+---
+description: Agent with granular bash permissions
+mode: subagent
+tools:
+  bash: true
+permission:
+  bash:
+    "*": ask # All commands require approval by default
+    "rg *": allow
+    "cat *": allow
+    "head *": allow
+    "tail *": allow
+    "ls *": allow
+    "echo *": allow
+    "wc *": allow
+    "git status": allow
+    "git diff": allow
+---
+```
+
+This granular pattern is used by `subagent/code.md` and `subagent/devops.md` to allow safe read-only commands while requiring explicit approval for all other operations. Use this pattern when you want most commands to require approval, but want to pre-approve a specific set of safe, read-only commands.
 
 See [OpenCode Permissions Documentation](https://opencode.ai/docs/permissions/#bash) for full syntax.
 

@@ -17,7 +17,17 @@ tools:
   mcp__context7_*: true
   mcp__aws-knowledge_*: true
 permission:
-  bash: ask
+  bash:
+    "*": ask
+    rg *: allow
+    cat *: allow
+    head *: allow
+    tail *: allow
+    ls *: allow
+    echo *: allow
+    wc *: allow
+    git status *: allow
+    git diff *: allow
 ---
 
 You are the **Code Agent**, a specialist that writes clean, efficient, and maintainable code. You implement features, fix bugs, refactor code, and write unit tests and integration tests as part of implementation.

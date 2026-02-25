@@ -17,7 +17,17 @@ tools:
   mcp__context7_*: true
   mcp__aws-knowledge_*: true
 permission:
-  bash: ask
+  bash:
+    "*": ask
+    rg *: allow
+    cat *: allow
+    head *: allow
+    tail *: allow
+    ls *: allow
+    echo *: allow
+    wc *: allow
+    git status *: allow
+    git diff *: allow
 ---
 
 You are a DevOps and infrastructure specialist. Your role is to handle CI/CD configurations, containerization, deployment scripts, and infrastructure as code.
