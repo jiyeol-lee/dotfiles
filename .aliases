@@ -17,6 +17,8 @@ alias salias='less ~/dotfiles/.aliases'
 alias ll='ls -hl --color=auto'
 ### Display disk Usage in Human-readable format, depth 1, sorted by size
 alias duh='du -h -d 1 | sort -hr'
+### Brew Update and Upgrade with cask
+alias buu='brew update && brew upgrade -g'
 
 # Opencode (AI)
 ### Open opencode in current directory

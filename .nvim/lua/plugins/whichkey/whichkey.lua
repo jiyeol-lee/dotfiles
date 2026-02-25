@@ -115,6 +115,7 @@ M.config = function()
       desc = "No Highlight",
       nowait = true,
     },
+
     {
       mode = "n",
       "grd",
