@@ -1,7 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "username": "Jiyeol Lee",
-  "theme": "opencode-custom",
   "default_agent": "primary/plan",
   "autoupdate": false,
   "provider": {
@@ -18,11 +17,6 @@
   "permission": {
     "doom_loop": "deny",
     "skill": "deny"
-  },
-  "keybinds": {
-    "leader": "ctrl+x",
-    "input_newline": "shift+return",
-    "session_parent": "ctrl+k"
   },
   "instructions": ["AGENTS.md"],
   "mcp": {
@@ -59,12 +53,6 @@
   "tools": {
     "mcp__*": false,
     "tool_*": false
-  },
-  "tui": {
-    "scroll_speed": 3,
-    "scroll_acceleration": {
-      "enabled": true
-    }
   },
   "agent": {
     "plan": {
