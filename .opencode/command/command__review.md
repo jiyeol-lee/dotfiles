@@ -34,7 +34,7 @@ Steps:
        - Consider responses to previous review comments.
 
 3. **Parallel Review** (Delegate to `subagent/review` - 4 parallel streams)
-   - Launch four parallel review streams:
+   - Invoke `subagent/review` 4 times in parallel:
    - Pass all context from Step 2 (file contents, file types, change types, and PR context if available) to each stream to avoid redundant file reads.
 
    **Stream 1: Quality Review**
