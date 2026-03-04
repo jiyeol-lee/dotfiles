@@ -1,6 +1,6 @@
 local M = {
   "mistricky/codesnap.nvim",
-  version = "*",
+  tag = "v2.0.0",
 }
 
 M.config = function()
