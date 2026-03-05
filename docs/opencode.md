@@ -21,7 +21,7 @@
 | Primary | `primary/plan`               | Research and task planning orchestrator                        |
 | Primary | `primary/build`              | Development workflow orchestrator                              |
 | Sub     | `subagent/research`          | Information gathering                                          |
-| Sub     | `subagent/task`              | Task breakdown and planning                                    |
+| Sub     | `subagent/task`              | Task breakdown, planning, and plan documentation writing       |
 | Sub     | `subagent/code`              | Code implementation                                            |
 | Sub     | `subagent/e2e-test`          | E2E testing specialist (Playwright), writes and runs E2E tests |
 | Sub     | `subagent/check`             | Validation specialist (lint, type-check, format, tests)        |
@@ -417,13 +417,13 @@ If none of the above applies, build skips review entirely.
 | Tool        | research | task | code | e2e-test | check | commit | pull-request | document | devops | review | review-validation |
 | ----------- | :------: | :--: | :--: | :------: | :---: | :----: | :----------: | :------: | :----: | :----: | :---------------: |
 | `bash`      |    ❌    |  ❌  |  ✅  |    ✅    |  ✅   |   ❌   |      ❌      |    ❌    |   ✅   |   ❌   |        ❌         |
-| `edit`      |    ❌    |  ❌  |  ✅  |    ✅    |  ❌   |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
-| `write`     |    ❌    |  ❌  |  ✅  |    ✅    |  ❌   |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
+| `edit`      |    ❌    |  ✅  |  ✅  |    ✅    |  ❌   |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
+| `write`     |    ❌    |  ✅  |  ✅  |    ✅    |  ❌   |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
 | `read`      |    ✅    |  ✅  |  ✅  |    ✅    |  ✅   |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |        ✅         |
 | `grep`      |    ✅    |  ✅  |  ✅  |    ✅    |  ✅   |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |        ✅         |
 | `glob`      |    ✅    |  ✅  |  ✅  |    ✅    |  ✅   |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |        ✅         |
 | `list`      |    ✅    |  ✅  |  ✅  |    ✅    |  ✅   |   ✅   |      ✅      |    ✅    |   ✅   |   ✅   |        ✅         |
-| `patch`     |    ❌    |  ❌  |  ✅  |    ✅    |  ❌   |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
+| `patch`     |    ❌    |  ✅  |  ✅  |    ✅    |  ❌   |   ❌   |      ❌      |    ✅    |   ✅   |   ❌   |        ❌         |
 | `todowrite` |    ❌    |  ❌  |  ❌  |    ❌    |  ❌   |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |        ❌         |
 | `todoread`  |    ❌    |  ❌  |  ❌  |    ❌    |  ❌   |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |        ❌         |
 | `webfetch`  |    ✅    |  ❌  |  ❌  |    ❌    |  ❌   |   ❌   |      ❌      |    ✅    |   ❌   |   ❌   |        ❌         |
