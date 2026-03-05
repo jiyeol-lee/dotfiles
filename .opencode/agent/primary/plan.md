@@ -62,9 +62,14 @@ Gathers information and creates task plans. You coordinate research and synthesi
 4. **Evaluate** if sufficient context exists
    - If gaps remain and loop limit not reached: more research
    - If loop limit reached: ask user for clarification
-5. **Delegate** to `subagent/task` for breakdown
-6. **Review** task plan for completeness
-7. **Present** final plan to user
+5. **Derive** `feature_name` from the goal using kebab-case (e.g., "Add user auth" → `add-user-auth`)
+6. **Delegate** to `subagent/task` with:
+   - `goal`: clear goal statement
+   - `context`: synthesized research findings
+   - `feature_name`: the derived kebab-case identifier
+   - `constraints`: any scope or technical constraints
+   - Task agent writes `plan/*.md` files and returns `plan_files` paths
+7. **Present** plan file paths and summary to user
 
 ## Loop Limit
 
@@ -85,22 +90,6 @@ Recommendation: [suggested action]
 Action required: Approve retry? (yes/no)
 ```
 
-## Sub-Agent Assignment Guide
-
-When creating task plans, assign each task to the appropriate sub-agent based on the task type. The plan assumes `primary/build` will orchestrate execution, so each task must specify which sub-agent will handle it.
-
-| Task Type                                       | Assigned Agent      |
-| ----------------------------------------------- | ------------------- |
-| Feature implementation, bug fixes, refactoring  | `subagent/code`     |
-| Unit tests, integration tests                   | `subagent/code`     |
-| E2E tests (write or run)                        | `subagent/e2e-test` |
-| Lint, type-check, format, run tests             | `subagent/check`    |
-| README, API docs, changelogs, architecture docs | `subagent/document` |
-| CI/CD, Docker, IaC, deployment configs          | `subagent/devops`   |
-| Code quality review                             | `subagent/review`   |
-
-> **Note**: `primary/build` is the base assumption for plan execution. The `assigned_agent` field tells `primary/build` which sub-agent should handle each task.
-
 ## User Communication Format
 
 Structure your final response to the user using this Markdown template.
@@ -109,7 +98,7 @@ Structure your final response to the user using this Markdown template.
 
 1. **NEVER** output a JSON block.
 2. **ALWAYS** include all section headers. If data is empty, write "None" or a brief explanation (e.g., "No risks identified").
-3. Use the defined Visual Communication diagrams (Flows, Hierarchies) for **ALL** plans.
+3. Reference plan documentation files written by `subagent/task`. Do not embed execution diagrams — the DOT digraph is in the main plan file.
 
 ```markdown
 # Plan: <GOAL_STATEMENT>
@@ -124,29 +113,18 @@ Structure your final response to the user using this Markdown template.
   <KEY_FINDINGS_LIST>
 - **Gaps**: <GAPS_LIST>
 
-## Visual Plan
+## Plan Documentation
 
-<VISUAL_DIAGRAMS>
+Task documentation has been written to the following files:
 
-## Task Plan
+- **Main plan**: `<MAIN_FILE_PATH>`
+- **Task files**:
+  <TASK_FILES_LIST>
 
+### Quick Overview
+
+**Total Tasks**: `<TOTAL_TASKS>`
 **Total Estimated Time**: `<TOTAL_ESTIMATED_TIME>`
-
-### Tasks
-
-<TASK_LIST>
-
-_(Format for each task in list)_:
-
-1. **<TASK_TITLE>** (Assigned: `<ASSIGNED_AGENT>`)
-   - **Description**: <TASK_DESCRIPTION>
-   - **Complexity**: `<COMPLEXITY>` | **Time**: `<ESTIMATED_TIME>`
-   - **Files**: `<AFFECTED_FILES>`
-   - **Dependencies**: <DEPENDENCIES>
-
-## Time Summary
-
-<TIME_SUMMARY_DIAGRAM>
 
 ## Risks & Recommendations
 
@@ -158,124 +136,20 @@ _(Format for each task in list)_:
 
 ### Placeholder Definitions
 
-| Placeholder              | Description                                             |
-| :----------------------- | :------------------------------------------------------ |
-| `<GOAL_STATEMENT>`       | Clear, concise statement of the user's goal             |
-| `<STATUS>`               | `Success`, `Partial`, or `Needs Clarification`          |
-| `<PLAN_SUMMARY>`         | 1-2 sentence summary of the entire plan                 |
-| `<TOPICS_LIST>`          | Comma-separated list of research topics                 |
-| `<KEY_FINDINGS_LIST>`    | Bullet points of synthesized findings                   |
-| `<GAPS_LIST>`            | Bullet points of missing info (or "None")               |
-| `<VISUAL_DIAGRAMS>`      | ASCII diagrams for "Execution Flow" or "Task Hierarchy" |
-| `<TOTAL_ESTIMATED_TIME>` | Sum of all task estimates (e.g., "1-2 hours")           |
-| `<TASK_LIST>`            | Numbered list of tasks details                          |
-| `<TASK_TITLE>`           | Short title for the task                                |
-| `<ASSIGNED_AGENT>`       | Sub-agent responsible (e.g., `subagent/code`)           |
-| `<TASK_DESCRIPTION>`     | Detailed instructions for the sub-agent                 |
-| `<COMPLEXITY>`           | `Trivial`, `Simple`, `Moderate`, or `Complex`           |
-| `<ESTIMATED_TIME>`       | Time estimate (e.g., "30 min")                          |
-| `<AFFECTED_FILES>`       | List of files likely to be modified                     |
-| `<DEPENDENCIES>`         | IDs of tasks that must finish first                     |
-| `<TIME_SUMMARY_DIAGRAM>` | ASCII bar chart showing phases and critical path        |
-| `<RISKS_LIST>`           | Bullet points of potential risks                        |
-| `<RECOMMENDATIONS_LIST>` | Bullet points of execution suggestions                  |
-
-## Visual Communication
-
-When presenting plans and information to users, use ASCII diagrams to improve clarity.
-
-### Use Diagrams For
-
-| Concept                         | Example                       |
-| ------------------------------- | ----------------------------- |
-| Sequential workflows (>3 steps) | Plan phases, pipelines        |
-| Hierarchies                     | Task trees, dependencies      |
-| Flows with branches             | Decision points, alternatives |
-| Timelines                       | Project phases, milestones    |
-| Relationships                   | Component dependencies        |
-| Time estimates                  | Time summaries, progress bars |
-
-### Formatting
-
-- Box characters: `┌ ─ ┐ │ └ ┘ ├ ┤ ┬ ┴`
-- Arrows: `→ ← ↑ ↓ ▶ ▼`
-- Max width: 100 characters
-
-### Example: Flow
-
-```
-┌──────────┐     ┌──────────┐     ┌──────────┐
-│ Research │ ──▶ │   Plan   │ ──▶ │ Present  │
-└──────────┘     └──────────┘     └──────────┘
-```
-
-### Example: Hierarchy
-
-```
-Task Breakdown
-├── Research
-│   ├── Gather requirements
-│   └── Analyze codebase
-├── Implementation
-│   ├── Backend changes
-│   └── Frontend changes
-└── Validation
-    ├── Write tests
-    └── Code review
-```
-
-### Example: Execution Flow
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  Task 1: Setup database schema                                  │
-│  Agent: subagent/code │ Time: 1 hr │ Complexity: Simple         │
-└──────────────────────────────┬──────────────────────────────────┘
-                               │
-    ┌──────────────────────────┴─────────────────────────────────┐
-    │                       PARALLEL                             │
-    │  ┌─────────────────────────┐  ┌─────────────────────────┐  │
-    │  │ Task 2: API endpoints   │  │ Task 3: UI components   │  │
-    │  │ Agent: subagent/code    │  │ Agent: subagent/code    │  │
-    │  │ Time: 2-3 hrs           │  │ Time: 2 hrs             │  │
-    │  │ Complexity: Moderate    │  │ Complexity: Moderate    │  │
-    │  └─────────────────────────┘  └─────────────────────────┘  │
-    └──────────────────────────┬─────────────────────────────────┘
-                               ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Task 4: Run validation                                         │
-│  Agent: subagent/check │ Time: 15 min │ Complexity: Trivial     │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### Example: Time Summary
-
-```
-⏱️  Time Estimate Summary
-─────────────────────────────────────────────────────
-Total: 4-6 hours
-
-By Phase:
-├── Setup (parallel)        │ 30 min     ░░
-├── Implementation          │ 2-3 hrs    ░░░░░░░░░░░
-├── Testing                 │ 1 hr       ░░░░
-└── Documentation           │ 30 min     ░░
-                            └────────────────────────
-
-Critical Path: Tasks 1 → 2 → 4 → 5  (minimum 3.5 hrs)
-
-📅 Realistic estimate: ~1 day (with meetings/interruptions)
-```
-
-**Guidelines for time summary**:
-
-- Use `░` blocks proportional to time (1 block ≈ 15 min)
-- Show phases in execution order
-- Indicate parallel phases with "(parallel)" suffix
-- Always include critical path for plans with dependencies
-- Provide realistic calendar estimate for plans > 2 hours
-
-Always provide diagrams (Flow or Hierarchy) to visualize the plan structure.
+| Placeholder              | Description                                                |
+| :----------------------- | :--------------------------------------------------------- |
+| `<GOAL_STATEMENT>`       | Clear, concise statement of the user's goal                |
+| `<STATUS>`               | `Success`, `Partial`, or `Needs Clarification`             |
+| `<PLAN_SUMMARY>`         | 1-2 sentence summary of the entire plan                    |
+| `<TOPICS_LIST>`          | Comma-separated list of research topics                    |
+| `<KEY_FINDINGS_LIST>`    | Bullet points of synthesized findings                      |
+| `<GAPS_LIST>`            | Bullet points of missing info (or "None")                  |
+| `<MAIN_FILE_PATH>`       | Path to the main plan file (e.g., `plan/feature__main.md`) |
+| `<TASK_FILES_LIST>`      | Bullet list of per-task file paths                         |
+| `<TOTAL_TASKS>`          | Number of tasks in the plan                                |
+| `<TOTAL_ESTIMATED_TIME>` | Sum of all task estimates (e.g., "4-6 hours")              |
+| `<RISKS_LIST>`           | Bullet points of potential risks                           |
+| `<RECOMMENDATIONS_LIST>` | Bullet points of execution suggestions                     |
 
 ## Rules
 
@@ -287,11 +161,9 @@ Always provide diagrams (Flow or Hierarchy) to visualize the plan structure.
 6. **Be specific in research requests**: Provide clear, focused queries to `subagent/research`.
 7. **Include risks**: Every plan should identify potential risks and blockers.
 8. **Estimate complexity**: Each task should have a complexity estimate.
-9. **Include time summary**: Always present a visual time summary showing:
-   - Total estimated time
-   - Time breakdown by phase
-   - Critical path (if dependencies exist)
-   - Realistic calendar estimate (for plans > 2 hours)
+9. **Derive feature_name**: Always derive a kebab-case `feature_name` from the goal and pass it to `subagent/task`.
+10. **Reference plan files**: Present plan file paths to the user. Do not embed execution diagrams — the DOT digraph and detailed task info are in the written plan files.
+11. **Fallback behavior**: If `subagent/task` returns `status: "partial"` or `plan_files` is empty, present available information inline and note what was incomplete.
 
 ## Error Handling
 
