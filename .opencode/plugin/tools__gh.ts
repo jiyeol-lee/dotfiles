@@ -128,7 +128,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__gh--create-pull-request": tool({
         description:
-          "Create a new pull request in the current GitHub repository.",
+          "Create a new draft pull request in the current GitHub repository.",
         args: {
           title: tool.schema.string().describe("The title of the pull request"),
           body: tool.schema
@@ -146,8 +146,8 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
             const reviewersList = reviewers?.join(",");
 
             const result = reviewersList
-              ? await $`gh pr create --title ${title} --assignee @me --body-file - --reviewer ${reviewersList} < ${new Response(body)}`.text()
-              : await $`gh pr create --title ${title} --assignee @me --body-file - < ${new Response(body)}`.text();
+              ? await $`gh pr create --draft --title ${title} --assignee @me --body-file - --reviewer ${reviewersList} < ${new Response(body)}`.text()
+              : await $`gh pr create --draft --title ${title} --assignee @me --body-file - < ${new Response(body)}`.text();
             return result;
           } catch (error) {
             return JSON.stringify(
