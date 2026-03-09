@@ -18,17 +18,11 @@ function M.config()
 
   local code_companion = require "codecompanion"
   local setup = {
-    -- adapters = {
-    --   http = {
-    --     --
-    --   },
-    -- },
     interactions = {
       chat = {
-        -- adapter = {
-        --   name = "",
-        --   model = "",
-        -- },
+        adapter = {
+          name = "opencode",
+        },
         opts = {
           system_prompt = function(ctx)
             local language = ctx.language or "English"
@@ -74,10 +68,9 @@ When given a task:
         },
       },
       inline = {
-        -- adapter = {
-        --   name = "",
-        --   model = "",
-        -- },
+        adapter = {
+          name = "opencode",
+        },
       },
     },
     display = {
