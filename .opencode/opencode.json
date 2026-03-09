@@ -3,17 +3,7 @@
   "username": "Jiyeol Lee",
   "default_agent": "primary/plan",
   "autoupdate": false,
-  "provider": {
-    "opencode": {
-      "models": {
-        "gpt-5.1-codex-mini": {
-          "options": {
-            "reasoningEffort": "high"
-          }
-        }
-      }
-    }
-  },
+  "model": "opencode-go/kimi-k2.5",
   "permission": {
     "doom_loop": "deny",
     "skill": "deny"
