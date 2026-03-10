@@ -38,19 +38,19 @@ When delegating to a sub-agent, include:
 
 Primary agents must provide the following context when delegating:
 
-| Sub-Agent                    | Required Context                                                                                                                                                      |
-| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `subagent/code`              | Goal, file paths to modify, requirements, technical constraints                                                                                                       |
-| `subagent/document`          | Task description, mode (draft/apply), target file paths, related code context                                                                                         |
-| `subagent/devops`            | Task description, infrastructure files, deployment context                                                                                                            |
-| `subagent/e2e-test`          | Test scope, target pages/flows, existing test file paths, Playwright configuration context                                                                            |
-| `subagent/check`             | Verification scope (lint/type-check/format/test), source file paths, language context                                                                                 |
-| `subagent/review`            | **Focus area** (quality/regression/documentation/performance), file paths to review, change context                                                                   |
-| `subagent/review-validation` | PR number, unresolved review thread data (with URLs), file paths referenced in reviews                                                                                |
-| `subagent/commit`            | Mode (draft/apply), scope of changes to commit                                                                                                                        |
-| `subagent/pull-request`      | Mode (draft/apply), PR title/description context, target branch                                                                                                       |
-| `subagent/research`          | Research question or topic, scope boundaries, what information to return                                                                                              |
-| `subagent/task`              | Goal to decompose, context from research, constraints, `feature_name` (kebab-case identifier for plan file naming; task agent writes `plan/*.md` documentation files) |
+| Sub-Agent                    | Required Context                                                                                                                                                        |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `subagent/code`              | Goal, file paths to modify, requirements, technical constraints                                                                                                         |
+| `subagent/document`          | Task description, mode (draft/apply), target file paths, related code context                                                                                           |
+| `subagent/devops`            | Task description, infrastructure files, deployment context                                                                                                              |
+| `subagent/e2e-test`          | Test scope, target pages/flows, existing test file paths, Playwright configuration context                                                                              |
+| `subagent/check`             | Verification scope (lint/type-check/format/test), source file paths, language context                                                                                   |
+| `subagent/review`            | **Focus area** (quality/regression/documentation/performance), file paths to review, change context                                                                     |
+| `subagent/review-validation` | PR number, unresolved review thread data (with URLs), file paths referenced in reviews                                                                                  |
+| `subagent/commit`            | Mode (draft/apply), scope of changes to commit                                                                                                                          |
+| `subagent/pull-request`      | Mode (draft/apply), PR title/description context, target branch                                                                                                         |
+| `subagent/research`          | Research question or topic, scope boundaries, what information to return                                                                                                |
+| `subagent/task`              | Goal to decompose, context from research, constraints, `feature_name` (kebab-case identifier for plan file naming; task agent writes `__plan/*.md` documentation files) |
 
 **Note**: This table is the shared contract. Primary agents use this to construct prompts; sub-agents use this to validate they received sufficient context.
 

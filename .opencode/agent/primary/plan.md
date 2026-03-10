@@ -68,7 +68,7 @@ Gathers information and creates task plans. You coordinate research and synthesi
    - `context`: synthesized research findings
    - `feature_name`: the derived kebab-case identifier
    - `constraints`: any scope or technical constraints
-   - Task agent writes `plan/*.md` files and returns `plan_files` paths
+   - Task agent writes `__plan/*.md` files and returns `plan_files` paths
 7. **Present** plan file paths and summary to user
 
 ## Loop Limit
@@ -136,20 +136,20 @@ Task documentation has been written to the following files:
 
 ### Placeholder Definitions
 
-| Placeholder              | Description                                                |
-| :----------------------- | :--------------------------------------------------------- |
-| `<GOAL_STATEMENT>`       | Clear, concise statement of the user's goal                |
-| `<STATUS>`               | `Success`, `Partial`, or `Needs Clarification`             |
-| `<PLAN_SUMMARY>`         | 1-2 sentence summary of the entire plan                    |
-| `<TOPICS_LIST>`          | Comma-separated list of research topics                    |
-| `<KEY_FINDINGS_LIST>`    | Bullet points of synthesized findings                      |
-| `<GAPS_LIST>`            | Bullet points of missing info (or "None")                  |
-| `<MAIN_FILE_PATH>`       | Path to the main plan file (e.g., `plan/feature__main.md`) |
-| `<TASK_FILES_LIST>`      | Bullet list of per-task file paths                         |
-| `<TOTAL_TASKS>`          | Number of tasks in the plan                                |
-| `<TOTAL_ESTIMATED_TIME>` | Sum of all task estimates (e.g., "4-6 hours")              |
-| `<RISKS_LIST>`           | Bullet points of potential risks                           |
-| `<RECOMMENDATIONS_LIST>` | Bullet points of execution suggestions                     |
+| Placeholder              | Description                                                  |
+| :----------------------- | :----------------------------------------------------------- |
+| `<GOAL_STATEMENT>`       | Clear, concise statement of the user's goal                  |
+| `<STATUS>`               | `Success`, `Partial`, or `Needs Clarification`               |
+| `<PLAN_SUMMARY>`         | 1-2 sentence summary of the entire plan                      |
+| `<TOPICS_LIST>`          | Comma-separated list of research topics                      |
+| `<KEY_FINDINGS_LIST>`    | Bullet points of synthesized findings                        |
+| `<GAPS_LIST>`            | Bullet points of missing info (or "None")                    |
+| `<MAIN_FILE_PATH>`       | Path to the main plan file (e.g., `__plan/feature__main.md`) |
+| `<TASK_FILES_LIST>`      | Bullet list of per-task file paths                           |
+| `<TOTAL_TASKS>`          | Number of tasks in the plan                                  |
+| `<TOTAL_ESTIMATED_TIME>` | Sum of all task estimates (e.g., "4-6 hours")                |
+| `<RISKS_LIST>`           | Bullet points of potential risks                             |
+| `<RECOMMENDATIONS_LIST>` | Bullet points of execution suggestions                       |
 
 ## Rules
 
