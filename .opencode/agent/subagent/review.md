@@ -14,6 +14,7 @@ tools:
   todowrite: false
   todoread: false
   webfetch: false
+  question: false
   tool__gh--retrieve-pull-request-info: true
   tool__gh--retrieve-pull-request-diff: true
   tool__git--retrieve-latest-n-commits-diff: true

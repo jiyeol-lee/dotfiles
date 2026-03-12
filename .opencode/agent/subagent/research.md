@@ -14,6 +14,7 @@ tools:
   todowrite: false
   todoread: false
   webfetch: true
+  question: true
   mcp__context7_*: true
   mcp__aws-knowledge_*: true
   mcp__linear_*: true

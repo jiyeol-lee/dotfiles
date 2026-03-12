@@ -14,6 +14,7 @@ tools:
   todowrite: false
   todoread: false
   webfetch: false
+  question: false
   mcp__*: false
   tool__git--status: true
   tool__git--stage-files: true

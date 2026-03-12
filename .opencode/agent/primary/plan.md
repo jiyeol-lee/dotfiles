@@ -13,6 +13,7 @@ tools:
   todowrite: true
   todoread: true
   webfetch: false
+  question: true
 permission:
   task:
     "*": deny

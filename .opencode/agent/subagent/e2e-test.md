@@ -14,6 +14,7 @@ tools:
   todowrite: false
   todoread: false
   webfetch: false
+  question: false
   mcp__context7_*: true
   mcp__playwright_*: true
 permission:

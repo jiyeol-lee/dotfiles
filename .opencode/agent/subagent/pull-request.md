@@ -14,6 +14,7 @@ tools:
   todowrite: false
   todoread: false
   webfetch: false
+  question: false
   mcp__linear_*: true
   mcp__atlassian_*: true
   tool__gh--retrieve-pull-request-info: true

@@ -406,6 +406,7 @@ If none of the above applies, build skips review entirely.
 | `todowrite` |  ✅  |  ✅   |
 | `todoread`  |  ✅  |  ✅   |
 | `webfetch`  |  ❌  |  ❌   |
+| `question`  |  ✅  |  ✅   |
 | MCP tools   |  ❌  |  ❌   |
 
 **Primary agents can ONLY directly use `todowrite` and `todoread`. ALL other tools must go through sub-agents.**
@@ -427,6 +428,7 @@ If none of the above applies, build skips review entirely.
 | `todowrite` |    ❌    |  ❌  |  ❌  |    ❌    |  ❌   |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |        ❌         |
 | `todoread`  |    ❌    |  ❌  |  ❌  |    ❌    |  ❌   |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |        ❌         |
 | `webfetch`  |    ✅    |  ❌  |  ❌  |    ❌    |  ❌   |   ❌   |      ❌      |    ✅    |   ❌   |   ❌   |        ❌         |
+| `question`  |    ✅    |  ❌  |  ❌  |    ❌    |  ❌   |   ❌   |      ❌      |    ❌    |   ❌   |   ❌   |        ❌         |
 | MCP tools   |    ✅    |  ❌  |  ✅  |    ✅    |  ❌   |   ❌   |      ✅      |    ✅    |   ✅   |   ❌   |        ❌         |
 
 ### Custom Tools Permission Matrix
