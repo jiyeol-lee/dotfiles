@@ -57,7 +57,9 @@ keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 
 vim.cmd [[
   " copy current file path to clipboard
-  nnoremap <Leader>cp :let @+ = expand("%:p:.")<CR>
+  nnoremap <silent> <Leader>cfp :let @+ = expand("%:p:.")<CR>
+  " copy current line path to clipboard
+  vnoremap <silent> <Leader>clp :<C-u>let @+ = expand("%:p:.") . " line:" . line("'<") . (line("'<") != line("'>") ? "-" . line("'>") : "")<CR>
 
   " console log
   nnoremap <Leader>cl :silent put=['console.log(\"<C-r><C-w>\", <C-r><C-w>);']<CR>-2==+
