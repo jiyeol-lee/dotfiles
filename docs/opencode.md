@@ -489,19 +489,19 @@ All primary agents have `permission.bash: deny` - they delegate to sub-agents.
 
 #### Sub-Agents (Specialists)
 
-| Agent                        | Default | Allowed Commands                                                            | Ask Commands |
-| ---------------------------- | ------- | --------------------------------------------------------------------------- | ------------ |
-| `subagent/code`              | `ask`   | `rg *, cat *, head *, tail *, ls *, echo *, wc *, git status *, git diff *` | `(other)`    |
-| `subagent/commit`            | `deny`  | (none - uses custom tools)                                                  | (none)       |
-| `subagent/devops`            | `ask`   | `rg *, cat *, head *, tail *, ls *, echo *, wc *, git status *, git diff *` | `(other)`    |
-| `subagent/document`          | `deny`  | (none)                                                                      | (none)       |
-| `subagent/e2e-test`          | `deny`  | `yarn run test:e2e *`, `npm run test:e2e *`                                 | (none)       |
-| `subagent/check`             | `allow` | (all)                                                                       | (none)       |
-| `subagent/pull-request`      | `deny`  | (none - uses custom tools)                                                  | (none)       |
-| `subagent/research`          | `deny`  | (none - uses custom tools)                                                  | (none)       |
-| `subagent/review`            | `deny`  | (none - uses custom tools)                                                  | (none)       |
-| `subagent/review-validation` | `deny`  | (none - uses custom tools)                                                  | (none)       |
-| `subagent/task`              | `deny`  | (none)                                                                      | (none)       |
+| Agent                        | Default | Allowed Commands                                                                                           | Ask Commands |
+| ---------------------------- | ------- | ---------------------------------------------------------------------------------------------------------- | ------------ |
+| `subagent/code`              | `ask`   | `rg *, cat *, head *, tail *, ls *, echo *, wc *, grep *, git log *, git show *, git status *, git diff *` | `(other)`    |
+| `subagent/commit`            | `deny`  | (none - uses custom tools)                                                                                 | (none)       |
+| `subagent/devops`            | `ask`   | `rg *, cat *, head *, tail *, ls *, echo *, wc *, grep *, git log *, git show *, git status *, git diff *` | `(other)`    |
+| `subagent/document`          | `deny`  | (none)                                                                                                     | (none)       |
+| `subagent/e2e-test`          | `deny`  | `yarn run test:e2e *`, `npm run test:e2e *`                                                                | (none)       |
+| `subagent/check`             | `allow` | (all)                                                                                                      | (none)       |
+| `subagent/pull-request`      | `deny`  | (none - uses custom tools)                                                                                 | (none)       |
+| `subagent/research`          | `deny`  | (none - uses custom tools)                                                                                 | (none)       |
+| `subagent/review`            | `deny`  | (none - uses custom tools)                                                                                 | (none)       |
+| `subagent/review-validation` | `deny`  | (none - uses custom tools)                                                                                 | (none)       |
+| `subagent/task`              | `deny`  | (none)                                                                                                     | (none)       |
 
 #### Configuration Reference
 

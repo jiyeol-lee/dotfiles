@@ -27,6 +27,9 @@ permission:
     ls *: allow
     echo *: allow
     wc *: allow
+    grep *: allow
+    git log *: allow
+    git show *: allow
     git status *: allow
     git diff *: allow
 ---
