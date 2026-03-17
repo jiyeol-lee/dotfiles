@@ -34,47 +34,7 @@ When delegating to a sub-agent, include:
 | **Mode**            | draft \|\| apply (if agent supports modes)       | If applicable |
 | **Expected output** | What information to return                       | Recommended   |
 
-### Sub-Agent Context Requirements
-
-Primary agents must provide the following context when delegating:
-
-| Sub-Agent                    | Required Context                                                                                                                                                        |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `subagent/code`              | Goal, file paths to modify, requirements, technical constraints                                                                                                         |
-| `subagent/document`          | Task description, mode (draft/apply), target file paths, related code context                                                                                           |
-| `subagent/devops`            | Task description, infrastructure files, deployment context                                                                                                              |
-| `subagent/e2e-test`          | Test scope, target pages/flows, existing test file paths, Playwright configuration context                                                                              |
-| `subagent/check`             | Verification scope (lint/type-check/format/test), source file paths, language context                                                                                   |
-| `subagent/review`            | **Focus area** (quality/regression/documentation/performance), file paths to review, change context                                                                     |
-| `subagent/review-validation` | PR number, unresolved review thread data (with URLs), file paths referenced in reviews                                                                                  |
-| `subagent/commit`            | Mode (draft/apply), scope of changes to commit                                                                                                                          |
-| `subagent/pull-request`      | Mode (draft/apply), PR title/description context, target branch                                                                                                         |
-| `subagent/research`          | Research question or topic, scope boundaries, what information to return                                                                                                |
-| `subagent/task`              | Goal to decompose, context from research, constraints, `feature_name` (kebab-case identifier for plan file naming; task agent writes `__plan/*.md` documentation files) |
-
-**Note**: This table is the shared contract. Primary agents use this to construct prompts; sub-agents use this to validate they received sufficient context.
-
-## Sub-Agent Capabilities
-
-Primary agents should be aware of what specialized capabilities each sub-agent has access to when delegating tasks.
-
-### MCP Server Access Matrix
-
-| Sub-Agent                    | MCP Servers Available                              |
-| ---------------------------- | -------------------------------------------------- |
-| `subagent/code`              | `context7`, `aws-knowledge`                        |
-| `subagent/document`          | `context7`, `aws-knowledge`                        |
-| `subagent/devops`            | `context7`, `aws-knowledge`                        |
-| `subagent/e2e-test`          | `context7`, **`playwright`**                       |
-| `subagent/check`             | None                                               |
-| `subagent/research`          | `context7`, `aws-knowledge`, `linear`, `atlassian` |
-| `subagent/pull-request`      | `linear`, `atlassian`                              |
-| `subagent/review`            | None                                               |
-| `subagent/review-validation` | None                                               |
-| `subagent/commit`            | None                                               |
-| `subagent/task`              | None                                               |
-
-### MCP Server Purposes
+## MCP Server Purposes
 
 | MCP Server      | Purpose                                           |
 | --------------- | ------------------------------------------------- |
@@ -84,21 +44,9 @@ Primary agents should be aware of what specialized capabilities each sub-agent h
 | `linear`        | Issue tracking integration                        |
 | `atlassian`     | Jira/Confluence integration                       |
 
-### Custom Tool Access Matrix
+## Custom Tool Purposes
 
-Some sub-agents use custom tools from plugins (`tools__gh.ts`, `tools__git.ts`) instead of bash commands for safer operation.
-
-| Sub-Agent                    | Custom Tools Available                                                                                                    |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `subagent/commit`            | `tool__git--status`, `tool__git--stage-files`, `tool__git--commit`, `tool__git--retrieve-current-branch-diff`             |
-| `subagent/pull-request`      | `tool__gh--*` (PR info, collaborators, create, edit), `tool__git--retrieve-current-branch-diff`, `tool__git--push`        |
-| `subagent/review`            | `tool__gh--retrieve-pull-request-info`, `tool__git--*` (diff tools)                                                       |
-| `subagent/review-validation` | `tool__gh--retrieve-pull-request-info`                                                                                    |
-| `subagent/research`          | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__git--retrieve-current-branch-diff` |
-
-See `docs/opencode.md` **Custom Tools Permission Matrix** for complete tool permissions.
-
-### Custom Tool Purposes
+Custom tools from `tools__gh.ts` and `tools__git.ts` plugins replace hardcoded bash commands for safer operation.
 
 | Tool                                              | Purpose                                                              |
 | ------------------------------------------------- | -------------------------------------------------------------------- |

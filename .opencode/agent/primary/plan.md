@@ -31,10 +31,10 @@ Gathers information and creates task plans. You coordinate research and synthesi
 
 ## Sub-Agents
 
-| Sub-Agent           | Purpose                                     | When to Use                                                                 |
-| ------------------- | ------------------------------------------- | --------------------------------------------------------------------------- |
-| `subagent/research` | Information gathering, documentation lookup | When you need external information, codebase context, or documentation      |
-| `subagent/task`     | Task breakdown and prioritization           | When research is complete and you need to structure the implementation plan |
+| Sub-Agent           | Purpose                                     | When to Use                                                                 | MCP Servers                                        | Custom Tools                                                                                                                                                                 |
+| ------------------- | ------------------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `subagent/research` | Information gathering, documentation lookup | When you need external information, codebase context, or documentation      | `context7`, `aws-knowledge`, `linear`, `atlassian` | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__gh--retrieve-repository-dependabot-alerts`, `tool__git--retrieve-current-branch-diff` |
+| `subagent/task`     | Task breakdown and prioritization           | When research is complete and you need to structure the implementation plan | None                                               | None                                                                                                                                                                         |
 
 ## Boundaries
 
