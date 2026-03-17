@@ -37,6 +37,16 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
     }
   }
 
+  // Helper function: Checks if a branch exists locally
+  async function branchExists(branchName: string): Promise<boolean> {
+    try {
+      await $`git show-ref --verify --quiet refs/heads/${branchName}`;
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   // Helper function: Finds the merge-base between two branches, trying fork-point first
   async function findMergeBase(
     branch1: string,
@@ -103,47 +113,6 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
     }
   }
 
-  // Helper function: Finds the best base branch for the current branch by analyzing commit history
-  // Returns the branch with the smallest commit distance from its merge-base to the current branch
-  async function findBaseBranch(currentBranch: string): Promise<string | null> {
-    // Get all local branches excluding the current branch
-    const candidateBranches = await getAllLocalBranches(currentBranch);
-
-    // If no other branches exist, return null (caller will fall back to remote default)
-    if (candidateBranches.length === 0) {
-      return null;
-    }
-
-    let bestBranch: string | null = null;
-    let smallestDistance = Infinity;
-
-    for (const candidate of candidateBranches) {
-      // Find merge-base between candidate and current branch
-      const mergeBase = await findMergeBase(candidate, currentBranch);
-
-      // Skip if no merge-base found
-      if (!mergeBase) {
-        continue;
-      }
-
-      // Calculate commit distance from merge-base to current branch
-      const distance = await getCommitDistance(mergeBase, currentBranch);
-
-      // Skip if distance calculation failed
-      if (distance === Infinity) {
-        continue;
-      }
-
-      // Update best branch if this candidate has a smaller distance
-      if (distance < smallestDistance) {
-        bestBranch = candidate;
-        smallestDistance = distance;
-      }
-    }
-
-    return bestBranch;
-  }
-
   return {
     tool: {
       "tool__git--retrieve-latest-n-commits-diff": tool({
@@ -176,7 +145,7 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__git--retrieve-current-branch-diff": tool({
         description:
-          "Retrieve the diff of the current branch compared to its detected base branch. The base branch is intelligently detected by analyzing commit history across local branches (finding the closest ancestor). Falls back to the remote default branch if no suitable local base is found.",
+          "Retrieve the diff of the current branch compared to its base branch. Auto-detects the base branch by checking for 'main', then 'master', then falls back to the remote default branch.",
         args: {},
         async execute() {
           try {
@@ -196,11 +165,14 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
               );
             }
 
-            // Find the best base branch by analyzing commit history
-            let baseBranch = await findBaseBranch(currentBranch);
+            // Auto-detect base branch using simplified fallback chain
+            let baseBranch: string | null = null;
 
-            // Fall back to remote default branch if no suitable local base found
-            if (!baseBranch) {
+            if (await branchExists("main")) {
+              baseBranch = "main";
+            } else if (await branchExists("master")) {
+              baseBranch = "master";
+            } else {
               baseBranch = await getRemoteDefaultBranch();
             }
 
@@ -210,7 +182,7 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
                 {
                   success: false,
                   error:
-                    "Could not determine a base branch. No suitable local branches found and remote default branch is not available.",
+                    "Could not determine a base branch. Neither 'main' nor 'master' branches exist locally, and remote default branch is not available.",
                 },
                 null,
                 2,
