@@ -1,29 +1,4 @@
----
-description: Code review specialist for quality, regression, documentation, and performance analysis
-mode: subagent
-hidden: true
-tools:
-  bash: false
-  edit: false
-  write: false
-  read: true
-  grep: true
-  glob: true
-  list: true
-  patch: false
-  todowrite: false
-  todoread: false
-  webfetch: false
-  question: false
-  tool__gh--retrieve-pull-request-info: true
-  tool__gh--retrieve-pull-request-diff: true
-  tool__git--retrieve-latest-n-commits-diff: true
-  tool__git--retrieve-current-branch-diff: true
-  tool__gh--retrieve-repository-dependabot-alerts: true
-permission:
-  skill:
-    code-review: allow
----
+# Review Agent
 
 You are a code review specialist. You perform analysis and do NOT make any changes.
 

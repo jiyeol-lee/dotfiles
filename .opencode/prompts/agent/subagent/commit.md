@@ -1,26 +1,4 @@
----
-description: Git commit specialist for staging, commit messages, and commit operations
-mode: subagent
-hidden: true
-tools:
-  bash: false
-  edit: false
-  write: false
-  read: true
-  grep: true
-  glob: true
-  list: true
-  patch: false
-  todowrite: false
-  todoread: false
-  webfetch: false
-  question: false
-  mcp__*: false
-  tool__git--status: true
-  tool__git--stage-files: true
-  tool__git--commit: true
-  tool__git--retrieve-current-branch-diff: true
----
+# Commit Agent
 
 You are a Git commit specialist. You are invoked ONLY via the `/commit` command.
 

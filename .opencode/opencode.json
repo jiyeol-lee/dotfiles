@@ -3,8 +3,10 @@
   "username": "Jiyeol Lee",
   "default_agent": "primary/plan",
   "autoupdate": false,
-  "model": "opencode-go/kimi-k2.5",
+  "model": "opencode-go/minimax-m2.7",
   "permission": {
+    "mcp__*": "deny",
+    "tool__*": "deny",
     "doom_loop": "deny",
     "skill": "deny"
   },
@@ -37,10 +39,6 @@
       "enabled": false
     }
   },
-  "tools": {
-    "mcp__*": false,
-    "tool_*": false
-  },
   "agent": {
     "plan": {
       "disable": true
@@ -48,11 +46,361 @@
     "build": {
       "disable": true
     },
+    "explore": {
+      "disable": true
+    },
     "general": {
       "disable": true
     },
-    "explore": {
-      "disable": true
+    "primary/plan": {
+      "description": "Research and task planning orchestrator",
+      "mode": "primary",
+      "prompt": "{file:./prompts/agent/primary/plan.md}",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "write": "deny",
+        "read": "deny",
+        "grep": "deny",
+        "glob": "deny",
+        "list": "deny",
+        "patch": "deny",
+        "todowrite": "allow",
+        "todoread": "allow",
+        "webfetch": "deny",
+        "question": "allow",
+        "task": {
+          "*": "deny",
+          "subagent/research": "allow",
+          "subagent/task": "allow"
+        }
+      }
+    },
+    "primary/build": {
+      "description": "Build orchestrator - delegates development tasks to specialized sub-agents",
+      "mode": "primary",
+      "prompt": "{file:./prompts/agent/primary/build.md}",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "write": "deny",
+        "read": "deny",
+        "grep": "deny",
+        "glob": "deny",
+        "list": "deny",
+        "patch": "deny",
+        "todowrite": "allow",
+        "todoread": "allow",
+        "webfetch": "deny",
+        "question": "allow",
+        "task": {
+          "*": "deny",
+          "subagent/code": "allow",
+          "subagent/document": "allow",
+          "subagent/devops": "allow",
+          "subagent/e2e-test": "allow",
+          "subagent/check": "allow",
+          "subagent/review": "allow",
+          "subagent/commit": "allow",
+          "subagent/pull-request": "allow",
+          "subagent/review-validation": "allow"
+        }
+      }
+    },
+    "subagent/check": {
+      "description": "Validation specialist for code quality checks (linting, type-checking, formatting, unit/integration tests)",
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/check.md}",
+      "permission": {
+        "bash": "allow",
+        "edit": "deny",
+        "write": "deny",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "deny",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "deny",
+        "question": "deny"
+      }
+    },
+    "subagent/code": {
+      "description": "Code implementation specialist for writing and modifying code",
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/code.md}",
+      "permission": {
+        "bash": {
+          "*": "ask",
+          "rg *": "allow",
+          "cat *": "allow",
+          "head *": "allow",
+          "tail *": "allow",
+          "ls *": "allow",
+          "echo *": "allow",
+          "wc *": "allow",
+          "grep *": "allow",
+          "git log *": "allow",
+          "git show *": "allow",
+          "git status *": "allow",
+          "git diff *": "allow"
+        },
+        "edit": "allow",
+        "write": "allow",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "allow",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "deny",
+        "question": "deny",
+        "mcp__context7_*": "allow",
+        "mcp__aws-knowledge_*": "allow"
+      }
+    },
+    "subagent/commit": {
+      "description": "Git commit specialist for staging, commit messages, and commit operations",
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/commit.md}",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "write": "deny",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "deny",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "deny",
+        "question": "deny",
+        "mcp__*": "deny",
+        "tool__git--status": "allow",
+        "tool__git--stage-files": "allow",
+        "tool__git--commit": "allow",
+        "tool__git--retrieve-current-branch-diff": "allow"
+      }
+    },
+    "subagent/devops": {
+      "description": "DevOps and infrastructure specialist for CI/CD, Docker, IaC, and deployment configs",
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/devops.md}",
+      "permission": {
+        "bash": {
+          "*": "ask",
+          "rg *": "allow",
+          "cat *": "allow",
+          "head *": "allow",
+          "tail *": "allow",
+          "ls *": "allow",
+          "echo *": "allow",
+          "wc *": "allow",
+          "grep *": "allow",
+          "git log *": "allow",
+          "git show *": "allow",
+          "git status *": "allow",
+          "git diff *": "allow"
+        },
+        "edit": "allow",
+        "write": "allow",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "allow",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "deny",
+        "question": "deny",
+        "mcp__context7_*": "allow",
+        "mcp__aws-knowledge_*": "allow"
+      }
+    },
+    "subagent/document": {
+      "description": "Documentation specialist for creating and maintaining docs",
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/document.md}",
+      "permission": {
+        "bash": "deny",
+        "edit": "allow",
+        "write": "allow",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "allow",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "allow",
+        "question": "deny",
+        "mcp__context7_*": "allow",
+        "mcp__aws-knowledge_*": "allow"
+      }
+    },
+    "subagent/e2e-test": {
+      "description": "E2E testing specialist for writing and running end-to-end tests using Playwright",
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/e2e-test.md}",
+      "permission": {
+        "bash": {
+          "*": "deny",
+          "yarn run test:e2e *": "allow",
+          "npm run test:e2e *": "allow"
+        },
+        "edit": "allow",
+        "write": "allow",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "allow",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "deny",
+        "question": "deny",
+        "mcp__context7_*": "allow",
+        "mcp__playwright_*": "allow"
+      }
+    },
+    "subagent/pull-request": {
+      "description": "Pull request management specialist for creating and updating PRs",
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/pull-request.md}",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "write": "deny",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "deny",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "deny",
+        "question": "deny",
+        "mcp__linear_*": "allow",
+        "mcp__atlassian_*": "allow",
+        "tool__gh--retrieve-pull-request-info": "allow",
+        "tool__gh--retrieve-repository-collaborators": "allow",
+        "tool__gh--create-pull-request": "allow",
+        "tool__gh--edit-pull-request": "allow",
+        "tool__git--retrieve-current-branch-diff": "allow",
+        "tool__git--push": "allow"
+      }
+    },
+    "subagent/research": {
+      "description": "Information gathering specialist for searching code and documentation",
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/research.md}",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "write": "deny",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "deny",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "allow",
+        "question": "allow",
+        "mcp__context7_*": "allow",
+        "mcp__aws-knowledge_*": "allow",
+        "mcp__linear_*": "allow",
+        "mcp__atlassian_*": "allow",
+        "tool__gh--retrieve-pull-request-info": "allow",
+        "tool__gh--retrieve-pull-request-diff": "allow",
+        "tool__git--retrieve-current-branch-diff": "allow",
+        "tool__gh--retrieve-repository-dependabot-alerts": "allow"
+      }
+    },
+    "subagent/review": {
+      "description": "Code review specialist for quality, regression, documentation, and performance analysis",
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/review.md}",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "write": "deny",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "deny",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "deny",
+        "question": "deny",
+        "tool__gh--retrieve-pull-request-info": "allow",
+        "tool__gh--retrieve-pull-request-diff": "allow",
+        "tool__git--retrieve-latest-n-commits-diff": "allow",
+        "tool__git--retrieve-current-branch-diff": "allow",
+        "tool__gh--retrieve-repository-dependabot-alerts": "allow",
+        "skill": {
+          "code-review": "allow"
+        }
+      }
+    },
+    "subagent/review-validation": {
+      "description": "PR review validation specialist for analyzing reviewer claims against actual code",
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/review-validation.md}",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "write": "deny",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "deny",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "deny",
+        "question": "deny",
+        "tool__gh--retrieve-pull-request-info": "allow"
+      }
+    },
+    "subagent/task": {
+      "description": "Task breakdown specialist for decomposing goals into actionable tasks",
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/task.md}",
+      "permission": {
+        "bash": "deny",
+        "read": "allow",
+        "write": {
+          "*": "deny",
+          "__plan/*.md": "allow"
+        },
+        "edit": {
+          "*": "deny",
+          "__plan/*.md": "allow"
+        },
+        "list": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "deny",
+        "question": "deny"
+      }
     }
   }
 }

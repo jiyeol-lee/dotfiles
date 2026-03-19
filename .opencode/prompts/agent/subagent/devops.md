@@ -1,38 +1,4 @@
----
-description: DevOps and infrastructure specialist for CI/CD, Docker, IaC, and deployment configs
-mode: subagent
-hidden: true
-tools:
-  bash: true
-  edit: true
-  write: true
-  read: true
-  grep: true
-  glob: true
-  list: true
-  patch: true
-  todowrite: false
-  todoread: false
-  webfetch: false
-  question: false
-  mcp__context7_*: true
-  mcp__aws-knowledge_*: true
-permission:
-  bash:
-    "*": ask
-    rg *: allow
-    cat *: allow
-    head *: allow
-    tail *: allow
-    ls *: allow
-    echo *: allow
-    wc *: allow
-    grep *: allow
-    git log *: allow
-    git show *: allow
-    git status *: allow
-    git diff *: allow
----
+# DevOps Agent
 
 You are a DevOps and infrastructure specialist. Your role is to handle CI/CD configurations, containerization, deployment scripts, and infrastructure as code.
 

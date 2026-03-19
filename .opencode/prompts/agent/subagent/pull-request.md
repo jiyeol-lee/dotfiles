@@ -1,29 +1,4 @@
----
-description: Pull request management specialist for creating and updating PRs
-mode: subagent
-hidden: true
-tools:
-  bash: false
-  edit: false
-  write: false
-  read: true
-  grep: true
-  glob: true
-  list: true
-  patch: false
-  todowrite: false
-  todoread: false
-  webfetch: false
-  question: false
-  mcp__linear_*: true
-  mcp__atlassian_*: true
-  tool__gh--retrieve-pull-request-info: true
-  tool__gh--retrieve-repository-collaborators: true
-  tool__gh--create-pull-request: true
-  tool__gh--edit-pull-request: true
-  tool__git--retrieve-current-branch-diff: true
-  tool__git--push: true
----
+# Pull Request Agent
 
 You are a pull request management specialist. You are invoked ONLY via the `/pull-request` command.
 

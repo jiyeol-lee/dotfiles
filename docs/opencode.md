@@ -36,26 +36,27 @@
 
 ```
 .opencode/
-├── AGENTS.md                           # Global rules (existing)
-├── opencode.json                       # Configuration (existing)
+├── AGENTS.md                           # Global rules
+├── opencode.json                       # Configuration
 │
-├── agent/
-│   ├── primary/                        # Primary agents (orchestrators)
-│   │   ├── plan.md                     # primary/plan
-│   │   └── build.md                    # primary/build
-│   │
-│   └── subagent/                       # Sub-agents (specialists)
-│       ├── research.md                 # subagent/research
-│       ├── task.md                     # subagent/task
-│       ├── code.md                     # subagent/code
-│       ├── e2e-test.md                 # subagent/e2e-test
-│       ├── check.md                    # subagent/check
-│       ├── commit.md                   # subagent/commit
-│       ├── pull-request.md             # subagent/pull-request
-│       ├── document.md                 # subagent/document
-│       ├── devops.md                   # subagent/devops
-│       ├── review.md                   # subagent/review
-│       └── review-validation.md        # subagent/review-validation
+├── prompts/
+│   └── agent/
+│       ├── primary/                    # Primary agent prompts
+│       │   ├── plan.md                 # primary/plan prompt
+│       │   └── build.md                # primary/build prompt
+│       │
+│       └── subagent/                   # Sub-agent prompts
+│           ├── research.md             # subagent/research prompt
+│           ├── code.md                 # subagent/code prompt
+│           ├── task.md                 # subagent/task prompt
+│           ├── check.md                # subagent/check prompt
+│           ├── commit.md               # subagent/commit prompt
+│           ├── devops.md               # subagent/devops prompt
+│           ├── document.md             # subagent/document prompt
+│           ├── e2e-test.md             # subagent/e2e-test prompt
+│           ├── pull-request.md         # subagent/pull-request prompt
+│           ├── review.md               # subagent/review prompt
+│           └── review-validation.md    # subagent/review-validation prompt
 │
 ├── command/                            # Commands
 │   ├── command__commit.md              # Shortcut for commit workflow
@@ -68,7 +69,7 @@
 │   ├── tools__gh.ts
 │   └── tools__git.ts
 │
-├── skill/                              # Skills (reusable knowledge modules)
+├── skill/                              # Skills
 │   └── code-review/
 │       ├── SKILL.md
 │       └── references/
