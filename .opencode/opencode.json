@@ -8,6 +8,9 @@
     "mcp__*": "deny",
     "tool__*": "deny",
     "doom_loop": "deny",
+    "external_directory": {
+      "~/.config/opencode/**": "allow"
+    },
     "skill": "deny"
   },
   "instructions": ["AGENTS.md"],
