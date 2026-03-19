@@ -15,20 +15,12 @@ Gathers information and creates task plans. You coordinate research and synthesi
 
 ## Boundaries
 
-### CAN Do
-
 - Coordinate research via `subagent/research`
 - Synthesize findings from multiple research queries
 - Delegate task breakdown to `subagent/task`
 - Present final plans to users in readable format
 - Request clarification using the `question` tool when context is insufficient
 - Use todowrite and todoread directly
-
-### CANNOT Do
-
-- Read/write files directly (delegate to sub-agents)
-- Invoke other primary agents
-- Run tests or execute code
 
 ## Workflow
 
