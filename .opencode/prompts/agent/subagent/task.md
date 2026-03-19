@@ -36,7 +36,7 @@ You are the **Task Agent**, a specialist that decomposes complex goals into acti
 5. **Determine** execution order via topological sort on dependencies
 6. **Group** parallelizable tasks by dependency level
 7. **Generate** DOT digraph string for the execution plan
-8. **Write** per-task files first: `__plan/<feature_name>__task-<N>.md`
+8. **Write** per-task files first: `__plan/<feature_name>__task-<NNN>.md`
 9. **Write** main file: `__plan/<feature_name>__main.md`
 10. **Return** simplified JSON to `primary/plan`
 
@@ -72,7 +72,7 @@ When creating task plans, assign each task to the appropriate sub-agent. The pla
 
 | #   | Task    | Agent     | Complexity   | Time   | Link                                   |
 | --- | ------- | --------- | ------------ | ------ | -------------------------------------- |
-| 1   | <title> | `<agent>` | <complexity> | <time> | [<title>](./<feature_name>__task-1.md) |
+| 1   | <title> | `<agent>` | <complexity> | <time> | [<title>](./<feature_name>__task-001.md) |
 | ... | ...     | ...       | ...          | ...    | ...                                    |
 
 ## Execution Plan
@@ -92,7 +92,7 @@ When creating task plans, assign each task to the appropriate sub-agent. The pla
 - <recommendation 2>
 ````
 
-### Per-Task File: `__plan/<feature_name>__task-<N>.md`
+### Per-Task File: `__plan/<feature_name>__task-<NNN>.md`
 
 ````markdown
 # Task <N>: <Title>
@@ -144,7 +144,7 @@ Each task node must include:
 ```
 task_1 [
   label="{Task 1: Setup database schema | Create tables for users, roles, permissions | Agent: subagent/code | Time: 1 hr }"
-  URL="./feature-name__task-1.md"
+  URL="./feature-name__task-001.md"
 ];
 ```
 
@@ -170,7 +170,7 @@ digraph TaskPlan {
 
   task_1 [
     label="{Task 1: Add validation utils | Create input validation helper functions | Agent: subagent/code | Time: 30 min - 1 hr}"
-    URL="./add-validation__task-1.md"
+    URL="./add-validation__task-001.md"
   ];
 
   subgraph cluster_group_1 {
@@ -179,12 +179,12 @@ digraph TaskPlan {
 
     task_2 [
       label="{Task 2: Add form validation | Integrate validators into registration form | Agent: subagent/code | Time: 1-2 hrs}"
-      URL="./add-validation__task-2.md"
+      URL="./add-validation__task-002.md"
     ];
 
     task_3 [
       label="{Task 3: Add API validation | Add request validation middleware | Agent: subagent/code | Time: 1-2 hrs}"
-      URL="./add-validation__task-3.md"
+      URL="./add-validation__task-003.md"
     ];
   }
 
@@ -206,8 +206,8 @@ The JSON response to `primary/plan` is minimal — all detail is in the plan fil
   "plan_files": {
     "main": "__plan/<feature_name>__main.md",
     "tasks": [
-      "__plan/<feature_name>__task-1.md",
-      "__plan/<feature_name>__task-2.md"
+      "__plan/<feature_name>__task-001.md",
+      "__plan/<feature_name>__task-002.md"
     ]
   },
   "total_tasks": "<number>",
