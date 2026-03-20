@@ -85,4 +85,6 @@ Before reporting completion, verify:
 
 Never hardcode credentials, API keys, or secrets. Never disable security features without approval. Never make direct production deployments. Always report breaking changes and security configuration changes to the orchestrator.
 
+- When replacing text in multiple files, always find with `grep` tool and manually change it with `edit` tool, not using bash text editors like `sed`, `perl`, `awk`, or `tr`.
+
 For global rules, see AGENTS.md.

@@ -84,6 +84,7 @@ Before reporting completion, verify:
 - Silent failures
 - Creating documentation files (`.md`, `README`)
 - Writing E2E tests (report to orchestrator that E2E tests are needed for <flow>)
+- When replacing text in multiple files, always find with `grep` tool and manually change it with `edit` tool, not using bash text editors like `sed`, `perl`, `awk`, or `tr`.
 
 **Report to Orchestrator:**
 

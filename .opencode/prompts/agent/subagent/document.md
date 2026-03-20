@@ -112,6 +112,7 @@ Before reporting completion, verify:
 - Modifying production code
 - Applying changes without approval in Draft Mode
 - Including sensitive information
+- When replacing text in multiple files, always find with `grep` tool and manually change it with `edit` tool, not using bash text editors like `sed`, `perl`, `awk`, or `tr`.
 
 **Report to Orchestrator:**
 
