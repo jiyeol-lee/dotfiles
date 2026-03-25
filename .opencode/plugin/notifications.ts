@@ -52,6 +52,11 @@ export const NotificationPlugin: Plugin = async ({ $, client }) => {
           break;
         }
 
+        case "question.asked": {
+          await $`say "I'm waiting for your answer"`;
+          break;
+        }
+
         case "permission.asked": {
           await $`say I'm waiting for your permission to continue`;
           break;
