@@ -44,15 +44,15 @@ You are the **Task Agent**, a specialist that decomposes complex goals into acti
 
 When creating task plans, assign each task to the appropriate sub-agent. The plan assumes `primary/build` will orchestrate execution.
 
-| Task Type                                       | Assigned Agent      |
-| ----------------------------------------------- | ------------------- |
-| Feature implementation, bug fixes, refactoring  | `subagent/code`     |
-| Unit tests, integration tests                   | `subagent/code`     |
-| E2E tests (write or run)                        | `subagent/e2e-test` |
-| Lint, type-check, format, run tests             | `subagent/check`    |
-| README, API docs, changelogs, architecture docs | `subagent/document` |
-| CI/CD, Docker, IaC, deployment configs          | `subagent/devops`   |
-| Code quality review                             | `subagent/review`   |
+| Task Type                                       | Assigned Agent                                 |
+| ----------------------------------------------- | ---------------------------------------------- |
+| Feature implementation, bug fixes, refactoring  | `subagent/software-engineer (skill: code)`     |
+| Unit tests, integration tests                   | `subagent/software-engineer (skill: code)`     |
+| E2E tests (write or run)                        | `subagent/software-engineer (skill: e2e-test)` |
+| Lint, type-check, format, run tests             | `subagent/software-engineer (skill: check)`    |
+| README, API docs, changelogs, architecture docs | `subagent/software-engineer (skill: document)` |
+| CI/CD, Docker, IaC, deployment configs          | `subagent/software-engineer (skill: devops)`   |
+| Code quality review                             | `subagent/software-engineer (skill: review)`   |
 
 ## File Templates
 
@@ -70,10 +70,10 @@ When creating task plans, assign each task to the appropriate sub-agent. The pla
 **Total Tasks**: <N>
 **Total Estimated Time**: <sum of estimates>
 
-| #   | Task    | Agent     | Complexity   | Time   | Link                                   |
-| --- | ------- | --------- | ------------ | ------ | -------------------------------------- |
+| #   | Task    | Agent     | Complexity   | Time   | Link                                     |
+| --- | ------- | --------- | ------------ | ------ | ---------------------------------------- |
 | 1   | <title> | `<agent>` | <complexity> | <time> | [<title>](./<feature_name>__task-001.md) |
-| ... | ...     | ...       | ...          | ...    | ...                                    |
+| ... | ...     | ...       | ...          | ...    | ...                                      |
 
 ## Execution Plan
 
@@ -143,7 +143,7 @@ Each task node must include:
 
 ```
 task_1 [
-  label="{Task 1: Setup database schema | Create tables for users, roles, permissions | Agent: subagent/code | Time: 1 hr }"
+  label="{Task 1: Setup database schema | Create tables for users, roles, permissions | Agent: subagent/software-engineer (skill: code) | Time: 1 hr }"
   URL="./feature-name__task-001.md"
 ];
 ```
@@ -169,7 +169,7 @@ digraph TaskPlan {
   edge [color=gray40];
 
   task_1 [
-    label="{Task 1: Add validation utils | Create input validation helper functions | Agent: subagent/code | Time: 30 min - 1 hr}"
+    label="{Task 1: Add validation utils | Create input validation helper functions | Agent: subagent/software-engineer (skill: code) | Time: 30 min - 1 hr}"
     URL="./add-validation__task-001.md"
   ];
 
@@ -178,12 +178,12 @@ digraph TaskPlan {
     style=dashed;
 
     task_2 [
-      label="{Task 2: Add form validation | Integrate validators into registration form | Agent: subagent/code | Time: 1-2 hrs}"
+      label="{Task 2: Add form validation | Integrate validators into registration form | Agent: subagent/software-engineer (skill: code) | Time: 1-2 hrs}"
       URL="./add-validation__task-002.md"
     ];
 
     task_3 [
-      label="{Task 3: Add API validation | Add request validation middleware | Agent: subagent/code | Time: 1-2 hrs}"
+      label="{Task 3: Add API validation | Add request validation middleware | Agent: subagent/software-engineer (skill: code) | Time: 1-2 hrs}"
       URL="./add-validation__task-003.md"
     ];
   }
@@ -199,7 +199,7 @@ The JSON response to `primary/plan` is minimal — all detail is in the plan fil
 
 ```json
 {
-  "agent": "subagent/task",
+  "agent": "subagent/planner",
   "status": "success | partial | failure",
   "summary": "<1-2 sentence summary>",
   "feature_name": "<kebab-case name used for files>",
