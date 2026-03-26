@@ -46,12 +46,13 @@ One focus area is assigned per invocation. Read the reference checklist for your
 A critical finding looks like this:
 
 **🔴 Critical — File: `src/auth/login.ts` — Line 42**
+
 - **Issue**: User-supplied `redirectUrl` is passed directly to `res.redirect()` without validation
 - **Why**: Open redirect vulnerability — attacker can craft a URL that redirects users to a phishing site after login
 - **Fix**: Validate `redirectUrl` against an allowlist of trusted domains before redirecting:
   ```ts
-  const allowed = ['/dashboard', '/profile', '/settings'];
-  const target = allowed.includes(redirectUrl) ? redirectUrl : '/dashboard';
+  const allowed = ["/dashboard", "/profile", "/settings"];
+  const target = allowed.includes(redirectUrl) ? redirectUrl : "/dashboard";
   res.redirect(target);
   ```
 

@@ -34,14 +34,14 @@ description: Analyzes branch diffs, drafts PR titles and bodies following Conven
 
 Follow Conventional Commits for the PR title:
 
-| Prefix       | When to Use             |
-| ------------ | ----------------------- |
-| `feat:`      | New feature             |
-| `fix:`       | Bug fix                 |
-| `refactor:`  | Code refactoring        |
-| `docs:`      | Documentation only      |
-| `chore:`     | Maintenance, deps, CI   |
-| `test:`      | Adding or updating tests |
+| Prefix      | When to Use              |
+| ----------- | ------------------------ |
+| `feat:`     | New feature              |
+| `fix:`      | Bug fix                  |
+| `refactor:` | Code refactoring         |
+| `docs:`     | Documentation only       |
+| `chore:`    | Maintenance, deps, CI    |
+| `test:`     | Adding or updating tests |
 
 ## PR Body Guidelines
 
@@ -57,16 +57,13 @@ For a branch with 3 commits adding a new caching layer:
 **Title**: `feat: add Redis caching for user session lookups`
 
 **Body**:
+
 ```markdown
 ## Summary
 
 - Add Redis-based caching for user session lookups to reduce DB load
 - Cache TTL is 15 minutes with automatic invalidation on session update
 - Add `RedisCacheService` with connection pooling and retry logic
-
-## Related Issues
-
-Closes #142
 ```
 
 ## Constraints

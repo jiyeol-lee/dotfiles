@@ -64,24 +64,31 @@
       "prompt": "{file:./prompts/agent/primary/plan.md}",
       "permission": {
         "bash": "deny",
-        "edit": "deny",
-        "write": "deny",
-        "read": "deny",
-        "grep": "deny",
-        "glob": "deny",
-        "list": "deny",
-        "patch": "deny",
+        "read": "allow",
+        "write": {
+          "*": "deny",
+          "__docs/**/*.md": "allow"
+        },
+        "edit": {
+          "*": "deny",
+          "__docs/**/*.md": "allow"
+        },
+        "list": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "patch": "allow",
         "todowrite": "allow",
         "todoread": "allow",
         "webfetch": "deny",
         "question": "allow",
         "task": {
           "*": "deny",
-          "subagent/researcher": "allow",
-          "subagent/planner": "allow"
+          "subagent/researcher": "allow"
         },
         "skill": {
-          "grill-me": "allow"
+          "grill-me": "allow",
+          "prd": "allow",
+          "task-breakdown": "allow"
         }
       }
     },
@@ -136,32 +143,6 @@
         "tool__gh--retrieve-pull-request-diff": "allow",
         "tool__git--retrieve-current-branch-diff": "allow",
         "tool__gh--retrieve-repository-dependabot-alerts": "allow"
-      }
-    },
-    "subagent/planner": {
-      "description": "Task breakdown specialist for decomposing goals into actionable tasks",
-      "temperature": 0.1,
-      "mode": "subagent",
-      "hidden": true,
-      "prompt": "{file:./prompts/agent/subagent/planner.md}",
-      "permission": {
-        "bash": "deny",
-        "read": "allow",
-        "write": {
-          "*": "deny",
-          "__plan/*.md": "allow"
-        },
-        "edit": {
-          "*": "deny",
-          "__plan/*.md": "allow"
-        },
-        "list": "allow",
-        "glob": "allow",
-        "grep": "allow",
-        "todowrite": "deny",
-        "todoread": "deny",
-        "webfetch": "deny",
-        "question": "deny"
       }
     },
     "subagent/software-engineer": {
