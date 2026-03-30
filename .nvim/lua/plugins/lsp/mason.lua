@@ -32,10 +32,12 @@ local function basic_lsp_setup()
 
   vim.diagnostic.config(diagnostic_configs)
 
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded",
-    width = 100,
-  })
+  vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+    vim.lsp.handlers.hover(err, result, ctx, vim.tbl_deep_extend("force", config or {}, {
+      border = "rounded",
+      width = 100,
+    }))
+  end
 end
 
 local function common_capabilities()
