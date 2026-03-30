@@ -63,7 +63,11 @@
       "mode": "primary",
       "prompt": "{file:./prompts/agent/primary/plan.md}",
       "permission": {
-        "bash": "deny",
+        "bash": {
+          "*": "deny",
+          "git config --get user.name": "allow",
+          "git config --get user.email": "allow"
+        },
         "read": "allow",
         "write": {
           "*": "deny",

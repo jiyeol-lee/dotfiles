@@ -37,9 +37,59 @@ description: Creates Product Requirements Documents (PRDs) as MD files in __docs
 
    **Open Questions** — Don't fake certainty. If something is unclear, list it here. A PRD with honest open questions is better than one with fabricated answers.
 
-5. **Write the file** — Save to `__docs/prd/<feature-name>.md`
+## File Splitting
 
-6. **Report** — Summarize what was created and flag any open questions that need resolution before implementation.
+**Always split PRDs into multiple files** to maintain readability and enable parallel editing:
+
+1. **Create an index file** — Main PRD file that references sub-files
+2. **Split logically** — Group related content into separate files
+3. **Index file structure** — Include problem statement, goals, non-goals, and links to sub-files
+
+```
+__docs/prd/
+├── feature-name.md          # Index file
+└── feature-name/            # PRD sub-directory
+    ├── overview.md          # Problem, goals, non-goals, user stories
+    ├── functional-reqs.md    # All FR-X requirements
+    └── acceptance-criteria.md # All acceptance criteria
+```
+
+The index file MUST:
+
+- Contain the problem statement and executive summary
+- Link to all sub-files
+- Serve as the entry point for reading the PRD
+
+## Write the file
+
+Write to a directory structure, not a single file:
+
+- `__docs/prd/<feature-name>.md` → Index file (with YAML frontmatter)
+- `__docs/prd/<feature-name>/` → Sub-directory containing the parts
+
+**Frontmatter for PRD files** — Every PRD index file should start with:
+
+```yaml
+---
+title: <feature-name in title case>
+date: yyyy-mm-dd format
+author: git config --get user.name (fallback to git config --get user.email)
+---
+```
+
+Example: If the feature is `user-password-reset`, the frontmatter would be:
+
+```yaml
+---
+title: User Password Reset
+date: 2026-03-30
+author: John Doe
+---
+```
+
+## Report
+
+Summarize what was created and flag any open questions that need resolution before implementation.
 
 ## Example: User Password Reset PRD
 
@@ -89,7 +139,11 @@ Step 4 — Draft (abbreviated):
   - Should we invalidate existing sessions on password reset?
   - What's the rate limit for reset requests per email?
 
-Step 5 — Write to __docs/prd/user-password-reset.md
+Step 5 — Write to:
+  - __docs/prd/user-password-reset.md (index file with frontmatter)
+  - __docs/prd/user-password-reset/overview.md
+  - __docs/prd/user-password-reset/functional-reqs.md
+  - __docs/prd/user-password-reset/acceptance-criteria.md
 ```
 
 ## Writing Good Requirements — Common Mistakes
@@ -109,4 +163,7 @@ Step 5 — Write to __docs/prd/user-password-reset.md
 - **NEVER** skip Non-Goals — they are the most valuable section for preventing scope creep
 - **ALWAYS** number functional requirements (FR-1, FR-2...) for traceability
 - **ALWAYS** write acceptance criteria as testable pass/fail conditions
-- **ALWAYS** write files to `__docs/prd/<feature-name>.md`
+- **ALWAYS** split PRDs into multiple files (index + sub-directory)
+- **ALWAYS** include YAML frontmatter in the index file
+- **ALWAYS** write index file to `__docs/prd/<feature-name>.md`
+- **ALWAYS** write sub-files to `__docs/prd/<feature-name>/`
