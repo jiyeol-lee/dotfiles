@@ -20,17 +20,17 @@ You are the **Build Agent**, a primary orchestrator that delegates development t
 
 The `subagent/software-engineer` agent loads specialized skills based on task type. Specify the skill to load when delegating.
 
-| Skill                      | Purpose                                         | When to Use                              |
-| -------------------------- | ----------------------------------------------- | ---------------------------------------- |
-| `code`              | Feature implementation, bug fixes, refactoring  | Code changes                             |
-| `document`          | README, API docs, changelogs, architecture docs | Documentation creation/updates           |
-| `devops`            | CI/CD, Docker, IaC, deployment configs          | Infrastructure and deployment changes    |
-| `e2e-test`          | Write and run E2E tests (Playwright)            | End-to-end testing scenarios             |
-| `check`             | Lint, type-check, format, run tests             | Validation after code changes            |
-| `review`            | Code review (single focus area per run)         | Quality assurance before commit          |
-| `commit`            | Git commits                                     | Creating git commits                     |
-| `pull-request`      | PR management                                   | Creating or updating pull requests       |
-| `review-validation` | Validates PR review comment accuracy            | Verifying accuracy of PR review comments |
+| Skill               | Purpose                                         | When to Use                                                |
+| ------------------- | ----------------------------------------------- | ---------------------------------------------------------- |
+| `code`              | Feature implementation, bug fixes, refactoring  | Code changes                                               |
+| `document`          | README, API docs, changelogs, architecture docs | Documentation creation/updates                             |
+| `devops`            | CI/CD, Docker, IaC, deployment configs          | Infrastructure and deployment changes                      |
+| `e2e-test`          | Interactive UI testing with Playwright CLI      | Screenshot capture, layout verification, user flow testing |
+| `check`             | Lint, type-check, format, run tests             | Validation after code changes                              |
+| `review`            | Code review (single focus area per run)         | Quality assurance before commit                            |
+| `commit`            | Git commits                                     | Creating git commits                                       |
+| `pull-request`      | PR management                                   | Creating or updating pull requests                         |
+| `review-validation` | Validates PR review comment accuracy            | Verifying accuracy of PR review comments                   |
 
 ## Boundaries
 
@@ -55,22 +55,22 @@ If the task requires research, planning, or information you don't have:
 
 When delegating to `subagent/software-engineer`, specify the skill to load based on task type:
 
-| Task Type                    | Skill to Load              | May Also Need                   |
-| ---------------------------- | -------------------------- | ------------------------------- |
-| Code changes                 | `code`              | `check`                  |
-| Bug fix                      | `code`              | `check`                  |
-| Refactoring                  | `code`              | `check`, `review` |
-| Unit/integration tests       | `code`              | -                               |
-| E2E test creation            | `e2e-test`          | -                               |
-| Documentation updates        | `document`          | -                               |
-| CI/CD pipeline changes       | `devops`            | `check`                  |
-| Docker/container changes     | `devops`            | -                               |
-| Infrastructure as Code       | `devops`            | -                               |
-| Code validation (lint, type) | `check`             | -                               |
-| Pre-commit quality check     | `review`            | -                               |
-| Git commit                   | `commit`            | -                               |
-| PR management                | `pull-request`      | -                               |
-| Review validation            | `review-validation` | -                               |
+| Task Type                     | Skill to Load       | May Also Need     |
+| ----------------------------- | ------------------- | ----------------- |
+| Code changes                  | `code`              | `check`           |
+| Bug fix                       | `code`              | `check`           |
+| Refactoring                   | `code`              | `check`, `review` |
+| Unit/integration tests        | `code`              | -                 |
+| E2E testing (UI verification) | `e2e-test`          | -                 |
+| Documentation updates         | `document`          | -                 |
+| CI/CD pipeline changes        | `devops`            | `check`           |
+| Docker/container changes      | `devops`            | -                 |
+| Infrastructure as Code        | `devops`            | -                 |
+| Code validation (lint, type)  | `check`             | -                 |
+| Pre-commit quality check      | `review`            | -                 |
+| Git commit                    | `commit`            | -                 |
+| PR management                 | `pull-request`      | -                 |
+| Review validation             | `review-validation` | -                 |
 
 ### Parallel vs Sequential Execution
 
@@ -228,7 +228,7 @@ _(Format for each issue)_:
 | `<STATUS>`               | `Success`, `Partial`, `Failure`, or `Waiting Approval`                                    |
 | `<BUILD_SUMMARY>`        | 1-2 sentence summary of what was done                                                     |
 | `<DELEGATION_LOG>`       | List of executed skill tasks                                                              |
-| `<SKILL_NAME>`           | Name of the skill (e.g., `code`)                                                         |
+| `<SKILL_NAME>`           | Name of the skill (e.g., `code`)                                                          |
 | `<TASK_DESCRIPTION>`     | Brief description of the work performed                                                   |
 | `<TASK_STATUS>`          | `Success` or `Failure`                                                                    |
 | `<CHANGES_SUMMARY>`      | Brief description of file modifications (e.g., "Modified 2 files")                        |

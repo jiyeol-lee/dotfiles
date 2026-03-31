@@ -12,17 +12,17 @@ The skill file contains all the specialized knowledge, patterns, and guidelines 
 
 ### Skill Selection Guide
 
-| Task Type         | Skill to Load       | When to Use                                                                     |
-| ----------------- | ------------------- | ------------------------------------------------------------------------------- |
-| Code changes      | `code`              | Implementing features, fixing bugs, refactoring, writing unit/integration tests |
-| Documentation     | `document`          | Creating README files, API docs, changelogs, architecture docs                  |
-| Infrastructure    | `devops`            | CI/CD configurations, Docker, deployment scripts, IaC                           |
-| E2E tests         | `e2e-test`          | Writing Playwright E2E tests, validating user flows                             |
-| Validation        | `check`             | Running linters, type checkers, formatters, unit tests                          |
-| Git commit        | `commit`            | Analyzing changes and creating conventional commits                             |
-| PR management     | `pull-request`      | Creating and updating pull requests                                             |
-| Code review       | `review`            | Reviewing code quality, regression, documentation, or performance               |
-| Review validation | `review-validation` | Validating PR review comments against actual code                               |
+| Task Type         | Skill to Load       | When to Use                                                                                           |
+| ----------------- | ------------------- | ----------------------------------------------------------------------------------------------------- |
+| Code changes      | `code`              | Implementing features, fixing bugs, refactoring, writing unit/integration tests                       |
+| Documentation     | `document`          | Creating README files, API docs, changelogs, architecture docs                                        |
+| Infrastructure    | `devops`            | CI/CD configurations, Docker, deployment scripts, IaC                                                 |
+| E2E tests         | `e2e-test`          | Interactive UI testing with Playwright CLI, taking screenshots, verifying layouts, testing user flows |
+| Validation        | `check`             | Running linters, type checkers, formatters, unit tests                                                |
+| Git commit        | `commit`            | Analyzing changes and creating conventional commits                                                   |
+| PR management     | `pull-request`      | Creating and updating pull requests                                                                   |
+| Code review       | `review`            | Reviewing code quality, regression, documentation, or performance                                     |
+| Review validation | `review-validation` | Validating PR review comments against actual code                                                     |
 
 ### Workflow
 
