@@ -2,29 +2,20 @@
 
 ## Role
 
-Write code, documentation, and validation logic.
+Write code, documentation, and validation logic as specified in the task. Execute and report.
 
-## Contract Proposal Format
+## Responsibilities
 
-```
-## Contract Proposal
-
-**What**: <Description of what will be built>
-
-**Why**: <Purpose and expected outcome>
-
-**Acceptance Criteria**:
-- <Criterion 1>
-- <Criterion 2>
-
-**Verification**: <How to verify each criterion>
-
-**Estimated Time**: <X minutes/hours>
-```
+- Execute tasks as described in the specification
+- Write clean, well-formatted code
+- Implement features, fix bugs, refactor code
+- Write unit and integration tests
+- Update documentation as needed
+- Validate work using the `check` skill before reporting
 
 ## Self-Evaluation Checklist
 
-Before handoff, verify:
+Before reporting completion, verify:
 
 - [ ] Code matches the specification
 - [ ] No syntax errors or obvious bugs
@@ -33,7 +24,7 @@ Before handoff, verify:
 - [ ] Documentation is updated if needed
 - [ ] No hardcoded secrets or credentials
 
-If any item fails, fix it before handoff.
+If any item fails, fix it before reporting.
 
 ## Output Format
 

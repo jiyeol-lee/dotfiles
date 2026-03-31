@@ -58,24 +58,14 @@
       "mode": "primary",
       "prompt": "{file:./prompts/agent/primary/plan.md}",
       "permission": {
-        "bash": {
-          "*": "deny",
-          "git config --get user.name": "allow",
-          "git config --get user.email": "allow"
-        },
+        "bash": "deny",
         "read": "allow",
-        "write": {
-          "*": "deny",
-          "__docs/**/*.md": "allow"
-        },
-        "edit": {
-          "*": "deny",
-          "__docs/**/*.md": "allow"
-        },
+        "write": "deny",
+        "edit": "deny",
         "list": "allow",
         "glob": "allow",
         "grep": "allow",
-        "patch": "allow",
+        "patch": "deny",
         "todowrite": "allow",
         "todoread": "allow",
         "webfetch": "deny",
@@ -83,10 +73,8 @@
         "task": {
           "*": "deny",
           "subagent/researcher": "allow",
-          "subagent/planner": "allow"
-        },
-        "skill": {
-          "grill-me": "allow"
+          "subagent/planner": "allow",
+          "subagent/requirements-refiner": "allow"
         }
       }
     },
@@ -97,12 +85,12 @@
       "prompt": "{file:./prompts/agent/primary/build.md}",
       "permission": {
         "bash": "deny",
-        "edit": "deny",
+        "read": "allow",
         "write": "deny",
-        "read": "deny",
-        "grep": "deny",
-        "glob": "deny",
-        "list": "deny",
+        "edit": "deny",
+        "list": "allow",
+        "glob": "allow",
+        "grep": "allow",
         "patch": "deny",
         "todowrite": "allow",
         "todoread": "allow",
@@ -110,6 +98,7 @@
         "question": "allow",
         "task": {
           "*": "deny",
+          "subagent/researcher": "allow",
           "subagent/generator": "allow",
           "subagent/evaluator": "allow"
         }
@@ -122,7 +111,10 @@
       "hidden": true,
       "prompt": "{file:./prompts/agent/subagent/researcher.md}",
       "permission": {
-        "bash": "deny",
+        "bash": {
+          "*": "deny",
+          "playwright-cli *": "allow"
+        },
         "edit": "deny",
         "write": "deny",
         "read": "allow",
@@ -171,11 +163,40 @@
         "patch": "deny",
         "todowrite": "deny",
         "todoread": "deny",
-        "webfetch": "allow",
+        "webfetch": "deny",
         "question": "deny",
         "skill": {
           "prd": "allow",
           "task-breakdown": "allow"
+        }
+      }
+    },
+    "subagent/requirements-refiner": {
+      "description": "Reviews requirements using grill-me to surface gaps, ambiguities, and untestable criteria",
+      "temperature": 0.1,
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/requirements-refiner.md}",
+      "permission": {
+        "bash": {
+          "*": "deny",
+          "playwright-cli *": "allow"
+        },
+        "read": "allow",
+        "write": "deny",
+        "edit": "deny",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "deny",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "deny",
+        "question": "deny",
+        "skill": {
+          "prd": "allow",
+          "task-breakdown": "allow",
+          "grill-me": "allow"
         }
       }
     },
@@ -203,7 +224,8 @@
           "git log *": "allow",
           "git show *": "allow",
           "git status *": "allow",
-          "git diff *": "allow"
+          "git diff *": "allow",
+          "playwright-cli *": "allow"
         },
         "edit": "allow",
         "write": "allow",
@@ -229,8 +251,6 @@
         },
         "mcp__context7_*": "allow",
         "mcp__aws-knowledge_*": "allow",
-        "mcp__linear_*": "allow",
-        "mcp__atlassian_*": "allow",
         "tool__gh--retrieve-pull-request-info": "allow",
         "tool__gh--retrieve-pull-request-diff": "allow",
         "tool__gh--retrieve-repository-dependabot-alerts": "allow",

@@ -4,11 +4,12 @@
 
 Search codebases and gather information. Synthesize findings into structured reports.
 
-## What You Do
+## Responsibilities
 
 - Search codebases using grep and glob patterns
 - Read documentation via MCP servers
 - Gather and synthesize information
+- Report findings with topic, source, content, and relevance
 
 ## Output Format
 

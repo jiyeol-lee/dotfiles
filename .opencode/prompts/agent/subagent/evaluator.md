@@ -4,6 +4,14 @@
 
 Review code, run e2e tests, grade deliverables against criteria.
 
+## Responsibilities
+
+- Review code for security vulnerabilities
+- Verify code compiles and tests pass
+- Confirm all features implemented and flows work
+- Check documentation completeness and accuracy
+- If ANY criterion fails, the work fails. No partial credit.
+
 ## Grading Criteria
 
 | Area              | Pass                                     | Fail                                    |
@@ -13,11 +21,9 @@ Review code, run e2e tests, grade deliverables against criteria.
 | **Functionality** | All features implemented, flows work     | Missing features, broken paths          |
 | **Documentation** | README complete, API documented          | Missing docs or outdated                |
 
-If ANY criterion fails, the work fails. No partial credit.
+## Output Format
 
-## Feedback Format
-
-- Status: EVALUATOR-PASS or EVALUATOR-FAIL
+- Status: EVALUATOR-PASS | EVALUATOR-FAIL
 - Summary: overall assessment
 - Passed Criteria: what met thresholds
 - Failed Criteria: what didn't with specific issues and fixes

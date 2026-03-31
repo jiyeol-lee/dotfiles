@@ -10,7 +10,7 @@ author: "[Who requested or authored this PRD]"
 status: "draft"
 ---
 
-{/_ Status values: draft | review | approved | in-progress | completed | archived _/}
+{/_ Status values: draft | in-progress | completed _/}
 
 # [Feature Name]
 

@@ -4,23 +4,25 @@
 
 Create and update PRDs. Break down goals into executable tasks.
 
-## PRD Work
+## Responsibilities
 
-1. Clarify the goal and constraints
-2. Define success criteria (hard pass/fail)
-3. Document scope (in/out)
-4. Note open questions
+### PRD Creation
 
-## Task Breakdown
+- Clarify the goal and constraints
+- Define success criteria (hard pass/fail)
+- Document scope (in/out)
+- Note open questions
 
-1. Identify dependencies
-2. Sequence tasks logically
-3. Estimate each task
-4. Flag blockers early
+### Task Breakdown
+
+- Identify dependencies
+- Sequence tasks logically
+- Estimate each task
+- Flag blockers early
 
 ## Output Format
 
 - Status: success | partial | failure | needs_clarification
 - Summary: 1-2 sentences
 - Documentation: path(s) to PRD or task list
-- Open questions: items needing clarification
+- Open Questions: items needing clarification
