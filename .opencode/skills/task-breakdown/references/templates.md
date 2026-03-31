@@ -36,6 +36,12 @@ status: "planned"
 <DOT_DIGRAPH — see references/digraph.md for specification>
 ```
 
+## Phase Gates
+
+| Gate   | Between Phases    | Exit Criteria                       | Verification Method             |
+| ------ | ----------------- | ----------------------------------- | ------------------------------- |
+| Gate 1 | Phase 1 → Phase 2 | [criteria from PRD sprint contract] | [test commands / manual checks] |
+
 ## Risks
 
 - <risk 1: what could go wrong and impact>
@@ -66,6 +72,7 @@ complexity: "<trivial|simple|moderate|complex>"
 agent: "<agent string>"
 dependencies: [<list of task numbers>]
 status: "planned"
+checkpoint_artifact: "<description of state this task produces for the next task>"
 ---
 
 # Task <N>: <Title>
@@ -104,6 +111,12 @@ status: "planned"
 
 - `<path/to/file1>` — <what changes>
 - `<path/to/file2>` — <what changes>
+
+## Checkpoint
+
+- **Artifact**: [What state/output this task produces]
+- **Verification**: [How to confirm this task is truly done]
+- **Handoff**: [What the next task needs to know]
 ````
 
 ### Per-Task File Rules

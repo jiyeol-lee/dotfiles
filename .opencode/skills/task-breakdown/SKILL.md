@@ -12,9 +12,13 @@ description: Decomposes complex goals into atomic, dependency-aware work items w
 5. **Map dependencies** — for each task, ask: "What MUST be done before this?" Only mark true blockers.
 6. **Group into phases** — topological sort on dependencies, then group independent tasks at the same level into parallel phases
 7. **Assign agent + skill** — use the assignment table below
-8. **Write per-task files** first: `__docs/task/<feature>__task-<NNN>.md`
-9. **Write main file**: `__docs/task/<feature>__main.md` with summary table, DOT digraph, risks
-10. **Return** structured output to caller
+8. **Add evaluator gates** — Between phases, insert evaluation checkpoints. Each gate should:
+   - Reference the sprint contract exit criteria from the PRD
+   - Define how to verify completion (test commands, manual checks)
+   - Specify what happens on failure (route critique back to generator)
+9. **Write per-task files** first: `__docs/task/<feature>__task-<NNN>.md`
+10. **Write main file**: `__docs/task/<feature>__main.md` with summary table, DOT digraph, risks
+11. **Return** structured output to caller
 
 ## Decomposition Procedure
 
@@ -79,6 +83,14 @@ Phase 3: Tasks whose dependencies are all in Phase 1-2 (run in parallel)
 | README, API docs, changelogs, architecture docs | `subagent/software-engineer (skill: document)` |
 | CI/CD, Docker, IaC, deployment configs          | `subagent/software-engineer (skill: devops)`   |
 | Code quality review                             | `subagent/software-engineer (skill: review)`   |
+
+## Evaluator Gates
+
+Evaluator gates are checkpoints inserted between phases to verify that sprint exit criteria are met before proceeding. They prevent cascading failures by catching incomplete work early.
+
+**How to define a gate**: Reference the PRD's sprint contract exit criteria. Specify concrete verification commands (e.g., `npm test`, `npm run lint`) or manual checks. Define the failure path: if a gate fails, route the critique back to the generator agent for revision, then re-evaluate.
+
+**When to use**: Add gates for complex multi-phase work with meaningful phase boundaries. Skip for simple single-phase tasks where the overhead outweighs the benefit.
 
 ## File Output
 

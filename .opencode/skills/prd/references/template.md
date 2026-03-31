@@ -201,4 +201,33 @@ _/}
 
 - [Deliverable 1]
 - [Deliverable 2]
+
+## Sprint Contracts
+
+{/_
+Sprint contracts define what "done" looks like for each phase.
+They serve as the agreement between the generator (builder) and evaluator (reviewer).
+Each contract should be independently verifiable — the evaluator should be able to
+check it without knowing implementation details.
+_/}
+
+### Sprint 1: [Name]
+
+| Field                   | Description                                                    |
+| ----------------------- | -------------------------------------------------------------- |
+| **Scope**               | [What this sprint builds — tie to FR numbers]                  |
+| **Exit Criteria**       | [Testable pass/fail conditions in Given/When/Then format]      |
+| **Verification Method** | [How the evaluator checks: test commands, manual checks, etc.] |
+| **Dependencies**        | [What must be complete before this sprint]                     |
+| **Handoff Artifact**    | [What state/context the next sprint needs]                     |
+
+### Sprint 2: [Name]
+
+| Field                   | Description                                                    |
+| ----------------------- | -------------------------------------------------------------- |
+| **Scope**               | [What this sprint builds — tie to FR numbers]                  |
+| **Exit Criteria**       | [Testable pass/fail conditions in Given/When/Then format]      |
+| **Verification Method** | [How the evaluator checks: test commands, manual checks, etc.] |
+| **Dependencies**        | [What must be complete before this sprint]                     |
+| **Handoff Artifact**    | [What state/context the next sprint needs]                     |
 ```

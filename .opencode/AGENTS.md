@@ -6,20 +6,46 @@ This file provides global context and rules inherited by all agent system prompt
 
 1. **Separation of Concerns**: Each agent has a single responsibility
 2. **Orchestrator Pattern**: Primary agents delegate; sub-agents execute
-3. **Independence**: Sub-agents never call other sub-agents
-4. **User Control**: Critical decisions require explicit approval
+3. **Subagent Isolation** (GLOBAL): Subagents MUST NOT communicate with other subagents directly. This applies to ALL subagents across ALL primary agents. All communication must be routed through primary agents.
+4. **Independence**: Sub-agents never call other sub-agents
+5. **User Control**: Critical decisions require explicit approval
 
 ## Communication Protocol
 
-| From         | To           | Format                     |
-| ------------ | ------------ | -------------------------- |
-| Agent        | Agent        | Structured JSON            |
-| Orchestrator | User         | Natural language, markdown |
-| Sub-agent    | Orchestrator | JSON with status report    |
+| From         | To           | Format                       |
+| ------------ | ------------ | ---------------------------- |
+| Agent        | Agent        | Natural language             |
+| Orchestrator | User         | Natural language, markdown   |
+| Sub-agent    | Orchestrator | Natural language with status |
 
 **Rule**: Never expose raw JSON or structured output to users unless explicitly requested. Always translate to readable markdown.
 
-**Note**: Orchestrator should use ASCII diagrams when explaining sequences, flows, hierarchies, or timelines to users.
+**Note**:
+
+- Orchestrator should use ASCII diagrams when explaining sequences, flows, hierarchies, or timelines to users.
+- File-based handoff: Subagents communicate via file system writes (e.g., writing results to files) rather than direct messaging. Primary agents read files and route information as needed.
+
+## Primary Agent Tool Access
+
+Primary agents have limited tool access to enforce proper delegation:
+
+| Primary Agent   | Tool Access                                                |
+| --------------- | ---------------------------------------------------------- |
+| `primary/plan`  | question, todowrite/todoread, file tools, skill (grill-me) |
+| `primary/build` | question ONLY                                              |
+
+## Delegation Requirements
+
+**Critical**: Primary agents MUST provide full context when delegating to subagents. Subagents start from zero context and cannot infer prior state.
+
+When delegating, include:
+
+| Element             | Description                                      | Required      |
+| ------------------- | ------------------------------------------------ | ------------- |
+| **Goal**            | What needs to be accomplished                    | Yes           |
+| **Context**         | Relevant file paths, constraints, prior findings | Yes           |
+| **Mode**            | draft \|\| apply (if agent supports modes)       | If applicable |
+| **Expected output** | What information to return                       | Recommended   |
 
 ## Agent Input/Output Philosophy
 

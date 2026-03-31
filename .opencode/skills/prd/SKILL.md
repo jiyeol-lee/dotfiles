@@ -60,6 +60,15 @@ The index file MUST:
 - Link to all sub-files
 - Serve as the entry point for reading the PRD
 
+## Sprint Contracts
+
+Use sprint contracts when a feature spans multiple phases or sprints. Each contract defines what "done" means for that sprint and serves as the negotiation point between the generator (builder) and evaluator (reviewer).
+
+- **Exit criteria** must be testable and unambiguous — the evaluator should verify them without knowing implementation details. Use Given/When/Then format.
+- **Handoff artifacts** are the structured state that carries between sprints (e.g., updated schema, live API endpoints, migration scripts). Name them explicitly so the next sprint has a known starting point.
+- **Verification methods** should be concrete: specific test commands, manual check steps, or endpoint assertions — not "verify it works."
+- Tie each sprint's scope to specific FR numbers for traceability back to the PRD.
+
 ## Write the file
 
 Write to a directory structure, not a single file:

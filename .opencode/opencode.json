@@ -82,12 +82,11 @@
         "question": "allow",
         "task": {
           "*": "deny",
-          "subagent/researcher": "allow"
+          "subagent/researcher": "allow",
+          "subagent/planner": "allow"
         },
         "skill": {
-          "grill-me": "allow",
-          "prd": "allow",
-          "task-breakdown": "allow"
+          "grill-me": "allow"
         }
       }
     },
@@ -111,7 +110,8 @@
         "question": "allow",
         "task": {
           "*": "deny",
-          "subagent/software-engineer": "allow"
+          "subagent/generator": "allow",
+          "subagent/evaluator": "allow"
         }
       }
     },
@@ -144,12 +144,47 @@
         "tool__gh--retrieve-repository-dependabot-alerts": "allow"
       }
     },
-    "subagent/software-engineer": {
-      "description": "Full-stack software engineer with skills for code implementation, documentation, DevOps, testing, and code review",
+    "subagent/planner": {
+      "description": "Creates and updates Product Requirements Documents (PRDs) and task breakdowns. Receives context from primary/plan and delivers planning documents.",
       "temperature": 0.1,
       "mode": "subagent",
       "hidden": true,
-      "prompt": "{file:./prompts/agent/subagent/software-engineer.md}",
+      "prompt": "{file:./prompts/agent/subagent/planner.md}",
+      "permission": {
+        "bash": {
+          "*": "deny",
+          "git config --get user.name": "allow",
+          "git config --get user.email": "allow"
+        },
+        "read": "allow",
+        "write": {
+          "*": "deny",
+          "__docs/**/*.md": "allow"
+        },
+        "edit": {
+          "*": "deny",
+          "__docs/**/*.md": "allow"
+        },
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "deny",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "allow",
+        "question": "deny",
+        "skill": {
+          "prd": "allow",
+          "task-breakdown": "allow"
+        }
+      }
+    },
+    "subagent/generator": {
+      "description": "Writes code, documentation, and runs validation. Proposes contracts and self-evaluates before handoff to evaluator. Part of the GAN-inspired build loop.",
+      "temperature": 0.1,
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/generator.md}",
       "permission": {
         "bash": {
           "*": "ask",
@@ -185,13 +220,12 @@
           "code": "allow",
           "document": "allow",
           "devops": "allow",
-          "e2e-test": "allow",
           "check": "allow",
           "commit": "allow",
           "pull-request": "allow",
-          "review": "allow",
           "review-validation": "allow",
-          "skill-creator": "allow"
+          "skill-creator": "allow",
+          "agent-creator": "allow"
         },
         "mcp__context7_*": "allow",
         "mcp__aws-knowledge_*": "allow",
@@ -209,6 +243,59 @@
         "tool__git--stage-files": "allow",
         "tool__git--commit": "allow",
         "tool__git--push": "allow"
+      }
+    },
+    "subagent/evaluator": {
+      "description": "Critiques code, reviews changes, runs e2e tests. Grades against criteria with hard thresholds and provides detailed feedback. Part of the GAN-inspired build loop.",
+      "temperature": 0.1,
+      "mode": "subagent",
+      "hidden": true,
+      "prompt": "{file:./prompts/agent/subagent/evaluator.md}",
+      "permission": {
+        "bash": {
+          "*": "ask",
+          "rg *": "allow",
+          "cat *": "allow",
+          "head *": "allow",
+          "tail *": "allow",
+          "ls *": "allow",
+          "echo *": "allow",
+          "wc *": "allow",
+          "grep *": "allow",
+          "git worktree *": "deny",
+          "git checkout *": "deny",
+          "git stash *": "deny",
+          "git pop *": "deny",
+          "git log *": "allow",
+          "git show *": "allow",
+          "git status *": "allow",
+          "git diff *": "allow",
+          "playwright-cli *": "allow"
+        },
+        "edit": "deny",
+        "write": "deny",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "deny",
+        "todowrite": "deny",
+        "todoread": "deny",
+        "webfetch": "deny",
+        "question": "deny",
+        "skill": {
+          "e2e-test": "allow",
+          "review": "allow"
+        },
+        "mcp__context7_*": "allow",
+        "mcp__aws-knowledge_*": "allow",
+        "tool__gh--retrieve-pull-request-info": "allow",
+        "tool__gh--retrieve-pull-request-diff": "allow",
+        "tool__gh--retrieve-repository-dependabot-alerts": "allow",
+        "tool__gh--retrieve-repository-collaborators": "allow",
+        "tool__git--retrieve-current-branch-diff": "allow",
+        "tool__git--retrieve-latest-n-commits-diff": "allow",
+        "tool__git--status": "allow"
       }
     }
   }
