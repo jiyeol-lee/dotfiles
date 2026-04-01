@@ -18,11 +18,22 @@ function M.config()
 
   local code_companion = require "codecompanion"
   local setup = {
+    adapters = {
+      http = {
+        copilot = function()
+          return require("codecompanion.adapters").extend("copilot", {
+            schema = {
+              model = {
+                default = "claude-sonnet-4.6",
+              },
+            },
+          })
+        end,
+      },
+    },
     interactions = {
       chat = {
-        adapter = {
-          name = "opencode",
-        },
+        adapter = "copilot",
         opts = {
           system_prompt = function(ctx)
             local language = ctx.language or "English"
@@ -68,9 +79,7 @@ When given a task:
         },
       },
       inline = {
-        adapter = {
-          name = "opencode",
-        },
+        adapter = "copilot",
       },
     },
     display = {
