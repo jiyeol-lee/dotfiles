@@ -129,7 +129,7 @@ digraph TaskPlan {
     ];
 
     task_5 [
-      label="{Task 5: Write auth E2E tests | Test registration, login, and protected route flows | Agent: subagent/software-engineer (skill: e2e-test) | Time: 1-2 hrs}"
+      label="{Task 5: Write auth E2E tests | Test registration, login, and protected route flows | Agent: subagent/software-engineer (skill: playwright-cli) | Time: 1-2 hrs}"
       URL="./user-auth__task-005.md"
     ];
   }

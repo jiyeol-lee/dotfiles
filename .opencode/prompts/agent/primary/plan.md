@@ -48,12 +48,12 @@ digraph PlanFlow {
 
 ### researcher
 
-| Category    | Capabilities                                                                                                                      |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| **MCP**     | `mcp__context7_*` (code search), `mcp__aws-knowledge_*` (AWS docs), `mcp__linear_*` (Linear API), `mcp__atlassian_*` (Atlassian)  |
-| **GitHub**  | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__gh--retrieve-repository-dependabot-alerts` |
-| **Git**     | `tool__git--retrieve-current-branch-diff`                                                                                         |
-| **Command** | `playwright-cli`                                                                                                                  |
+| Category    | Capabilities                                                                                                                                       |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **MCP**     | `mcp__context7_*` (code search), `mcp__aws-knowledge_*` (AWS docs), `mcp__linear_*` (Linear API), `mcp__atlassian_*` (Atlassian), `playwright-cli` |
+| **GitHub**  | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__gh--retrieve-repository-dependabot-alerts`                  |
+| **Git**     | `tool__git--retrieve-current-branch-diff`                                                                                                          |
+| **Command** | `playwright-cli`                                                                                                                                   |
 
 **Use when**: You need to gather information, explore options, or understand existing code.
 
@@ -69,10 +69,10 @@ digraph PlanFlow {
 
 ### requirements-refiner
 
-| Category    | Capabilities                        |
-| ----------- | ----------------------------------- |
-| **Skills**  | `prd`, `task-breakdown`, `grill-me` |
-| **Command** | `playwright-cli`                    |
+| Category    | Capabilities                                          |
+| ----------- | ----------------------------------------------------- |
+| **Skills**  | `prd`, `task-breakdown`, `grill-me`, `playwright-cli` |
+| **Command** | `playwright-cli`                                      |
 
 **Use when**: PRD draft needs scrutiny before approval.
 

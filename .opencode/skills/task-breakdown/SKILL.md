@@ -74,15 +74,15 @@ Phase 3: Tasks whose dependencies are all in Phase 1-2 (run in parallel)
 
 ## Agent Assignment
 
-| Task Type                                       | Agent + Skill                                  |
-| ----------------------------------------------- | ---------------------------------------------- |
-| Feature implementation, bug fixes, refactoring  | `subagent/software-engineer (skill: code)`     |
-| Unit tests, integration tests                   | `subagent/software-engineer (skill: code)`     |
-| E2E tests                                       | `subagent/software-engineer (skill: e2e-test)` |
-| Lint, type-check, format, run tests             | `subagent/software-engineer (skill: check)`    |
-| README, API docs, changelogs, architecture docs | `subagent/software-engineer (skill: document)` |
-| CI/CD, Docker, IaC, deployment configs          | `subagent/software-engineer (skill: devops)`   |
-| Code quality review                             | `subagent/software-engineer (skill: review)`   |
+| Task Type                                       | Agent + Skill                                        |
+| ----------------------------------------------- | ---------------------------------------------------- |
+| Feature implementation, bug fixes, refactoring  | `subagent/software-engineer (skill: code)`           |
+| Unit tests, integration tests                   | `subagent/software-engineer (skill: code)`           |
+| E2E tests                                       | `subagent/software-engineer (skill: playwright-cli)` |
+| Lint, type-check, format, run tests             | `subagent/software-engineer (skill: check)`          |
+| README, API docs, changelogs, architecture docs | `subagent/software-engineer (skill: document)`       |
+| CI/CD, Docker, IaC, deployment configs          | `subagent/software-engineer (skill: devops)`         |
+| Code quality review                             | `subagent/software-engineer (skill: review)`         |
 
 ## Evaluator Gates
 
@@ -181,7 +181,7 @@ digraph TaskPlan {
 - **Over-serializing**: The most common mistake is marking too many dependencies. Two tasks that touch different files can almost always run in parallel even if they're "related".
 - **Giant tasks**: If a task description needs more than 3 sentences, it's probably not atomic. Split it.
 - **Missing test tasks**: Implementation tasks often need companion test tasks. Don't forget them unless tests are included in the implementation task's acceptance criteria.
-- **Wrong agent assignment**: Linting/formatting is `check`, not `code`. E2E tests are `e2e-test`, not `code`. Documentation is `document`, not `code`.
+- **Wrong agent assignment**: Linting/formatting is `check`, not `code`. E2E tests are `playwright-cli`, not `code`. Documentation is `document`, not `code`.
 
 ## Constraints
 

@@ -44,12 +44,12 @@ digraph BuildFlow {
 
 ### researcher
 
-| Category    | Capabilities                                                                                                                      |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| **MCP**     | `mcp__context7_*` (code search), `mcp__aws-knowledge_*` (AWS docs), `mcp__linear_*` (Linear API), `mcp__atlassian_*` (Atlassian)  |
-| **GitHub**  | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__gh--retrieve-repository-dependabot-alerts` |
-| **Git**     | `tool__git--retrieve-current-branch-diff`                                                                                         |
-| **Command** | `playwright-cli`                                                                                                                  |
+| Category    | Capabilities                                                                                                                                       |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **MCP**     | `mcp__context7_*` (code search), `mcp__aws-knowledge_*` (AWS docs), `mcp__linear_*` (Linear API), `mcp__atlassian_*` (Atlassian), `playwright-cli` |
+| **GitHub**  | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__gh--retrieve-repository-dependabot-alerts`                  |
+| **Git**     | `tool__git--retrieve-current-branch-diff`                                                                                                          |
+| **Command** | `playwright-cli`                                                                                                                                   |
 
 ### generator
 
@@ -59,7 +59,7 @@ digraph BuildFlow {
 | **MCP**     | `mcp__context7_*`, `mcp__aws-knowledge_*`                                                                                                                                                                                                        |
 | **GitHub**  | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__gh--retrieve-repository-dependabot-alerts`, `tool__gh--retrieve-repository-collaborators`, `tool__gh--create-pull-request`, `tool__gh--edit-pull-request` |
 | **Git**     | `tool__git--retrieve-current-branch-diff`, `tool__git--retrieve-latest-n-commits-diff`, `tool__git--status`, `tool__git--stage-files`, `tool__git--commit`, `tool__git--push`                                                                    |
-| **Command** | `rg`, `cat`, `head`, `tail`, `ls`, `echo`, `wc`, `grep`, `git log`, `git show`, `git status`, `git diff`, `playwright-cli`                                                                                                                       |
+| **Command** | `rg`, `cat`, `head`, `tail`, `ls`, `echo`, `wc`, `grep`, `git log`, `git show`, `git status`, `git diff`                                                                                                                                         |
 
 **Use when**: You need to implement features, write code, create documentation, set up CI/CD, or create PRs.
 
@@ -67,7 +67,7 @@ digraph BuildFlow {
 
 | Category    | Capabilities                                                                                                                                                                     |
 | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Skills**  | `e2e-test`, `review`                                                                                                                                                             |
+| **Skills**  | `review`, `playwright-cli`                                                                                                                                                       |
 | **MCP**     | `mcp__context7_*`, `mcp__aws-knowledge_*`                                                                                                                                        |
 | **GitHub**  | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__gh--retrieve-repository-dependabot-alerts`, `tool__gh--retrieve-repository-collaborators` |
 | **Git**     | `tool__git--retrieve-current-branch-diff`, `tool__git--retrieve-latest-n-commits-diff`, `tool__git--status`                                                                      |

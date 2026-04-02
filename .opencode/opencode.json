@@ -134,6 +134,9 @@
         "tool__gh--retrieve-pull-request-diff": "allow",
         "tool__git--retrieve-current-branch-diff": "allow",
         "tool__gh--retrieve-repository-dependabot-alerts": "allow"
+      },
+      "skill": {
+        "playwright-cli": "allow"
       }
     },
     "subagent/planner": {
@@ -196,7 +199,8 @@
         "skill": {
           "prd": "allow",
           "task-breakdown": "allow",
-          "grill-me": "allow"
+          "grill-me": "allow",
+          "playwright-cli": "allow"
         }
       }
     },
@@ -224,8 +228,7 @@
           "git log *": "allow",
           "git show *": "allow",
           "git status *": "allow",
-          "git diff *": "allow",
-          "playwright-cli *": "allow"
+          "git diff *": "allow"
         },
         "edit": "allow",
         "write": "allow",
@@ -304,8 +307,8 @@
         "webfetch": "deny",
         "question": "deny",
         "skill": {
-          "e2e-test": "allow",
-          "review": "allow"
+          "review": "allow",
+          "playwright-cli": "allow"
         },
         "mcp__context7_*": "allow",
         "mcp__aws-knowledge_*": "allow",
