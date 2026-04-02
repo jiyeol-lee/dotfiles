@@ -67,7 +67,7 @@ digraph BuildFlow {
 
 | Category    | Capabilities                                                                                                                                                                     |
 | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Skills**  | `review`, `playwright-cli`                                                                                                                                                       |
+| **Skills**  | `check`, `review-validation`, `review`, `playwright-cli`                                                                                                                         |
 | **MCP**     | `mcp__context7_*`, `mcp__aws-knowledge_*`                                                                                                                                        |
 | **GitHub**  | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__gh--retrieve-repository-dependabot-alerts`, `tool__gh--retrieve-repository-collaborators` |
 | **Git**     | `tool__git--retrieve-current-branch-diff`, `tool__git--retrieve-latest-n-commits-diff`, `tool__git--status`                                                                      |

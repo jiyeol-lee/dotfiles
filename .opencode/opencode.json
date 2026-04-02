@@ -310,6 +310,8 @@
         "webfetch": "deny",
         "question": "deny",
         "skill": {
+          "check": "allow",
+          "review-validation": "allow",
           "review": "allow",
           "playwright-cli": "allow"
         },
