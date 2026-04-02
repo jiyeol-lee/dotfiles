@@ -113,7 +113,8 @@
       "permission": {
         "bash": {
           "*": "deny",
-          "playwright-cli *": "allow"
+          "playwright-cli *": "allow",
+          "sleep *": "allow"
         },
         "edit": "deny",
         "write": "deny",
@@ -183,7 +184,8 @@
       "permission": {
         "bash": {
           "*": "deny",
-          "playwright-cli *": "allow"
+          "playwright-cli *": "allow",
+          "sleep *": "allow"
         },
         "read": "allow",
         "write": "deny",
@@ -293,7 +295,8 @@
           "git show *": "allow",
           "git status *": "allow",
           "git diff *": "allow",
-          "playwright-cli *": "allow"
+          "playwright-cli *": "allow",
+          "sleep *": "allow"
         },
         "edit": "deny",
         "write": "deny",

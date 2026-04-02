@@ -49,7 +49,7 @@ digraph BuildFlow {
 | **MCP**     | `mcp__context7_*` (code search), `mcp__aws-knowledge_*` (AWS docs), `mcp__linear_*` (Linear API), `mcp__atlassian_*` (Atlassian), `playwright-cli` |
 | **GitHub**  | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__gh--retrieve-repository-dependabot-alerts`                  |
 | **Git**     | `tool__git--retrieve-current-branch-diff`                                                                                                          |
-| **Command** | `playwright-cli`                                                                                                                                   |
+| **Command** | `playwright-cli`, `sleep`                                                                                                                          |
 
 ### generator
 
@@ -71,7 +71,7 @@ digraph BuildFlow {
 | **MCP**     | `mcp__context7_*`, `mcp__aws-knowledge_*`                                                                                                                                        |
 | **GitHub**  | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__gh--retrieve-repository-dependabot-alerts`, `tool__gh--retrieve-repository-collaborators` |
 | **Git**     | `tool__git--retrieve-current-branch-diff`, `tool__git--retrieve-latest-n-commits-diff`, `tool__git--status`                                                                      |
-| **Command** | `rg`, `cat`, `head`, `tail`, `ls`, `echo`, `wc`, `grep`, `git log`, `git show`, `git status`, `git diff`, `playwright-cli`                                                       |
+| **Command** | `rg`, `cat`, `head`, `tail`, `ls`, `echo`, `wc`, `grep`, `git log`, `git show`, `git status`, `git diff`, `playwright-cli`, `sleep`                                              |
 
 **Use when**: You need to validate implementation against criteria, run tests, or review code quality.
 
