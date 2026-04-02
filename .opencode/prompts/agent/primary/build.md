@@ -59,7 +59,7 @@ digraph BuildFlow {
 | **MCP**     | `mcp__context7_*`, `mcp__aws-knowledge_*`                                                                                                                                                                                                        |
 | **GitHub**  | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__gh--retrieve-repository-dependabot-alerts`, `tool__gh--retrieve-repository-collaborators`, `tool__gh--create-pull-request`, `tool__gh--edit-pull-request` |
 | **Git**     | `tool__git--retrieve-current-branch-diff`, `tool__git--retrieve-latest-n-commits-diff`, `tool__git--status`, `tool__git--stage-files`, `tool__git--commit`, `tool__git--push`                                                                    |
-| **Command** | `rg`, `cat`, `head`, `tail`, `ls`, `echo`, `wc`, `grep`, `git log`, `git show`, `git status`, `git diff`                                                                                                                                         |
+| **Command** | `rg`, `cat`, `head`, `tail`, `ls`, `echo`, `wc`, `grep`, `sort`, `pwd`, `tree`, `git log`, `git show`, `git status`, `git diff`                                                                                                                  |
 
 **Use when**: You need to implement features, write code, create documentation, set up CI/CD, or create PRs.
 
@@ -71,7 +71,7 @@ digraph BuildFlow {
 | **MCP**     | `mcp__context7_*`, `mcp__aws-knowledge_*`                                                                                                                                        |
 | **GitHub**  | `tool__gh--retrieve-pull-request-info`, `tool__gh--retrieve-pull-request-diff`, `tool__gh--retrieve-repository-dependabot-alerts`, `tool__gh--retrieve-repository-collaborators` |
 | **Git**     | `tool__git--retrieve-current-branch-diff`, `tool__git--retrieve-latest-n-commits-diff`, `tool__git--status`                                                                      |
-| **Command** | `rg`, `cat`, `head`, `tail`, `ls`, `echo`, `wc`, `grep`, `git log`, `git show`, `git status`, `git diff`, `playwright-cli`, `sleep`                                              |
+| **Command** | `rg`, `cat`, `head`, `tail`, `ls`, `echo`, `wc`, `grep`, `sort`, `pwd`, `tree`, `git log`, `git show`, `git status`, `git diff`, `playwright-cli`, `sleep`                       |
 
 **Use when**: You need to validate implementation against criteria, run tests, or review code quality.
 
