@@ -1,6 +1,6 @@
 ---
 name: playwright-cli
-description: Interactively tests web applications using the Playwright CLI. Use when user asks to "open a page", "take a screenshot", "check the layout", "verify the UI", "test a page behavior", "navigate through pages", "inspect element", "see how a page looks", "fill out a form", "click a button", "test a user flow", "check network requests", "verify cookies", "test localStorage", "mock API responses", "record a trace", or "check console logs". Also use when debugging design issues, verifying responsive layouts, testing form validation, checking API mocking, or tracing page performance.
+description: Interactive browser automation using playwright-cli bash commands. Use when user asks to "open a page", "take a screenshot", "check the layout", "verify the UI", "inspect element", "fill out a form", "click a button", "mock API responses", "record a trace", or "check console logs". Also use for debugging design issues, verifying responsive layouts, testing form interactions, inspecting cookies or localStorage, checking network requests, or tracing page performance. Do NOT use for writing Playwright test files (.spec.ts or .test.ts) or running test suites (npx playwright test).
 ---
 
 # Browser Automation with playwright-cli
@@ -21,6 +21,17 @@ playwright-cli screenshot
 # close the browser
 playwright-cli close
 ```
+
+## Installation Check
+
+Before using any `playwright-cli` command, **MUST** first check if it is available:
+
+```bash
+playwright-cli --version
+```
+
+- If the command **succeeds**: proceed with browser automation tasks.
+- If the command **is not found or fails**: inform the user that `playwright-cli` is not installed and **STOP**. Do **NOT** attempt to install it using `npx`, `npm`, or any other package manager. The user is responsible for installing it themselves.
 
 ## Commands
 
@@ -259,17 +270,7 @@ playwright-cli kill-all
 
 ## Installation
 
-If global `playwright-cli` command is not available, try a local version via `npx playwright-cli`:
-
-```bash
-npx --no-install playwright-cli --version
-```
-
-When local version is available, use `npx playwright-cli` in all commands. Otherwise, install `playwright-cli` as a global command:
-
-```bash
-npm install -g @playwright/cli@latest
-```
+If `playwright-cli --version` fails, inform the user that `playwright-cli` is not installed and stop. Do **NOT** use `npx`, `npm install -g`, or any other package manager to install it. The user is responsible for installation.
 
 ## Example: Form submission
 
@@ -315,14 +316,86 @@ playwright-cli tracing-stop
 playwright-cli close
 ```
 
+## Workflow Patterns
+
+### Basic Page Inspection
+
+```bash
+playwright-cli open https://example.com
+playwright-cli snapshot
+# Read snapshot to understand page structure and element refs
+playwright-cli snapshot "#specific-section"  # Narrow down to specific area
+playwright-cli close
+```
+
+### Form Testing
+
+```bash
+playwright-cli open https://example.com/form
+playwright-cli snapshot
+playwright-cli fill e1 "user@example.com"
+playwright-cli fill e2 "password123"
+playwright-cli click e3  # submit button
+playwright-cli snapshot  # verify result page
+playwright-cli close
+```
+
+### API Mocking + UI Verification
+
+```bash
+playwright-cli open https://example.com
+playwright-cli route "https://api.example.com/data" --body='{"items": [{"id": 1, "name": "Test"}]}'
+playwright-cli goto https://example.com/dashboard
+playwright-cli snapshot  # verify UI renders with mocked data
+playwright-cli unroute
+playwright-cli close
+```
+
+### Authentication State Reuse
+
+```bash
+# First session: log in and save state
+playwright-cli open https://example.com/login
+playwright-cli fill e1 "user@example.com"
+playwright-cli fill e2 "password"
+playwright-cli click e3
+playwright-cli state-save auth.json
+playwright-cli close
+
+# Subsequent sessions: load saved state
+playwright-cli open https://example.com
+playwright-cli state-load auth.json
+playwright-cli goto https://example.com/dashboard
+playwright-cli snapshot
+playwright-cli close
+```
+
+### Debugging a Failing UI
+
+```bash
+playwright-cli open https://example.com/broken-page
+playwright-cli console  # check for JS errors
+playwright-cli network  # check for failed requests
+playwright-cli snapshot  # inspect current DOM state
+playwright-cli screenshot --filename=debug.png  # visual capture
+playwright-cli close
+```
+
+## Constraints
+
+- This skill is for **on-the-fly interactive browser automation** via `playwright-cli` bash commands only
+- Do **NOT** write Playwright test code files (`.spec.ts`, `.test.ts`) using this skill
+- Do **NOT** use `npx playwright test` or any test runner command
+- Do **NOT** install `playwright-cli` via `npx`, `npm`, or any package manager — if not available, inform the user and stop
+- All commands MUST use the `playwright-cli` binary — never `npx`, `npm`, or any package manager prefix
+
 ## Specific tasks
 
-- **Running and Debugging Playwright tests** [references/playwright-tests.md](references/playwright-tests.md)
+- **Debugging Playwright tests with playwright-cli** [references/playwright-tests.md](references/playwright-tests.md)
 - **Request mocking** [references/request-mocking.md](references/request-mocking.md)
 - **Running Playwright code** [references/running-code.md](references/running-code.md)
 - **Browser session management** [references/session-management.md](references/session-management.md)
 - **Storage state (cookies, localStorage)** [references/storage-state.md](references/storage-state.md)
-- **Test generation** [references/test-generation.md](references/test-generation.md)
 - **Tracing** [references/tracing.md](references/tracing.md)
 - **Video recording** [references/video-recording.md](references/video-recording.md)
 - **Inspecting element attributes** [references/element-attributes.md](references/element-attributes.md)
