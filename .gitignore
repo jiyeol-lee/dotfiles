@@ -5,3 +5,5 @@
 .tmux/plugins
 .tmux/tpm
 .alacritty/alacritty-bindings.toml
+
+**/.opencode/package-lock.json
