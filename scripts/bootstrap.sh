@@ -51,6 +51,9 @@ function installPackages() {
   # Install pngpaste for pasting image to markdown using obsidian.nvim
   brew install pngpaste
 
+  # Install luacheck
+  brew install luacheck
+
   # Install firefox
   brew install --cask firefox
 
