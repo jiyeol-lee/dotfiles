@@ -61,19 +61,6 @@ Bad non-goals are obvious:
 - [Non-goal 1 — something tempting but explicitly excluded, with brief rationale]
 - [Non-goal 2]
 
-## User Stories
-
-{/\*
-Write from the END USER's perspective, not the developer's.
-Format: As a [role], I want [action], so that [benefit].
-
-The "so that" clause is mandatory — it forces you to articulate the value.
-If you can't write the "so that", the story may not be worth building.
-\*/}
-
-- As a [role], I want [action], so that [benefit].
-- As a [role], I want [action], so that [benefit].
-
 ## Functional Requirements
 
 {/\*

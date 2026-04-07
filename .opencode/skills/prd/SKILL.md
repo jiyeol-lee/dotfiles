@@ -7,7 +7,6 @@ description: Creates Product Requirements Documents (PRDs) as MD files in __docs
 
 1. **Clarify the goal** — Confirm the feature/goal with the user. Ask for:
    - What problem does this solve? (not what to build — WHY to build it)
-   - Who are the users affected?
    - Any known constraints (timeline, tech stack, dependencies)?
    - Any prior art or related features?
 
@@ -29,8 +28,6 @@ description: Creates Product Requirements Documents (PRDs) as MD files in __docs
 
    **Goals vs Non-Goals** — Non-goals are MORE important than goals. They prevent scope creep. For every goal, ask: "What's the adjacent thing someone might assume is included but ISN'T?"
 
-   **User Stories** — Write from the user's perspective, not the developer's. Bad: "As a developer, I want an API endpoint." Good: "As a customer, I want to reset my password so I can regain access to my account."
-
    **Functional Requirements** — Number every requirement (FR-1, FR-2...). Each MUST be independently testable. If a requirement contains "and", split it into two.
 
    **Acceptance Criteria** — Write these as pass/fail checks. Use "Given/When/Then" format. Every functional requirement MUST have at least one acceptance criterion.
@@ -49,7 +46,7 @@ description: Creates Product Requirements Documents (PRDs) as MD files in __docs
 __docs/prd/
 ├── feature-name.md          # Index file
 └── feature-name/            # PRD sub-directory
-    ├── overview.md          # Problem, goals, non-goals, user stories
+    ├── overview.md          # Problem, goals, non-goals
     ├── functional-reqs.md    # All FR-X requirements
     └── acceptance-criteria.md # All acceptance criteria
 ```
@@ -126,12 +123,6 @@ Step 4 — Draft (abbreviated):
   - Account recovery for deleted accounts
   - Password reset via SMS (future phase)
   - Changing password policies or complexity rules
-
-  User Stories:
-  - As a user who forgot my password, I want to receive a reset
-    link via email so I can regain access without contacting support.
-  - As a user, I want confirmation that my password was changed
-    so I know the reset succeeded.
 
   Functional Requirements:
   - FR-1: System sends a reset email with a unique, time-limited token
