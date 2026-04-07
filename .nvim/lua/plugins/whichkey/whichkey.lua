@@ -325,9 +325,16 @@ M.config = function()
     },
     {
       mode = "n",
-      "<leader>on",
+      "<leader>ond",
       ":ObsidianNew<CR>",
-      desc = "Create a new note",
+      desc = "Create a new default note",
+      nowait = true,
+    },
+    {
+      mode = "n",
+      "<leader>ont",
+      ":ObsidianNewFromTemplate<CR>",
+      desc = "Create a new default note",
       nowait = true,
     },
     {
