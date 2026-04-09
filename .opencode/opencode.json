@@ -32,11 +32,6 @@
         "Authorization": "Bearer {env:LINEAR_API_KEY}"
       },
       "enabled": false
-    },
-    "mcp__atlassian": {
-      "type": "local",
-      "command": ["npx", "mcp-remote", "https://mcp.atlassian.com/v1/mcp"],
-      "enabled": false
     }
   },
   "agent": {
