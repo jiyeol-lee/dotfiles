@@ -1,4 +1,6 @@
-export const BashProtection = async ({}) => {
+import { type Plugin } from "@opencode-ai/plugin";
+
+export const BashProtection: Plugin = async ({}) => {
   return {
     "tool.execute.before": async (input, output) => {
       if (input.tool === "bash") {
