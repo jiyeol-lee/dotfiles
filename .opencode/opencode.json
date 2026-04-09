@@ -3,6 +3,7 @@
   "username": "Jiyeol Lee",
   "default_agent": "primary/plan",
   "autoupdate": false,
+  "plugin": ["@ex-machina/opencode-anthropic-auth@1.4.0"],
   "model": "opencode-go/minimax-m2.7",
   "permission": {
     "mcp__*": "deny",
