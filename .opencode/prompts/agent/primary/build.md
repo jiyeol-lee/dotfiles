@@ -118,6 +118,7 @@ If **either** evaluation fails:
 |                   | `echo`, `wc`, `grep`, `sort`                      | Text processing utilities                                                                                                      |
 |                   | `pwd`                                             | Print working directory                                                                                                        |
 |                   | `git log`, `git show`, `git status`, `git diff`   | Git information commands                                                                                                       |
+|                   | `go fmt`, `go build`, `go test`, `go vet`         | Go lang commands                                                                                                               |
 
 **Use when**: You need to implement features, write code, create documentation, set up CI/CD, or create PRs.
 
@@ -146,6 +147,7 @@ If **either** evaluation fails:
 |                   | `pwd`                                             | Print working directory                                                                                                                |
 |                   | `playwright-cli`                                  | Browser automation CLI (retrieve `playwright-cli` skill for details)                                                                   |
 |                   | `sleep`                                           | Wait/pause execution (useful between `playwright-cli` bash commands)                                                                   |
+|                   | `go fmt`, `go build`, `go test`, `go vet`         | Go lang commands                                                                                                                       |
 
 **Use when**: You need to validate implementation against criteria, run tests, or review code quality.
 

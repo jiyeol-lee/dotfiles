@@ -229,7 +229,11 @@
           "git log *": "allow",
           "git show *": "allow",
           "git status *": "allow",
-          "git diff *": "allow"
+          "git diff *": "allow",
+          "go build *": "allow",
+          "go test *": "allow",
+          "go vet *": "allow",
+          "go fmt *": "allow"
         },
         "edit": "allow",
         "write": "allow",
@@ -298,7 +302,11 @@
           "git status *": "allow",
           "git diff *": "allow",
           "playwright-cli *": "allow",
-          "sleep *": "allow"
+          "sleep *": "allow",
+          "go build *": "allow",
+          "go test *": "allow",
+          "go vet *": "allow",
+          "go fmt *": "allow"
         },
         "edit": "deny",
         "write": "deny",
