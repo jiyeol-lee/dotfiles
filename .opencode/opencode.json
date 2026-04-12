@@ -100,6 +100,26 @@
         }
       }
     },
+    "primary/lawyer": {
+      "description": "Legal advice specialist",
+      "mode": "primary",
+      "prompt": "{file:./prompts/agent/primary/lawyer.md}",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "write": "deny",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "deny",
+        "todowrite": "allow",
+        "todoread": "allow",
+        "webfetch": "allow",
+        "question": "allow",
+        "task": "deny"
+      }
+    },
     "subagent/researcher": {
       "description": "Information gathering specialist for searching code and documentation",
       "temperature": 0.1,
