@@ -15,28 +15,6 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
     }
   }
 
-  // Helper function: Returns array of local branch names, optionally excluding one branch
-  async function getAllLocalBranches(
-    excludeBranch?: string,
-  ): Promise<string[]> {
-    try {
-      const result =
-        await $`git for-each-ref --format='%(refname:short)' refs/heads/`.text();
-      const branches = result
-        .trim()
-        .split("\n")
-        .map((b) => b.trim())
-        .filter((b) => b.length > 0);
-
-      if (excludeBranch) {
-        return branches.filter((b) => b !== excludeBranch);
-      }
-      return branches;
-    } catch {
-      return [];
-    }
-  }
-
   // Helper function: Checks if a branch exists locally
   async function branchExists(branchName: string): Promise<boolean> {
     try {
@@ -44,57 +22,6 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
       return true;
     } catch {
       return false;
-    }
-  }
-
-  // Helper function: Finds the merge-base between two branches, trying fork-point first
-  async function findMergeBase(
-    branch1: string,
-    branch2: string,
-  ): Promise<string | null> {
-    // First try fork-point (more accurate for rebased branches)
-    try {
-      const forkPoint = (
-        await $`git merge-base --fork-point ${branch1} ${branch2}`.text()
-      ).trim();
-      if (forkPoint) {
-        return forkPoint;
-      }
-    } catch {
-      // fork-point failed, try regular merge-base
-    }
-
-    // Fallback to regular merge-base
-    try {
-      const mergeBase = (
-        await $`git merge-base ${branch1} ${branch2}`.text()
-      ).trim();
-      if (mergeBase) {
-        return mergeBase;
-      }
-    } catch {
-      // merge-base also failed
-    }
-
-    return null;
-  }
-
-  // Helper function: Returns number of commits between two refs
-  async function getCommitDistance(
-    fromRef: string,
-    toRef: string,
-  ): Promise<number> {
-    try {
-      const result = (
-        await $`git rev-list --count ${fromRef}..${toRef}`.text()
-      ).trim();
-      const count = parseInt(result, 10);
-      if (isNaN(count)) {
-        return Infinity;
-      }
-      return count;
-    } catch {
-      return Infinity;
     }
   }
 
@@ -117,7 +44,7 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
     tool: {
       "tool__git--retrieve-latest-n-commits-diff": tool({
         description:
-          "Retrieve the diff of the latest N commits in the current Git repository.",
+          "Retrieve the diff of the latest N commits in the current Git repository. `number_of_commits` is a required argument that specifies how many of the most recent commits to include in the diff, with a maximum of 100 to prevent excessive output.",
         args: {
           number_of_commits: tool.schema
             .number()
@@ -264,7 +191,8 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
         },
       }),
       "tool__git--commit": tool({
-        description: "Create a git commit with the staged changes.",
+        description:
+          "Create a git commit with the staged changes. `message` is a required argument for the commit message (subject line), and `body` is an optional argument for an extended commit message body.",
         args: {
           message: tool.schema
             .string()
@@ -349,7 +277,7 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__git--stage-files": tool({
         description:
-          "Stage specified files for commit. Use '.' to stage all changes.",
+          "Stage specified files for commit. Use '.' to stage all changes. `files` is a required argument that accepts an array of file paths to stage, or ['.'] to stage all changes. File paths should be relative to the repository root and can include alphanumeric characters, dashes, underscores, dots, and forward slashes.",
         args: {
           files: tool.schema
             .array(tool.schema.string())

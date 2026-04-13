@@ -5,7 +5,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
     tool: {
       "tool__gh--retrieve-pull-request-info": tool({
         description:
-          "Retrieve detailed information about a GitHub pull request, including its state, title, body, comments, reviews, and review threads.",
+          "Retrieve detailed information about a GitHub pull request, including its state, title, body, comments, reviews, and review threads. `pull_request_number` is optional and defaults to the current branch's PR if not provided. By default, resolved review threads are excluded, but can be included by setting `with_resolved` to true.",
         args: {
           pull_request_number: tool.schema
             .number()
@@ -128,7 +128,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__gh--create-pull-request": tool({
         description:
-          "Create a new draft pull request in the current GitHub repository.",
+          "Create a new draft pull request in the current GitHub repository. `title` and `body` are required, while `reviewers` is optional and can be a list of GitHub usernames to request reviews from.",
         args: {
           title: tool.schema.string().describe("The title of the pull request"),
           body: tool.schema
@@ -163,7 +163,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__gh--edit-pull-request": tool({
         description:
-          "Edit an existing pull request in the current GitHub repository.",
+          "Edit an existing pull request in the current GitHub repository. `pull_request_number` is required to identify which pull request to edit. `title`, `body`, and `reviewers` are optional fields that can be updated. If `reviewers` is provided, it will add the specified GitHub usernames as reviewers to the pull request.",
         args: {
           pull_request_number: tool.schema
             .number()
@@ -226,7 +226,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__gh--retrieve-pull-request-diff": tool({
         description:
-          "Retrieve the diff of a GitHub pull request in the current repository.",
+          "Retrieve the diff of a GitHub pull request in the current repository. `pull_request_number` is required to specify which pull request's diff to retrieve.",
         args: {
           pull_request_number: tool.schema
             .number()
@@ -252,7 +252,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__gh--retrieve-repository-dependabot-alerts": tool({
         description:
-          "Retrieve a list of Dependabot alerts for the current GitHub repository.",
+          "Retrieve a list of Dependabot alerts for the current GitHub repository. `state` is an optional filter to specify the state of the alerts to retrieve (e.g., 'open', 'closed', 'dismissed'). `severity` is another optional filter to specify the severity level of the alerts (e.g., 'low', 'medium', 'high', 'critical'). By default, it retrieves open alerts of all severity levels.",
         args: {
           state: tool.schema
             .string()
