@@ -145,7 +145,6 @@
         "mcp__context7_*": "allow",
         "mcp__aws-knowledge_*": "allow",
         "mcp__linear_*": "allow",
-        "mcp__atlassian_*": "allow",
         "tool__gh--retrieve-pull-request-info": "allow",
         "tool__gh--retrieve-pull-request-diff": "allow",
         "tool__git--retrieve-current-branch-diff": "allow",
