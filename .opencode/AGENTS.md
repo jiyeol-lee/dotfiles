@@ -32,19 +32,6 @@ When delegating, include:
 | **Mode**            | draft \|\| apply (if agent supports modes)       | If applicable |
 | **Expected output** | What information to return                       | Recommended   |
 
-## Agent Input/Output Philosophy
-
-### What Callers Should Include in Prompts
-
-When delegating to a sub-agent, include:
-
-| Element             | Description                                      | Required      |
-| ------------------- | ------------------------------------------------ | ------------- |
-| **Goal**            | What needs to be accomplished                    | Yes           |
-| **Context**         | Relevant file paths, constraints, prior findings | Yes           |
-| **Mode**            | draft \|\| apply (if agent supports modes)       | If applicable |
-| **Expected output** | What information to return                       | Recommended   |
-
 ## Status Values
 
 | Status                | Meaning                               |
