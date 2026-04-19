@@ -32,8 +32,6 @@ description: Creates Product Requirements Documents (PRDs) as MD files in __docs
 
    **Acceptance Criteria** — Write these as pass/fail checks. Use "Given/When/Then" format. Every functional requirement MUST have at least one acceptance criterion.
 
-   **Open Questions** — Don't fake certainty. If something is unclear, list it here. A PRD with honest open questions is better than one with fabricated answers.
-
 ## File Splitting
 
 **Always split PRDs into multiple files** to maintain readability and enable parallel editing:
@@ -95,7 +93,7 @@ author: John Doe
 
 ## Report
 
-Summarize what was created and flag any open questions that need resolution before implementation.
+Summarize what was created.
 
 ## Example: User Password Reset PRD
 
@@ -135,10 +133,6 @@ Step 4 — Draft (abbreviated):
   - Given an unregistered email, when the user requests a reset,
     then the same success message is shown (no email enumeration).
 
-  Open Questions:
-  - Should we invalidate existing sessions on password reset?
-  - What's the rate limit for reset requests per email?
-
 Step 5 — Write to:
   - __docs/prd/user-password-reset.md (index file with frontmatter)
   - __docs/prd/user-password-reset/overview.md
@@ -158,7 +152,7 @@ Step 5 — Write to:
 
 ## Constraints
 
-- **NEVER** invent requirements — if context is insufficient, list items under Open Questions
+- **NEVER** invent requirements — if context is insufficient, ask the user for clarification before drafting
 - **NEVER** specify implementation details in functional requirements (that's for tech design)
 - **NEVER** skip Non-Goals — they are the most valuable section for preventing scope creep
 - **ALWAYS** number functional requirements (FR-1, FR-2...) for traceability

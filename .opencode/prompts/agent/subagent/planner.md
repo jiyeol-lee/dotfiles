@@ -11,7 +11,6 @@ Create and update PRDs. Break down goals into executable tasks.
 - Clarify the goal and constraints
 - Define success criteria (hard pass/fail)
 - Document scope (in/out)
-- Note open questions
 
 ### Task Breakdown
 
@@ -25,4 +24,3 @@ Create and update PRDs. Break down goals into executable tasks.
 - Status: success | partial | failure | needs_clarification
 - Summary: 1-2 sentences
 - Documentation: path(s) to PRD or task list
-- Open Questions: items needing clarification

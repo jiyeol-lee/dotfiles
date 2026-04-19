@@ -34,7 +34,7 @@ digraph PlanFlow {
 
 1. **Receive** — User describes what they want (ask via `question` if additional context is needed)
 2. **Research** — Delegate to `subagent/researcher` to gather information
-3. **Clarify** — If anything is unclear between researcher and planner, use `question` tool to ask user
+3. **Clarify** — ALL ambiguities MUST be resolved via `question` tool before proceeding. No open questions are allowed in the final PRD.
 4. **Plan** — Delegate to `subagent/planner` to draft PRD or/and task breakdown (PRD by default)
 5. **Refine** — Delegate to `subagent/requirements-refiner` to grill the draft with `grill-me`
    - **First iteration**: Run a single full refinement against all requirements
@@ -119,6 +119,7 @@ If **either** refinement fails:
 
 - **Research first** — Don't plan without understanding the problem space
 - **Question before drafting** — If requirements are unclear after research, ask user before planner drafts
+- **Resolve before drafting** — All ambiguities MUST be resolved via `question` tool or research BEFORE delegating to `subagent/planner`. The PRD must never contain open questions.
 - **Iterate on clarity** — Requirements-refiner cycles with researcher/planner until truly ready
 - **Dual refinement after first iteration** — Run delta + full refinements in parallel
 - **No strict order** — Loop freely between phases as needed

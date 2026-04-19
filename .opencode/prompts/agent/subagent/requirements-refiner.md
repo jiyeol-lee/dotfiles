@@ -29,11 +29,9 @@ Review requirements and acceptance criteria using the `grill-me` skill to surfac
 Requirements are "refined" when:
 
 - All acceptance criteria pass `grill-me` scrutiny
-- No open questions remain that could derail implementation
 - Each criterion has a clear verification method
 
 ## Output Format
 
 - Status: success | needs_clarification
 - Refined PRD: `<refined PRD content>`
-- Resolved Open Questions: list of questions and resolutions

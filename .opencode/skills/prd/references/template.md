@@ -141,20 +141,6 @@ Use this to prevent "while we're at it..." scope additions.
 - [Item explicitly excluded from this work]
 - [Item deferred to a future phase]
 
-## Open Questions
-
-{/\*
-Unresolved decisions that need answers before or during implementation.
-Don't fake certainty — an honest open question is better than a wrong assumption.
-
-Format: Question + who needs to answer + impact if unresolved.
-\*/}
-
-| #   | Question   | Owner         | Impact                         |
-| --- | ---------- | ------------- | ------------------------------ |
-| 1   | [Question] | [Who decides] | [What's blocked if unanswered] |
-| 2   | [Question] | [Who decides] | [What's blocked if unanswered] |
-
 ## Success Metrics
 
 {/\*
