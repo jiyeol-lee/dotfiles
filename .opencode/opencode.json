@@ -3,6 +3,7 @@
   "username": "Jiyeol Lee",
   "default_agent": "primary/plan",
   "autoupdate": false,
+  "lsp": false,
   "permission": {
     "mcp__*": "deny",
     "tool__*": "deny",
