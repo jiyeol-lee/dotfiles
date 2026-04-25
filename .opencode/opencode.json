@@ -99,10 +99,10 @@
         }
       }
     },
-    "primary/lawyer": {
-      "description": "Legal advice specialist",
+    "primary/general": {
+      "description": "General advice and web research agent",
       "mode": "primary",
-      "prompt": "{file:./prompts/agent/primary/lawyer.md}",
+      "prompt": "{file:./prompts/agent/primary/general.md}",
       "permission": {
         "bash": "deny",
         "edit": "deny",
@@ -116,7 +116,10 @@
         "todoread": "deny",
         "webfetch": "allow",
         "question": "allow",
-        "task": "deny"
+        "task": "deny",
+        "skill": {
+          "legal-advice": "allow"
+        }
       }
     },
     "subagent/researcher": {
