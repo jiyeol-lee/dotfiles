@@ -1,206 +1,44 @@
-# PRD MD Template
+# PRD Template
 
-Use this template when drafting a PRD. Replace all `[bracketed]` placeholders. Delete any section annotation comments before writing the final file.
+Use this template when synthesizing a PRD from conversation and repository context. Replace bracketed placeholders, remove instructional comments, and keep the final document focused on durable decisions.
 
 ```md
----
-title: "[Feature Name — human-readable, title case]"
-date: "[YYYY-MM-DD]"
-author: "[Who requested or authored this PRD]"
-status: "draft"
----
+# [Feature or Initiative Name]
 
-{/_ Status values: draft | in-progress | completed _/}
+## Problem Statement
 
-# [Feature Name]
+[Describe the user's problem, the current state, who is affected, and why this matters now. Use project vocabulary and relevant metrics when available.]
 
-## Background / Problem Statement
+## Solution
 
-{/\*
-WHY does this feature need to exist? Write 2-4 sentences covering:
+[Describe the proposed outcome from the user's perspective. Explain what changes for users/operators and how success should feel or be observed.]
 
-1. What's the current situation?
-2. What's painful about it? (quantify if possible — tickets/week, time lost, revenue impact)
-3. Who is affected?
+## Implementation Decisions
 
-Litmus test: Could someone unfamiliar with the project understand the problem
-after reading ONLY this section?
-\*/}
+[List durable technical decisions that guide implementation. Include major modules/components/interfaces to create or modify, architectural constraints, schema/API contracts, data flows, migrations, and integration points.]
 
-[Describe the current state, the pain point, and who is affected. Use data when available.]
+- [Decision 1]
+- [Decision 2]
+- [Decision 3]
 
-## Goals
+Avoid brittle file paths and long code snippets because they drift quickly. Exception: include a short decision-rich prototype artifact when prose would be less precise, such as a state machine, reducer transition table, schema/type shape, or API contract. Trim it to the important decision, not a working demo.
 
-{/\*
-What does success look like? Each goal should be:
+## Testing Decisions
 
-- Measurable (tied to a success metric below)
-- Achievable within the stated scope
-- Written as outcomes, not outputs ("reduce support tickets" not "build a form")
-  \*/}
+[Describe the testing strategy. Focus tests on externally observable behavior, stable interfaces, and meaningful outcomes rather than implementation details. Note which modules/interfaces should be tested and cite similar tests or prior art in the codebase when known.]
 
-- [Goal 1 — outcome-oriented, measurable]
-- [Goal 2]
-
-## Non-Goals
-
-{/\*
-CRITICAL SECTION. For every goal, ask: "What adjacent thing might someone assume
-is included but ISN'T?" List those here. This prevents scope creep during implementation.
-
-Good non-goals are specific and tempting:
-
-- "SMS-based password reset (planned for Phase 2)"
-- "Admin ability to force-reset user passwords"
-
-Bad non-goals are obvious:
-
-- "Building a mobile app" (if the project is a CLI tool)
-  \*/}
-
-- [Non-goal 1 — something tempting but explicitly excluded, with brief rationale]
-- [Non-goal 2]
-
-## Functional Requirements
-
-{/\*
-Number every requirement for traceability (FR-1, FR-2...).
-Rules:
-
-- Each requirement MUST be independently testable
-- If it contains "and", split it into two requirements
-- Describe WHAT the system does, not HOW it's implemented
-- Bad: "Use Redis to cache tokens" (implementation detail)
-- Good: "Reset tokens are retrievable within 50ms" (testable behavior)
-  \*/}
-
-- **FR-1**: [Requirement — what the system must do, testable, no "and"]
-- **FR-2**: [Requirement]
-- **FR-3**: [Requirement]
-
-## Non-Functional Requirements
-
-{/_
-Cover the "-ilities" that apply. Delete categories that don't apply to this feature.
-Be specific — "fast" is not a requirement, "< 200ms p95 response time" is.
-_/}
-
-- **Performance**: [e.g., "Password reset email sent within 60 seconds of request"]
-- **Security**: [e.g., "Reset tokens are cryptographically random, 256-bit minimum"]
-- **Accessibility**: [e.g., "Reset flow is fully navigable via keyboard and screen reader"]
-- **Scalability**: [e.g., "Supports 1000 concurrent reset requests"]
-- **Reliability**: [e.g., "Reset flow available 99.9% uptime"]
-
-## Acceptance Criteria
-
-{/\*
-Map each functional requirement to at least one acceptance criterion.
-Use Given/When/Then format for clarity:
-
-- Given [precondition]
-- When [action]
-- Then [expected result]
-
-Each criterion must be a binary pass/fail — no subjective judgment.
-\*/}
-
-### FR-1: [Requirement title]
-
-- **Given** [precondition], **when** [action], **then** [expected result].
-- **Given** [alternate/edge case], **when** [action], **then** [expected result].
-
-### FR-2: [Requirement title]
-
-- **Given** [precondition], **when** [action], **then** [expected result].
-
-## Technical Considerations
-
-{/\*
-Architecture notes for the engineering team. This is the ONE section where
-implementation details are appropriate. Cover:
-
-- Dependencies on other systems or services
-- Known technical constraints or risks
-- Suggested approach (as guidance, not mandate)
-- Data model changes needed
-- Migration considerations
-  \*/}
-
-- [Dependency, constraint, or architectural note]
-- [Data model change or migration note]
+- [Testing decision 1]
+- [Testing decision 2]
+- [Relevant prior art]
 
 ## Out of Scope
 
-{/\*
-Different from Non-Goals. Non-Goals are things someone might EXPECT to be included.
-Out of Scope is the explicit boundary of this PRD — everything beyond it.
+[List adjacent or tempting work that this PRD explicitly excludes. Include deferred phases, unrelated refactors, unsupported platforms, or features that should not be assumed by implementation agents.]
 
-Use this to prevent "while we're at it..." scope additions.
-\*/}
+- [Excluded item 1]
+- [Excluded item 2]
 
-- [Item explicitly excluded from this work]
-- [Item deferred to a future phase]
+## Further Notes
 
-## Success Metrics
-
-{/\*
-How do we know this feature succeeded AFTER launch?
-Each metric should be:
-
-- Quantifiable (a number, percentage, or threshold)
-- Tied to a goal above
-- Measurable with existing or planned instrumentation
-  \*/}
-
-| Metric                                      | Target                | Measurement Method                |
-| ------------------------------------------- | --------------------- | --------------------------------- |
-| [e.g., Support tickets for password resets] | [e.g., Reduce by 90%] | [e.g., Zendesk ticket tag count]  |
-| [e.g., Reset flow completion rate]          | [e.g., > 95%]         | [e.g., Analytics funnel tracking] |
-
-## Milestones / Phases
-
-{/_
-Optional — include only if the feature spans multiple releases.
-Each phase should be independently shippable and valuable.
-If the feature ships in one release, delete this section.
-_/}
-
-### Phase 1: [Name] — [Target date or sprint]
-
-- [Deliverable 1]
-- [Deliverable 2]
-
-### Phase 2: [Name] — [Target date or sprint]
-
-- [Deliverable 1]
-- [Deliverable 2]
-
-## Sprint Contracts
-
-{/_
-Sprint contracts define what "done" looks like for each phase.
-They serve as the agreement between the generator (builder) and evaluator (reviewer).
-Each contract should be independently verifiable — the evaluator should be able to
-check it without knowing implementation details.
-_/}
-
-### Sprint 1: [Name]
-
-| Field                   | Description                                                    |
-| ----------------------- | -------------------------------------------------------------- |
-| **Scope**               | [What this sprint builds — tie to FR numbers]                  |
-| **Exit Criteria**       | [Testable pass/fail conditions in Given/When/Then format]      |
-| **Verification Method** | [How the evaluator checks: test commands, manual checks, etc.] |
-| **Dependencies**        | [What must be complete before this sprint]                     |
-| **Handoff Artifact**    | [What state/context the next sprint needs]                     |
-
-### Sprint 2: [Name]
-
-| Field                   | Description                                                    |
-| ----------------------- | -------------------------------------------------------------- |
-| **Scope**               | [What this sprint builds — tie to FR numbers]                  |
-| **Exit Criteria**       | [Testable pass/fail conditions in Given/When/Then format]      |
-| **Verification Method** | [How the evaluator checks: test commands, manual checks, etc.] |
-| **Dependencies**        | [What must be complete before this sprint]                     |
-| **Handoff Artifact**    | [What state/context the next sprint needs]                     |
+[Capture assumptions, open questions that do not block drafting, issue tracker links, rollout notes, observability considerations, or follow-up decisions.]
 ```

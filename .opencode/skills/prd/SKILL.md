@@ -1,163 +1,69 @@
 ---
 name: prd
-description: Creates Product Requirements Documents (PRDs) as MD files in __docs/prd/. Use when asked to "write a PRD", "create a product requirements document", "draft requirements", "write requirements for a feature", "create a spec", or "document product requirements".
+description: Synthesizes Product Requirements Documents from the current conversation and repository context. Use when user asks to "write a PRD", "create a product requirements document", "turn this into a PRD", "draft requirements", "create a spec", or publish product requirements to an issue tracker.
 ---
 
 ## Workflow
 
-1. **Clarify the goal** — Confirm the feature/goal with the user. Ask for:
-   - What problem does this solve? (not what to build — WHY to build it)
-   - Any known constraints (timeline, tech stack, dependencies)?
-   - Any prior art or related features?
+1. **Synthesize first, interview only for blockers** — Use the current conversation, prior decisions, and visible codebase context as the source of truth. Ask follow-up questions only when missing information would change the PRD's core direction or create unsafe assumptions.
+2. **Ground the PRD in the repository** — Explore enough of the repo to understand the feature's current state before writing:
+   - Look for related code, configuration, existing docs, issue templates, and product specs.
+   - Use the project's domain vocabulary and glossary terms when they exist.
+   - Respect relevant notes, and established patterns in the area being changed.
+3. **Map the implementation shape** — Identify the major modules, components, APIs, schemas, jobs, or interfaces likely to be created or changed. Prefer **deep modules**: small, stable, testable interfaces that encapsulate meaningful behavior and avoid leaking implementation details.
+4. **Capture decisions, not transient details** — Read `references/template.md` when drafting the PRD. Fill it with product-facing problem/solution context plus implementation and testing decisions. Avoid brittle file paths and code snippets unless a short prototype artifact captures a decision more clearly than prose, such as a state machine, schema shape, reducer, or API contract.
+5. **Define testing strategy by external behavior** — Specify which modules or interfaces need tests, what good tests should assert, and where similar tests already exist. Prefer tests of externally observable behavior over implementation details.
+6. **Publish only when the workflow supports it** — If the user asks to create or publish an issue and the repository exposes an issue tracker workflow, create or update the issue using the project's existing templates and label vocabulary. Apply a readiness or triage label only when that vocabulary is present in the project context; never invent labels or rely on unrelated setup commands.
+7. **Report the result** — Summarize the PRD created or issue published, the key implementation/testing decisions captured, and any assumptions that need later confirmation.
 
-   If the user provides enough context upfront, skip the interview and proceed.
+## Key Patterns
 
-2. **Research the codebase** — Before writing, ground the PRD in reality:
-   - Glob for related code, configs, and existing docs
-   - Read relevant source files to understand current architecture
-   - Check for existing PRDs in `__docs/prd/` to avoid duplication and maintain consistency
+- Treat the PRD as a synthesis artifact: convert conversation context and repo understanding into a clear plan instead of re-asking everything.
+- Use project language over generic product language; if the codebase calls a concept a "workspace", do not rename it to "organization" in the PRD.
+- Separate durable decisions from implementation guesses. Module boundaries, API contracts, schema shapes, and test strategy belong in the PRD; temporary file locations usually do not.
 
-3. **Derive the feature name** — Convert the feature/goal to kebab-case for the filename:
-   - "User Password Reset" → `user-password-reset`
-   - "Add Dark Mode Support" → `dark-mode-support`
-   - Strip verbs like "add", "implement", "create" — name the FEATURE, not the action
+## Example
 
-4. **Draft the PRD** — Read `references/template.md` for the full MD structure, then write each section following these principles:
+User request: "Turn our discussion about saved search filters into a PRD and open an issue if this project supports it."
 
-   **Problem Statement** — Write this FIRST. If you can't articulate the problem clearly, the PRD isn't ready. Ask the user for clarification instead of guessing.
+```md
+## Problem Statement
 
-   **Goals vs Non-Goals** — Non-goals are MORE important than goals. They prevent scope creep. For every goal, ask: "What's the adjacent thing someone might assume is included but ISN'T?"
+Users repeatedly rebuild the same search filters across sessions, which slows down common workflows and increases the chance of inconsistent results.
 
-   **Functional Requirements** — Number every requirement (FR-1, FR-2...). Each MUST be independently testable. If a requirement contains "and", split it into two.
+## Solution
 
-   **Acceptance Criteria** — Write these as pass/fail checks. Use "Given/When/Then" format. Every functional requirement MUST have at least one acceptance criterion.
+Add saved search filters so users can name, reuse, update, and delete frequently used filter sets from the search experience.
 
-## File Splitting
+## Implementation Decisions
 
-**Always split PRDs into multiple files** to maintain readability and enable parallel editing:
+- Add a saved-filter module with a stable interface for creating, listing, applying, updating, and deleting filter definitions.
+- Keep filter serialization and validation behind that module so the UI and persistence layer do not duplicate filter rules.
+- Reuse the existing search execution boundary; applying a saved filter should produce the same query behavior as manually selecting those filters.
 
-1. **Create an index file** — Main PRD file that references sub-files
-2. **Split logically** — Group related content into separate files
-3. **Index file structure** — Include problem statement, goals, non-goals, and links to sub-files
+## Testing Decisions
 
+- Test behavior through visible saved-filter outcomes: creation, reuse, update, deletion, validation errors, and applied search results.
+- Prefer module-level tests around the saved-filter interface plus integration coverage at the search boundary; avoid asserting internal storage details.
+- Use existing search/filter tests as prior art when present.
+
+## Out of Scope
+
+- Sharing saved filters between users.
+- Advanced permission controls for saved filters.
+- Redesigning the underlying search query engine.
+
+## Further Notes
+
+- Assumption: the current filter vocabulary and validation rules remain the source of truth.
+- If an issue tracker and accepted readiness labels exist, publish this PRD there; otherwise return the Markdown PRD for the user to place manually.
 ```
-__docs/prd/
-├── feature-name.md          # Index file
-└── feature-name/            # PRD sub-directory
-    ├── overview.md          # Problem, goals, non-goals
-    ├── functional-reqs.md    # All FR-X requirements
-    └── acceptance-criteria.md # All acceptance criteria
-```
-
-The index file MUST:
-
-- Contain the problem statement and executive summary
-- Link to all sub-files
-- Serve as the entry point for reading the PRD
-
-## Sprint Contracts
-
-Use sprint contracts when a feature spans multiple phases or sprints. Each contract defines what "done" means for that sprint and serves as the negotiation point between the generator (builder) and evaluator (reviewer).
-
-- **Exit criteria** must be testable and unambiguous — the evaluator should verify them without knowing implementation details. Use Given/When/Then format.
-- **Handoff artifacts** are the structured state that carries between sprints (e.g., updated schema, live API endpoints, migration scripts). Name them explicitly so the next sprint has a known starting point.
-- **Verification methods** should be concrete: specific test commands, manual check steps, or endpoint assertions — not "verify it works."
-- Tie each sprint's scope to specific FR numbers for traceability back to the PRD.
-
-## Write the file
-
-Write to a directory structure, not a single file:
-
-- `__docs/prd/<feature-name>.md` → Index file (with YAML frontmatter)
-- `__docs/prd/<feature-name>/` → Sub-directory containing the parts
-
-**Frontmatter for PRD files** — Every PRD index file should start with:
-
-```yaml
----
-title: <feature-name in title case>
-date: yyyy-mm-dd format
-author: git config --get user.name (fallback to git config --get user.email)
----
-```
-
-Example: If the feature is `user-password-reset`, the frontmatter would be:
-
-```yaml
----
-title: User Password Reset
-date: 2026-03-30
-author: John Doe
----
-```
-
-## Report
-
-Summarize what was created.
-
-## Example: User Password Reset PRD
-
-Given the request: "We need to let users reset their passwords"
-
-```
-Step 1 — Clarify: Users currently have no self-service recovery.
-         Support team handles ~50 reset requests/week manually.
-
-Step 2 — Research: Read auth module, found existing session management
-         in src/auth/. No existing reset flow. Uses JWT tokens.
-
-Step 3 — Feature name: user-password-reset
-
-Step 4 — Draft (abbreviated):
-
-  Problem: Users who forget passwords must contact support,
-  creating ~50 tickets/week and 24hr average resolution time.
-
-  Goals:
-  - Self-service password reset via email
-  - Reduce support tickets for password resets by 90%
-
-  Non-Goals:
-  - Account recovery for deleted accounts
-  - Password reset via SMS (future phase)
-  - Changing password policies or complexity rules
-
-  Functional Requirements:
-  - FR-1: System sends a reset email with a unique, time-limited token
-  - FR-2: Reset tokens expire after 1 hour
-  - FR-3: Reset tokens are single-use
-
-  Acceptance Criteria (for FR-1):
-  - Given a registered email, when the user requests a reset,
-    then an email with a reset link is sent within 60 seconds.
-  - Given an unregistered email, when the user requests a reset,
-    then the same success message is shown (no email enumeration).
-
-Step 5 — Write to:
-  - __docs/prd/user-password-reset.md (index file with frontmatter)
-  - __docs/prd/user-password-reset/overview.md
-  - __docs/prd/user-password-reset/functional-reqs.md
-  - __docs/prd/user-password-reset/acceptance-criteria.md
-```
-
-## Writing Good Requirements — Common Mistakes
-
-| Mistake                           | Example                                          | Fix                                                                      |
-| --------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------ |
-| Vague requirement                 | "System should be fast"                          | "Page loads in < 2s on 3G"                                               |
-| Untestable criterion              | "User has a good experience"                     | "User completes flow in < 3 steps"                                       |
-| Solution disguised as requirement | "Use Redis for caching"                          | "Frequently accessed data loads in < 100ms" (let tech design choose HOW) |
-| Missing non-goal                  | Goals list everything to build                   | Add what's explicitly OUT — prevents scope creep                         |
-| AND in a requirement              | "FR-1: User can reset password and update email" | Split into FR-1 and FR-2                                                 |
 
 ## Constraints
 
-- **NEVER** invent requirements — if context is insufficient, ask the user for clarification before drafting
-- **NEVER** specify implementation details in functional requirements (that's for tech design)
-- **NEVER** skip Non-Goals — they are the most valuable section for preventing scope creep
-- **ALWAYS** number functional requirements (FR-1, FR-2...) for traceability
-- **ALWAYS** write acceptance criteria as testable pass/fail conditions
-- **ALWAYS** split PRDs into multiple files (index + sub-directory)
-- **ALWAYS** include YAML frontmatter in the index file
-- **ALWAYS** write index file to `__docs/prd/<feature-name>.md`
-- **ALWAYS** write sub-files to `__docs/prd/<feature-name>/`
+- **NEVER** add persona-based narrative requirement lists unless the user explicitly asks for them.
+- **NEVER** conduct a long interview when the conversation and repo already provide enough context.
+- **NEVER** invent issue tracker labels, triage vocabulary, or setup commands.
+- **NEVER** include fragile file-path inventories or full code samples as implementation decisions.
+- **ALWAYS** include implementation decisions, testing decisions, and explicit out-of-scope boundaries.
+- **ALWAYS** call out assumptions when the PRD depends on inferred context.
