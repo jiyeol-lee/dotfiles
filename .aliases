@@ -23,6 +23,8 @@ alias buu='brew update && brew upgrade -g'
 # Opencode (AI)
 ### Open opencode in current directory
 alias oc='opencode'
+### OpenCode Stats
+alias ocs='~/dotfiles/scripts/opencode_period_stats.sh'
 
 # AWS
 ### AWs SSO Login
