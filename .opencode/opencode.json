@@ -154,7 +154,8 @@
         "tool__gh--retrieve-repository-dependabot-alerts": "allow"
       },
       "skill": {
-        "playwright-cli": "allow"
+        "playwright-cli": "allow",
+        "ascii-layout": "allow"
       }
     },
     "subagent/planner": {
@@ -188,7 +189,8 @@
         "question": "deny",
         "skill": {
           "prd": "allow",
-          "task-breakdown": "allow"
+          "task-breakdown": "allow",
+          "ascii-layout": "allow"
         }
       }
     },
@@ -219,7 +221,8 @@
           "prd": "allow",
           "task-breakdown": "allow",
           "grill-me": "allow",
-          "playwright-cli": "allow"
+          "playwright-cli": "allow",
+          "ascii-layout": "allow"
         }
       }
     },
