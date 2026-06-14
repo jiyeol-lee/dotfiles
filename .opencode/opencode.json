@@ -49,7 +49,6 @@
     },
     "primary/plan": {
       "description": "Research and task planning orchestrator",
-      "temperature": 0.3,
       "mode": "primary",
       "prompt": "{file:./prompts/agent/primary/plan.md}",
       "permission": {
@@ -75,7 +74,6 @@
     },
     "primary/build": {
       "description": "Build orchestrator - delegates development tasks to specialized sub-agents",
-      "temperature": 0.1,
       "mode": "primary",
       "prompt": "{file:./prompts/agent/primary/build.md}",
       "permission": {
@@ -124,7 +122,6 @@
     },
     "subagent/researcher": {
       "description": "Information gathering specialist for searching code and documentation",
-      "temperature": 0.1,
       "mode": "subagent",
       "hidden": true,
       "prompt": "{file:./prompts/agent/subagent/researcher.md}",
@@ -160,7 +157,6 @@
     },
     "subagent/planner": {
       "description": "Creates and updates Product Requirements Documents (PRDs) and task breakdowns. Receives context from primary/plan and delivers planning documents.",
-      "temperature": 0.1,
       "mode": "subagent",
       "hidden": true,
       "prompt": "{file:./prompts/agent/subagent/planner.md}",
@@ -196,7 +192,6 @@
     },
     "subagent/requirements-refiner": {
       "description": "Reviews requirements using grill-me to surface gaps, ambiguities, and untestable criteria",
-      "temperature": 0.1,
       "mode": "subagent",
       "hidden": true,
       "prompt": "{file:./prompts/agent/subagent/requirements-refiner.md}",
@@ -228,7 +223,6 @@
     },
     "subagent/generator": {
       "description": "Writes code, documentation, and runs validation. Proposes contracts and self-evaluates before handoff to evaluator. Part of the GAN-inspired build loop.",
-      "temperature": 0.1,
       "mode": "subagent",
       "hidden": true,
       "prompt": "{file:./prompts/agent/subagent/generator.md}",
@@ -299,7 +293,6 @@
     },
     "subagent/evaluator": {
       "description": "Critiques code, reviews changes, runs e2e tests. Grades against criteria with hard thresholds and provides detailed feedback. Part of the GAN-inspired build loop.",
-      "temperature": 0.1,
       "mode": "subagent",
       "hidden": true,
       "prompt": "{file:./prompts/agent/subagent/evaluator.md}",
