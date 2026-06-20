@@ -7,7 +7,7 @@
   "permission": {
     "mcp__*": "deny",
     "tool__*": "deny",
-    "doom_loop": "deny",
+    "doom_loop": "allow",
     "external_directory": {
       "~/.config/opencode/**": "allow"
     },
