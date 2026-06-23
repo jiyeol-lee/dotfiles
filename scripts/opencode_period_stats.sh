@@ -202,10 +202,16 @@ print_current_month() {
   local gpt55_input_usd_per_million="5.00"
   local gpt55_output_usd_per_million="30.00"
   local gpt55_cached_read_usd_per_million="0.50"
-  local opus47_input_usd_per_million="5.00"
-  local opus47_output_usd_per_million="25.00"
-  local opus47_cached_read_usd_per_million="0.50"
-  local opus47_cache_write_usd_per_million="6.25"
+  local opus48_input_usd_per_million="5.00"
+  local opus48_output_usd_per_million="25.00"
+  local opus48_cached_read_usd_per_million="0.50"
+  local opus48_cache_write_usd_per_million="6.25"
+  local kimi_k27_code_input_usd_per_million="0.95"
+  local kimi_k27_code_output_usd_per_million="4.00"
+  local kimi_k27_code_cached_read_usd_per_million="0.19"
+  local glm52_input_usd_per_million="1.40"
+  local glm52_output_usd_per_million="4.40"
+  local glm52_cached_read_usd_per_million="0.26"
 
   sql="
 WITH bounds AS (
@@ -272,11 +278,21 @@ WITH bounds AS (
       WHEN lower_model LIKE '%gpt-5.5%'
         OR lower_model LIKE '%gpt-five-five%'
       THEN 'gpt-5.5'
-      WHEN lower_model LIKE '%claude-opus-4-7%'
-        OR lower_model LIKE '%claude-opus-4.7%'
-        OR lower_model LIKE '%claude-opus-4_7%'
-        OR lower_model LIKE '%claude-opus-47%'
-      THEN 'claude-opus-4.7'
+      WHEN lower_model LIKE '%claude-opus-4-8%'
+        OR lower_model LIKE '%claude-opus-4.8%'
+        OR lower_model LIKE '%claude-opus-4_8%'
+        OR lower_model LIKE '%claude-opus-48%'
+      THEN 'claude-opus-4.8'
+      WHEN lower_model LIKE '%kimi-k2.7-code%'
+        OR lower_model LIKE '%kimi-k2-7-code%'
+        OR lower_model LIKE '%kimi-k2_7-code%'
+        OR lower_model LIKE '%kimi-k27-code%'
+      THEN 'kimi-k2.7-code'
+      WHEN lower_model LIKE '%glm-5.2%'
+        OR lower_model LIKE '%glm-5-2%'
+        OR lower_model LIKE '%glm-5_2%'
+        OR lower_model LIKE '%glm52%'
+      THEN 'glm-5.2'
       ELSE ''
     END AS pricing_rule
   FROM message_costs
@@ -298,11 +314,21 @@ WITH bounds AS (
         ((output_tokens + reasoning_tokens) * $gpt55_output_usd_per_million) +
         (cache_read_tokens * $gpt55_cached_read_usd_per_million)
       ) / 1000000.0
-      WHEN pricing_rule = 'claude-opus-4.7' THEN (
-        (input_tokens * $opus47_input_usd_per_million) +
-        ((output_tokens + reasoning_tokens) * $opus47_output_usd_per_million) +
-        (cache_read_tokens * $opus47_cached_read_usd_per_million) +
-        (cache_write_tokens * $opus47_cache_write_usd_per_million)
+      WHEN pricing_rule = 'claude-opus-4.8' THEN (
+        (input_tokens * $opus48_input_usd_per_million) +
+        ((output_tokens + reasoning_tokens) * $opus48_output_usd_per_million) +
+        (cache_read_tokens * $opus48_cached_read_usd_per_million) +
+        (cache_write_tokens * $opus48_cache_write_usd_per_million)
+      ) / 1000000.0
+      WHEN pricing_rule = 'kimi-k2.7-code' THEN (
+        (input_tokens * $kimi_k27_code_input_usd_per_million) +
+        ((output_tokens + reasoning_tokens) * $kimi_k27_code_output_usd_per_million) +
+        (cache_read_tokens * $kimi_k27_code_cached_read_usd_per_million)
+      ) / 1000000.0
+      WHEN pricing_rule = 'glm-5.2' THEN (
+        (input_tokens * $glm52_input_usd_per_million) +
+        ((output_tokens + reasoning_tokens) * $glm52_output_usd_per_million) +
+        (cache_read_tokens * $glm52_cached_read_usd_per_million)
       ) / 1000000.0
       ELSE 0
     END AS effective_cost_usd
