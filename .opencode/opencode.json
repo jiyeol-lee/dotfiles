@@ -152,7 +152,8 @@
       },
       "skill": {
         "playwright-cli": "allow",
-        "ascii-layout": "allow"
+        "ascii-layout": "allow",
+        "conversation-memory": "allow"
       }
     },
     "subagent/planner": {
@@ -186,7 +187,8 @@
         "skill": {
           "prd": "allow",
           "task-breakdown": "allow",
-          "ascii-layout": "allow"
+          "ascii-layout": "allow",
+          "conversation-memory": "allow"
         }
       }
     },
@@ -217,7 +219,8 @@
           "task-breakdown": "allow",
           "grill-me": "allow",
           "playwright-cli": "allow",
-          "ascii-layout": "allow"
+          "ascii-layout": "allow",
+          "conversation-memory": "allow"
         }
       }
     },
@@ -273,7 +276,8 @@
           "pull-request": "allow",
           "review-validation": "allow",
           "skill-creator": "allow",
-          "agent-creator": "allow"
+          "agent-creator": "allow",
+          "conversation-memory": "allow"
         },
         "mcp__context7_*": "allow",
         "mcp__aws-knowledge_*": "allow",
@@ -340,7 +344,8 @@
           "check": "allow",
           "review-validation": "allow",
           "review": "allow",
-          "playwright-cli": "allow"
+          "playwright-cli": "allow",
+          "conversation-memory": "allow"
         },
         "mcp__context7_*": "allow",
         "mcp__aws-knowledge_*": "allow",

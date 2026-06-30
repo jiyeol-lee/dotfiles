@@ -83,6 +83,7 @@ If **either** evaluation fails:
 | **Git**           | `tool__git--retrieve-current-branch-diff`         | Shows the diff between the current branch and its base branch                                      |
 | **Skills**        | `playwright-cli`                                  | On-the-fly browser automation for interactive web testing (retrieve skill for details)             |
 |                   | `ascii-layout`                                    | Creates ASCII-only layout diagrams and numbered implementation plans for layouts                   |
+|                   | `conversation-memory`                             | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                |
 | **Bash Commands** | `sleep`                                           | Wait/pause execution (useful between `playwright-cli` bash commands)                               |
 
 ### subagent/generator
@@ -98,6 +99,7 @@ If **either** evaluation fails:
 |                   | `review-validation`                               | Validates PR review comments against actual code by analyzing reviewer claims to determine validity                            |
 |                   | `skill-creator`                                   | Creates new Agent Skills (SKILL.md files) following the agentskills.io open standard                                           |
 |                   | `agent-creator`                                   | Creates or updates primary and sub-agents in the opencode agentic system                                                       |
+|                   | `conversation-memory`                             | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                                            |
 | **MCP**           | `mcp__context7_*`                                 | Searches codebases and retrieves up-to-date library documentation and code examples from Context7                              |
 |                   | `mcp__aws-knowledge_*`                            | Queries AWS documentation for service-specific guidance, best practices, and architecture patterns                             |
 | **GitHub**        | `tool__gh--retrieve-pull-request-info`            | Fetches PR metadata, review threads, comments, and status checks                                                               |
@@ -130,6 +132,7 @@ If **either** evaluation fails:
 |                   | `review-validation`                               | Validates PR review comments against actual code by analyzing reviewer claims to determine validity                                    |
 |                   | `review`                                          | Performs code review analysis across Quality, Regression, Documentation, and Performance focus areas with severity-classified findings |
 |                   | `playwright-cli`                                  | On-the-fly browser automation for interactive web testing (retrieve skill for details)                                                 |
+|                   | `conversation-memory`                             | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                                                    |
 | **MCP**           | `mcp__context7_*`                                 | Searches codebases and retrieves up-to-date library documentation and code examples from Context7                                      |
 |                   | `mcp__aws-knowledge_*`                            | Queries AWS documentation for service-specific guidance, best practices, and architecture patterns                                     |
 | **GitHub**        | `tool__gh--retrieve-pull-request-info`            | Fetches PR metadata, review threads, comments, and status checks                                                                       |

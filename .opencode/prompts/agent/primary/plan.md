@@ -99,6 +99,7 @@ If **either** refinement fails:
 | **Git**           | `tool__git--retrieve-current-branch-diff`         | Shows the diff between the current branch and its base branch                                      |
 | **Skills**        | `playwright-cli`                                  | On-the-fly browser automation for interactive web testing (retrieve skill for details)             |
 |                   | `ascii-layout`                                    | Creates ASCII-only layout diagrams and numbered implementation plans for layouts                   |
+|                   | `conversation-memory`                             | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                |
 | **Bash Commands** | `sleep`                                           | Wait/pause execution (useful between `playwright-cli` bash commands)                               |
 
 **Use when**: You need to gather information, explore options, or understand existing code.
@@ -110,6 +111,7 @@ If **either** refinement fails:
 | **Skills**        | `prd`                                     | Creates Product Requirements Documents as MD files in \_\_docs/prd/                    |
 |                   | `task-breakdown`                          | Decomposes complex goals into atomic, dependency-aware work items with execution plans |
 |                   | `ascii-layout`                            | Creates ASCII-only layout diagrams and numbered implementation plans for layouts       |
+|                   | `conversation-memory`                     | SQLite-backed project-scoped memory for durable preferences, conventions, and notes    |
 | **Git**           | `tool__git--retrieve-current-branch-diff` | Shows the diff between the current branch and its base branch                          |
 | **Bash Commands** | `git config --get user.name`              | Retrieve git user name for PRD authorship                                              |
 |                   | `git config --get user.email`             | Retrieve git user email for PRD authorship                                             |
@@ -118,15 +120,16 @@ If **either** refinement fails:
 
 ### subagent/requirements-refiner
 
-| Category          | Tool/Skill       | Description                                                                                                                        |
-| ----------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| **Skills**        | `prd`            | Creates Product Requirements Documents as MD files in \_\_docs/prd/                                                                |
-|                   | `task-breakdown` | Decomposes complex goals into atomic, dependency-aware work items with execution plans                                             |
-|                   | `grill-me`       | Conducts thorough interviews to deeply understand user needs and requirements; surfaces gaps, ambiguities, and untestable criteria |
-|                   | `playwright-cli` | On-the-fly browser automation for interactive web testing (retrieve skill for details)                                             |
-|                   | `ascii-layout`   | Creates ASCII-only layout diagrams and numbered implementation plans for layouts                                                   |
-| **Bash Commands** | `playwright-cli` | Browser automation CLI (retrieve `playwright-cli` skill for details)                                                               |
-|                   | `sleep`          | Wait/pause execution (useful between `playwright-cli` bash commands)                                                               |
+| Category          | Tool/Skill            | Description                                                                                                                        |
+| ----------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **Skills**        | `prd`                 | Creates Product Requirements Documents as MD files in \_\_docs/prd/                                                                |
+|                   | `task-breakdown`      | Decomposes complex goals into atomic, dependency-aware work items with execution plans                                             |
+|                   | `grill-me`            | Conducts thorough interviews to deeply understand user needs and requirements; surfaces gaps, ambiguities, and untestable criteria |
+|                   | `playwright-cli`      | On-the-fly browser automation for interactive web testing (retrieve skill for details)                                             |
+|                   | `ascii-layout`        | Creates ASCII-only layout diagrams and numbered implementation plans for layouts                                                   |
+|                   | `conversation-memory` | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                                                |
+| **Bash Commands** | `playwright-cli`      | Browser automation CLI (retrieve `playwright-cli` skill for details)                                                               |
+|                   | `sleep`               | Wait/pause execution (useful between `playwright-cli` bash commands)                                                               |
 
 **Use when**: A PRD or task breakdown draft needs scrutiny before approval.
 
