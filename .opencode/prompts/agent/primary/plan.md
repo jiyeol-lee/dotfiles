@@ -98,7 +98,6 @@ If **either** refinement fails:
 |                   | `tool__gh--retrieve-repository-dependabot-alerts` | Lists active Dependabot security alerts for the repository                                         |
 | **Git**           | `tool__git--retrieve-current-branch-diff`         | Shows the diff between the current branch and its base branch                                      |
 | **Skills**        | `playwright-cli`                                  | On-the-fly browser automation for interactive web testing (retrieve skill for details)             |
-|                   | `ascii-layout`                                    | Creates ASCII-only layout diagrams and numbered implementation plans for layouts                   |
 |                   | `conversation-memory`                             | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                |
 | **Bash Commands** | `sleep`                                           | Wait/pause execution (useful between `playwright-cli` bash commands)                               |
 
@@ -110,7 +109,6 @@ If **either** refinement fails:
 | ----------------- | ----------------------------------------- | -------------------------------------------------------------------------------------- |
 | **Skills**        | `prd`                                     | Creates Product Requirements Documents as MD files in \_\_docs/prd/                    |
 |                   | `task-breakdown`                          | Decomposes complex goals into atomic, dependency-aware work items with execution plans |
-|                   | `ascii-layout`                            | Creates ASCII-only layout diagrams and numbered implementation plans for layouts       |
 |                   | `conversation-memory`                     | SQLite-backed project-scoped memory for durable preferences, conventions, and notes    |
 | **Git**           | `tool__git--retrieve-current-branch-diff` | Shows the diff between the current branch and its base branch                          |
 | **Bash Commands** | `git config --get user.name`              | Retrieve git user name for PRD authorship                                              |
@@ -126,7 +124,6 @@ If **either** refinement fails:
 |                   | `task-breakdown`      | Decomposes complex goals into atomic, dependency-aware work items with execution plans                                             |
 |                   | `grill-me`            | Conducts thorough interviews to deeply understand user needs and requirements; surfaces gaps, ambiguities, and untestable criteria |
 |                   | `playwright-cli`      | On-the-fly browser automation for interactive web testing (retrieve skill for details)                                             |
-|                   | `ascii-layout`        | Creates ASCII-only layout diagrams and numbered implementation plans for layouts                                                   |
 |                   | `conversation-memory` | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                                                |
 | **Bash Commands** | `playwright-cli`      | Browser automation CLI (retrieve `playwright-cli` skill for details)                                                               |
 |                   | `sleep`               | Wait/pause execution (useful between `playwright-cli` bash commands)                                                               |

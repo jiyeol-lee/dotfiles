@@ -82,7 +82,6 @@ If **either** evaluation fails:
 |                   | `tool__gh--retrieve-repository-dependabot-alerts` | Lists active Dependabot security alerts for the repository                                         |
 | **Git**           | `tool__git--retrieve-current-branch-diff`         | Shows the diff between the current branch and its base branch                                      |
 | **Skills**        | `playwright-cli`                                  | On-the-fly browser automation for interactive web testing (retrieve skill for details)             |
-|                   | `ascii-layout`                                    | Creates ASCII-only layout diagrams and numbered implementation plans for layouts                   |
 |                   | `conversation-memory`                             | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                |
 | **Bash Commands** | `sleep`                                           | Wait/pause execution (useful between `playwright-cli` bash commands)                               |
 

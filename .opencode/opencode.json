@@ -152,7 +152,6 @@
       },
       "skill": {
         "playwright-cli": "allow",
-        "ascii-layout": "allow",
         "conversation-memory": "allow"
       }
     },
@@ -187,7 +186,6 @@
         "skill": {
           "prd": "allow",
           "task-breakdown": "allow",
-          "ascii-layout": "allow",
           "conversation-memory": "allow"
         }
       }
@@ -219,7 +217,6 @@
           "task-breakdown": "allow",
           "grill-me": "allow",
           "playwright-cli": "allow",
-          "ascii-layout": "allow",
           "conversation-memory": "allow"
         }
       }
