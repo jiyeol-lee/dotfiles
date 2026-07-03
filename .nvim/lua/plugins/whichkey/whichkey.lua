@@ -353,30 +353,9 @@ M.config = function()
     },
     {
       mode = "n",
-      "<leader>opid",
-      ":ObsidianPasteImg<CR>",
-      desc = "Paste image into configured path",
-      nowait = true,
-    },
-    {
-      mode = "n",
-      "<leader>opit",
-      ":ObsidianPasteImg --tmp-dir<CR>",
-      desc = "Paste image into temp path",
-      nowait = true,
-    },
-    {
-      mode = "n",
-      "<leader>opfd",
-      ":ObsidianPasteFile<CR>",
-      desc = "Paste file into configured path",
-      nowait = true,
-    },
-    {
-      mode = "n",
-      "<leader>opft",
-      ":ObsidianPasteFile<CR>",
-      desc = "Paste file into temp path",
+      "<leader>op",
+      ":ObsidianPaste<CR>",
+      desc = "Paste into configured path",
       nowait = true,
     },
 

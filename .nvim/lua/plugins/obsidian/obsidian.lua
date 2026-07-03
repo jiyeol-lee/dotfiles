@@ -7,6 +7,20 @@ local M = {
 }
 
 M.config = function()
+  local function _make_filename(source_path)
+    math.randomseed(os.time())
+    local ext = vim.fn.fnamemodify(source_path, ":e")
+
+    if ext ~= "" then
+      ext = "." .. ext
+    end
+
+    local timestamp = os.date "!%Y%m%dT%H%M%SZ"
+    local random = math.random(0, 99999999)
+
+    return string.format("%s_%08d%s", timestamp, random, ext)
+  end
+
   local obsidian = require "obsidian"
   local setup = {
     workspaces = {
@@ -110,36 +124,6 @@ M.config = function()
       },
     },
 
-    -- Optional, by default when you use `:ObsidianFollowLink` on a link to an external
-    -- URL it will be ignored but you can customize this behavior here.
-    ---@param url string
-    follow_url_func = function(url)
-      -- Open the URL in the default web browser.
-      -- vim.fn.jobstart({ "open", url }) -- Mac OS
-      -- vim.fn.jobstart({"xdg-open", url})  -- linux
-      -- vim.cmd(':silent exec "!start ' .. url .. '"') -- Windows
-      vim.ui.open(url) -- need Neovim 0.10.0+
-    end,
-
-    -- Optional, by default when you use `:ObsidianFollowLink` on a link to an image
-    -- file it will be ignored but you can customize this behavior here.
-    ---@param img string
-    follow_img_func = function(img)
-      vim.fn.jobstart { "qlmanage", "-p", img } -- Mac OS quick look preview
-      -- vim.fn.jobstart({"xdg-open", url})  -- linux
-      -- vim.cmd(':silent exec "!start ' .. url .. '"') -- Windows
-    end,
-
-    ---@param pdf string
-    follow_pdf_func = function(pdf)
-      -- os.execute('start "" "' .. pdf .. '"') -- For Windows
-      -- os.execute('xdg-open "' .. pdf .. '"')  -- For Linux
-      os.execute('open "' .. pdf .. '"') -- For macOS
-    end,
-
-    -- Optional, set to true to force ':ObsidianOpen' to bring the app to the foreground.
-    open_app_foreground = true,
-
     picker = {
       -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', or 'mini.pick'.
       name = "telescope.nvim",
@@ -170,7 +154,43 @@ M.config = function()
       -- Smart action depending on context, either follow link or toggle checkbox.
       ["<cr>"] = {
         action = function()
-          return require("obsidian").util.smart_action()
+          return require("obsidian").util.cursor_link_action(function(type, link)
+            if type == "link" then
+              if not link:match "^s3://" then
+                vim.notify("Link is not an S3 URI: " .. link, vim.log.levels.WARN)
+                return
+              end
+
+              local filename = vim.fn.fnamemodify(link, ":t")
+              local output_path = "~/.local/share/obsidian_attachments/" .. filename
+
+              -- if file exists, open it
+              if vim.fn.filereadable(output_path) == 1 then
+                vim.cmd("open " .. output_path)
+                return
+              end
+
+              local region = "us-east-2"
+              local signed_url = vim.fn.system("aws", "s3", "presign", link, "--region", region, "--expires-in", "10")
+
+              if vim.v.shell_error ~= 0 then
+                vim.notify("Failed to create signed URL: " .. signed_url, vim.log.levels.ERROR)
+                return
+              end
+
+              signed_url = vim.trim(signed_url)
+              local output = vim.fn.system("curl", "-L", signed_url, "-o", output_path)
+
+              if vim.v.shell_error ~= 0 then
+                vim.notify("Download failed: " .. output, vim.log.levels.ERROR)
+                return
+              end
+
+              vim.cmd("open " .. output_path)
+            end
+
+            return "<cmd>ObsidianToggleCheckbox<CR>"
+          end)
         end,
         opts = { buffer = true, expr = true },
       },
@@ -187,30 +207,21 @@ M.config = function()
 
     -- Specify how to handle attachments.
     attachments = {
-      confirm_img_paste = false,
-      img_folder = "assets/images", -- This is the default
+      upload_func = function(client, source_path)
+        local workspace_name = client.current_workspace.name or "personal"
+        local bucket = "jiyeol-lee.obsidian-attachments"
+        local key = string.format("%s/%s", workspace_name, _make_filename(source_path))
+        local s3_uri = string.format("s3://%s/%s", bucket, key)
+        local output = vim.fn.system("aws", "s3", "cp", source_path, s3_uri, "--quiet")
 
-      -- Optional, customize the default name or prefix when pasting images via `:ObsidianPasteImg`.
-      ---@return string
-      img_name_func = function()
-        -- Prefix image names with timestamp.
-        return string.format("%s", os.time())
+        if vim.v.shell_error ~= 0 then
+          vim.notify("S3 upload failed: " .. output, vim.log.levels.ERROR)
+          return nil
+        end
+
+        return s3_uri
       end,
 
-      ---@return string
-      img_text_func = function(client, path)
-        path = client:vault_relative_path(path) or path
-        return string.format("![%s](%s)", path.stem, path)
-      end,
-
-      confirm_file_paste = false,
-      file_folder = "assets/files",
-
-      file_name_func = function()
-        return string.format("%s", os.time())
-      end,
-
-      ---@return string
       file_text_func = function(client, path)
         path = client:vault_relative_path(path) or path
 
@@ -220,6 +231,8 @@ M.config = function()
 
         return string.format("[%s](%s)", input == "" and path.stem or input, path)
       end,
+
+      confirm_paste = false,
     },
   }
 
