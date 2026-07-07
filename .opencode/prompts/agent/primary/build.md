@@ -90,7 +90,8 @@ If **either** evaluation fails:
 | **Git**           | `tool__git--retrieve-current-branch-diff`         | Shows the diff between the current branch and its base branch                                      |
 | **Skills**        | `playwright-cli`                                  | On-the-fly browser automation for interactive web testing (retrieve skill for details)             |
 |                   | `conversation-memory`                             | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                |
-| **Bash Commands** | `sleep`                                           | Wait/pause execution (useful between `playwright-cli` bash commands)                               |
+| **Bash Commands** | `git log`, `git show`, `git status`, `git diff`   | Git information commands                                                                           |
+|                   | `sleep`                                           | Wait/pause execution (useful between `playwright-cli` bash commands)                               |
 
 ### subagent/generator
 
