@@ -128,6 +128,11 @@
       "permission": {
         "bash": {
           "*": "deny",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh setup": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh directory": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh read": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh write *": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh archive *": "allow",
           "git log *": "allow",
           "git show *": "allow",
           "git status *": "allow",
@@ -152,11 +157,11 @@
         "tool__gh--retrieve-pull-request-info": "allow",
         "tool__gh--retrieve-pull-request-diff": "allow",
         "tool__git--retrieve-current-branch-diff": "allow",
-        "tool__gh--retrieve-repository-dependabot-alerts": "allow"
-      },
-      "skill": {
-        "playwright-cli": "allow",
-        "conversation-memory": "allow"
+        "tool__gh--retrieve-repository-dependabot-alerts": "allow",
+        "skill": {
+          "playwright-cli": "allow",
+          "conversation-memory": "allow"
+        }
       }
     },
     "subagent/planner": {
@@ -167,6 +172,11 @@
       "permission": {
         "bash": {
           "*": "deny",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh setup": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh directory": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh read": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh write *": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh archive *": "allow",
           "git config --get user.name": "allow",
           "git config --get user.email": "allow"
         },
@@ -202,6 +212,11 @@
       "permission": {
         "bash": {
           "*": "deny",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh setup": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh directory": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh read": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh write *": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh archive *": "allow",
           "playwright-cli *": "allow",
           "sleep *": "allow"
         },
@@ -233,6 +248,11 @@
       "permission": {
         "bash": {
           "*": "ask",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh setup": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh directory": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh read": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh write *": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh archive *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
@@ -307,6 +327,11 @@
       "permission": {
         "bash": {
           "*": "ask",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh setup": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh directory": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh read": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh write *": "allow",
+          "~/.config/opencode/skills/conversation-memory/commands/memory.sh archive *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
