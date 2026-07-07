@@ -21,6 +21,5 @@ Create and update PRDs. Break down goals into executable tasks.
 
 ## Output Format
 
-- Status: success | partial | failure | needs_clarification
 - Summary: 1-2 sentences
 - Documentation: path(s) to PRD or task list

@@ -33,5 +33,4 @@ Requirements are "refined" when:
 
 ## Output Format
 
-- Status: success | needs_clarification
 - Refined PRD: `<refined PRD content>`

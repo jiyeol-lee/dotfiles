@@ -240,6 +240,8 @@
           "sort *": "allow",
           "pwd *": "allow",
           "tree *": "allow",
+          "playwright-cli *": "allow",
+          "sleep *": "allow",
           "git worktree *": "deny",
           "git checkout *": "deny",
           "git stash *": "deny",
@@ -274,6 +276,7 @@
           "review-validation": "allow",
           "skill-creator": "allow",
           "agent-creator": "allow",
+          "playwright-cli": "allow",
           "conversation-memory": "allow"
         },
         "mcp__context7_*": "allow",
@@ -293,7 +296,7 @@
       }
     },
     "subagent/evaluator": {
-      "description": "Critiques code, reviews changes, runs e2e tests. Grades against criteria with hard thresholds and provides detailed feedback. Part of the GAN-inspired build loop.",
+      "description": "Critiques code and reviews changes against criteria with hard thresholds and provided validation evidence. Part of the GAN-inspired build loop.",
       "mode": "subagent",
       "hidden": true,
       "prompt": "{file:./prompts/agent/subagent/evaluator.md}",
@@ -318,13 +321,7 @@
           "git log *": "allow",
           "git show *": "allow",
           "git status *": "allow",
-          "git diff *": "allow",
-          "playwright-cli *": "allow",
-          "sleep *": "allow",
-          "go build *": "allow",
-          "go test *": "allow",
-          "go vet *": "allow",
-          "go fmt *": "allow"
+          "git diff *": "allow"
         },
         "edit": "deny",
         "write": "deny",
@@ -338,10 +335,8 @@
         "webfetch": "deny",
         "question": "deny",
         "skill": {
-          "check": "allow",
           "review-validation": "allow",
           "review": "allow",
-          "playwright-cli": "allow",
           "conversation-memory": "allow"
         },
         "mcp__context7_*": "allow",

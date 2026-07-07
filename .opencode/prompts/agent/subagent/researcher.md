@@ -13,7 +13,6 @@ Search codebases and gather information. Synthesize findings into structured rep
 
 ## Output Format
 
-- Status: success | partial | failure
 - Summary: 1-2 sentence summary of what was found
 - Findings: topic, source, content discovered, relevance (high/medium/low)
 - Gaps: note information that couldn't be found

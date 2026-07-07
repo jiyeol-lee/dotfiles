@@ -143,7 +143,6 @@ If **either** refinement fails:
 
 ## Output Format
 
-- Status: success | partial | failure | waiting_approval | needs_fixes | needs_clarification
 - Summary: 1-2 sentence description
 - Details: specifics (files modified, issues found, etc.)
 - Recommendations: follow-up suggestions
