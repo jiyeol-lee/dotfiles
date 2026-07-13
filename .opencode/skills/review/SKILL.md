@@ -7,8 +7,8 @@ description: Performs code review analysis across Quality, Regression, Documenta
 
 1. **Determine review target** from the task context:
    - Pull request: use `tool__gh--retrieve-pull-request-diff` to fetch the diff
-   - Last N commits: use `tool__git--retrieve-latest-n-commits-diff` to get the diff
-   - Branch changes: use `tool__git--retrieve-current-branch-diff` for current branch vs base
+   - Last N commits: use `git diff HEAD~<N>` to get the diff
+   - Branch changes: use `git diff <base>...HEAD` for current branch vs base
 2. **Gather context** for each modified file:
    - Read the full file content (not just the diff) — surrounding code is essential for understanding impact
    - For PR reviews, use `tool__gh--retrieve-pull-request-info` to understand PR goals and existing feedback

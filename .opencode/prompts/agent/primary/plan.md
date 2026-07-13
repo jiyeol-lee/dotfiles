@@ -96,7 +96,6 @@ If **either** refinement fails:
 | **GitHub**        | `tool__gh--retrieve-pull-request-info`            | Fetches PR metadata, review threads, comments, and status checks                                   |
 |                   | `tool__gh--retrieve-pull-request-diff`            | Retrieves the full diff of a pull request for code review                                          |
 |                   | `tool__gh--retrieve-repository-dependabot-alerts` | Lists active Dependabot security alerts for the repository                                         |
-| **Git**           | `tool__git--retrieve-current-branch-diff`         | Shows the diff between the current branch and its base branch                                      |
 | **Skills**        | `playwright-cli`                                  | On-the-fly browser automation for interactive web testing (retrieve skill for details)             |
 |                   | `conversation-memory`                             | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                |
 | **Bash Commands** | `git log`, `git show`, `git status`, `git diff`   | Git information commands                                                                           |
@@ -106,14 +105,13 @@ If **either** refinement fails:
 
 ### subagent/planner
 
-| Category          | Tool/Skill                                | Description                                                                            |
-| ----------------- | ----------------------------------------- | -------------------------------------------------------------------------------------- |
-| **Skills**        | `prd`                                     | Creates Product Requirements Documents as MD files in \_\_docs/prd/                    |
-|                   | `task-breakdown`                          | Decomposes complex goals into atomic, dependency-aware work items with execution plans |
-|                   | `conversation-memory`                     | SQLite-backed project-scoped memory for durable preferences, conventions, and notes    |
-| **Git**           | `tool__git--retrieve-current-branch-diff` | Shows the diff between the current branch and its base branch                          |
-| **Bash Commands** | `git config --get user.name`              | Retrieve git user name for PRD authorship                                              |
-|                   | `git config --get user.email`             | Retrieve git user email for PRD authorship                                             |
+| Category          | Tool/Skill                    | Description                                                                            |
+| ----------------- | ----------------------------- | -------------------------------------------------------------------------------------- |
+| **Skills**        | `prd`                         | Creates Product Requirements Documents as MD files in \_\_docs/prd/                    |
+|                   | `task-breakdown`              | Decomposes complex goals into atomic, dependency-aware work items with execution plans |
+|                   | `conversation-memory`         | SQLite-backed project-scoped memory for durable preferences, conventions, and notes    |
+| **Bash Commands** | `git config --get user.name`  | Retrieve git user name for PRD authorship                                              |
+|                   | `git config --get user.email` | Retrieve git user email for PRD authorship                                             |
 
 **Use when**: User explicitly asks for a PRD or task breakdown.
 

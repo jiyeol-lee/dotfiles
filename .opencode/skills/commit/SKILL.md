@@ -6,10 +6,10 @@ description: Analyzes repository state, proposes commit messages following Conve
 ## Workflow
 
 1. **Preflight**
-   - Use `tool__git--status` to check repository state (staged, unstaged, untracked files)
+   - Use `git status --short` to check repository state (staged, unstaged, untracked files)
    - If no changes exist, report and stop
 2. **Analyze changes**
-   - Use `tool__git--retrieve-current-branch-diff` to view all changes compared to the base branch
+   - Use `git diff <base>` to view tracked working-tree changes compared to the base branch; inspect untracked files identified during preflight separately
    - Categorize changes by type (feature, fix, refactor, docs, test, chore, etc.)
 3. **Propose staging**
    - If there are unstaged changes, ask the user which files to stage
@@ -46,6 +46,7 @@ description: Analyzes repository state, proposes commit messages following Conve
 Use standard types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`.
 
 **Breaking changes** — append `!` after type/scope:
+
 ```
 feat(api)!: change response format from XML to JSON
 
@@ -56,15 +57,26 @@ parsing must migrate to JSON parsing.
 ## Example: Full Commit Workflow
 
 ```
-> tool__git--status
-  Staged:     (none)
-  Unstaged:   src/auth.ts (modified), src/auth.test.ts (modified)
-  Untracked:  src/middleware/rateLimit.ts
+> git status --short
+ M src/auth.ts
+ M src/auth.test.ts
+?? src/middleware/rateLimit.ts
 
-> tool__git--retrieve-current-branch-diff
+The first status column is the index (staged) state and the second is the
+working-tree state. The ` M` entries each begin with one space before `M`,
+indicating an unstaged modification; `??` has no leading space and denotes an
+untracked file.
+
+> git diff main
   src/auth.ts: Added JWT token refresh logic
   src/auth.test.ts: Added tests for token refresh
+
+> git diff --no-index /dev/null src/middleware/rateLimit.ts
   src/middleware/rateLimit.ts: New rate limiting middleware
+
+  `git diff --no-index` exits with status 1 when it detects differences. If
+  the command's exit status is surfaced, treat status 1 as expected
+  detected-diff behavior, not an inspection failure.
 
 > Propose staging:
   Files to stage:

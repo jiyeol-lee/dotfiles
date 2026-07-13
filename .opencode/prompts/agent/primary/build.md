@@ -87,7 +87,6 @@ If **either** evaluation fails:
 | **GitHub**        | `tool__gh--retrieve-pull-request-info`            | Fetches PR metadata, review threads, comments, and status checks                                   |
 |                   | `tool__gh--retrieve-pull-request-diff`            | Retrieves the full diff of a pull request for code review                                          |
 |                   | `tool__gh--retrieve-repository-dependabot-alerts` | Lists active Dependabot security alerts for the repository                                         |
-| **Git**           | `tool__git--retrieve-current-branch-diff`         | Shows the diff between the current branch and its base branch                                      |
 | **Skills**        | `playwright-cli`                                  | On-the-fly browser automation for interactive web testing (retrieve skill for details)             |
 |                   | `conversation-memory`                             | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                |
 | **Bash Commands** | `git log`, `git show`, `git status`, `git diff`   | Git information commands                                                                           |
@@ -116,10 +115,7 @@ If **either** evaluation fails:
 |                   | `tool__gh--retrieve-repository-collaborators`     | Lists repository collaborators (used for PR reviewer assignment)                                                                 |
 |                   | `tool__gh--create-pull-request`                   | Creates a new pull request on GitHub                                                                                             |
 |                   | `tool__gh--edit-pull-request`                     | Updates an existing pull request (title, body, reviewers, labels)                                                                |
-| **Git**           | `tool__git--retrieve-current-branch-diff`         | Shows the diff between the current branch and its base branch                                                                    |
-|                   | `tool__git--retrieve-latest-n-commits-diff`       | Shows the diff for the last N commits                                                                                            |
-|                   | `tool__git--status`                               | Shows working directory status (staged, unstaged, untracked files)                                                               |
-|                   | `tool__git--stage-files`                          | Stages specified files for commit                                                                                                |
+| **Git**           | `tool__git--stage-files`                          | Stages specified files for commit                                                                                                |
 |                   | `tool__git--commit`                               | Creates a git commit with the specified message                                                                                  |
 |                   | `tool__git--push`                                 | Pushes commits to the remote repository                                                                                          |
 | **Bash Commands** | `rg`                                              | ripgrep — fast content search across files                                                                                       |
@@ -146,9 +142,6 @@ If **either** evaluation fails:
 |                   | `tool__gh--retrieve-pull-request-diff`            | Retrieves the full diff of a pull request for code review                                                                              |
 |                   | `tool__gh--retrieve-repository-dependabot-alerts` | Lists active Dependabot security alerts for the repository                                                                             |
 |                   | `tool__gh--retrieve-repository-collaborators`     | Lists repository collaborators (used for PR reviewer assignment)                                                                       |
-| **Git**           | `tool__git--retrieve-current-branch-diff`         | Shows the diff between the current branch and its base branch                                                                          |
-|                   | `tool__git--retrieve-latest-n-commits-diff`       | Shows the diff for the last N commits                                                                                                  |
-|                   | `tool__git--status`                               | Shows working directory status (staged, unstaged, untracked files)                                                                     |
 | **Bash Commands** | `rg`                                              | ripgrep — fast content search across files                                                                                             |
 |                   | `cat`, `head`, `tail`                             | File content viewing                                                                                                                   |
 |                   | `ls`, `tree`                                      | Directory listing                                                                                                                      |

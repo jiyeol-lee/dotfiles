@@ -10,7 +10,7 @@ description: Analyzes branch diffs, drafts PR titles and bodies following Conven
    - Ensure current branch is NOT `main` or `master` — abort if so
    - Check for unpushed commits
 2. **Analyze**
-   - Use `tool__git--retrieve-current-branch-diff` to analyze commits since diverging from target branch
+   - Use `git diff <target-branch>...HEAD` to analyze changes since diverging from the target branch
    - Scan commit messages for issue references (e.g., `LINEAR-123`, `JIRA-456`, `#123`)
    - Check for PR template: try to read `.github/pull_request_template.md` or `pull_request_template.md`
 3. **Draft**
