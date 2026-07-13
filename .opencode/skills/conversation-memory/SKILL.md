@@ -42,7 +42,7 @@ When a stored memory is no longer useful, superseded, or incorrect, archive it b
 
 ## Project Directory Detection
 
-Use `~/.config/opencode/skills/conversation-memory/commands/memory.sh` to detect the project directory consistently. The helper preserves the requested behavior:
+Use `./commands/memory.sh` to detect the project directory consistently. The helper preserves the requested behavior:
 
 - If `.git` exists in the current directory, it reads the project directory from `git worktree list --porcelain | awk 'NR==1 {print $2}'`.
 - If `.git` does not exist in the current directory, it uses `pwd`.
@@ -54,7 +54,7 @@ This intentionally checks for `.git` in the current directory only; parent-direc
 Prefer the helper script over direct database access. The `read`, `write`, and `archive` commands run setup automatically; use `setup` only when you need to initialize explicitly:
 
 ```bash
-~/.config/opencode/skills/conversation-memory/commands/memory.sh setup
+./commands/memory.sh setup
 ```
 
 The setup command creates `~/.local/share/conversation-memory/memory.db`, creates the `memories` table with `id`, `directory`, `category`, `memory`, `created_at`, `updated_at`, and `archived_at`, and creates directory/category/archive indexes. Allowed categories are `preference`, `convention`, and `note`.
@@ -64,10 +64,10 @@ The setup command creates `~/.local/share/conversation-memory/memory.db`, create
 Use the helper script through the stable symlinked OpenCode config path:
 
 ```bash
-~/.config/opencode/skills/conversation-memory/commands/memory.sh setup
-~/.config/opencode/skills/conversation-memory/commands/memory.sh read
-~/.config/opencode/skills/conversation-memory/commands/memory.sh write "Do not add domain-specific comments after LLM edits code." --category preference
-~/.config/opencode/skills/conversation-memory/commands/memory.sh archive 3
+./commands/memory.sh setup
+./commands/memory.sh read
+./commands/memory.sh write "Do not add domain-specific comments after LLM edits code." --category preference
+./commands/memory.sh archive 3
 ```
 
 Use this path regardless of the current working directory because the dotfiles configuration is symlinked into `~/.config/opencode`.
@@ -91,7 +91,7 @@ User feedback during a code-editing task:
 End-of-conversation write:
 
 ```bash
-~/.config/opencode/skills/conversation-memory/commands/memory.sh write \
+./commands/memory.sh write \
   "Do not add domain-specific comments after LLM edits code; avoid comments that explain obvious business behavior." \
   --category preference
 ```
