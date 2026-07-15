@@ -123,7 +123,7 @@ If **either** evaluation fails:
 |                   | `ls`, `tree`                                      | Directory listing                                                                                                                |
 |                   | `echo`, `wc`, `grep`, `sort`                      | Text processing utilities                                                                                                        |
 |                   | `pwd`                                             | Print working directory                                                                                                          |
-|                   | `git log`, `git show`, `git status`, `git diff`   | Git information commands                                                                                                         |
+|                   | `git log`, `git show`, `git status`, `git diff`   | Git information commands; `git -C` commands are prohibited                                                                      |
 |                   | `go fmt`, `go build`, `go test`, `go vet`         | Go lang commands                                                                                                                 |
 |                   | `playwright-cli`, `sleep`                         | Browser behavior inspection/debugging/manual verification and wait pauses when using `playwright-cli`                            |
 
@@ -146,7 +146,7 @@ If **either** evaluation fails:
 |                   | `cat`, `head`, `tail`                             | File content viewing                                                                                                                   |
 |                   | `ls`, `tree`                                      | Directory listing                                                                                                                      |
 |                   | `echo`, `wc`, `grep`, `sort`                      | Text processing utilities                                                                                                              |
-|                   | `git log`, `git show`, `git status`, `git diff`   | Git information commands                                                                                                               |
+|                   | `git log`, `git show`, `git status`, `git diff`   | Git information commands; `git -C` commands are prohibited                                                                            |
 |                   | `pwd`                                             | Print working directory                                                                                                                |
 
 **Use when**: You need review-only assessment of implementation against criteria, quality, risk, documentation, and provided validation evidence.
