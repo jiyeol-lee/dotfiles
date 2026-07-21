@@ -88,18 +88,18 @@ If **either** refinement fails:
 
 ### subagent/researcher
 
-| Category          | Tool/Skill                                        | Description                                                                                        |
-| ----------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| **MCP**           | `mcp__context7_*`                                 | Searches codebases and retrieves up-to-date library documentation and code examples from Context7  |
-|                   | `mcp__aws-knowledge_*`                            | Queries AWS documentation for service-specific guidance, best practices, and architecture patterns |
-|                   | `mcp__linear_*`                                   | Interacts with Linear project management: reads/creates/updates issues, projects, and cycles       |
-| **GitHub**        | `tool__gh--retrieve-pull-request-info`            | Fetches PR metadata, review threads, comments, and status checks                                   |
-|                   | `tool__gh--retrieve-pull-request-diff`            | Retrieves the full diff of a pull request for code review                                          |
-|                   | `tool__gh--retrieve-repository-dependabot-alerts` | Lists active Dependabot security alerts for the repository                                         |
-| **Skills**        | `playwright-cli`                                  | On-the-fly browser automation for interactive web testing (retrieve skill for details)             |
-|                   | `conversation-memory`                             | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                |
-| **Bash Commands** | `git log`, `git show`, `git status`, `git diff`   | Git information commands                                                                           |
-|                   | `sleep`                                           | Wait/pause execution (useful between `playwright-cli` bash commands)                               |
+| Category          | Tool/Skill                                                                       | Description                                                                                        |
+| ----------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| **MCP**           | `mcp__context7_*`                                                                | Searches codebases and retrieves up-to-date library documentation and code examples from Context7  |
+|                   | `mcp__aws-knowledge_*`                                                           | Queries AWS documentation for service-specific guidance, best practices, and architecture patterns |
+|                   | `mcp__linear_*`                                                                  | Interacts with Linear project management: reads/creates/updates issues, projects, and cycles       |
+| **GitHub**        | `tool__gh--retrieve-pull-request-info`                                           | Fetches PR metadata, review threads, comments, and status checks                                   |
+|                   | `tool__gh--retrieve-pull-request-diff`                                           | Retrieves the full diff of a pull request for code review                                          |
+|                   | `tool__gh--retrieve-repository-dependabot-alerts`                                | Lists active Dependabot security alerts for the repository                                         |
+| **Skills**        | `playwright-cli`                                                                 | On-the-fly browser automation for interactive web testing (retrieve skill for details)             |
+|                   | `conversation-memory`                                                            | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                |
+| **Bash Commands** | `git log`, `git show`, `git status`, `git diff`, `git show-ref`, `git rev-parse` | Git information commands                                                                           |
+|                   | `sleep`                                                                          | Wait/pause execution (useful between `playwright-cli` bash commands)                               |
 
 **Use when**: You need to gather information, explore options, or understand existing code.
 

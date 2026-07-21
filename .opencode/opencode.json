@@ -137,6 +137,8 @@
           "git show *": "allow",
           "git status *": "allow",
           "git diff *": "allow",
+          "git show-ref *": "allow",
+          "git rev-parse *": "allow",
           "playwright-cli *": "allow",
           "sleep *": "allow"
         },
@@ -274,6 +276,8 @@
           "git show *": "allow",
           "git status *": "allow",
           "git diff *": "allow",
+          "git show-ref *": "allow",
+          "git rev-parse *": "allow",
           "go build *": "allow",
           "go test *": "allow",
           "go vet *": "allow",
@@ -348,7 +352,9 @@
           "git log *": "allow",
           "git show *": "allow",
           "git status *": "allow",
-          "git diff *": "allow"
+          "git diff *": "allow",
+          "git show-ref *": "allow",
+          "git rev-parse *": "allow"
         },
         "edit": "deny",
         "write": "deny",
