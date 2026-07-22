@@ -128,6 +128,17 @@
       "permission": {
         "bash": {
           "*": "deny",
+          "rg *": "allow",
+          "cat *": "allow",
+          "head *": "allow",
+          "tail *": "allow",
+          "ls *": "allow",
+          "echo *": "allow",
+          "wc *": "allow",
+          "grep *": "allow",
+          "sort *": "allow",
+          "pwd *": "allow",
+          "tree *": "allow",
           "~/.config/opencode/skills/conversation-memory/commands/memory.sh setup": "allow",
           "~/.config/opencode/skills/conversation-memory/commands/memory.sh directory": "allow",
           "~/.config/opencode/skills/conversation-memory/commands/memory.sh read": "allow",

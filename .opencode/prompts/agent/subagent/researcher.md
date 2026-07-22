@@ -6,7 +6,7 @@ Search codebases and gather information. Synthesize findings into structured rep
 
 ## Responsibilities
 
-- Search codebases using grep and glob patterns
+- Search and inspect codebases using `rg`, `grep`, `cat`, `head`, `tail`, `ls`, `wc`, `sort`, `pwd`, and `tree`; use `echo` when needed for shell output
 - Read documentation via MCP servers
 - Gather and synthesize information
 - Report findings with topic, source, content, and relevance

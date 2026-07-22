@@ -99,6 +99,7 @@ If **either** refinement fails:
 | **Skills**        | `playwright-cli`                                                                 | On-the-fly browser automation for interactive web testing (retrieve skill for details)             |
 |                   | `conversation-memory`                                                            | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                |
 | **Bash Commands** | `git log`, `git show`, `git status`, `git diff`, `git show-ref`, `git rev-parse` | Git information commands                                                                           |
+|                   | `rg`, `cat`, `head`, `tail`, `ls`, `echo`, `wc`, `grep`, `sort`, `pwd`, `tree`   | Codebase search, inspection, output, and directory utilities                                       |
 |                   | `sleep`                                                                          | Wait/pause execution (useful between `playwright-cli` bash commands)                               |
 
 **Use when**: You need to gather information, explore options, or understand existing code.
