@@ -8,6 +8,10 @@
 - Uses dual parallel evaluation after first iteration
 - Asks user via `question` tool for clarification when needed
 
+## Constraints
+
+- NEVER try to run commands that are not explicitly defined as `allow` or `ask` in the agent capabilities tables below
+
 ## Orchestration Flow
 
 ```dot
@@ -75,81 +79,13 @@ If **either** evaluation fails:
   - Evaluator's position and what it requires
   - Request for direction on how to proceed
 
-## Subagent Capabilities
+## Agent Capabilities
 
-### subagent/researcher
+### primary/build
 
-| Category          | Tool/Skill                                                                       | Description                                                                                        |
-| ----------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| **MCP**           | `mcp__context7_*`                                                                | Searches codebases and retrieves up-to-date library documentation and code examples from Context7  |
-|                   | `mcp__aws-knowledge_*`                                                           | Queries AWS documentation for service-specific guidance, best practices, and architecture patterns |
-| **GitHub**        | `tool__gh--retrieve-pull-request-info`                                           | Fetches PR metadata, review threads, comments, and status checks                                   |
-|                   | `tool__gh--retrieve-pull-request-diff`                                           | Retrieves the full diff of a pull request for code review                                          |
-|                   | `tool__gh--retrieve-repository-dependabot-alerts`                                | Lists active Dependabot security alerts for the repository                                         |
-| **Skills**        | `playwright-cli`                                                                 | On-the-fly browser automation for interactive web testing (retrieve skill for details)             |
-|                   | `conversation-memory`                                                            | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                |
-| **Bash Commands** | `git log`, `git show`, `git status`, `git diff`, `git show-ref`, `git rev-parse` | Git information commands                                                                           |
-|                   | `rg`, `cat`, `head`, `tail`, `ls`, `echo`, `wc`, `grep`, `sort`, `pwd`, `tree`   | Codebase search, inspection, output, and directory utilities                                       |
-|                   | `sleep`                                                                          | Wait/pause execution (useful between `playwright-cli` bash commands)                               |
-
-### subagent/generator
-
-| Category          | Tool/Skill                                                                       | Description                                                                                                                      |
-| ----------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| **Skills**        | `code`                                                                           | Implements features, fixes bugs, refactors code, and writes unit/integration tests                                               |
-|                   | `document`                                                                       | Creates and maintains project documentation (README, API docs, changelogs, architecture docs)                                    |
-|                   | `devops`                                                                         | Handles CI/CD configurations, containerization, deployment scripts, and infrastructure as code                                   |
-|                   | `check`                                                                          | Verifies code quality through linting, type-checking, formatting, and testing (does NOT auto-fix lint errors, only formatting)   |
-|                   | `commit`                                                                         | Analyzes repo state, proposes commit messages following Conventional Commits, commits after user approval                        |
-|                   | `pull-request`                                                                   | Analyzes branch diffs, drafts PR titles/bodies following Conventional Commits, creates/updates PRs via GitHub CLI                |
-|                   | `review-validation`                                                              | Validates PR review comments against actual code by analyzing reviewer claims to determine validity                              |
-|                   | `skill-creator`                                                                  | Creates new Agent Skills (SKILL.md files) following the agentskills.io open standard                                             |
-|                   | `agent-creator`                                                                  | Creates or updates primary and sub-agents in the opencode agentic system                                                         |
-|                   | `playwright-cli`                                                                 | Inspects browser behavior before/after implementation, debugs UI flows, and performs manual browser verification when applicable |
-|                   | `conversation-memory`                                                            | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                                              |
-| **MCP**           | `mcp__context7_*`                                                                | Searches codebases and retrieves up-to-date library documentation and code examples from Context7                                |
-|                   | `mcp__aws-knowledge_*`                                                           | Queries AWS documentation for service-specific guidance, best practices, and architecture patterns                               |
-| **GitHub**        | `tool__gh--retrieve-pull-request-info`                                           | Fetches PR metadata, review threads, comments, and status checks                                                                 |
-|                   | `tool__gh--retrieve-pull-request-diff`                                           | Retrieves the full diff of a pull request for code review                                                                        |
-|                   | `tool__gh--retrieve-repository-dependabot-alerts`                                | Lists active Dependabot security alerts for the repository                                                                       |
-|                   | `tool__gh--retrieve-repository-collaborators`                                    | Lists repository collaborators (used for PR reviewer assignment)                                                                 |
-|                   | `tool__gh--create-pull-request`                                                  | Creates a new pull request on GitHub                                                                                             |
-|                   | `tool__gh--edit-pull-request`                                                    | Updates an existing pull request (title, body, reviewers, labels)                                                                |
-| **Git**           | `tool__git--stage-files`                                                         | Stages specified files for commit                                                                                                |
-|                   | `tool__git--commit`                                                              | Creates a git commit with the specified message                                                                                  |
-|                   | `tool__git--push`                                                                | Pushes commits to the remote repository                                                                                          |
-| **Bash Commands** | `rg`                                                                             | ripgrep — fast content search across files                                                                                       |
-|                   | `cat`, `head`, `tail`                                                            | File content viewing                                                                                                             |
-|                   | `ls`, `tree`                                                                     | Directory listing                                                                                                                |
-|                   | `echo`, `wc`, `grep`, `sort`                                                     | Text processing utilities                                                                                                        |
-|                   | `pwd`                                                                            | Print working directory                                                                                                          |
-|                   | `git log`, `git show`, `git status`, `git diff`, `git show-ref`, `git rev-parse` | Git information commands; `git -C` commands are prohibited                                                                       |
-|                   | `go fmt`, `go build`, `go test`, `go vet`                                        | Go lang commands                                                                                                                 |
-|                   | `playwright-cli`, `sleep`                                                        | Browser behavior inspection/debugging/manual verification and wait pauses when using `playwright-cli`                            |
-
-**Use when**: You need to implement features, write code, create documentation, set up CI/CD, or create PRs.
-
-### subagent/evaluator
-
-| Category          | Tool/Skill                                                                       | Description                                                                                                                            |
-| ----------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| **Skills**        | `review-validation`                                                              | Validates PR review comments against actual code by analyzing reviewer claims to determine validity                                    |
-|                   | `review`                                                                         | Performs code review analysis across Quality, Regression, Documentation, and Performance focus areas with severity-classified findings |
-|                   | `conversation-memory`                                                            | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                                                    |
-| **MCP**           | `mcp__context7_*`                                                                | Searches codebases and retrieves up-to-date library documentation and code examples from Context7                                      |
-|                   | `mcp__aws-knowledge_*`                                                           | Queries AWS documentation for service-specific guidance, best practices, and architecture patterns                                     |
-| **GitHub**        | `tool__gh--retrieve-pull-request-info`                                           | Fetches PR metadata, review threads, comments, and status checks                                                                       |
-|                   | `tool__gh--retrieve-pull-request-diff`                                           | Retrieves the full diff of a pull request for code review                                                                              |
-|                   | `tool__gh--retrieve-repository-dependabot-alerts`                                | Lists active Dependabot security alerts for the repository                                                                             |
-|                   | `tool__gh--retrieve-repository-collaborators`                                    | Lists repository collaborators (used for PR reviewer assignment)                                                                       |
-| **Bash Commands** | `rg`                                                                             | ripgrep — fast content search across files                                                                                             |
-|                   | `cat`, `head`, `tail`                                                            | File content viewing                                                                                                                   |
-|                   | `ls`, `tree`                                                                     | Directory listing                                                                                                                      |
-|                   | `echo`, `wc`, `grep`, `sort`                                                     | Text processing utilities                                                                                                              |
-|                   | `git log`, `git show`, `git status`, `git diff`, `git show-ref`, `git rev-parse` | Git information commands; `git -C` commands are prohibited                                                                             |
-|                   | `pwd`                                                                            | Print working directory                                                                                                                |
-
-**Use when**: You need review-only assessment of implementation against criteria, quality, risk, documentation, and provided validation evidence.
+| Bash Command Pattern | Permission | Description                           |
+| -------------------- | ---------- | ------------------------------------- |
+| `*`                  | Deny       | Bash is disabled for the build agent. |
 
 ## Clarification Gate
 

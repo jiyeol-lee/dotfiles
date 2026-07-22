@@ -11,6 +11,10 @@
 - Uses dual parallel refinement after first iteration
 - Asks user via `question` tool for clarification when needed
 
+## Constraints
+
+- NEVER try to run commands that are not explicitly defined as `allow` or `ask` in the agent capabilities tables below
+
 ## Orchestration Flow
 
 ```dot
@@ -84,50 +88,13 @@ If **either** refinement fails:
   - What remains unresolved
   - What decisions or clarifications are needed to proceed
 
-## Subagent Capabilities
+## Agent Capabilities
 
-### subagent/researcher
+### primary/plan
 
-| Category          | Tool/Skill                                                                       | Description                                                                                        |
-| ----------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| **MCP**           | `mcp__context7_*`                                                                | Searches codebases and retrieves up-to-date library documentation and code examples from Context7  |
-|                   | `mcp__aws-knowledge_*`                                                           | Queries AWS documentation for service-specific guidance, best practices, and architecture patterns |
-| **GitHub**        | `tool__gh--retrieve-pull-request-info`                                           | Fetches PR metadata, review threads, comments, and status checks                                   |
-|                   | `tool__gh--retrieve-pull-request-diff`                                           | Retrieves the full diff of a pull request for code review                                          |
-|                   | `tool__gh--retrieve-repository-dependabot-alerts`                                | Lists active Dependabot security alerts for the repository                                         |
-| **Skills**        | `playwright-cli`                                                                 | On-the-fly browser automation for interactive web testing (retrieve skill for details)             |
-|                   | `conversation-memory`                                                            | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                |
-| **Bash Commands** | `git log`, `git show`, `git status`, `git diff`, `git show-ref`, `git rev-parse` | Git information commands                                                                           |
-|                   | `rg`, `cat`, `head`, `tail`, `ls`, `echo`, `wc`, `grep`, `sort`, `pwd`, `tree`   | Codebase search, inspection, output, and directory utilities                                       |
-|                   | `sleep`                                                                          | Wait/pause execution (useful between `playwright-cli` bash commands)                               |
-
-**Use when**: You need to gather information, explore options, or understand existing code.
-
-### subagent/planner
-
-| Category          | Tool/Skill                    | Description                                                                            |
-| ----------------- | ----------------------------- | -------------------------------------------------------------------------------------- |
-| **Skills**        | `prd`                         | Creates Product Requirements Documents as MD files in \_\_docs/prd/                    |
-|                   | `task-breakdown`              | Decomposes complex goals into atomic, dependency-aware work items with execution plans |
-|                   | `conversation-memory`         | SQLite-backed project-scoped memory for durable preferences, conventions, and notes    |
-| **Bash Commands** | `git config --get user.name`  | Retrieve git user name for PRD authorship                                              |
-|                   | `git config --get user.email` | Retrieve git user email for PRD authorship                                             |
-
-**Use when**: User explicitly asks for a PRD or task breakdown.
-
-### subagent/requirements-refiner
-
-| Category          | Tool/Skill            | Description                                                                                                                        |
-| ----------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| **Skills**        | `prd`                 | Creates Product Requirements Documents as MD files in \_\_docs/prd/                                                                |
-|                   | `task-breakdown`      | Decomposes complex goals into atomic, dependency-aware work items with execution plans                                             |
-|                   | `grill-me`            | Conducts thorough interviews to deeply understand user needs and requirements; surfaces gaps, ambiguities, and untestable criteria |
-|                   | `playwright-cli`      | On-the-fly browser automation for interactive web testing (retrieve skill for details)                                             |
-|                   | `conversation-memory` | SQLite-backed project-scoped memory for durable preferences, conventions, and notes                                                |
-| **Bash Commands** | `playwright-cli`      | Browser automation CLI (retrieve `playwright-cli` skill for details)                                                               |
-|                   | `sleep`               | Wait/pause execution (useful between `playwright-cli` bash commands)                                                               |
-
-**Use when**: A PRD or task breakdown draft needs scrutiny before approval.
+| Bash Command Pattern | Permission | Description                          |
+| -------------------- | ---------- | ------------------------------------ |
+| `*`                  | Deny       | Bash is disabled for the plan agent. |
 
 ## Key Principles
 

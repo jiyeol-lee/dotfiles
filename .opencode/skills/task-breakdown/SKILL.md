@@ -74,15 +74,15 @@ Phase 3: Tasks whose dependencies are all in Phase 1-2 (run in parallel)
 
 ## Agent Assignment
 
-| Task Type                                       | Agent + Skill                                        |
-| ----------------------------------------------- | ---------------------------------------------------- |
-| Feature implementation, bug fixes, refactoring  | `subagent/software-engineer (skill: code)`           |
-| Unit tests, integration tests                   | `subagent/software-engineer (skill: code)`           |
-| E2E tests                                       | `subagent/software-engineer (skill: playwright-cli)` |
-| Lint, type-check, format, run tests             | `subagent/software-engineer (skill: check)`          |
-| README, API docs, changelogs, architecture docs | `subagent/software-engineer (skill: document)`       |
-| CI/CD, Docker, IaC, deployment configs          | `subagent/software-engineer (skill: devops)`         |
-| Code quality review                             | `subagent/software-engineer (skill: review)`         |
+| Task Type                                       | Agent + Skill                                |
+| ----------------------------------------------- | -------------------------------------------- |
+| Feature implementation, bug fixes, refactoring  | `subagent/generator`                         |
+| Unit tests, integration tests                   | `subagent/generator`                         |
+| E2E tests                                       | `subagent/generator (skill: playwright-cli)` |
+| Lint, type-check, format, run tests             | `subagent/generator (skill: check)`          |
+| README, API docs, changelogs, architecture docs | `subagent/generator`                         |
+| CI/CD, Docker, IaC, deployment configs          | `subagent/generator`                         |
+| Code quality review                             | `subagent/evaluator (skill: review)`         |
 
 ## Evaluator Gates
 
@@ -114,19 +114,19 @@ Task 1: Create verification token utility
   - Generate cryptographic token, store with expiry
   - Complexity: simple (30 min-1 hr)
   - Dependencies: none
-  - Agent: subagent/software-engineer (skill: code)
+  - Agent: subagent/generator
 
 Task 2: Add verification endpoint
   - POST /verify-email accepts token, marks user verified
   - Complexity: simple (1-2 hr)
   - Dependencies: [Task 1]
-  - Agent: subagent/software-engineer (skill: code)
+  - Agent: subagent/generator
 
 Task 3: Add verification email trigger
   - Send verification email on registration with token link
   - Complexity: simple (1-2 hr)
   - Dependencies: [Task 1]
-  - Agent: subagent/software-engineer (skill: code)
+  - Agent: subagent/generator
 
 Phases:
   Phase 1: [Task 1]           — sequential (single task)
@@ -144,7 +144,7 @@ digraph TaskPlan {
   edge [color=gray40];
 
   task_1 [
-    label="{Task 1: Create verification token utility | Generate crypto token with expiry storage | Agent: subagent/software-engineer (skill: code) | Time: 30 min - 1 hr}"
+    label="{Task 1: Create verification token utility | Generate crypto token with expiry storage | Agent: subagent/generator | Time: 30 min - 1 hr}"
     URL="./add-email-verification__task-001.md"
   ];
 
@@ -154,12 +154,12 @@ digraph TaskPlan {
     color=blue;
 
     task_2 [
-      label="{Task 2: Add verification endpoint | POST /verify-email validates token, marks verified | Agent: subagent/software-engineer (skill: code) | Time: 1-2 hrs}"
+      label="{Task 2: Add verification endpoint | POST /verify-email validates token, marks verified | Agent: subagent/generator | Time: 1-2 hrs}"
       URL="./add-email-verification__task-002.md"
     ];
 
     task_3 [
-      label="{Task 3: Add verification email trigger | Send verification email on registration | Agent: subagent/software-engineer (skill: code) | Time: 1-2 hrs}"
+      label="{Task 3: Add verification email trigger | Send verification email on registration | Agent: subagent/generator | Time: 1-2 hrs}"
       URL="./add-email-verification__task-003.md"
     ];
   }
@@ -181,7 +181,7 @@ digraph TaskPlan {
 - **Over-serializing**: The most common mistake is marking too many dependencies. Two tasks that touch different files can almost always run in parallel even if they're "related".
 - **Giant tasks**: If a task description needs more than 3 sentences, it's probably not atomic. Split it.
 - **Missing test tasks**: Implementation tasks often need companion test tasks. Don't forget them unless tests are included in the implementation task's acceptance criteria.
-- **Wrong agent assignment**: Linting/formatting is `check`, not `code`. E2E tests are `playwright-cli`, not `code`. Documentation is `document`, not `code`.
+- **Wrong agent assignment**: Assign implementation, documentation, and infrastructure work directly to `subagent/generator`. Use `check` for linting/formatting and `playwright-cli` for E2E tests.
 
 ## Constraints
 

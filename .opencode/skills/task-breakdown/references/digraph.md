@@ -96,7 +96,7 @@ digraph TaskPlan {
 
   // Phase 1: single foundation task
   task_1 [
-    label="{Task 1: Set up database schema | Create users and sessions tables with migrations | Agent: subagent/software-engineer (skill: code) | Time: 1-2 hrs}"
+    label="{Task 1: Set up database schema | Create users and sessions tables with migrations | Agent: subagent/generator | Time: 1-2 hrs}"
     URL="./user-auth__task-001.md"
   ];
 
@@ -107,12 +107,12 @@ digraph TaskPlan {
     color=blue;
 
     task_2 [
-      label="{Task 2: Implement registration endpoint | POST /register with validation and password hashing | Agent: subagent/software-engineer (skill: code) | Time: 1-2 hrs}"
+      label="{Task 2: Implement registration endpoint | POST /register with validation and password hashing | Agent: subagent/generator | Time: 1-2 hrs}"
       URL="./user-auth__task-002.md"
     ];
 
     task_3 [
-      label="{Task 3: Implement login endpoint | POST /login with credential check and JWT issuance | Agent: subagent/software-engineer (skill: code) | Time: 1-2 hrs}"
+      label="{Task 3: Implement login endpoint | POST /login with credential check and JWT issuance | Agent: subagent/generator | Time: 1-2 hrs}"
       URL="./user-auth__task-003.md"
     ];
   }
@@ -124,7 +124,7 @@ digraph TaskPlan {
     color=blue;
 
     task_4 [
-      label="{Task 4: Add auth middleware | Verify JWT on protected routes, attach user to request | Agent: subagent/software-engineer (skill: code) | Time: 30 min - 1 hr}"
+      label="{Task 4: Add auth middleware | Verify JWT on protected routes, attach user to request | Agent: subagent/generator | Time: 30 min - 1 hr}"
       URL="./user-auth__task-004.md"
     ];
 

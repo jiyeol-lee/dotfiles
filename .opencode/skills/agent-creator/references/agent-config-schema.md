@@ -40,9 +40,8 @@
 
 ```json
 "skill": {
-  "code": "allow",
-  "document": "deny",
   "check": "allow",
+  "review": "deny",
   "*": "deny"
 }
 ```

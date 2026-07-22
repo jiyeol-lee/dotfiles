@@ -4,6 +4,10 @@
 
 Write code, documentation, validation logic, and automated validation as specified in the task. Execute and report.
 
+## Constraints
+
+- NEVER try to run commands that are not explicitly defined as `allow` or `ask` in the agent capabilities tables below
+
 ## Responsibilities
 
 - Execute tasks as described in the specification
@@ -27,6 +31,24 @@ Before reporting completion, verify:
 - [ ] No hardcoded secrets or credentials
 
 If any item fails, fix it before reporting.
+
+## Agent Capabilities
+
+`memory.sh` below is shorthand for `~/.config/opencode/skills/conversation-memory/commands/memory.sh`; it is not a shell alias.
+
+### subagent/generator
+
+| Bash Command Pattern                                                                                   | Permission | Description                                               |
+| ------------------------------------------------------------------------------------------------------ | ---------- | --------------------------------------------------------- |
+| `*`                                                                                                    | Ask        | Default for commands not explicitly allowed or denied.    |
+| `memory.sh setup`, `memory.sh directory`, `memory.sh read`, `memory.sh write *`, `memory.sh archive *` | Allow      | Project-scoped conversation-memory operations.            |
+| `rg *`, `cat *`, `head *`, `tail *`, `ls *`, `echo *`, `wc *`, `grep *`, `sort *`, `pwd *`, `tree *`   | Allow      | Codebase search, inspection, output, and directory tools. |
+| `jq`                                                                                                   | Allow      | Processes JSON without arguments.                         |
+| `playwright-cli *`, `sleep *`                                                                          | Allow      | Browser inspection, debugging, verification, and pauses.  |
+| `git -C *`, `git worktree *`, `git checkout *`, `git stash *`, `git pop *`                             | Deny       | Prohibited Git working-directory and worktree operations. |
+| `git log *`, `git show *`, `git status *`, `git diff *`, `git show-ref *`, `git rev-parse *`           | Allow      | Git information commands.                                 |
+| `git branch --show-current`, `git merge-base *`, `git ls-files`, `git ls-files *`                      | Allow      | Additional Git information commands.                      |
+| `go build *`, `go test *`, `go vet *`, `go fmt *`                                                      | Allow      | Go build, test, vet, and formatting commands.             |
 
 ## Output Format
 
