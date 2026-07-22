@@ -1,20 +1,19 @@
 ---
 name: prd
-description: Synthesizes Product Requirements Documents from the current conversation and repository context. Use when user asks to "write a PRD", "create a product requirements document", "turn this into a PRD", "draft requirements", "create a spec", or publish product requirements to an issue tracker.
+description: Synthesizes Product Requirements Documents from the current conversation and repository context. Use when user asks to "write a PRD", "create a product requirements document", "turn this into a PRD", "draft requirements", or "create a spec".
 ---
 
 ## Workflow
 
 1. **Synthesize first, interview only for blockers** — Use the current conversation, prior decisions, and visible codebase context as the source of truth. Ask follow-up questions only when missing information would change the PRD's core direction or create unsafe assumptions.
 2. **Ground the PRD in the repository** — Explore enough of the repo to understand the feature's current state before writing:
-   - Look for related code, configuration, existing docs, issue templates, and product specs.
+   - Look for related code, configuration, existing docs, and product specs.
    - Use the project's domain vocabulary and glossary terms when they exist.
    - Respect relevant notes, and established patterns in the area being changed.
 3. **Map the implementation shape** — Identify the major modules, components, APIs, schemas, jobs, or interfaces likely to be created or changed. Prefer **deep modules**: small, stable, testable interfaces that encapsulate meaningful behavior and avoid leaking implementation details.
 4. **Capture decisions, not transient details** — Read `references/template.md` when drafting the PRD. Fill it with product-facing problem/solution context plus implementation and testing decisions. Avoid brittle file paths and code snippets unless a short prototype artifact captures a decision more clearly than prose, such as a state machine, schema shape, reducer, or API contract.
 5. **Define testing strategy by external behavior** — Specify which modules or interfaces need tests, what good tests should assert, and where similar tests already exist. Prefer tests of externally observable behavior over implementation details.
-6. **Publish only when the workflow supports it** — If the user asks to create or publish an issue and the repository exposes an issue tracker workflow, create or update the issue using the project's existing templates and label vocabulary. Apply a readiness or triage label only when that vocabulary is present in the project context; never invent labels or rely on unrelated setup commands.
-7. **Report the result** — Summarize the PRD created or issue published, the key implementation/testing decisions captured, and any assumptions that need later confirmation.
+6. **Report the result** — Summarize the PRD created, the key implementation/testing decisions captured, and any assumptions that need later confirmation.
 
 ## Key Patterns
 
@@ -24,7 +23,7 @@ description: Synthesizes Product Requirements Documents from the current convers
 
 ## Example
 
-User request: "Turn our discussion about saved search filters into a PRD and open an issue if this project supports it."
+User request: "Turn our discussion about saved search filters into a PRD."
 
 ```md
 ## Problem Statement
@@ -56,14 +55,12 @@ Add saved search filters so users can name, reuse, update, and delete frequently
 ## Further Notes
 
 - Assumption: the current filter vocabulary and validation rules remain the source of truth.
-- If an issue tracker and accepted readiness labels exist, publish this PRD there; otherwise return the Markdown PRD for the user to place manually.
 ```
 
 ## Constraints
 
 - **NEVER** add persona-based narrative requirement lists unless the user explicitly asks for them.
 - **NEVER** conduct a long interview when the conversation and repo already provide enough context.
-- **NEVER** invent issue tracker labels, triage vocabulary, or setup commands.
 - **NEVER** include fragile file-path inventories or full code samples as implementation decisions.
 - **ALWAYS** include implementation decisions, testing decisions, and explicit out-of-scope boundaries.
 - **ALWAYS** call out assumptions when the PRD depends on inferred context.

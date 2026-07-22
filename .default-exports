@@ -63,21 +63,14 @@ if command -v go &>/dev/null; then
   export PATH="$PATH:$GO_BIN"
 fi
 
-if command -v pass &>/dev/null; then
-  #  OPENAI_API_KEY="$(temp_command "$TMP_TEMP_DIR/openai_api_key" "$TEMP_TTL" "pass show openai/api_key | head -n1")"
-  #  if [ -n "$OPENAI_API_KEY" ]; then
-  #    export OPENAI_API_KEY
-  #  fi
+#  OPENAI_API_KEY="$(temp_command "$TMP_TEMP_DIR/openai_api_key" "$TEMP_TTL" "pass show openai/api_key | head -n1")"
+#  if [ -n "$OPENAI_API_KEY" ]; then
+#    export OPENAI_API_KEY
+#  fi
 
-  LINEAR_API_KEY="$(temp_command "$TMP_TEMP_DIR/linear_api_key" "$TEMP_TTL" "pass show linear/api_key | head -n1")"
-  if [ -n "$LINEAR_API_KEY" ]; then
-    export LINEAR_API_KEY
-  fi
-
-  #  ANTHROPIC_API_KEY="$(temp_command "$TMP_TEMP_DIR/anthropic_api_key" "$TEMP_TTL" "pass show claude/api_key | head -n1")"
-  #  if [ -n "$ANTHROPIC_API_KEY" ]; then
-  #    export ANTHROPIC_API_KEY
-  #  fi
-fi
+#  ANTHROPIC_API_KEY="$(temp_command "$TMP_TEMP_DIR/anthropic_api_key" "$TEMP_TTL" "pass show claude/api_key | head -n1")"
+#  if [ -n "$ANTHROPIC_API_KEY" ]; then
+#    export ANTHROPIC_API_KEY
+#  fi
 
 unset -f temp_command

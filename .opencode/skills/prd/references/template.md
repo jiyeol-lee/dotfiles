@@ -40,5 +40,5 @@ Avoid brittle file paths and long code snippets because they drift quickly. Exce
 
 ## Further Notes
 
-[Capture assumptions, open questions that do not block drafting, issue tracker links, rollout notes, observability considerations, or follow-up decisions.]
+[Capture assumptions, open questions that do not block drafting, rollout notes, observability considerations, or follow-up decisions.]
 ```

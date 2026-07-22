@@ -23,7 +23,7 @@ description: Analyzes repository state, proposes commit messages following Conve
 4. **Draft commit message**
    - Use Conventional Commits format (see below)
    - Include body if changes are complex (wrapped at 72 chars)
-   - Include footer for breaking changes or issue references
+   - Include a footer for breaking changes when needed
    - Always use lowercase unless proper nouns
 5. **Ask for approval**: Present the draft and ask "Do you approve this commit? (yes/no/edit)"
 6. **Commit** (only after explicit approval)

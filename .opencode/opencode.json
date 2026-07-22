@@ -24,14 +24,6 @@
     "mcp__aws-knowledge": {
       "type": "remote",
       "url": "https://knowledge-mcp.global.api.aws"
-    },
-    "mcp__linear": {
-      "type": "remote",
-      "url": "https://mcp.linear.app/mcp",
-      "headers": {
-        "Authorization": "Bearer {env:LINEAR_API_KEY}"
-      },
-      "enabled": false
     }
   },
   "agent": {
@@ -166,7 +158,6 @@
         "question": "allow",
         "mcp__context7_*": "allow",
         "mcp__aws-knowledge_*": "allow",
-        "mcp__linear_*": "allow",
         "tool__gh--retrieve-pull-request-info": "allow",
         "tool__gh--retrieve-pull-request-diff": "allow",
         "tool__gh--retrieve-repository-dependabot-alerts": "allow",

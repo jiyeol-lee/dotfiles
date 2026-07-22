@@ -11,7 +11,6 @@ description: Analyzes branch diffs, drafts PR titles and bodies following Conven
    - Check for unpushed commits
 2. **Analyze**
    - Use `git diff <target-branch>...HEAD` to analyze changes since diverging from the target branch
-   - Scan commit messages for issue references (e.g., `LINEAR-123`, `JIRA-456`, `#123`)
    - Check for PR template: try to read `.github/pull_request_template.md` or `pull_request_template.md`
 3. **Draft**
    - **If existing PR**:
@@ -48,7 +47,6 @@ Follow Conventional Commits for the PR title:
 - If a PR template exists, conform to its structure and headers exactly
 - Summarize changes clearly — explain **why**, not just what or how
 - Use markdown formatting for readability
-- Include issue references if found in commits
 
 ## Example Output
 
