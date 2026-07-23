@@ -4,6 +4,28 @@
   "default_agent": "primary/plan",
   "autoupdate": false,
   "lsp": false,
+  "provider": {
+    "opencode-go": {
+      "models": {
+        "kimi-k3": {
+          "variants": {
+            "max": {
+              "disabled": true
+            },
+            "low": {
+              "reasoningEffort": "low"
+            },
+            "medium": {
+              "reasoningEffort": "high"
+            },
+            "high": {
+              "reasoningEffort": "max"
+            }
+          }
+        }
+      }
+    }
+  },
   "permission": {
     "mcp__*": "deny",
     "tool__*": "deny",
