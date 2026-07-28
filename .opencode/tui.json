@@ -44,8 +44,8 @@
     "session_list": "none",
     "message_undo": "none",
     "message_redo": "none",
-    "messages_half_page_up": "ctrl+u",
-    "messages_half_page_down": "ctrl+d",
+    "messages_line_up": "ctrl+u",
+    "messages_line_down": "ctrl+d",
     "messages_last_user": "<leader>l"
   },
   "scroll_speed": 3,
