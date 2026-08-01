@@ -5,7 +5,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
     tool: {
       "tool__gh--retrieve-pull-request-info": tool({
         description:
-          "Retrieve detailed information about a GitHub pull request, including its state, title, body, comments, reviews, and review threads. `pull_request_number` is optional and defaults to the current branch's PR if not provided. By default, resolved review threads are excluded, but can be included by setting `with_resolved` to true.",
+          "Retrieve detailed information about a GitHub pull request, including its state, title, body, comments, reviews, and review threads. `pull_request_number` is optional and defaults to the current branch's PR if not provided. By default, resolved review threads are excluded, but can be included by setting `with_resolved` to true. Use this tool when you want to get comprehensive information about a specific pull request in the current repository.",
         args: {
           pull_request_number: tool.schema
             .number()
@@ -92,7 +92,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__gh--retrieve-repository-collaborators": tool({
         description:
-          "Retrieve a list of collaborators for the current GitHub repository.",
+          "Retrieve a list of collaborators for the current GitHub repository. Use this tool to get information about the users who have access to the repository, including their GitHub usernames and names. Use this tool when you want to see who has access to the repository and their roles.",
         args: {},
         async execute() {
           try {
@@ -128,7 +128,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__gh--create-pull-request": tool({
         description:
-          "Create a new draft pull request in the current GitHub repository. `title` and `body` are required, while `reviewers` is optional and can be a list of GitHub usernames to request reviews from.",
+          "Create a new draft pull request in the current GitHub repository. `title` and `body` are required, while `reviewers` is optional and can be a list of GitHub usernames to request reviews from. Use this tool when you want to create a new pull request for your changes, allowing you to specify the title, description, and reviewers for the pull request.",
         args: {
           title: tool.schema.string().describe("The title of the pull request"),
           body: tool.schema
@@ -163,7 +163,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__gh--edit-pull-request": tool({
         description:
-          "Edit an existing pull request in the current GitHub repository. `pull_request_number` is required to identify which pull request to edit. `title`, `body`, and `reviewers` are optional fields that can be updated. If `reviewers` is provided, it will add the specified GitHub usernames as reviewers to the pull request.",
+          "Edit an existing pull request in the current GitHub repository. `pull_request_number` is required to identify which pull request to edit. `title`, `body`, and `reviewers` are optional fields that can be updated. If `reviewers` is provided, it will add the specified GitHub usernames as reviewers to the pull request. Use this tool when you want to modify the details of an existing pull request, such as changing its title, description, or adding reviewers.",
         args: {
           pull_request_number: tool.schema
             .number()
@@ -226,7 +226,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__gh--retrieve-pull-request-diff": tool({
         description:
-          "Retrieve the diff of a GitHub pull request in the current repository. `pull_request_number` is required to specify which pull request's diff to retrieve.",
+          "Retrieve the diff of a GitHub pull request in the current repository. `pull_request_number` is required to specify which pull request's diff to retrieve. Use this tool to view the changes introduced by a pull request in a unified diff format. Use this tool when you want to analyze the code changes made in a pull request.",
         args: {
           pull_request_number: tool.schema
             .number()
@@ -252,7 +252,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__gh--retrieve-repository-dependabot-alerts": tool({
         description:
-          "Retrieve a list of Dependabot alerts for the current GitHub repository. `state` is an optional filter to specify the state of the alerts to retrieve (e.g., 'open', 'closed', 'dismissed'). `severity` is another optional filter to specify the severity level of the alerts (e.g., 'low', 'medium', 'high', 'critical'). By default, it retrieves open alerts of all severity levels.",
+          "Retrieve a list of Dependabot alerts for the current GitHub repository. `state` is an optional filter to specify the state of the alerts to retrieve (e.g., 'open', 'closed', 'dismissed'). `severity` is another optional filter to specify the severity level of the alerts (e.g., 'low', 'medium', 'high', 'critical'). By default, it retrieves open alerts of all severity levels. Use this tool when you want to monitor and manage security vulnerabilities in your repository's dependencies.",
         args: {
           state: tool.schema
             .string()

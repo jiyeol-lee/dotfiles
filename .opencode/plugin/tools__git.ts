@@ -5,7 +5,7 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
     tool: {
       "tool__git--commit": tool({
         description:
-          "Create a git commit with the staged changes. `message` is a required argument for the commit message (subject line), and `body` is an optional argument for an extended commit message body.",
+          "Create a git commit with the staged changes. `message` is a required argument for the commit message (subject line), and `body` is an optional argument for an extended commit message body. Use this tool when you have staged changes and want to create a commit.",
         args: {
           message: tool.schema
             .string()
@@ -90,7 +90,7 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__git--stage-files": tool({
         description:
-          "Stage specified files for commit. Use '.' to stage all changes. `files` is a required argument that accepts an array of file paths to stage, or ['.'] to stage all changes. File paths should be relative to the repository root and can include alphanumeric characters, dashes, underscores, dots, and forward slashes.",
+          "Stage specified files for commit. Use '.' to stage all changes. `files` is a required argument that accepts an array of file paths to stage, or ['.'] to stage all changes. File paths should be relative to the repository root and can include alphanumeric characters, dashes, underscores, dots, and forward slashes. Use this tool when you want to stage specific files or all changes before committing.",
         args: {
           files: tool.schema
             .array(tool.schema.string())
@@ -164,7 +164,7 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
       }),
       "tool__git--push": tool({
         description:
-          "Push the current branch to the remote repository with upstream tracking.",
+          "Push the current branch to the remote repository with upstream tracking. Use this tool when you want to push your commits to the remote repository",
         args: {},
         async execute() {
           try {
