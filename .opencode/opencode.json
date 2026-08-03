@@ -102,7 +102,7 @@
         "patch": "deny",
         "todowrite": "allow",
         "todoread": "allow",
-        "webfetch": "deny",
+        "webfetch": "allow",
         "question": "allow",
         "task": {
           "*": "deny",
