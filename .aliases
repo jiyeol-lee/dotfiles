@@ -83,9 +83,16 @@ alias grepos='~/dotfiles/scripts/github_repos.sh'
 alias gprr='~/dotfiles/scripts/github_pr_find_regressions.sh'
 
 # Terraform
-### TerraForm Plan
+### TerraForm
 alias tf='terraform'
+### TerraForm Init
+alias tfi='terraform init'
+### TerraForm Plan
 alias tfp='terraform plan'
+### TerraForm Format
+alias tff='terraform fmt'
+### TerraForm Validate
+alias tfv='terraform validate'
 
 # Go
 ### Go Run Main
