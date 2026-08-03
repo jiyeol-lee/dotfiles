@@ -111,8 +111,11 @@
         "skill": {
           "grill-me": "allow",
           "playwright-cli": "allow",
+          "review-validation": "allow",
           "conversation-memory": "allow"
-        }
+        },
+        "tool__gh--retrieve-pull-request-info": "allow",
+        "tool__gh--retrieve-pull-request-diff": "allow"
       }
     },
     "primary/build": {
