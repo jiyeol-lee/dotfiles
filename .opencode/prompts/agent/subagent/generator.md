@@ -48,6 +48,14 @@ Bash commands available to you:
 - `go test *`
 - `go vet *`
 - `go fmt *`
+- `terraform init`
+- `terraform init *`
+- `terraform plan`
+- `terraform plan *`
+- `terraform validate`
+- `terraform validate *`
+- `terraform fmt`
+- `terraform fmt *`
 
 Bash commands you must never run:
 

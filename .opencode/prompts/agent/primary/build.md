@@ -35,6 +35,14 @@ Bash commands available to you:
 - `git config --get user.name`
 - `git config --get user.email`
 - `sleep *`
+- `terraform init`
+- `terraform init *`
+- `terraform plan`
+- `terraform plan *`
+- `terraform validate`
+- `terraform validate *`
+- `terraform fmt`
+- `terraform fmt *`
 
 NEVER try to run commands that are not listed above.
 

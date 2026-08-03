@@ -91,7 +91,13 @@
           "git rev-parse *": "allow",
           "git config --get user.name": "allow",
           "git config --get user.email": "allow",
-          "sleep *": "allow"
+          "sleep *": "allow",
+          "terraform init": "allow",
+          "terraform init *": "allow",
+          "terraform plan": "allow",
+          "terraform plan *": "allow",
+          "terraform validate": "allow",
+          "terraform validate *": "allow"
         },
         "read": "allow",
         "write": "deny",
@@ -148,7 +154,15 @@
           "git rev-parse *": "allow",
           "git config --get user.name": "allow",
           "git config --get user.email": "allow",
-          "sleep *": "allow"
+          "sleep *": "allow",
+          "terraform init": "allow",
+          "terraform init *": "allow",
+          "terraform plan": "allow",
+          "terraform plan *": "allow",
+          "terraform validate": "allow",
+          "terraform validate *": "allow",
+          "terraform fmt": "allow",
+          "terraform fmt *": "allow"
         },
         "read": "allow",
         "write": "deny",
@@ -279,7 +293,15 @@
           "go build *": "allow",
           "go test *": "allow",
           "go vet *": "allow",
-          "go fmt *": "allow"
+          "go fmt *": "allow",
+          "terraform init": "allow",
+          "terraform init *": "allow",
+          "terraform plan": "allow",
+          "terraform plan *": "allow",
+          "terraform validate": "allow",
+          "terraform validate *": "allow",
+          "terraform fmt": "allow",
+          "terraform fmt *": "allow"
         },
         "edit": "allow",
         "write": "allow",
