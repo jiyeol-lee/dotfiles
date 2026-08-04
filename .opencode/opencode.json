@@ -31,6 +31,7 @@
     "tool__*": "deny",
     "doom_loop": "allow",
     "external_directory": {
+      "*": "deny",
       "~/.config/opencode/**": "allow"
     },
     "skill": {
