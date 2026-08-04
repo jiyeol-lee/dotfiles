@@ -17,6 +17,7 @@ Bash commands available to you:
 - `ls *`
 - `echo *`
 - `jq`
+- `jq *`
 - `wc *`
 - `grep *`
 - `sort *`
