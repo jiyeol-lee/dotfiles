@@ -165,12 +165,12 @@
           "terraform fmt *": "allow"
         },
         "read": "allow",
-        "write": "deny",
-        "edit": "deny",
+        "write": "allow",
+        "edit": "allow",
         "list": "allow",
         "glob": "allow",
         "grep": "allow",
-        "patch": "deny",
+        "patch": "allow",
         "todowrite": "allow",
         "todoread": "allow",
         "webfetch": "allow",
@@ -249,7 +249,7 @@
       }
     },
     "subagent/generator": {
-      "description": "Agent specialized for generating code and other content. Use this when you need to create new files, implement features, or generate content based on specifications. This agent can also be used to modify existing code or content according to provided instructions.",
+      "description": "Agent specialized for substantial code and content generation. Use this when you need to create/update/delete files, implement features, or generate content based on specifications. Do not use this for simple code or content modifications.",
       "mode": "subagent",
       "hidden": true,
       "prompt": "{file:./prompts/agent/subagent/generator.md}",
