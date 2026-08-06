@@ -121,7 +121,8 @@
           "grill-me": "allow",
           "playwright-cli": "allow",
           "review-validation": "allow",
-          "conversation-memory": "allow"
+          "conversation-memory": "allow",
+          "explain-diff": "allow"
         },
         "tool__gh--retrieve-pull-request-info": "allow",
         "tool__gh--retrieve-pull-request-diff": "allow"
