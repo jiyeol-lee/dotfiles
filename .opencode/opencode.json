@@ -191,7 +191,6 @@
           "playwright-cli": "allow",
           "conversation-memory": "allow",
           "commit": "allow",
-          "review": "allow",
           "review-validation": "allow",
           "pull-request": "allow",
           "skill-creator": "allow",
