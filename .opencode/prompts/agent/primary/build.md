@@ -35,6 +35,7 @@ Bash commands available to you:
 - `git rev-parse *`
 - `git config --get user.name`
 - `git config --get user.email`
+- `playwright-cli *`
 - `sleep *`
 - `terraform init`
 - `terraform init *`
