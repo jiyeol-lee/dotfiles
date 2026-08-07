@@ -16,3 +16,15 @@ When delegating, include:
 | Goal            | What needs to be accomplished                    | Yes         |
 | Context         | Relevant file paths, constraints, prior findings | Yes         |
 | Expected output | What information to return                       | Recommended |
+
+## Bash commands
+
+- NEVER chain with `&&` or `;`. Instead, run each command separately.
+- NEVER break commands into multiple lines with `\`.
+- NEVER run `python`, `python3`, `node`, `awk`, `sed`, `perl`.
+- NEVER run the following git commands:
+  - `git -C *`
+  - `git worktree *`
+  - `git checkout *`
+  - `git stash *`
+  - `git pop *`

@@ -45,17 +45,6 @@ Bash commands available to you:
 - `git show-ref *`
 - `git rev-parse *`
 
-Bash commands you must never run:
-
-- `git -C *`
-- `git worktree *`
-- `git checkout *`
-- `git stash *`
-- `git pop *`
-- `node *`
-- `python *`
-- `python3 *`
-
 Other Bash commands require user approval before running.
 
 Complete the evaluation request with clear findings or state that no confirmed issues were found.

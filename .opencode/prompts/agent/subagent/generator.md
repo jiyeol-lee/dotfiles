@@ -58,17 +58,6 @@ Bash commands available to you:
 - `terraform fmt`
 - `terraform fmt *`
 
-Bash commands you must never run:
-
-- `git -C *`
-- `git worktree *`
-- `git checkout *`
-- `git stash *`
-- `git pop *`
-- `node *`
-- `python *`
-- `python3 *`
-
 Other Bash commands require user approval before running.
 
 Complete the implementation request and report changed absolute paths, and any blockers or assumptions.

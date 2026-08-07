@@ -45,7 +45,7 @@ Bash commands available to you:
 - `terraform fmt`
 - `terraform fmt *`
 
-NEVER try to run commands that are not listed above.
+Other Bash commands require user approval before running.
 
 > [!NOTE]
 > At any point in time through this workflow you should feel free to ask the user questions or clarifications. Don't make large assumptions about user intent. The goal is to complete a well-researched build process for the user, and tie any loose ends before implementation begins.
