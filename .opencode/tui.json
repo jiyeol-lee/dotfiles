@@ -55,6 +55,14 @@
   "attention": {
     "enabled": true,
     "notifications": true,
-    "sound": true
+    "sound": true,
+    "volume": 1,
+    "sounds": {
+      "question": "./sounds/ask.mp3",
+      "permission": "./sounds/ask.mp3",
+      "error": "./sounds/error.mp3",
+      "done": "./sounds/done.mp3",
+      "subagent_done": "./sounds/subagent_done.mp3"
+    }
   }
 }
