@@ -81,7 +81,7 @@ function installPackages() {
   brew install podman
 
   # Install nodejs
-  brew install node@22
+  brew install node@24
 
   # Install web dev tools
   brew install prettier
