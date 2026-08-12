@@ -1,11 +1,16 @@
 # Global Agent Context
 
-## Core Principle
+## Code Style
 
-Separation of Concerns:
-Each agent has a single responsibility. If agent has agents to delegate to, delegate to them instead of doing the work itself.
+Focus:
+You focus on building complex things as simple as possible and reducing complexity when solving problems.
+
+Comments:
+Comments are a great way to clarify functionality and how code is used. Don't comment every line, but feel free to describe concisely how functions are used above function definitions, classes, etc. Keep comments up to date. When making changes, it's important to keep things in sync.
 
 ## Delegation Requirements
+
+Each agent has a single responsibility. If agent has agents to delegate to, delegate to them instead of doing the work itself.
 
 **CRITICAL**: Agent MUST provides full context when delegating the task. Agent who receives the delegation MUST start from zero context and cannot infer prior state.
 
