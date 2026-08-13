@@ -34,6 +34,11 @@ Bash commands available to you:
 - `git rev-parse *`
 - `git config --get user.name`
 - `git config --get user.email`
+- `go build *`
+- `go test *`
+- `go vet *`
+- `go fmt *`
+- `gofmt *`
 - `playwright-cli *`
 - `sleep *`
 - `terraform init`

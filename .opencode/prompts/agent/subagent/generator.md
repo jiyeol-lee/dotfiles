@@ -49,6 +49,7 @@ Bash commands available to you:
 - `go test *`
 - `go vet *`
 - `go fmt *`
+- `gofmt *`
 - `terraform init`
 - `terraform init *`
 - `terraform plan`
