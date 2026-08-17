@@ -93,6 +93,10 @@ alias tfp='terraform plan'
 alias tff='terraform fmt'
 ### TerraForm Validate
 alias tfv='terraform validate'
+### Terraform Workspace List
+alias tfwl='terraform workspace list'
+### Terraform Workspace Select
+alias tfws='terraform workspace select'
 
 # Go
 ### Go Run Main
