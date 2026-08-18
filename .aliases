@@ -96,3 +96,7 @@ alias grm='go run main.go'
 alias grd='go run .'
 ### Go Test All
 alias gta='go test ./...'
+
+# Conversation memory
+### Conversation Memory
+alias cm='conversation-memory'

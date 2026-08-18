@@ -114,6 +114,9 @@ function installPackages() {
 
   # For tmux google calendar
   go install github.com/jiyeol-lee/gcli@latest
+
+  # For conversation memory
+  go install github.com/jiyeol-lee/conversation-memory@latest
 }
 
 function doIt() {

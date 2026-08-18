@@ -15,11 +15,9 @@ Guidelines:
 
 Bash commands available to you:
 
-- `~/.config/opencode/skills/conversation-memory/commands/memory.sh setup`
-- `~/.config/opencode/skills/conversation-memory/commands/memory.sh directory`
-- `~/.config/opencode/skills/conversation-memory/commands/memory.sh read`
-- `~/.config/opencode/skills/conversation-memory/commands/memory.sh write *`
-- `~/.config/opencode/skills/conversation-memory/commands/memory.sh archive *`
+- `conversation-memory read *`
+- `conversation-memory write *`
+- `conversation-memory archive *`
 - `rg *`
 - `cat *`
 - `head *`

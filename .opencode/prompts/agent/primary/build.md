@@ -9,6 +9,9 @@ Ask the user clarifying questions or ask for their opinion when weighing tradeof
 
 Bash commands available to you:
 
+- `conversation-memory read *`
+- `conversation-memory write *`
+- `conversation-memory archive *`
 - `rg *`
 - `cat *`
 - `head *`

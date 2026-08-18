@@ -68,6 +68,7 @@
       "permission": {
         "bash": {
           "*": "ask",
+          "conversation-memory read *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
@@ -134,6 +135,9 @@
       "permission": {
         "bash": {
           "*": "ask",
+          "conversation-memory read *": "allow",
+          "conversation-memory write *": "allow",
+          "conversation-memory archive *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
@@ -266,11 +270,9 @@
       "permission": {
         "bash": {
           "*": "ask",
-          "~/.config/opencode/skills/conversation-memory/commands/memory.sh setup": "allow",
-          "~/.config/opencode/skills/conversation-memory/commands/memory.sh directory": "allow",
-          "~/.config/opencode/skills/conversation-memory/commands/memory.sh read": "allow",
-          "~/.config/opencode/skills/conversation-memory/commands/memory.sh write *": "allow",
-          "~/.config/opencode/skills/conversation-memory/commands/memory.sh archive *": "allow",
+          "conversation-memory read *": "allow",
+          "conversation-memory write *": "allow",
+          "conversation-memory archive *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
@@ -345,11 +347,9 @@
       "permission": {
         "bash": {
           "*": "ask",
-          "~/.config/opencode/skills/conversation-memory/commands/memory.sh setup": "allow",
-          "~/.config/opencode/skills/conversation-memory/commands/memory.sh directory": "allow",
-          "~/.config/opencode/skills/conversation-memory/commands/memory.sh read": "allow",
-          "~/.config/opencode/skills/conversation-memory/commands/memory.sh write *": "allow",
-          "~/.config/opencode/skills/conversation-memory/commands/memory.sh archive *": "allow",
+          "conversation-memory read *": "allow",
+          "conversation-memory write *": "allow",
+          "conversation-memory archive *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
