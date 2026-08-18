@@ -43,6 +43,7 @@ Bash commands available to you:
 - `git ls-files *`
 - `git show-ref *`
 - `git rev-parse *`
+- `git rev-list *`
 - `go build *`
 - `go test *`
 - `go vet *`

@@ -42,6 +42,7 @@ Bash commands available to you:
 - `git ls-files *`
 - `git show-ref *`
 - `git rev-parse *`
+- `git rev-list *`
 
 Other Bash commands require user approval before running.
 

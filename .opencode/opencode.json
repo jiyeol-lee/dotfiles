@@ -92,6 +92,7 @@
           "git ls-files *": "allow",
           "git show-ref *": "allow",
           "git rev-parse *": "allow",
+          "git rev-list *": "allow",
           "git config --get user.name": "allow",
           "git config --get user.email": "allow",
           "playwright-cli *": "allow",
@@ -161,6 +162,7 @@
           "git ls-files *": "allow",
           "git show-ref *": "allow",
           "git rev-parse *": "allow",
+          "git rev-list *": "allow",
           "git config --get user.name": "allow",
           "git config --get user.email": "allow",
           "go build *": "allow",
@@ -303,6 +305,7 @@
           "git ls-files *": "allow",
           "git show-ref *": "allow",
           "git rev-parse *": "allow",
+          "git rev-list *": "allow",
           "go build *": "allow",
           "go test *": "allow",
           "go vet *": "allow",
@@ -377,7 +380,8 @@
           "git ls-files": "allow",
           "git ls-files *": "allow",
           "git show-ref *": "allow",
-          "git rev-parse *": "allow"
+          "git rev-parse *": "allow",
+          "git rev-list *": "allow"
         },
         "edit": "deny",
         "write": "deny",

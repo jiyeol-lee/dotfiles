@@ -35,6 +35,7 @@ Bash commands available to you:
 - `git ls-files *`
 - `git show-ref *`
 - `git rev-parse *`
+- `git rev-list *`
 - `git config --get user.name`
 - `git config --get user.email`
 - `go build *`
