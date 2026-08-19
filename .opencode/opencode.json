@@ -35,7 +35,8 @@
       "~/.config/opencode/**": "allow"
     },
     "skill": {
-      "*": "deny"
+      "*": "deny",
+      "unslop": "allow"
     }
   },
   "instructions": ["AGENTS.md"],
