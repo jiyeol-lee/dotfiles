@@ -20,7 +20,12 @@ alias buu='brew update && brew upgrade -g'
 
 # Opencode (AI)
 ### Open opencode in current directory
-alias oc='opencode'
+oc() {
+  command opencode "$@"
+  local -i code=$?
+  ~/dotfiles/scripts/tmux_opencode_pane_strip.sh
+  return $code
+}
 ### OpenCode Stats
 alias ocs='~/dotfiles/scripts/opencode_period_stats.sh'
 
