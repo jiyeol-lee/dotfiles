@@ -22,21 +22,28 @@ fi
 
 export PODMAN_COMPOSE_WARNING_LOGS=false
 
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_STATE_HOME="$HOME/.local/state"
-export XDG_CACHE_HOME="$HOME/.cache"
-
-# ================================
-# Handle heavy loading commands with temp files and TTL
-TMP_TEMP_DIR="${TMPDIR:-/tmp}/shell_temp_$USER"
-TEMP_TTL=18000 # 5 hours in seconds
-
-# Create temp directory with secure permissions
-if [ ! -d "$TMP_TEMP_DIR" ]; then
-  mkdir -p "$TMP_TEMP_DIR"
-  chmod 700 "$TMP_TEMP_DIR"
+if [ -z "$XDG_CONFIG_HOME" ]; then
+  export XDG_CONFIG_HOME="$HOME/.config"
+  mkdir -p "$XDG_CONFIG_HOME"
 fi
+if [ -z "$XDG_DATA_HOME" ]; then
+  export XDG_DATA_HOME="$HOME/.local/share"
+  mkdir -p "$XDG_DATA_HOME"
+fi
+if [ -z "$XDG_STATE_HOME" ]; then
+  export XDG_STATE_HOME="$HOME/.local/state"
+  mkdir -p "$XDG_STATE_HOME"
+fi
+if [ -z "$XDG_CACHE_HOME" ]; then
+  export XDG_CACHE_HOME="$HOME/.cache"
+  mkdir -p "$XDG_CACHE_HOME"
+fi
+if [ -z "$XDG_RUNTIME_DIR" ]; then
+  export XDG_RUNTIME_DIR="${TMPDIR:-/tmp}/runtime-$UID"
+  (umask 0077 && mkdir -p "$XDG_RUNTIME_DIR")
+fi
+
+TEMP_TTL=18000 # 5 hours in seconds
 
 # Function to temp command output with TTL
 temp_command() {
@@ -59,16 +66,16 @@ temp_command() {
 
 if command -v go &>/dev/null; then
   # Add go path to PATH
-  GO_BIN="$(temp_command "$TMP_TEMP_DIR/go_bin_path" "$TEMP_TTL" "go env GOPATH")/bin"
+  GO_BIN="$(temp_command "$XDG_RUNTIME_DIR/go_bin_path" "$TEMP_TTL" "go env GOPATH")/bin"
   export PATH="$PATH:$GO_BIN"
 fi
 
-#  OPENAI_API_KEY="$(temp_command "$TMP_TEMP_DIR/openai_api_key" "$TEMP_TTL" "pass show openai/api_key | head -n1")"
+#  OPENAI_API_KEY="$(temp_command "$XDG_RUNTIME_DIR/openai_api_key" "$TEMP_TTL" "pass show openai/api_key | head -n1")"
 #  if [ -n "$OPENAI_API_KEY" ]; then
 #    export OPENAI_API_KEY
 #  fi
 
-#  ANTHROPIC_API_KEY="$(temp_command "$TMP_TEMP_DIR/anthropic_api_key" "$TEMP_TTL" "pass show claude/api_key | head -n1")"
+#  ANTHROPIC_API_KEY="$(temp_command "$XDG_RUNTIME_DIR/anthropic_api_key" "$TEMP_TTL" "pass show claude/api_key | head -n1")"
 #  if [ -n "$ANTHROPIC_API_KEY" ]; then
 #    export ANTHROPIC_API_KEY
 #  fi
