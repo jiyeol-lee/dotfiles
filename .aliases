@@ -18,6 +18,10 @@ alias duh='du -h -d 1 | sort -hr'
 ### Brew Update and Upgrade with cask
 alias buu='brew update && brew upgrade -g'
 
+# OpenSSL
+### OpenSsl Random String, pass n as length in bytes (turns into 2n hex characters)
+alias osrs='openssl rand -hex'
+
 # Opencode (AI)
 ### Open opencode in current directory
 oc() {
