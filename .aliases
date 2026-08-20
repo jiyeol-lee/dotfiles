@@ -95,6 +95,8 @@ alias tfwl='terraform workspace list'
 alias tfws='terraform workspace select'
 
 # Go
+### Go Run
+alias gr='go run'
 ### Go Run Main
 alias grm='go run main.go'
 ### Go Run Dot
