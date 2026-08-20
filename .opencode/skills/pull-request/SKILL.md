@@ -47,6 +47,7 @@ Follow Conventional Commits for the PR title:
 - If a PR template exists, conform to its structure and headers exactly
 - Summarize changes clearly — explain **why**, not just what or how
 - Use markdown formatting for readability
+- DO NOT include what commands were run like linters, tests, formatting.
 
 ## Example Output
 
