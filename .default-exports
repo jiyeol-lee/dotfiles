@@ -70,6 +70,16 @@ if command -v go &>/dev/null; then
   export PATH="$PATH:$GO_BIN"
 fi
 
+if pass show google/oauth/client_id &>/dev/null; then
+  GOOGLE_CLIENT_ID="$(pass show google/oauth/client_id | head -n1)"
+  export GOOGLE_CLIENT_ID
+fi
+
+if pass show google/oauth/client_secret &>/dev/null; then
+  GOOGLE_CLIENT_SECRET="$(pass show google/oauth/client_secret | head -n1)"
+  export GOOGLE_CLIENT_SECRET
+fi
+
 #  OPENAI_API_KEY="$(temp_command "$XDG_RUNTIME_DIR/openai_api_key" "$TEMP_TTL" "pass show openai/api_key | head -n1")"
 #  if [ -n "$OPENAI_API_KEY" ]; then
 #    export OPENAI_API_KEY
