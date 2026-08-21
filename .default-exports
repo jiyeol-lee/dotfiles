@@ -80,6 +80,11 @@ if pass show google/oauth/client_secret &>/dev/null; then
   export GOOGLE_CLIENT_SECRET
 fi
 
+if pass show opencode/api_key &>/dev/null; then
+  OPENCODE_GO_API_KEY="$(pass show opencode/api_key | head -n1)"
+  export OPENCODE_GO_API_KEY
+fi
+
 #  OPENAI_API_KEY="$(temp_command "$XDG_RUNTIME_DIR/openai_api_key" "$TEMP_TTL" "pass show openai/api_key | head -n1")"
 #  if [ -n "$OPENAI_API_KEY" ]; then
 #    export OPENAI_API_KEY
