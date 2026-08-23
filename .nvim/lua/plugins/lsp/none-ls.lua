@@ -20,8 +20,7 @@ M.config = function()
       -- webdev stuff
       formatting.prettier,
       -- go
-      formatting.golines,
-      formatting.gofumpt,
+      formatting.gofmt,
       -- bash
       formatting.shfmt,
       -- terraform

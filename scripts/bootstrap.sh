@@ -92,10 +92,6 @@ function installPackages() {
   # Install go
   brew install go
 
-  # Install go tools
-  brew install golines
-  brew install gofumpt
-
   # Install shell tools
   brew install shellcheck
   brew install shfmt
