@@ -108,8 +108,8 @@ function installPackages() {
   # Install gnu sed
   brew install gnu-sed
 
-  # For tmux google calendar
-  go install github.com/jiyeol-lee/gcli@latest
+  # For personal cli tools
+  go install github.com/jiyeol-lee/cli/cmd/cli@latest
 
   # For conversation memory
   go install github.com/jiyeol-lee/conversation-memory@latest
