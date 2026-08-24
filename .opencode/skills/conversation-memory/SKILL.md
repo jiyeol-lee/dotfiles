@@ -1,6 +1,6 @@
 ---
 name: conversation-memory
-description: Records and retrieves durable user feedback, working preferences, and project- or global-scoped conversation notes for future reference. Use when a conversation starts or ends, when user says preferences such as "remember", "don't do that", "next time", "always", or "never", and before applying future work in a directory.
+description: Records and retrieves durable user feedback, working preferences, and project- or global-scoped conversation notes for future reference. Must always apply.
 ---
 
 ## Purpose
@@ -9,12 +9,12 @@ Use this skill to persist reusable user conventions and preferences across conve
 
 ## Workflow
 
-### 1. Read memory first
+### 1. Read memory
 
-At the start of a conversation or before doing substantive work:
+!`conversation-memory read`
 
-1. Run `conversation-memory read` to read active project and global memories.
-2. Apply relevant memories silently. Project memories appear before global memories, and explicit instructions in the current conversation always override memory.
+> [!IMPORTANT]
+> If empty, no active memory exists.
 
 ### 2. Capture memory-worthy feedback during the conversation
 
@@ -98,7 +98,6 @@ Future behavior:
 
 ## Constraints
 
-- ALWAYS read relevant memory before substantive work.
 - ALWAYS write durable user feedback/preferences after the conversation ends.
 - MUST use an explicit scope for every write and archive.
 - NEVER store secrets, tokens, passwords, private keys, or credentials.
