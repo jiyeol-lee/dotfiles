@@ -110,9 +110,6 @@ function installPackages() {
 
   # For personal cli tools
   go install github.com/jiyeol-lee/cli/cmd/cli@latest
-
-  # For conversation memory
-  go install github.com/jiyeol-lee/conversation-memory@latest
 }
 
 function doIt() {

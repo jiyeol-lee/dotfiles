@@ -1,17 +1,17 @@
 ---
-name: conversation-memory
+name: memory
 description: Records and retrieves durable user feedback, working preferences, and project- or global-scoped conversation notes for future reference. Must always apply.
 ---
 
 ## Purpose
 
-Use this skill to persist reusable user conventions and preferences across conversations. The memory database is SQLite at `$XDG_DATA_HOME/conversation-memory/memory.db`, and can apply to the current project or globally across projects.
+Use this skill to persist reusable user conventions and preferences across conversations. It can apply to the current project or globally across projects.
 
 ## Workflow
 
 ### 1. Read memory
 
-!`conversation-memory read`
+!`cli memory read`
 
 > [!IMPORTANT]
 > If empty, no active memory exists.
@@ -40,8 +40,8 @@ At the end of every conversation:
 4. Write with an explicit category and scope:
 
    ```bash
-   conversation-memory write "Keep final reports concise." --category preference --scope global
-   conversation-memory write "Use pnpm, not npm" --category convention --scope project
+   cli memory write "Keep final reports concise." --category preference --scope global
+   cli memory write "Use pnpm, not npm" --category convention --scope project
    ```
 
 ### 4. Archive stale or incorrect memories
@@ -49,8 +49,8 @@ At the end of every conversation:
 When a stored memory is no longer useful, superseded, or incorrect, archive it by id. Always pass an explicit `--scope`, and use the same scope shown for that memory by `read`:
 
 ```bash
-conversation-memory archive 3 --scope project
-conversation-memory archive 7 --scope global
+cli memory archive 3 --scope project
+cli memory archive 7 --scope global
 ```
 
 ## CLI Commands
@@ -58,26 +58,26 @@ conversation-memory archive 7 --scope global
 Normal workflow uses only `read`, `write`, and `archive`; the CLI initializes its storage automatically:
 
 ```bash
-conversation-memory read
-conversation-memory read --scope project
-conversation-memory read --scope global
-conversation-memory write "Do not add domain-specific comments." --category preference --scope global
-conversation-memory archive 3 --scope project
+cli memory read
+cli memory read --scope project
+cli memory read --scope global
+cli memory write "Do not add domain-specific comments." --category preference --scope global
+cli memory archive 3 --scope project
 ```
 
 Supported commands:
 
-- `conversation-memory read` — read project and global active memories, project first.
-- `conversation-memory read --scope all|project|global` — read active memories from the selected scope.
-- `conversation-memory write <memory> --category preference|convention|note --scope project|global` — write a scoped memory. The category and scope options may appear in either order.
-- `conversation-memory archive <id> --scope project|global` — archive a memory in its existing scope.
+- `cli memory read` — read project and global active memories, project first.
+- `cli memory read --scope all|project|global` — read active memories from the selected scope.
+- `cli memory write <memory> --category preference|convention|note --scope project|global` — write a scoped memory. The category and scope options may appear in either order.
+- `cli memory archive <id> --scope project|global` — archive a memory in its existing scope.
 
 ## Error Handling
 
 - Invoke the CLI directly without checking availability first. Do not use `command -v`, `which`, `type`, or `--help` probes.
 - Do not install or set up the CLI as part of this workflow.
 - Do not fall back to a helper script or direct database access.
-- If any `conversation-memory` invocation errors, stop the memory workflow immediately, report the error, and run no subsequent memory command.
+- If any `cli memory` invocation errors, stop the memory workflow immediately, report the error, and run no subsequent memory command.
 
 ## Example: Input → Stored Memory
 
@@ -88,7 +88,7 @@ User feedback during a code-editing task:
 End-of-conversation write:
 
 ```bash
-conversation-memory write "Do not add domain-specific comments; avoid comments that explain obvious business behavior." --category preference --scope global
+cli memory write "Do not add domain-specific comments; avoid comments that explain obvious business behavior." --category preference --scope global
 ```
 
 Future behavior:

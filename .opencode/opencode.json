@@ -69,7 +69,7 @@
       "permission": {
         "bash": {
           "*": "ask",
-          "conversation-memory read *": "allow",
+          "cli memory read *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
@@ -124,7 +124,7 @@
           "grill-me": "allow",
           "playwright-cli": "allow",
           "review-validation": "allow",
-          "conversation-memory": "allow",
+          "memory": "allow",
           "explain-diff": "allow"
         },
         "tool__gh--retrieve-pull-request-info": "allow",
@@ -137,9 +137,9 @@
       "permission": {
         "bash": {
           "*": "ask",
-          "conversation-memory read *": "allow",
-          "conversation-memory write *": "allow",
-          "conversation-memory archive *": "allow",
+          "cli memory read *": "allow",
+          "cli memory write *": "allow",
+          "cli memory archive *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
@@ -202,7 +202,7 @@
         "skill": {
           "grill-me": "allow",
           "playwright-cli": "allow",
-          "conversation-memory": "allow",
+          "memory": "allow",
           "commit": "allow",
           "review-validation": "allow",
           "pull-request": "allow",
@@ -273,9 +273,9 @@
       "permission": {
         "bash": {
           "*": "ask",
-          "conversation-memory read *": "allow",
-          "conversation-memory write *": "allow",
-          "conversation-memory archive *": "allow",
+          "cli memory read *": "allow",
+          "cli memory write *": "allow",
+          "cli memory archive *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
@@ -334,7 +334,7 @@
         "question": "deny",
         "skill": {
           "playwright-cli": "allow",
-          "conversation-memory": "allow"
+          "memory": "allow"
         },
         "mcp__context7_*": "allow",
         "mcp__aws-knowledge_*": "allow",
@@ -351,9 +351,9 @@
       "permission": {
         "bash": {
           "*": "ask",
-          "conversation-memory read *": "allow",
-          "conversation-memory write *": "allow",
-          "conversation-memory archive *": "allow",
+          "cli memory read *": "allow",
+          "cli memory write *": "allow",
+          "cli memory archive *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
@@ -396,7 +396,7 @@
         "webfetch": "deny",
         "question": "deny",
         "skill": {
-          "conversation-memory": "allow"
+          "memory": "allow"
         },
         "mcp__context7_*": "allow",
         "mcp__aws-knowledge_*": "allow",

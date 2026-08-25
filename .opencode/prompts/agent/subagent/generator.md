@@ -15,9 +15,9 @@ Guidelines:
 
 Bash commands available to you:
 
-- `conversation-memory read *`
-- `conversation-memory write *`
-- `conversation-memory archive *`
+- `cli memory read *`
+- `cli memory write *`
+- `cli memory archive *`
 - `rg *`
 - `cat *`
 - `head *`
