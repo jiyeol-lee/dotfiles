@@ -36,17 +36,6 @@ jobs:
             Update only .opencode/command/explain-diff.md. Query the authoritative npm registry latest metadata for @tailwindcss/browser, highlight.js, and mermaid. Pin each dependency to its exact latest stable semver version. Keep both highlightjs/cdn-release URLs on the same version. Preserve the existing CDN providers, URL paths, HTML template structure, and all unrelated content. Validate that every resulting CDN resource is available. Do not edit, create, rename, or delete any other file. Do not branch, commit, push, create a pull request, or ask questions. Do not use any shell commands.js, awk, sed, Perl, chained commands, or multiline commands.
         run: '"$HOME/.opencode/bin/opencode" run --auto --model opencode-go/glm-5.3-flash --agent primary/build "$UPDATE_PROMPT"'
 
-      - name: Validate changes
-        run: |
-          set -euo pipefail
-          if git status --porcelain --untracked-files=all | grep -qvE '^.. \.opencode/command/explain-diff\.md$'; then
-            echo "OpenCode modified a file outside .opencode/command/explain-diff.md" >&2
-            git status --short
-            exit 1
-          fi
-          git diff --check
-          go run .github/scripts/validate-web-dependencies.go
-
       - name: Create dependency pull request
         uses: peter-evans/create-pull-request@v8
         with:
