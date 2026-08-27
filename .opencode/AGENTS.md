@@ -33,3 +33,7 @@ When delegating, include:
   - `git checkout *`
   - `git stash *`
   - `git pop *`
+
+## Temporary directory
+
+When you need to create a file or directory for temporary use, do it under `/tmp/agentic-coding-tool`. Make sure to create with a unique name to avoid collisions with others. When done, no need to clean up, as the system will handle it.

@@ -32,6 +32,7 @@
     "doom_loop": "allow",
     "external_directory": {
       "*": "deny",
+      "/tmp/agentic-coding-tool/**": "allow",
       "~/.config/opencode/**": "allow"
     },
     "skill": {
