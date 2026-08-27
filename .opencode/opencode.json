@@ -48,7 +48,6 @@
       "permission": {
         "bash": {
           "*": "ask",
-          "cli memory read *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
@@ -101,8 +100,7 @@
         },
         "skill": {
           "grill-me": "allow",
-          "playwright-cli": "allow",
-          "memory": "allow"
+          "playwright-cli": "allow"
         },
         "tool__gh--retrieve-pull-request-info": "allow",
         "tool__gh--retrieve-pull-request-diff": "allow"
@@ -114,9 +112,6 @@
       "permission": {
         "bash": {
           "*": "ask",
-          "cli memory read *": "allow",
-          "cli memory write *": "allow",
-          "cli memory archive *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
@@ -179,7 +174,6 @@
         "skill": {
           "grill-me": "allow",
           "playwright-cli": "allow",
-          "memory": "allow",
           "pull-request": "allow"
         },
         "tool__gh--retrieve-pull-request-info": "allow",
@@ -198,7 +192,6 @@
       "permission": {
         "bash": {
           "*": "ask",
-          "cli memory read *": "allow",
           "http-sever *": "allow",
           "rg *": "allow",
           "cat *": "allow",
@@ -257,7 +250,6 @@
           "subagent/explore": "allow"
         },
         "skill": {
-          "memory": "allow",
           "playwright-cli": "allow"
         },
         "tool__gh--retrieve-pull-request-info": "allow",
@@ -320,9 +312,6 @@
       "permission": {
         "bash": {
           "*": "ask",
-          "cli memory read *": "allow",
-          "cli memory write *": "allow",
-          "cli memory archive *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
@@ -380,8 +369,7 @@
         "webfetch": "deny",
         "question": "deny",
         "skill": {
-          "playwright-cli": "allow",
-          "memory": "allow"
+          "playwright-cli": "allow"
         },
         "mcp__context7_*": "allow",
         "mcp__aws-knowledge_*": "allow",
@@ -400,7 +388,6 @@
       "permission": {
         "bash": {
           "*": "ask",
-          "cli memory read *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",
@@ -442,9 +429,7 @@
         "todoread": "deny",
         "webfetch": "deny",
         "question": "deny",
-        "skill": {
-          "memory": "allow"
-        },
+        "skill": {},
         "mcp__context7_*": "allow",
         "mcp__aws-knowledge_*": "allow",
         "tool__gh--retrieve-pull-request-info": "allow",
