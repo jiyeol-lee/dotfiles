@@ -242,8 +242,8 @@
     },
     "subagent/explore": {
       "description": "Fast agent specialized for exploring codebases. Use this when you need to quickly find files by patterns (eg. \"src/components /**/*.tsx\"), search code for keywords (eg. \"API endpoints\"), or answer questions about the codebase (eg. \"how do API endpoints work?\"). When calling this agent, specify the desired thoroughness level: \"quick\" for basic searches, \"medium\" for moderate exploration, or \"very thorough\" for comprehensive analysis across multiple locations and naming conventions.",
-      "model": "opencode-go/gpt-5.6-luna",
-      "variant": "high",
+      "model": "opencode-go/glm-5.3-flash",
+      "variant": "low",
       "mode": "subagent",
       "hidden": true,
       "prompt": "{file:./prompts/agent/subagent/explore.md}",
@@ -346,6 +346,8 @@
     },
     "subagent/evaluator": {
       "description": "Agent specialized for evaluating code and content against specified criteria. Use this when you need to assess the quality, correctness, or adherence to standards of generated or existing code and content. or when generator agent was used to modify existing code or content, this agent can be used to evaluate the changes made and provide feedback or validation.",
+      "model": "opencode-go/glm-5.3-flash",
+      "variant": "low",
       "mode": "subagent",
       "hidden": true,
       "prompt": "{file:./prompts/agent/subagent/evaluator.md}",
