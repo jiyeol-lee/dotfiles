@@ -124,9 +124,7 @@
         "skill": {
           "grill-me": "allow",
           "playwright-cli": "allow",
-          "review-validation": "allow",
-          "memory": "allow",
-          "explain-diff": "allow"
+          "memory": "allow"
         },
         "tool__gh--retrieve-pull-request-info": "allow",
         "tool__gh--retrieve-pull-request-diff": "allow"
@@ -204,7 +202,6 @@
           "grill-me": "allow",
           "playwright-cli": "allow",
           "memory": "allow",
-          "review-validation": "allow",
           "pull-request": "allow"
         },
         "tool__gh--retrieve-pull-request-info": "allow",
@@ -213,6 +210,80 @@
         "tool__gh--create-pull-request": "allow",
         "tool__gh--edit-pull-request": "allow",
         "tool__git--push": "allow"
+      }
+    },
+    "primary/review": {
+      "mode": "primary",
+      "prompt": "{file:./prompts/agent/primary/review.md}",
+      "model": "opencode-go/glm-5.3-flash",
+      "variant": "max",
+      "permission": {
+        "bash": {
+          "*": "ask",
+          "cli memory read *": "allow",
+          "http-sever *": "allow",
+          "rg *": "allow",
+          "cat *": "allow",
+          "head *": "allow",
+          "tail *": "allow",
+          "ls *": "allow",
+          "echo *": "allow",
+          "jq": "allow",
+          "jq *": "allow",
+          "wc *": "allow",
+          "grep *": "allow",
+          "sort *": "allow",
+          "pwd *": "allow",
+          "tree *": "allow",
+          "git log *": "allow",
+          "git show *": "allow",
+          "git status *": "allow",
+          "git diff *": "allow",
+          "git branch --show-current": "allow",
+          "git merge-base *": "allow",
+          "git ls-files": "allow",
+          "git ls-files *": "allow",
+          "git show-ref *": "allow",
+          "git rev-parse *": "allow",
+          "git rev-list *": "allow",
+          "git config --get user.name": "allow",
+          "git config --get user.email": "allow",
+          "playwright-cli *": "allow",
+          "sleep *": "allow",
+          "terraform init": "allow",
+          "terraform init *": "allow",
+          "terraform plan": "allow",
+          "terraform plan *": "allow",
+          "terraform validate": "allow",
+          "terraform validate *": "allow"
+        },
+        "read": "allow",
+        "write": {
+          "/tmp/agentic-coding-tool/**": "allow"
+        },
+        "edit": {
+          "/tmp/agentic-coding-tool/**": "allow"
+        },
+        "list": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "patch": {
+          "/tmp/agentic-coding-tool/**": "allow"
+        },
+        "todowrite": "allow",
+        "todoread": "allow",
+        "webfetch": "allow",
+        "question": "allow",
+        "task": {
+          "*": "deny",
+          "subagent/explore": "allow"
+        },
+        "skill": {
+          "memory": "allow",
+          "playwright-cli": "allow"
+        },
+        "tool__gh--retrieve-pull-request-info": "allow",
+        "tool__gh--retrieve-pull-request-diff": "allow"
       }
     },
     "primary/general": {

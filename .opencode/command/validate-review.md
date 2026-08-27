@@ -1,6 +1,6 @@
 ---
-name: review-validation
-description: Validates PR review comments against actual code by analyzing reviewer claims to determine if they are valid or invalid. Use when user asks to "validate review comments", "check if review feedback is correct", "verify PR review", or "are these review comments valid".
+description: Validates the review of a code change, diff, branch, or pull request.
+agent: primary/review
 ---
 
 ## Workflow
@@ -46,29 +46,45 @@ description: Validates PR review comments against actual code by analyzing revie
 | Ambiguous reviewer comment | Mark confidence as `low`, document uncertainty   |
 | Line number out of range   | Read available context, note limitation          |
 
-## Example Validation
-
-A validated issue looks like this:
-
-**Issue: "Potential null pointer on `user.profile.name`"** — ❌ INVALID (High confidence)
-
-> 🔗 [View Comment](https://github.com/org/repo/pull/45#discussion_r1234)
-> 📁 `src/api/users.ts` @ Line 38
-
-**Reviewer claimed**: `user.profile` could be null, causing a runtime error on line 38.
-
-**Reality**: The `user` object is fetched on line 22 with `findUserOrThrow()` which guarantees a non-null `profile` field via the `UserWithProfile` return type. The null case is handled by the thrown exception on line 23.
-
-```ts
-// Line 22-23
-const user = await findUserOrThrow(userId); // Returns UserWithProfile
-// Line 38
-const displayName = user.profile.name; // Safe — profile is guaranteed non-null
-```
-
 ## Report Format
 
-Use the report format in `references/report-format.md` when generating the validation report.
+````markdown
+## Review Validation Report
+
+**PR**: #X - [PR Title]
+**Unresolved Threads**: X total
+**Validation Result**: X valid, X invalid
+
+### Status: [✅ All Issues Valid | ❌ X Issues Invalid | ⚠️ Mixed Results]
+
+## Issue 1: [Issue Title from Review] [✅ VALID | ❌ INVALID]
+
+> 🔗 [View Comment](https://github.com/owner/repo/pull/X#discussion_rXXX)
+> 📁 `path/to/file.ts` @ Line X
+> 👤 @reviewer-username
+
+### Review's Claim
+
+[Summarize what the reviewer stated or claimed]
+
+### Reality
+
+**[The review is correct/incorrect].** Here's why:
+
+[Detailed analysis explaining why the claim is valid or invalid]
+
+```[language]
+// Relevant code evidence
+```
+
+## Summary
+
+| Issue               | Valid?         | Reason              | Link        |
+| ------------------- | -------------- | ------------------- | ----------- |
+| [Issue description] | ✅ Yes / ❌ No | [Brief explanation] | [View](url) |
+
+**[Recommendation: Changes required / No changes required]**
+````
 
 ## Constraints
 
