@@ -345,7 +345,7 @@
       }
     },
     "subagent/evaluator": {
-      "description": "Agent specialized for evaluating code and content against specified criteria. Use this when you need to assess the quality, correctness, or adherence to standards of generated or existing code and content. or when generator agent was used to modify existing code or content, this agent can be used to evaluate the changes made and provide feedback or validation.",
+      "description": "An agent specialized in evaluating code and content against specified criteria. Use this to evaluate changes and provide feedback or validation when you need to assess the quality, correctness, and regression testing of new or existing code and content. You always use this before finishing a task if any code has changed.",
       "model": "opencode-go/glm-5.3-flash",
       "variant": "low",
       "mode": "subagent",
@@ -355,8 +355,6 @@
         "bash": {
           "*": "ask",
           "cli memory read *": "allow",
-          "cli memory write *": "allow",
-          "cli memory archive *": "allow",
           "rg *": "allow",
           "cat *": "allow",
           "head *": "allow",

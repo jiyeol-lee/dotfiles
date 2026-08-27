@@ -17,8 +17,6 @@ Guidelines:
 Bash commands available to you:
 
 - `cli memory read *`
-- `cli memory write *`
-- `cli memory archive *`
 - `rg *`
 - `cat *`
 - `head *`
