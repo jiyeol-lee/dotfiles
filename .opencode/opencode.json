@@ -204,11 +204,8 @@
           "grill-me": "allow",
           "playwright-cli": "allow",
           "memory": "allow",
-          "commit": "allow",
           "review-validation": "allow",
-          "pull-request": "allow",
-          "skill-creator": "allow",
-          "agent-creator": "allow"
+          "pull-request": "allow"
         },
         "tool__gh--retrieve-pull-request-info": "allow",
         "tool__gh--retrieve-pull-request-diff": "allow",
