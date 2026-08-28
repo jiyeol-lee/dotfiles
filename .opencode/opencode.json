@@ -256,28 +256,6 @@
         "tool__gh--retrieve-pull-request-diff": "allow"
       }
     },
-    "primary/general": {
-      "mode": "primary",
-      "prompt": "{file:./prompts/agent/primary/general.md}",
-      "permission": {
-        "bash": "deny",
-        "edit": "deny",
-        "write": "deny",
-        "read": "deny",
-        "grep": "deny",
-        "glob": "deny",
-        "list": "deny",
-        "patch": "deny",
-        "todowrite": "deny",
-        "todoread": "deny",
-        "webfetch": "allow",
-        "question": "allow",
-        "task": "deny",
-        "skill": {
-          "legal-advice": "allow"
-        }
-      }
-    },
     "subagent/explore": {
       "description": "Fast agent specialized for exploring codebases. Use this when you need to quickly find files by patterns (eg. \"src/components /**/*.tsx\"), search code for keywords (eg. \"API endpoints\"), or answer questions about the codebase (eg. \"how do API endpoints work?\"). When calling this agent, specify the desired thoroughness level: \"quick\" for basic searches, \"medium\" for moderate exploration, or \"very thorough\" for comprehensive analysis across multiple locations and naming conventions.",
       "model": "opencode-go/glm-5.3-flash",
