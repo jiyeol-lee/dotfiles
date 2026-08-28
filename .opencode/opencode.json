@@ -184,9 +184,9 @@
         "tool__git--push": "allow"
       }
     },
-    "primary/review": {
+    "primary/codelens": {
       "mode": "primary",
-      "prompt": "{file:./prompts/agent/primary/review.md}",
+      "prompt": "{file:./prompts/agent/primary/codelens.md}",
       "model": "opencode-go/glm-5.3-flash",
       "variant": "max",
       "permission": {

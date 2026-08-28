@@ -1,6 +1,6 @@
 ---
 description: Explains the differences of a code change, diff, branch, or pull request.
-agent: primary/review
+agent: primary/codelens
 ---
 
 Make me a rich explanation of the code change.
