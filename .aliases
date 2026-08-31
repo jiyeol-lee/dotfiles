@@ -92,9 +92,11 @@ alias tfi='terraform init'
 ### TerraForm Plan
 alias tfp='terraform plan'
 ### TerraForm Format
-alias tff='terraform fmt'
+alias tff='terraform fmt -check -recursive'
 ### TerraForm Validate
 alias tfv='terraform validate'
+### TerraForm Apply
+alias tfa='terraform apply'
 ### Terraform Workspace List
 alias tfwl='terraform workspace list'
 ### Terraform Workspace Select
