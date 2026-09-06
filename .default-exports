@@ -50,17 +50,29 @@ temp_command() {
   local temp_file="$1"
   local ttl="$2"
   local command="$3"
-  local result
+  local result mtime now
 
-  if [ -f "$temp_file" ] && [ $(($(date +%s) - $(stat -f %m "$temp_file"))) -lt "$ttl" ]; then
-    cat "$temp_file"
-  else
-    result="$(eval "$command")"
-    if [ -n "$result" ]; then
-      echo "$result" >"$temp_file"
-      chmod 600 "$temp_file"
-      echo "$result"
+  if [ -f "$temp_file" ]; then
+    case "$(uname -s)" in
+    Darwin)
+      mtime=$(stat -f %m "$temp_file")
+      ;;
+    Linux)
+      mtime=$(stat -c %Y "$temp_file")
+      ;;
+    esac
+    now=$(date +%s)
+    if [ $((now - mtime)) -lt "$ttl" ]; then
+      cat "$temp_file"
+      return
     fi
+  fi
+
+  result="$(eval "$command")"
+  if [ -n "$result" ]; then
+    echo "$result" >"$temp_file"
+    chmod 600 "$temp_file"
+    echo "$result"
   fi
 }
 

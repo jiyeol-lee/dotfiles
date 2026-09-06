@@ -17,6 +17,17 @@ alias ll='ls -hl --color=auto'
 alias duh='du -h -d 1 | sort -hr'
 ### Brew Update and Upgrade with cask
 alias buu='brew update && brew upgrade -g'
+## Package manager Update
+pu() {
+  case "$(uname -s)" in
+  Darwin)
+    brew update && brew upgrade -g
+    ;;
+  Linux)
+    sudo dnf update -y
+    ;;
+  esac
+}
 ### LazyGit
 alias lg='lazygit'
 
@@ -52,8 +63,17 @@ alias cvw3='cd ~/vaults/vwork3'
 # Config/Dotfiles
 ### Change directory to Config folder
 alias cc='cd ~/dotfiles'
-### shell ReLoad zshrc
-alias rlc='source ~/.zshrc'
+### shell ReLoad config
+rlc() {
+  case "$(uname -s)" in
+  Darwin)
+    source ~/.zshrc
+    ;;
+  Linux)
+    source ~/.bashrc
+    ;;
+  esac
+}
 
 # Podman
 ### Podman System Prune (all, volumes)
