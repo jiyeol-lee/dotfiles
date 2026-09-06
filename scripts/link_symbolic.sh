@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Function to create symbolic links idempotently
 # Arguments: source_path destination_path

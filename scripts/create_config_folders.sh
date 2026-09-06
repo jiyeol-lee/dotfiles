@@ -1,4 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# Create fonts
+mkdir -p ~/.local/share/fonts
 
 # Create config directories
 mkdir -p ~/.config/alacritty

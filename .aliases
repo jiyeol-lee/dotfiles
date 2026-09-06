@@ -52,8 +52,17 @@ alias cvw3='cd ~/vaults/vwork3'
 # Config/Dotfiles
 ### Change directory to Config folder
 alias cc='cd ~/dotfiles'
-### shell ReLoad zshrc
-alias rlc='source ~/.zshrc'
+### shell ReLoad config
+rlc() {
+  case "$(uname -s)" in
+  Darwin)
+    source ~/.zshrc
+    ;;
+  Linux)
+    source ~/.bashrc
+    ;;
+  esac
+}
 
 # Podman
 ### Podman System Prune (all, volumes)
