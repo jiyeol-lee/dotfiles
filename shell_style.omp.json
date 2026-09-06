@@ -1,0 +1,121 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "version": 4,
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "path",
+          "style": "plain",
+          "template": "\uf07c {{ .Path }} ",
+          "properties": {
+            "style": "mixed"
+          },
+          "foreground": "#A6E22E"
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "foreground": "#FF9F43",
+          "template": "{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
+          "options": {
+            "branch_icon": "\ue725 "
+          }
+        },
+        {
+          "type": "go",
+          "style": "plain",
+          "template": "\ue724 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
+          "cache": {
+            "duration": "168h",
+            "strategy": "folder"
+          },
+          "foreground": "#00ADD8"
+        },
+        {
+          "type": "lua",
+          "style": "plain",
+          "template": "\ue620 {{ .Full }} ",
+          "cache": {
+            "duration": "168h",
+            "strategy": "folder"
+          },
+          "foreground": "#51A0CF"
+        },
+        {
+          "type": "node",
+          "style": "plain",
+          "template": "\ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} ",
+          "cache": {
+            "duration": "168h",
+            "strategy": "folder"
+          },
+          "foreground": "#68A063"
+        },
+        {
+          "type": "python",
+          "style": "plain",
+          "template": "\ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }} ",
+          "cache": {
+            "duration": "168h",
+            "strategy": "folder"
+          },
+          "foreground": "#FFD43B"
+        },
+        {
+          "type": "rust",
+          "style": "plain",
+          "template": "\ue7a8 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
+          "cache": {
+            "duration": "168h",
+            "strategy": "folder"
+          },
+          "foreground": "#DEA584"
+        },
+        {
+          "type": "aws",
+          "style": "plain",
+          "template": "\ue7ad {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }} ",
+          "cache": {
+            "duration": "1h",
+            "strategy": "session"
+          },
+          "foreground": "#FF9900"
+        },
+        {
+          "type": "kubectl",
+          "style": "plain",
+          "template": "\u2388 {{ .Context }}{{ if .Namespace }} :: {{ .Namespace }}{{ end }} ",
+          "cache": {
+            "duration": "1m",
+            "strategy": "session"
+          },
+          "foreground": "#326CE5"
+        },
+        {
+          "type": "terraform",
+          "style": "plain",
+          "template": "\ue8bd {{ .WorkspaceName }} ",
+          "cache": {
+            "duration": "5m",
+            "strategy": "folder"
+          },
+          "foreground": "#8E54C8"
+        }
+      ]
+    },
+    {
+      "type": "rprompt",
+      "segments": [
+        {
+          "type": "time",
+          "style": "plain",
+          "template": "\uf017 {{ .CurrentDate | date .Format }}",
+          "foreground": "#D1A3E2"
+        }
+      ]
+    }
+  ]
+}
