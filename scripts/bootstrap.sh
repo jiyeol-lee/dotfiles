@@ -184,6 +184,16 @@ function doIt() {
 
     installLinuxPackages
 
+    echo "There is a mic issue on the software side to take care of it manually"
+    echo "1. Run 'sudo dnf install pavucontrol'"
+    echo "2. Run 'pavucontrol'"
+    echo "3. Go to 'Configuration'"
+    echo "4. Select 'Play HiFi quality Music (Mic1, Mic2, Speaker)' from 'Ryzen HD Audio Controller'"
+    echo "5. Select 'Input Devices'"
+    echo "6. Click 'Set as default' (check icon) and make sure unmute audio"
+    echo "7. Set volumn to 35%"
+    echo "8. Test with 'arecord -d 5 /tmp/test.wav && aplay /tmp/test.wav"
+
     source ~/.bashrc
     ;;
   esac
