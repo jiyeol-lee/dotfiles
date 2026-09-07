@@ -45,14 +45,14 @@ link_file "$HOME/dotfiles/.editorconfig" "$HOME/.editorconfig"
 # Dynamic Alacritty bindings
 target_binding=""
 case "$(uname -s)" in
-Linux*) target_binding="key-bindings-nonmacos.toml" ;;
-Darwin*) target_binding="key-bindings-macos.toml" ;;
+Linux*) target_binding="linux-specific.toml" ;;
+Darwin*) target_binding="macos-specific.toml" ;;
 esac
 
 if [ -n "$target_binding" ]; then
   # Link inside the repo folder (which is linked to config)
   # We use ln -sf to force creation/update of the symlink
-  ln -sf "$target_binding" "$HOME/dotfiles/.alacritty/key-bindings.toml"
+  ln -sf "$target_binding" "$HOME/dotfiles/.alacritty/alacritty-os-specific.toml"
 fi
 
 unset link_file
