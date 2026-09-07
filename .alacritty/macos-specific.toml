@@ -1,7 +1,5 @@
-[[keyboard.bindings]]
-key = "V"
-mods = "Control"
-action = "Paste"
+[font]
+size = 15.0
 
 # to make the Shift+Enter as Enter
 [[keyboard.bindings]]
