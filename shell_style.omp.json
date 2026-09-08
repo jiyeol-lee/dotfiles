@@ -25,56 +25,6 @@
           }
         },
         {
-          "type": "go",
-          "style": "plain",
-          "template": "\ue724 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-          "cache": {
-            "duration": "168h",
-            "strategy": "folder"
-          },
-          "foreground": "#00ADD8"
-        },
-        {
-          "type": "lua",
-          "style": "plain",
-          "template": "\ue620 {{ .Full }} ",
-          "cache": {
-            "duration": "168h",
-            "strategy": "folder"
-          },
-          "foreground": "#51A0CF"
-        },
-        {
-          "type": "node",
-          "style": "plain",
-          "template": "\ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} ",
-          "cache": {
-            "duration": "168h",
-            "strategy": "folder"
-          },
-          "foreground": "#68A063"
-        },
-        {
-          "type": "python",
-          "style": "plain",
-          "template": "\ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }} ",
-          "cache": {
-            "duration": "168h",
-            "strategy": "folder"
-          },
-          "foreground": "#FFD43B"
-        },
-        {
-          "type": "rust",
-          "style": "plain",
-          "template": "\ue7a8 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-          "cache": {
-            "duration": "168h",
-            "strategy": "folder"
-          },
-          "foreground": "#DEA584"
-        },
-        {
           "type": "aws",
           "style": "plain",
           "template": "\ue7ad {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }} ",
