@@ -187,8 +187,6 @@
     "primary/codelens": {
       "mode": "primary",
       "prompt": "{file:./prompts/agent/primary/codelens.md}",
-      "model": "opencode-go/glm-5.3-flash",
-      "variant": "max",
       "permission": {
         "bash": {
           "*": "ask",
@@ -358,8 +356,6 @@
     },
     "subagent/evaluator": {
       "description": "An agent specialized in evaluating code and content against specified criteria. Use this to evaluate changes and provide feedback or validation when you need to assess the quality, correctness, and regression testing of new or existing code and content. You always use this before finishing a task if any code has changed.",
-      "model": "opencode-go/glm-5.3-flash",
-      "variant": "low",
       "mode": "subagent",
       "hidden": true,
       "prompt": "{file:./prompts/agent/subagent/evaluator.md}",
