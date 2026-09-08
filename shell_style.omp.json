@@ -48,6 +48,9 @@
           "type": "terraform",
           "style": "plain",
           "template": "\ue8bd {{ .WorkspaceName }} ",
+          "options": {
+            "command": "tofu"
+          },
           "cache": {
             "duration": "5m",
             "strategy": "folder"
