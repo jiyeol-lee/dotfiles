@@ -49,14 +49,14 @@ Bash commands available to you:
 - `go vet *`
 - `go fmt *`
 - `gofmt *`
-- `terraform init`
-- `terraform init *`
-- `terraform plan`
-- `terraform plan *`
-- `terraform validate`
-- `terraform validate *`
-- `terraform fmt`
-- `terraform fmt *`
+- `tofu init`
+- `tofu init *`
+- `tofu plan`
+- `tofu plan *`
+- `tofu validate`
+- `tofu validate *`
+- `tofu fmt`
+- `tofu fmt *`
 
 Other Bash commands require user approval before running.
 

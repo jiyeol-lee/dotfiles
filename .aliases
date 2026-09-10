@@ -104,23 +104,25 @@ gws() {
   # shellcheck source=scripts/git_worktree_sandbox.sh
   source ~/dotfiles/scripts/git_worktree_sandbox.sh "$@"
 }
-# Terraform
-### TerraForm
-alias tf='terraform'
-### TerraForm Init
-alias tfi='terraform init'
-### TerraForm Plan
-alias tfp='terraform plan'
-### TerraForm Format
-alias tff='terraform fmt -check -recursive'
-### TerraForm Validate
-alias tfv='terraform validate'
-### TerraForm Apply
-alias tfa='terraform apply'
-### Terraform Workspace List
-alias tfwl='terraform workspace list'
-### Terraform Workspace Select
-alias tfws='terraform workspace select'
+# OpenTofu
+### openToFu
+alias tf='tofu'
+### openToFu Init
+alias tfi='tofu init'
+### openToFu Plan
+alias tfp='tofu plan'
+### openToFu Format
+alias tff='tofu fmt -check -recursive'
+### openToFu Validate
+alias tfv='tofu validate'
+### openToFu Apply
+alias tfa='tofu apply'
+### openToFu Output
+alias tfo='tofu output'
+### openToFu Workspace List
+alias tfwl='tofu workspace list'
+### openToFu Workspace Select
+alias tfws='tofu workspace select'
 
 # Go
 ### Go Run

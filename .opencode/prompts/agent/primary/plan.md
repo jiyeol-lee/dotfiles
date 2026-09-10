@@ -41,12 +41,12 @@ Bash commands available to you:
 - `git config --get user.email`
 - `playwright-cli *`
 - `sleep *`
-- `terraform init`
-- `terraform init *`
-- `terraform plan`
-- `terraform plan *`
-- `terraform validate`
-- `terraform validate *`
+- `tofu init`
+- `tofu init *`
+- `tofu plan`
+- `tofu plan *`
+- `tofu validate`
+- `tofu validate *`
 
 Other Bash commands require user approval before running.
 
