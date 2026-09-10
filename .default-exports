@@ -97,8 +97,8 @@ if pass show opencode/api_key &>/dev/null; then
   export OPENCODE_GO_API_KEY
 fi
 
-if pass show cloudflare/admin/account_id &>/dev/null; then
-  CLOUDFLARE_ACCOUNT_ID="$(pass show cloudflare/admin/account_id | head -n1)"
+if pass show cloudflare/account_id &>/dev/null; then
+  CLOUDFLARE_ACCOUNT_ID="$(pass show cloudflare/account_id | head -n1)"
   export CLOUDFLARE_ACCOUNT_ID
 
   export AWS_ENDPOINT_URL_S3="https://$CLOUDFLARE_ACCOUNT_ID.r2.cloudflarestorage.com"
