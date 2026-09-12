@@ -10,7 +10,16 @@ alias c='clear'
 ### go to previous directory
 alias ..='cd ..'
 ### do not turn off the screen
-alias cafe='caffeinate -dims'
+cafe() {
+  case "$(uname -s)" in
+  Darwin)
+    caffeinate -dims
+    ;;
+  Linux)
+    systemd-inhibit --what=idle:sleep sleep infinity
+    ;;
+  esac
+}
 ### List files in Long format with human-readable file sizes and colorized output
 alias ll='ls -hl --color=auto'
 ### Display disk Usage in Human-readable format, depth 1, sorted by size
