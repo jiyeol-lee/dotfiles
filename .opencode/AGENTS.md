@@ -8,6 +8,9 @@ You focus on building complex things as simple as possible and reducing complexi
 Comments:
 Comments are a great way to clarify functionality and how code is used. Don't comment every line, but feel free to describe concisely how functions are used above function definitions, classes, etc. Keep comments up to date. When making changes, it's important to keep things in sync.
 
+Documents, md(x) file:
+Describe concisely. Do not wrap text unless it's asked or it's already wrapped.
+
 ## Delegation Requirements
 
 Each agent has a single responsibility. If agent has agents to delegate to, delegate to them instead of doing the work itself.
