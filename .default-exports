@@ -82,41 +82,42 @@ if command -v go &>/dev/null; then
   export PATH="$PATH:$GO_BIN"
 fi
 
-if pass show google/oauth/client_id &>/dev/null; then
-  GOOGLE_CLIENT_ID="$(pass show google/oauth/client_id | head -n1)"
+if _pass_value="$(pass show google/oauth/client_id 2>/dev/null)"; then
+	GOOGLE_CLIENT_ID="${_pass_value%%$'\n'*}"
   export GOOGLE_CLIENT_ID
 fi
 
-if pass show google/oauth/client_secret &>/dev/null; then
-  GOOGLE_CLIENT_SECRET="$(pass show google/oauth/client_secret | head -n1)"
+if _pass_value="$(pass show google/oauth/client_secret 2>/dev/null)"; then
+	GOOGLE_CLIENT_SECRET="${_pass_value%%$'\n'*}"
   export GOOGLE_CLIENT_SECRET
 fi
 
-if pass show opencode/api_key &>/dev/null; then
-  OPENCODE_GO_API_KEY="$(pass show opencode/api_key | head -n1)"
+if _pass_value="$(pass show opencode/api_key 2>/dev/null)"; then
+	OPENCODE_GO_API_KEY="${_pass_value%%$'\n'*}"
   export OPENCODE_GO_API_KEY
 fi
 
-if pass show cloudflare/account_id &>/dev/null; then
-  CLOUDFLARE_ACCOUNT_ID="$(pass show cloudflare/account_id | head -n1)"
+if _pass_value="$(pass show cloudflare/account_id 2>/dev/null)"; then
+	CLOUDFLARE_ACCOUNT_ID="${_pass_value%%$'\n'*}"
   export CLOUDFLARE_ACCOUNT_ID
 
   export AWS_ENDPOINT_URL_S3="https://$CLOUDFLARE_ACCOUNT_ID.r2.cloudflarestorage.com"
-  if pass show cloudflare/admin/s3_access_key_id &>/dev/null; then
-    AWS_ACCESS_KEY_ID="$(pass show cloudflare/admin/s3_access_key_id | head -n1)"
+	if _pass_value="$(pass show cloudflare/admin/s3_access_key_id 2>/dev/null)"; then
+		AWS_ACCESS_KEY_ID="${_pass_value%%$'\n'*}"
     export AWS_ACCESS_KEY_ID
   fi
 
-  if pass show cloudflare/admin/s3_secret_access_key &>/dev/null; then
-    AWS_SECRET_ACCESS_KEY="$(pass show cloudflare/admin/s3_secret_access_key | head -n1)"
+	if _pass_value="$(pass show cloudflare/admin/s3_secret_access_key 2>/dev/null)"; then
+		AWS_SECRET_ACCESS_KEY="${_pass_value%%$'\n'*}"
     export AWS_SECRET_ACCESS_KEY
   fi
 fi
 
-if pass show cloudflare/admin/api_token &>/dev/null; then
-  CLOUDFLARE_API_TOKEN="$(pass show cloudflare/admin/api_token | head -n1)"
-  export CLOUDFLARE_API_TOKEN
+if _pass_value="$(pass show cloudflare/admin/api_token 2>/dev/null)"; then
+	CLOUDFLARE_API_TOKEN="${_pass_value%%$'\n'*}"
+	export CLOUDFLARE_API_TOKEN
 fi
+unset _pass_value
 
 #  OPENAI_API_KEY="$(temp_command "$XDG_RUNTIME_DIR/openai_api_key" "$TEMP_TTL" "pass show openai/api_key | head -n1")"
 #  if [ -n "$OPENAI_API_KEY" ]; then
