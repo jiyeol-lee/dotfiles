@@ -55,6 +55,20 @@ oc() {
 ### OpenCode Stats
 alias ocs='~/dotfiles/scripts/opencode_period_stats.sh'
 
+# Workmux
+### WorkMux
+alias wm='cli workmux'
+### WorkMux Add
+alias wma='cli workmux add'
+### WorkMux Merge
+alias wmm='cli workmux merge'
+### WorkMux Remove
+alias wmr='cli workmux remove'
+### WorkMux Open
+alias wmo='cli workmux open'
+### WorkMux Close
+alias wmc='cli workmux close'
+
 # AWS
 ### AWs SSO Login
 alias awssol='aws sso login --profile '
