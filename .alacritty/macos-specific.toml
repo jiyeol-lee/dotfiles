@@ -6,3 +6,8 @@ size = 15.0
 key = "Return"
 mods = "Shift"
 chars = "\u001b[13;2u"
+
+[[keyboard.bindings]]
+key = "J"
+mods = "Control"
+chars = "\u001b[106;5u"
