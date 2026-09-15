@@ -95,6 +95,8 @@ function installMacOSPackages() {
 function installLinuxPackages() {
   sudo dnf install akonadi-calendar-tools -y
 
+  sudo dnf install fastfetch -y
+
   sudo dnf install keepassxc -y
 
   sudo dnf install golang -y
