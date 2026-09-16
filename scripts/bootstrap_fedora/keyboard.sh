@@ -65,6 +65,8 @@ kwriteconfig6 --file kglobalshortcutsrc --group services --group org.kde.konsole
 kwriteconfig6 --file kglobalshortcutsrc --group services --group Alacritty.desktop --key _launch "Meta+T"
 ## remapping krunner launch key map
 kwriteconfig6 --file kglobalshortcutsrc --group services --group org.kde.krunner.desktop --key _launch "Alt+Space"
+## map voice dictate cli
+kwriteconfig6 --file kglobalshortcutsrc --group services --group net.local.speech-to-text.desktop --key _launch "Alt+Shift+D"
 
 # ---
 # plasmakeyboardrc
