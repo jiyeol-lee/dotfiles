@@ -61,6 +61,8 @@ kwriteconfig6 --file kglobalshortcutsrc --group plasmashell --key "manage activi
 
 ## no konsole launch key map
 kwriteconfig6 --file kglobalshortcutsrc --group services --group org.kde.konsole.desktop --key _launch "none"
+## map alacritty launch key map
+kwriteconfig6 --file kglobalshortcutsrc --group services --group Alacritty.desktop --key _launch "Meta+T"
 ## remapping krunner launch key map
 kwriteconfig6 --file kglobalshortcutsrc --group services --group org.kde.krunner.desktop --key _launch "Alt+Space"
 
