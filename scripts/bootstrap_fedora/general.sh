@@ -34,6 +34,7 @@ kwriteconfig6 --file kscreenlockerrc --group Daemon --key Autolock "false"
 kwriteconfig6 --file kscreenlockerrc --group Daemon --key LockGrace "0"
 kwriteconfig6 --file kscreenlockerrc --group Daemon --key Timeout "0"
 
+# voice to text app setting to map keybinding
 mkdir -p ~/.local/share/applications
 cat >~/.local/share/applications/net.local.speech-to-text.desktop <<'EOF'
 [Desktop Entry]
@@ -44,3 +45,4 @@ StartupNotify=false
 Type=Application
 X-KDE-GlobalAccel-CommandShortcut=true
 EOF
+kbuildsycoca6 # without running this, changes won't be applied even though you reboot the computer.
