@@ -4,6 +4,12 @@
 # you can check with `kscreen-doctor -o`
 # `eDP-1` is the default display
 kscreen-doctor output.eDP-1.scale.1.5
+# you can check with `kscreen-doctor -o`
+# `2880*1920` is the default resolution
+kscreen-doctor output.eDP-1.mode.2880x1920@60
+
+# Set battery power profile to save mode
+tuned-adm profile powersave
 
 # set organizer view
 kwriteconfig6 --file korganizerrc --group "Agenda View" --key "Hour Size" "20"
