@@ -54,7 +54,7 @@ Format:
     </script>
 
     <script type="module">
-      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.17.2/+esm";
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@12.0.0/+esm";
       mermaid.initialize({ startOnLoad: true, theme: "dark" });
     </script>
   </head>
