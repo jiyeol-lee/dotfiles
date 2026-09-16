@@ -97,6 +97,8 @@ function installLinuxPackages() {
 
   sudo dnf install fastfetch -y
 
+  sudo dnf install sqlite -y
+
   sudo dnf install keepassxc -y
 
   sudo dnf install golang -y
