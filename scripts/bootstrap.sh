@@ -109,10 +109,6 @@ function installLinuxPackages() {
 
   sudo dnf install oh-my-posh -y
 
-  # This is for audio recording in https://github.com/jiyeol-lee/voice-dictate
-  # remove it when opencode supports
-  sudo dnf install sox -y
-
   sudo dnf install pass -y
 
   sudo dnf install alacritty -y
