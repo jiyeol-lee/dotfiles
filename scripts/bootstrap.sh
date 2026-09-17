@@ -19,9 +19,6 @@ function installMacOSPackages() {
   # Install oh-my-posh
   brew install oh-my-posh
 
-  # Install sox for audio recording in https://github.com/jiyeol-lee/voice-dictate
-  brew install sox
-
   # Install opencode
   brew install anomalyco/tap/opencode
 
