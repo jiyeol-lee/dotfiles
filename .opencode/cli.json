@@ -4,6 +4,9 @@
     "name": "opencode",
     "mode": "system"
   },
+  "plugins": [
+    "./tui-plugins/speech"
+  ],
   "keybinds": {
     "leader": "ctrl+x",
     "app.exit": "ctrl+c",
