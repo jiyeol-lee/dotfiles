@@ -127,7 +127,7 @@ function installLinuxPackages() {
   curl -L https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz | tar -xJ -C ~/.local/share/fonts
   fc-cache -fv
 
-  curl -fsSL https://opencode.ai/install | bash
+  curl -fsSL https://opencode.ai/v2/install | bash
 
   go install github.com/jesseduffield/lazygit@latest
 
