@@ -1,4 +1,5 @@
-import { type Plugin } from "@opencode-ai/plugin";
+import { Plugin } from "@opencode/plugin";
+import { command } from "../lib/server-tools.ts";
 import {
   loadStore,
   paneStateFromSessions,
@@ -14,9 +15,9 @@ import {
   type PaneRow,
   type PaneStore,
   type SessionIconState,
-} from "./lib/tmux-status.ts";
+} from "../lib/tmux-status.ts";
 
-type Shell = Parameters<Plugin>[0]["$"];
+type Shell = ReturnType<typeof command>;
 
 const paneListFormat =
   "#{window_id}\t#{pane_id}\t#{pane_index}\t#{pane_current_command}\t#{pane_pid}\t#{pane_current_path}";
@@ -24,16 +25,10 @@ const paneListFormat =
 // Single painter for plugin events, zsh precmd, and the tmux pane-exited hook.
 const stripScript = `${process.env.HOME}/dotfiles/scripts/tmux_opencode_pane_strip.sh`;
 
-const listPanes = async ($: Shell): Promise<PaneRow[]> => {
-  const result = await $`tmux list-panes -a -F ${paneListFormat}`
-    .nothrow()
-    .quiet();
-  if (result.exitCode !== 0) {
-    return [];
-  }
+const listPanes = async (run: Shell): Promise<PaneRow[]> => {
+  const result = await run("tmux", ["list-panes", "-a", "-F", paneListFormat]);
 
   return result
-    .text()
     .split("\n")
     .flatMap((line) => {
       const pane = parsePaneLine(line.trim());
@@ -41,13 +36,10 @@ const listPanes = async ($: Shell): Promise<PaneRow[]> => {
     });
 };
 
-const parentPid = async ($: Shell, pid: number) => {
-  const result = await $`ps -o ppid= -p ${pid}`.nothrow().quiet();
-  if (result.exitCode !== 0) {
-    return undefined;
-  }
+const parentPid = async (run: Shell, pid: number) => {
+  const result = await run("ps", ["-o", "ppid=", "-p", String(pid)]);
 
-  const value = Number(result.text().trim());
+  const value = Number(result.trim());
   return Number.isInteger(value) && value > 0 ? value : undefined;
 };
 
@@ -68,7 +60,8 @@ const findOwnPaneId = async ($: Shell, panes: PaneRow[]) => {
   return undefined;
 };
 
-const TmuxStatus: Plugin = async ({ $ }) => {
+async function setup(ctx: Plugin.Context) {
+  const $ = command(ctx.location.directory);
   const path = statusFilePath();
   const sessions = new Map<string, SessionIconState>();
   let ownPaneId: string | undefined;
@@ -99,7 +92,7 @@ const TmuxStatus: Plugin = async ({ $ }) => {
       saveStore(path, store);
     }
 
-    await $`${stripScript}`.nothrow().quiet();
+    await $(stripScript, []);
   };
 
   const safePaint = async () => {
@@ -122,18 +115,20 @@ const TmuxStatus: Plugin = async ({ $ }) => {
     // tmux may be absent
   }
 
-  return {
-    event: async ({ event }) => {
-      const busEvent = event as unknown as BusEvent;
+  const controller = new AbortController();
+  const events = (async () => {
+    for await (const event of ctx.event.subscribe({ signal: controller.signal })) {
+      const busEvent = event as BusEvent;
+      if (event.location && event.location.directory !== ctx.location.directory) continue;
       const sessionId = sessionIdFromEvent(busEvent);
       if (!sessionId) {
-        return;
+        continue;
       }
 
       if (busEvent.type === "session.deleted") {
         sessions.delete(sessionId);
         await safePaint();
-        return;
+        continue;
       }
 
       const state = stateFromEvent(
@@ -141,18 +136,21 @@ const TmuxStatus: Plugin = async ({ $ }) => {
         statusTypeFromEvent(busEvent),
       );
       if (!state) {
-        return;
+        continue;
       }
 
       await track(sessionId, state);
-    },
-    "chat.message": async (input) => {
-      await track(input.sessionID, "running");
-    },
-    "permission.ask": async (input) => {
-      await track(input.sessionID, "ask");
-    },
+    }
+  })().catch((error) => {
+    if (!controller.signal.aborted) console.error("tmux-status event stream failed", error);
+  });
+  await ctx.session.hook("prompt", async (event) => {
+    await track(event.sessionID, "running");
+  });
+  return async () => {
+    controller.abort();
+    await events;
   };
-};
+}
 
-export default TmuxStatus;
+export default Plugin.define({ id: "tmux-status", setup });

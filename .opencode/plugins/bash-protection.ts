@@ -1,4 +1,4 @@
-import { type Plugin } from "@opencode-ai/plugin";
+import { Plugin } from "@opencode/plugin";
 
 const deniedGitSubcommands = new Set(["worktree", "checkout", "stash", "pop"]);
 const isDeniedGitOption = (token: string) =>
@@ -46,11 +46,12 @@ const isDeniedGitInvocation = (command: string) => {
   return false;
 };
 
-export const BashProtection: Plugin = async ({}) => {
-  return {
-    "tool.execute.before": async (input, output) => {
-      if (input.tool === "bash") {
-        const command = output.args.command || "";
+export default Plugin.define({
+  id: "bash-protection",
+  async setup(ctx) {
+    await ctx.tool.hook("execute.before", async (event) => {
+      if (event.tool === "bash") {
+        const command = (event.input as { command?: string }).command || "";
 
         if (/\\[ \t]*(?:\r?\n|$)/.test(command)) {
           throw new Error(
@@ -82,6 +83,6 @@ export const BashProtection: Plugin = async ({}) => {
           );
         }
       }
-    },
-  };
-};
+    });
+  },
+});

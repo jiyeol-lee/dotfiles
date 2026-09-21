@@ -1,8 +1,12 @@
-import { tool, type Plugin } from "@opencode-ai/plugin";
+import { Plugin } from "@opencode/plugin";
+import { command, tool } from "../lib/server-tools.ts";
 
-export const ToolsGhPlugin: Plugin = async ({ $ }) => {
-  return {
-    tool: {
+export default Plugin.define({
+  id: "tools-gh",
+  async setup(ctx) {
+    const run = command(ctx.location.directory);
+    const repository = async () => JSON.parse(await run("gh", ["repo", "view", "--json", "owner,name"])) as { owner: { login: string }; name: string };
+    const tools = {
       "tool__gh--retrieve-pull-request-info": tool({
         description:
           "Retrieve detailed information about a GitHub pull request, including its state, title, body, comments, reviews, and review threads. `pull_request_number` is optional and defaults to the current branch's PR if not provided. By default, resolved review threads are excluded, but can be included by setting `with_resolved` to true. Use this tool when you want to get comprehensive information about a specific pull request in the current repository.",
@@ -31,10 +35,11 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
             const pullRequestNumberArg =
               pullRequestNumber ??
               Number(
-                (await $`gh pr view --json number -q .number`).text().trim(),
+                (await run("gh", ["pr", "view", "--json", "number", "-q", ".number"])).trim(),
               );
 
-            const result = await $`gh api graphql -f query='
+            const repo = await repository();
+            const result = JSON.parse(await run("gh", ["api", "graphql", "-f", `query=
               query($owner: String!, $name: String!, $number: Int!) {
                 repository(owner: $owner, name: $name) {
                   pullRequest(number: $number) {
@@ -72,12 +77,11 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
                     }
                   }
                 }
-              }' \
-                -F owner="$(gh repo view --json owner -q .owner.login)" \
-                -F name="$(gh repo view --json name -q .name)" \
-                -F number=${pullRequestNumberArg} \
-                | jq --argjson resolved ${withResolved} '.data.repository.pullRequest.reviewThreads.nodes |= map(select(.isResolved == $resolved))'`.text();
-            return result;
+              }`, "-F", `owner=${repo.owner.login}`, "-F", `name=${repo.name}`, "-F", `number=${pullRequestNumberArg}`]));
+            if (!withResolved) {
+              result.data.repository.pullRequest.reviewThreads.nodes = result.data.repository.pullRequest.reviewThreads.nodes.filter((thread: { isResolved: boolean }) => !thread.isResolved);
+            }
+            return JSON.stringify(result, null, 2);
           } catch (error) {
             return JSON.stringify(
               {
@@ -96,7 +100,8 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
         args: {},
         async execute() {
           try {
-            const result = await $`gh api graphql -f query='
+            const repo = await repository();
+            const result = JSON.parse(await run("gh", ["api", "graphql", "-f", `query=
               query($owner: String!, $name: String!) {
                 repository(owner: $owner, name: $name) {
                   collaborators(first: 100) {
@@ -108,12 +113,9 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
                     }
                   }
                 }
-              }' \
-                -F owner="$(gh repo view --json owner -q .owner.login)" \
-                -F name="$(gh repo view --json name -q .name)" \
-                | jq '[.data.repository.collaborators.edges[].node | {login, name}]'`.text();
+              }`, "-F", `owner=${repo.owner.login}`, "-F", `name=${repo.name}`]));
 
-            return result;
+            return JSON.stringify(result.data.repository.collaborators.edges.map((edge: { node: { login: string; name: string | null } }) => edge.node), null, 2);
           } catch (error) {
             return JSON.stringify(
               {
@@ -145,9 +147,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
           try {
             const reviewersList = reviewers?.join(",");
 
-            const result = reviewersList
-              ? await $`gh pr create --draft --title ${title} --assignee @me --body-file - --reviewer ${reviewersList} < ${new Response(body)}`.text()
-              : await $`gh pr create --draft --title ${title} --assignee @me --body-file - < ${new Response(body)}`.text();
+            const result = await run("gh", ["pr", "create", "--draft", "--title", title, "--assignee", "@me", "--body-file", "-", ...(reviewersList ? ["--reviewer", reviewersList] : [])], body);
             return result;
           } catch (error) {
             return JSON.stringify(
@@ -194,21 +194,21 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
 
             let result: string;
 
-            if (body && title) {
+            if (body !== undefined && title !== undefined) {
               result =
-                await $`gh pr edit ${pullRequestNumber} --title ${title} --body-file - < ${new Response(body)}`.text();
-            } else if (body) {
+                await run("gh", ["pr", "edit", String(pullRequestNumber), "--title", title, "--body-file", "-"], body);
+            } else if (body !== undefined) {
               result =
-                await $`gh pr edit ${pullRequestNumber} --body-file - < ${new Response(body)}`.text();
-            } else if (title) {
+                await run("gh", ["pr", "edit", String(pullRequestNumber), "--body-file", "-"], body);
+            } else if (title !== undefined) {
               result =
-                await $`gh pr edit ${pullRequestNumber} --title ${title}`.text();
+                await run("gh", ["pr", "edit", String(pullRequestNumber), "--title", title]);
             } else {
               result = "No changes specified";
             }
 
             if (reviewersList) {
-              await $`gh pr edit ${pullRequestNumber} --add-reviewer ${reviewersList}`.text();
+              await run("gh", ["pr", "edit", String(pullRequestNumber), "--add-reviewer", reviewersList]);
             }
 
             return result;
@@ -236,7 +236,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
           const { pull_request_number: pullRequestNumber } = args;
 
           try {
-            const result = await $`gh pr diff ${pullRequestNumber}`.text();
+            const result = await run("gh", ["pr", "diff", String(pullRequestNumber)]);
             return result;
           } catch (error) {
             return JSON.stringify(
@@ -271,12 +271,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
           const { state = "open", severity } = args;
 
           try {
-            const owner = (await $`gh repo view --json owner -q .owner.login`)
-              .text()
-              .trim();
-            const repo = (await $`gh repo view --json name -q .name`)
-              .text()
-              .trim();
+            const repo = await repository();
             const queryParams = new URLSearchParams();
             if (state) {
               queryParams.append("state", state);
@@ -285,7 +280,7 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
               queryParams.append("severity", severity);
             }
             const result =
-              await $`gh api "/repos/${owner}/${repo}/dependabot/alerts?${queryParams.toString()}"`.text();
+              await run("gh", ["api", `/repos/${repo.owner.login}/${repo.name}/dependabot/alerts?${queryParams.toString()}`]);
             return result;
           } catch (error) {
             return JSON.stringify(
@@ -299,6 +294,14 @@ export const ToolsGhPlugin: Plugin = async ({ $ }) => {
           }
         },
       }),
-    },
-  };
-};
+    };
+    await ctx.tool.transform((editor) => {
+      editor.add({ name: "tool__gh--retrieve-pull-request-info", ...tools["tool__gh--retrieve-pull-request-info"] });
+      editor.add({ name: "tool__gh--retrieve-repository-collaborators", ...tools["tool__gh--retrieve-repository-collaborators"] });
+      editor.add({ name: "tool__gh--create-pull-request", ...tools["tool__gh--create-pull-request"] });
+      editor.add({ name: "tool__gh--edit-pull-request", ...tools["tool__gh--edit-pull-request"] });
+      editor.add({ name: "tool__gh--retrieve-pull-request-diff", ...tools["tool__gh--retrieve-pull-request-diff"] });
+      editor.add({ name: "tool__gh--retrieve-repository-dependabot-alerts", ...tools["tool__gh--retrieve-repository-dependabot-alerts"] });
+    });
+  },
+});

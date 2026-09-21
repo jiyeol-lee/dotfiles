@@ -1,8 +1,11 @@
-import { tool, type Plugin } from "@opencode-ai/plugin";
+import { Plugin } from "@opencode/plugin";
+import { command, tool } from "../lib/server-tools.ts";
 
-export const ToolsGitPlugin: Plugin = async ({ $ }) => {
-  return {
-    tool: {
+export default Plugin.define({
+  id: "tools-git",
+  async setup(ctx) {
+    const run = command(ctx.location.directory);
+    const tools = {
       "tool__git--commit": tool({
         description:
           "Create a git commit with the staged changes. `message` is a required argument for the commit message (subject line), and `body` is an optional argument for an extended commit message body. Use this tool when you have staged changes and want to create a commit.",
@@ -32,9 +35,8 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
             }
 
             // Check if there are staged changes
-            const status = await $`git status --porcelain`.text();
+            const status = await run("git", ["status", "--porcelain"]);
             const hasStagedChanges = status
-              .trim()
               .split("\n")
               .some(
                 (line) => line.length > 0 && line[0] !== " " && line[0] !== "?",
@@ -55,14 +57,14 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
             // Create the commit
             let result: string;
             if (body) {
-              result = await $`git commit -m ${message} -m ${body}`.text();
+              result = await run("git", ["commit", "-m", message, "-m", body]);
             } else {
-              result = await $`git commit -m ${message}`.text();
+              result = await run("git", ["commit", "-m", message]);
             }
 
             // Get the commit hash
             const commitHash = (
-              await $`git rev-parse --short HEAD`.text()
+              await run("git", ["rev-parse", "--short", "HEAD"])
             ).trim();
 
             return JSON.stringify(
@@ -129,12 +131,11 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
             }
 
             // Stage the files
-            await $`git add ${files}`.text();
+            await run("git", ["add", "--", ...files]);
 
             // Get the updated status to confirm what was staged
-            const status = await $`git status --porcelain`.text();
+            const status = await run("git", ["status", "--porcelain"]);
             const stagedFiles = status
-              .trim()
               .split("\n")
               .filter(
                 (line) => line.length > 0 && line[0] !== " " && line[0] !== "?",
@@ -168,7 +169,7 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
         args: {},
         async execute() {
           try {
-            const result = await $`git push -u origin HEAD`.text();
+            const result = await run("git", ["push", "-u", "origin", "HEAD"]);
 
             return JSON.stringify(
               {
@@ -190,6 +191,11 @@ export const ToolsGitPlugin: Plugin = async ({ $ }) => {
           }
         },
       }),
-    },
-  };
-};
+    };
+    await ctx.tool.transform((editor) => {
+      editor.add({ name: "tool__git--commit", ...tools["tool__git--commit"] });
+      editor.add({ name: "tool__git--stage-files", ...tools["tool__git--stage-files"] });
+      editor.add({ name: "tool__git--push", ...tools["tool__git--push"] });
+    });
+  },
+});

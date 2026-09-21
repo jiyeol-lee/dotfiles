@@ -7,7 +7,8 @@ import {
   sessionIdFromEvent,
   setPaneState,
   stateFromEvent,
-} from "./lib/tmux-status.ts";
+  statusTypeFromEvent,
+} from "../lib/tmux-status.ts";
 
 test("maps session and ask events to icon states", () => {
   assert.equal(stateFromEvent("session.created"), "idle");
@@ -20,6 +21,9 @@ test("maps session and ask events to icon states", () => {
   assert.equal(stateFromEvent("permission.replied"), "running");
   assert.equal(stateFromEvent("question.replied"), "running");
   assert.equal(stateFromEvent("question.rejected"), "running");
+  assert.equal(stateFromEvent("form.created"), "ask");
+  assert.equal(stateFromEvent("form.replied"), "running");
+  assert.equal(stateFromEvent("form.cancelled"), "running");
   assert.equal(stateFromEvent("session.updated"), null);
 });
 
@@ -36,6 +40,18 @@ test("reads session id from info or sessionID", () => {
     }),
     "ses_direct",
   );
+});
+
+test("reads v2 event data and execution lifecycle", () => {
+  const event = { type: "session.status", data: { sessionID: "ses_v2", status: { type: "busy" } } };
+  assert.equal(sessionIdFromEvent(event), "ses_v2");
+  assert.equal(statusTypeFromEvent(event), "busy");
+  assert.equal(sessionIdFromEvent({ data: { form: { sessionID: "ses_form" } } }), "ses_form");
+  assert.equal(stateFromEvent("session.execution.started"), "running");
+  assert.equal(stateFromEvent("session.retry.scheduled"), "running");
+  for (const type of ["session.execution.succeeded", "session.execution.failed", "session.execution.interrupted"]) {
+    assert.equal(stateFromEvent(type), "done");
+  }
 });
 
 test("resolves the pane state by highest priority across sessions", () => {

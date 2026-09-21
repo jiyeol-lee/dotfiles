@@ -1,0 +1,96 @@
+{
+  "$schema": "https://opencode.ai/v2/cli.json",
+  "theme": {
+    "name": "opencode-custom",
+    "mode": "system"
+  },
+  "keybinds": {
+    "leader": "ctrl+x",
+    "app.exit": "ctrl+c",
+    "session.list": "none",
+    "session.page.up": "ctrl+u",
+    "session.page.down": "ctrl+d",
+    "session.line.up": "ctrl+k",
+    "session.line.down": "ctrl+j",
+    "session.messages_last_user": "<leader>l",
+    "agent.cycle": "tab",
+    "input.newline": "shift+return",
+    "input.select.left": "none",
+    "input.select.right": "none",
+    "input.select.up": "none",
+    "input.select.down": "none",
+    "input.line.home": "none",
+    "input.line.end": "none",
+    "input.select.line.home": "none",
+    "input.select.line.end": "none",
+    "input.visual.line.home": "none",
+    "input.visual.line.end": "none",
+    "input.select.visual.line.home": "none",
+    "input.select.visual.line.end": "none",
+    "input.buffer.home": "none",
+    "input.buffer.end": "none",
+    "input.select.buffer.home": "none",
+    "input.select.buffer.end": "none",
+    "input.delete.line": "none",
+    "input.delete.to.line.end": "none",
+    "input.delete.to.line.start": "none",
+    "input.backspace": "backspace",
+    "input.delete": "none",
+    "input.undo": "none",
+    "input.redo": "none",
+    "input.word.forward": "none",
+    "input.word.backward": "none",
+    "input.select.word.forward": "none",
+    "input.select.word.backward": "none",
+    "input.delete.word.forward": "none",
+    "input.delete.word.backward": "none",
+    "input.select.all": "none"
+  },
+  "scroll": {
+    "speed": 3,
+    "acceleration": true
+  },
+  "attention": {
+    "enabled": true,
+    "notifications": true,
+    "sound": true,
+    "volume": 1,
+    "sounds": {
+      "question": "./sounds/ask.mp3",
+      "permission": "./sounds/ask.mp3",
+      "error": "./sounds/error.mp3",
+      "done": "./sounds/done.mp3",
+      "subagent_done": "./sounds/subagent_done.mp3"
+    }
+  },
+  "diffs": {
+    "wrap": "word",
+    "single": true
+  },
+  "session": {
+    "sidebar": "auto",
+    "scrollbar": true,
+    "thinking": "hide",
+    "markdown": "rendered",
+    "grouping": "auto",
+    "permissions": "prompt"
+  },
+  "animations": true,
+  "tabs": {
+    "layout": "horizontal",
+    "indicators": "status",
+    "scope": "global"
+  },
+  "prompt": {
+    "paste": "full"
+  },
+  "leader": {
+    "timeout": 2000
+  },
+  "terminal": {
+    "copy": "select"
+  },
+  "debug": {
+    "devtools": false
+  }
+}

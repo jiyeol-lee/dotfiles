@@ -1,21 +1,19 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { BashProtection } from "./bash-protection.ts";
+import BashProtection from "../plugins/bash-protection.ts";
+import type { Plugin } from "@opencode/plugin";
 
-const protection = await BashProtection(
-  {} as Parameters<typeof BashProtection>[0],
-);
-const before = protection["tool.execute.before"];
+let before: (event: { tool: string; input: unknown }) => Promise<void>;
+await BashProtection.setup({
+  tool: { hook: async (_name: string, callback: typeof before) => { before = callback; } },
+} as unknown as Plugin.Context);
 
-if (!before) {
+if (!before!) {
   throw new Error("BashProtection did not register its before hook");
 }
 
 const runBash = (command: string) =>
-  before(
-    { tool: "bash", sessionID: "test-session", callID: "test-call" },
-    { args: { command } },
-  );
+  before({ tool: "bash", input: { command } });
 
 test("rejects backslash line continuations and trailing backslashes", async () => {
   const message =

@@ -12,6 +12,7 @@ export type PaneStore = Record<string, PaneRecord>;
 
 export type BusEvent = {
   type?: string;
+  data?: Record<string, unknown>;
   properties?: Record<string, unknown>;
 };
 
@@ -35,6 +36,9 @@ export const stateFromEvent = (
     return "idle";
   }
 
+  if (type === "session.execution.started" || type === "session.retry.scheduled") return "running";
+  if (type === "session.execution.succeeded" || type === "session.execution.failed" || type === "session.execution.interrupted") return "done";
+
   if (type === "session.status") {
     if (statusType === "busy" || statusType === "retry") {
       return "running";
@@ -47,6 +51,7 @@ export const stateFromEvent = (
 
   if (
     type === "permission.asked" ||
+    type === "form.created" ||
     type === "permission.updated" ||
     type === "question.asked"
   ) {
@@ -55,6 +60,8 @@ export const stateFromEvent = (
 
   if (
     type === "permission.replied" ||
+    type === "form.replied" ||
+    type === "form.cancelled" ||
     type === "question.replied" ||
     type === "question.rejected"
   ) {
@@ -80,16 +87,17 @@ const stringField = (
 
 /** Reads session id from common event payload shapes. */
 export const sessionIdFromEvent = (event: BusEvent) => {
-  const properties = event.properties;
+  const properties = event.data ?? event.properties;
   return (
     stringField(properties, "sessionID") ??
+    stringField(asRecord(properties?.form), "sessionID") ??
     stringField(asRecord(properties?.info), "id") ??
     stringField(asRecord(properties?.session), "id")
   );
 };
 
 export const statusTypeFromEvent = (event: BusEvent) => {
-  const status = asRecord(event.properties?.status);
+  const status = asRecord((event.data ?? event.properties)?.status);
   return stringField(status, "type");
 };
 
