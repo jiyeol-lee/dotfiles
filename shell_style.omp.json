@@ -19,7 +19,7 @@
           "type": "git",
           "style": "plain",
           "foreground": "#FF9F43",
-          "template": "{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
+          "template": "{{ .UpstreamIcon }}{{ .HEAD }} ",
           "options": {
             "branch_icon": "\ue725 "
           }
@@ -27,7 +27,7 @@
         {
           "type": "aws",
           "style": "plain",
-          "template": "\ue7ad {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }} ",
+          "template": "\ue7ad {{ if .Env.AWS_PROFILE }}{{ .Env.AWS_PROFILE }}{{ end }}{{ if .Region }}@{{ .Region }}{{ end }} ",
           "cache": {
             "duration": "1h",
             "strategy": "session"
