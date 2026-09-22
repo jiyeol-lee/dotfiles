@@ -1,6 +1,9 @@
 {
   "username": "Jiyeol Lee",
   "default_agent": "plan",
+  "websearch": {
+    "provider": "exa"
+  },
   "autoupdate": false,
   "lsp": false,
   "permissions": [
@@ -78,6 +81,7 @@
         { "action": "todowrite", "resource": "*", "effect": "allow" },
         { "action": "todoread", "resource": "*", "effect": "allow" },
         { "action": "webfetch", "resource": "*", "effect": "allow" },
+        { "action": "websearch", "resource": "*", "effect": "allow" },
         { "action": "question", "resource": "*", "effect": "allow" },
         { "action": "subagent", "resource": "*", "effect": "deny" },
         { "action": "subagent", "resource": "explore", "effect": "allow" },
@@ -142,6 +146,7 @@
         { "action": "todowrite", "resource": "*", "effect": "allow" },
         { "action": "todoread", "resource": "*", "effect": "allow" },
         { "action": "webfetch", "resource": "*", "effect": "allow" },
+        { "action": "websearch", "resource": "*", "effect": "allow" },
         { "action": "question", "resource": "*", "effect": "allow" },
         { "action": "subagent", "resource": "*", "effect": "deny" },
         { "action": "subagent", "resource": "explore", "effect": "allow" },
@@ -207,6 +212,7 @@
         { "action": "todowrite", "resource": "*", "effect": "allow" },
         { "action": "todoread", "resource": "*", "effect": "allow" },
         { "action": "webfetch", "resource": "*", "effect": "allow" },
+        { "action": "websearch", "resource": "*", "effect": "allow" },
         { "action": "question", "resource": "*", "effect": "allow" },
         { "action": "subagent", "resource": "*", "effect": "deny" },
         { "action": "subagent", "resource": "explore", "effect": "allow" },
