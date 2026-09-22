@@ -1,6 +1,6 @@
 {
   "username": "Jiyeol Lee",
-  "default_agent": "primary/plan",
+  "default_agent": "plan",
   "autoupdate": false,
   "lsp": false,
   "permissions": [
@@ -27,19 +27,10 @@
     }
   },
   "agents": {
-    "plan": {
-      "disabled": true
-    },
-    "build": {
-      "disabled": true
-    },
-    "explore": {
-      "disabled": true
-    },
     "general": {
       "disabled": true
     },
-    "primary/plan": {
+    "plan": {
       "mode": "primary",
       "permissions": [
         { "action": "shell", "resource": "*", "effect": "ask" },
@@ -89,14 +80,14 @@
         { "action": "webfetch", "resource": "*", "effect": "allow" },
         { "action": "question", "resource": "*", "effect": "allow" },
         { "action": "subagent", "resource": "*", "effect": "deny" },
-        { "action": "subagent", "resource": "subagent/explore", "effect": "allow" },
+        { "action": "subagent", "resource": "explore", "effect": "allow" },
         { "action": "skill", "resource": "grill-me", "effect": "allow" },
         { "action": "skill", "resource": "playwright-cli", "effect": "allow" },
         { "action": "tool__gh--retrieve-pull-request-info", "resource": "*", "effect": "allow" },
         { "action": "tool__gh--retrieve-pull-request-diff", "resource": "*", "effect": "allow" }
       ]
     },
-    "primary/build": {
+    "build": {
       "mode": "primary",
       "permissions": [
         { "action": "shell", "resource": "*", "effect": "ask" },
@@ -153,9 +144,9 @@
         { "action": "webfetch", "resource": "*", "effect": "allow" },
         { "action": "question", "resource": "*", "effect": "allow" },
         { "action": "subagent", "resource": "*", "effect": "deny" },
-        { "action": "subagent", "resource": "subagent/explore", "effect": "allow" },
-        { "action": "subagent", "resource": "subagent/generator", "effect": "allow" },
-        { "action": "subagent", "resource": "subagent/evaluator", "effect": "allow" },
+        { "action": "subagent", "resource": "explore", "effect": "allow" },
+        { "action": "subagent", "resource": "generator", "effect": "allow" },
+        { "action": "subagent", "resource": "evaluator", "effect": "allow" },
         { "action": "skill", "resource": "grill-me", "effect": "allow" },
         { "action": "skill", "resource": "playwright-cli", "effect": "allow" },
         { "action": "skill", "resource": "pull-request", "effect": "allow" },
@@ -167,7 +158,7 @@
         { "action": "tool__git--push", "resource": "*", "effect": "allow" }
       ]
     },
-    "primary/codelens": {
+    "codelens": {
       "mode": "primary",
       "permissions": [
         { "action": "shell", "resource": "*", "effect": "ask" },
@@ -218,13 +209,13 @@
         { "action": "webfetch", "resource": "*", "effect": "allow" },
         { "action": "question", "resource": "*", "effect": "allow" },
         { "action": "subagent", "resource": "*", "effect": "deny" },
-        { "action": "subagent", "resource": "subagent/explore", "effect": "allow" },
+        { "action": "subagent", "resource": "explore", "effect": "allow" },
         { "action": "skill", "resource": "playwright-cli", "effect": "allow" },
         { "action": "tool__gh--retrieve-pull-request-info", "resource": "*", "effect": "allow" },
         { "action": "tool__gh--retrieve-pull-request-diff", "resource": "*", "effect": "allow" }
       ]
     },
-    "subagent/explore": {
+    "explore": {
       "description": "Fast agent specialized for exploring codebases. Use this when you need to quickly find files by patterns (eg. \"src/components /**/*.tsx\"), search code for keywords (eg. \"API endpoints\"), or answer questions about the codebase (eg. \"how do API endpoints work?\"). When calling this agent, specify the desired thoroughness level: \"quick\" for basic searches, \"medium\" for moderate exploration, or \"very thorough\" for comprehensive analysis across multiple locations and naming conventions.",
       "model": "openai/gpt-5.6-terra",
       "variant": "low",
@@ -250,7 +241,7 @@
         { "action": "tool__gh--retrieve-pull-request-diff", "resource": "*", "effect": "allow" }
       ]
     },
-    "subagent/generator": {
+    "generator": {
       "description": "Agent specialized for substantial code and content generation. Use this when you need to create/update/delete files, implement features, or generate content based on specifications. Do not use this for simple code or content modifications.",
       "mode": "subagent",
       "hidden": true,
@@ -320,7 +311,7 @@
         { "action": "tool__gh--retrieve-repository-dependabot-alerts", "resource": "*", "effect": "allow" }
       ]
     },
-    "subagent/evaluator": {
+    "evaluator": {
       "description": "An agent specialized in evaluating code and content against specified criteria. Use this to evaluate changes and provide feedback or validation when you need to assess the quality, correctness, and regression testing of new or existing code and content. You always use this before finishing a task if any code has changed.",
       "mode": "subagent",
       "hidden": true,
