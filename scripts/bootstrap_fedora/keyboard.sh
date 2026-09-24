@@ -38,6 +38,12 @@ kwriteconfig6 --file kglobalshortcutsrc --group kwin --key "Grid View" "none,non
 ## remapping switching windows key map
 kwriteconfig6 --file kglobalshortcutsrc --group kwin --key "Walk Through Windows" "Alt+Tab,none,Walk Through Windows"
 kwriteconfig6 --file kglobalshortcutsrc --group kwin --key "Walk Through Windows (Reverse)" "Alt+Shift+Tab,none,Walk Through Windows (Reverse)"
+## remapping window opacity key map
+kwriteconfig6 --file kglobalshortcutsrc --group kwin --key "Decrease Opacity" "Meta+-,none,Decrease Opacity of Active Window by 5%"
+kwriteconfig6 --file kglobalshortcutsrc --group kwin --key "Increase Opacity" "Meta+=,none,Increase Opacity of Active Window by 5%"
+## [unused] remove view zoom key map
+kwriteconfig6 --file kglobalshortcutsrc --group kwin --key "view_zoom_in" "none,none,Zoom In"
+kwriteconfig6 --file kglobalshortcutsrc --group kwin --key "view_zoom_out" "none,none,Zoom Out"
 
 ## remapping lock mode key map
 kwriteconfig6 --file kglobalshortcutsrc --group ksmserver --key "Lock Session" "Meta+L,none,Lock Session"
