@@ -52,8 +52,6 @@ oc() {
   ~/dotfiles/scripts/tmux_opencode_pane_strip.sh
   return $code
 }
-### OpenCode Stats
-alias ocs='~/dotfiles/scripts/opencode_period_stats.sh'
 
 # Workmux
 ### WorkMux
