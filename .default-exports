@@ -105,6 +105,11 @@ if _pass_value="$(pass show exa/api_key 2>/dev/null)"; then
   export EXA_API_KEY
 fi
 
+if _pass_value="$(pass show opencode/server_password 2>/dev/null)"; then
+  EXA_API_KEY="${_pass_value%%$'\n'*}"
+  export OPENCODE_PASSWORD
+fi
+
 if _pass_value="$(pass show cloudflare/account_id 2>/dev/null)"; then
   CLOUDFLARE_ACCOUNT_ID="${_pass_value%%$'\n'*}"
   export CLOUDFLARE_ACCOUNT_ID
