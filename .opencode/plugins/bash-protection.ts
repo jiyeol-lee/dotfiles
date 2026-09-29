@@ -50,7 +50,7 @@ export default Plugin.define({
   id: "bash-protection",
   async setup(ctx) {
     await ctx.tool.hook("execute.before", async (event) => {
-      if (event.tool === "bash") {
+      if (event.tool === "shell") {
         const command = (event.input as { command?: string }).command || "";
 
         if (/\\[ \t]*(?:\r?\n|$)/.test(command)) {

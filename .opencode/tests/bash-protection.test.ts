@@ -5,15 +5,27 @@ import type { Plugin } from "@opencode/plugin";
 
 let before: (event: { tool: string; input: unknown }) => Promise<void>;
 await BashProtection.setup({
-  tool: { hook: async (_name: string, callback: typeof before) => { before = callback; } },
+  tool: { hook: async (name: string, callback: typeof before) => {
+    assert.equal(name, "execute.before");
+    before = callback;
+  } },
 } as unknown as Plugin.Context);
 
 if (!before!) {
   throw new Error("BashProtection did not register its before hook");
 }
 
-const runBash = (command: string) =>
-  before({ tool: "bash", input: { command } });
+const runShell = (command: string) =>
+  before({ tool: "shell", input: { command } });
+
+test("ignores unrelated tools", async () => {
+  await assert.doesNotReject(
+    before({ tool: "read", input: { path: "script.py" } }),
+  );
+  await assert.doesNotReject(
+    before({ tool: "custom", input: { command: "python script.py" } }),
+  );
+});
 
 test("rejects backslash line continuations and trailing backslashes", async () => {
   const message =
@@ -23,14 +35,14 @@ test("rejects backslash line continuations and trailing backslashes", async () =
   for (const lineEnding of ["\n", "\r\n"]) {
     for (const whitespace of trailingWhitespace) {
       await assert.rejects(
-        runBash(`command1\\${whitespace}${lineEnding}command2`),
+        runShell(`command1\\${whitespace}${lineEnding}command2`),
         { message },
       );
     }
   }
 
   for (const whitespace of trailingWhitespace) {
-    await assert.rejects(runBash(`command1\\${whitespace}`), { message });
+    await assert.rejects(runShell(`command1\\${whitespace}`), { message });
   }
 });
 
@@ -39,7 +51,7 @@ test("allows backslashes that are not at a line or input boundary", async () => 
     "printf 'one\\two'",
     "printf '/tmp/one\\two'",
   ]) {
-    await assert.doesNotReject(runBash(command));
+    await assert.doesNotReject(runShell(command));
   }
 });
 
@@ -56,7 +68,7 @@ test("rejects raw shell separator and control characters", async () => {
     "git status\n",
   ]) {
     await assert.rejects(
-      runBash(command),
+      runShell(command),
       /Shell separator and control characters/,
     );
   }
@@ -73,7 +85,7 @@ test("rejects direct denied Git commands", async () => {
     "git -c alias.co=checkout co mai",
     "git -c color.ui=false status",
   ]) {
-    await assert.rejects(runBash(command), {
+    await assert.rejects(runShell(command), {
       message:
         "`git -c`, `git -C`, `git worktree`, `git checkout`, `git stash`, `git pop` commands are not allowed.",
     });
@@ -93,7 +105,7 @@ test("rejects every denied Git target after supported options", async () => {
 
   for (const option of supportedOptions) {
     for (const target of deniedTargets) {
-      await assert.rejects(runBash(`git ${option} ${target}`), {
+      await assert.rejects(runShell(`git ${option} ${target}`), {
         message:
           "`git -c`, `git -C`, `git worktree`, `git checkout`, `git stash`, `git pop` commands are not allowed.",
       });
@@ -109,20 +121,20 @@ test("allows safe Git commands", async () => {
     "git --no-pager --git-dir=.git status",
     "git show checkout",
   ]) {
-    await assert.doesNotReject(runBash(command));
+    await assert.doesNotReject(runShell(command));
   }
 });
 
 test("preserves interpreter and text-tool protection", async () => {
   for (const command of ["python script.py", "python3 script.py", "node script.js"]) {
-    await assert.rejects(runBash(command), {
+    await assert.rejects(runShell(command), {
       message:
         "Inline script execution with interpreters (python, python3, node) is not allowed.",
     });
   }
 
   for (const command of ["awk '{print $1}' file", "sed 's/a/b/' file", "perl -e 'print 1'"]) {
-    await assert.rejects(runBash(command), {
+    await assert.rejects(runShell(command), {
       message:
         "Inline script execution with text processing tools (awk, sed, perl) is not allowed.",
     });
