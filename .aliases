@@ -46,12 +46,7 @@ alias osrs='openssl rand -hex'
 
 # Opencode (AI)
 ### Open opencode in current directory
-oc() {
-  command opencode "$@"
-  local -i code=$?
-  ~/dotfiles/scripts/tmux_opencode_pane_strip.sh
-  return $code
-}
+alias oc='opencode'
 
 # Workmux
 ### WorkMux
