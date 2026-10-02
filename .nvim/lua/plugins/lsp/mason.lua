@@ -96,6 +96,7 @@ M.config = function()
     "tflint",
     "yamlls",
     "svelte",
+    "ruff",
   }
   local mason_setup = {
     ui = {
@@ -111,12 +112,26 @@ M.config = function()
   }
   local mason_lspconfig_setup = {
     ensure_installed = servers,
-    automatic_installation = true,
     automatic_enable = false,
   }
 
   require("mason").setup(mason_setup)
   require("mason-lspconfig").setup(mason_lspconfig_setup)
+
+  local registry = require("mason-registry")
+  registry.refresh(function(success)
+    if not success then
+      vim.notify("Failed to refresh Mason registry", vim.log.levels.ERROR)
+      return
+    end
+
+    for _, name in ipairs({ "prettier", "shellcheck", "shfmt" }) do
+      local pkg = registry.get_package(name)
+      if not pkg:is_installed() and not pkg:is_installing() then
+        pkg:install()
+      end
+    end
+  end)
 
   for _, server in pairs(servers) do
     local lsp_options = {

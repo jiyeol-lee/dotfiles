@@ -69,10 +69,6 @@ function installMacOSPackages() {
   # Install go
   brew install go
 
-  # Install shell tools
-  brew install shellcheck
-  brew install shfmt
-
   # Install lua tools
   brew install stylua
 
@@ -119,10 +115,6 @@ function installLinuxPackages() {
   sudo dnf install neovim -y
 
   sudo dnf install gh -y
-
-  sudo dnf install ShellCheck -y
-
-  sudo dnf install shfmt -y
 
   curl -L https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz | tar -xJ -C ~/.local/share/fonts
   fc-cache -fv
