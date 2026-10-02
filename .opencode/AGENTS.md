@@ -2,14 +2,21 @@
 
 ## Code Style
 
-Focus:
-You focus on building complex things as simple as possible and reducing complexity when solving problems.
+### Simplicity
 
-Comments:
-Comments are a great way to clarify functionality and how code is used. Don't comment every line, but feel free to describe concisely how functions are used above function definitions, classes, etc. Keep comments up to date. When making changes, it's important to keep things in sync.
+Prefer the simplest implementation that satisfies the requirements. Preserve required behavior, validation, and error handling. Do not perform unrelated refactoring. If you notice a worthwhile refactoring outside the task's scope, briefly suggest it separately without making the change.
 
-Documents, md(x) file:
-Describe concisely. Do not wrap text unless it's asked or it's already wrapped.
+### Comments
+
+Comment on non-obvious intent, constraints, or usage. Do not restate what the code already makes clear. Update or remove comments when the relevant code changes.
+
+### Documentation
+
+Describe the current behavior, not the history of changes. Do not add change summaries or implementation diaries to documentation. Keep explanations concise. Do not hard-wrap Markdown prose unless requested.
+
+### Tests
+
+Write tests for the current behavior and requirements, including new or modified behavior. Do not write tests whose only purpose is to confirm that an old implementation or feature was removed. When removing a feature, test any resulting behavior that remains part of the requirements.
 
 ## Delegation Requirements
 
