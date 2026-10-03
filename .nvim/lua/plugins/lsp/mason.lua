@@ -97,6 +97,7 @@ M.config = function()
     "yamlls",
     "svelte",
     "ruff",
+    "golangci_lint_ls"
   }
   local mason_setup = {
     ui = {
