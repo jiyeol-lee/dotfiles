@@ -73,7 +73,8 @@
     "thinking": "hide",
     "markdown": "rendered",
     "grouping": "auto",
-    "permissions": "prompt"
+    "permissions": "prompt",
+    "verbosity": "low"
   },
   "animations": true,
   "tabs": {
