@@ -125,7 +125,7 @@ M.config = function()
       return
     end
 
-    for _, name in ipairs({ "prettier", "shellcheck", "shfmt" }) do
+    for _, name in ipairs({ "prettier", "shellcheck", "shfmt", "golangci-lint" }) do
       local pkg = registry.get_package(name)
       if not pkg:is_installed() and not pkg:is_installing() then
         pkg:install()
