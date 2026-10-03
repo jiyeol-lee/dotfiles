@@ -48,6 +48,11 @@
       "action": "skill",
       "resource": "unslop",
       "effect": "allow"
+    },
+    {
+      "action": "skill",
+      "resource": "global-convention",
+      "effect": "allow"
     }
   ],
   "instructions": [
