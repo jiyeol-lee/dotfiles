@@ -61,6 +61,10 @@ alias wmr='cli workmux remove'
 alias wmo='cli workmux open'
 ### WorkMux Close
 alias wmc='cli workmux close'
+### WorkMux Sandbox
+alias wmsb='cli workmux sandbox build --no-cache'
+### WorkMux Sandbox Run
+alias wmsr='cli workmux sandbox run'
 
 # AWS
 ### AWs SSO Login
