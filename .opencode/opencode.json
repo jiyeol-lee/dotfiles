@@ -51,7 +51,7 @@
     },
     {
       "action": "skill",
-      "resource": "global-convention",
+      "resource": "behavioral-guidelines",
       "effect": "allow"
     }
   ],
