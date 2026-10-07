@@ -328,6 +328,11 @@
           "effect": "allow"
         },
         {
+          "action": "subagent",
+          "resource": "evaluator",
+          "effect": "allow"
+        },
+        {
           "action": "skill",
           "resource": "grill-me",
           "effect": "allow"
