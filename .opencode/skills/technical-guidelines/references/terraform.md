@@ -2,7 +2,7 @@
 
 These are the convention when you write terraform code. You MUST OBEY the following rules.
 
-1. Prefer to use `data` block when defining policy.
+1. Use `data` block when defining policy.
 
 Example:
 
