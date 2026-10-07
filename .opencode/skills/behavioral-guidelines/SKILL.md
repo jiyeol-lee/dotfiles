@@ -5,7 +5,7 @@ description: Behavioral guideline to complete the mission. Use when writing, rev
 
 # Behavioral Guidelines
 
-Guidelines described here supersede all of the other existing guidelines. you MUST OBEY these guidelines.
+Behavioral guidelines described here supersede all of the other existing behavioral guidelines. you MUST OBEY following guidelines.
 
 ## Simplicity First
 
