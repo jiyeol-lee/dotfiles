@@ -51,12 +51,7 @@
     },
     {
       "action": "skill",
-      "resource": "behavioral-guidelines",
-      "effect": "allow"
-    },
-    {
-      "action": "skill",
-      "resource": "technical-guidelines",
+      "resource": "guidelines",
       "effect": "allow"
     }
   ],

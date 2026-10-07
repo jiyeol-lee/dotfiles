@@ -1,9 +1,9 @@
 ---
-name: behavioral-guidelines
-description: Behavioral guideline to complete the mission. Use when writing, reviewing, or refactoring.
+name: guidelines
+description: Guidelines to complete the mission. Use when writing, reviewing, or refactoring.
 ---
 
-# Behavioral Guidelines
+# Guidelines
 
 Behavioral guidelines described here supersede all of the other existing behavioral guidelines. you MUST OBEY following guidelines.
 
@@ -73,3 +73,11 @@ For multi-step tasks, state a brief plan:
 - Write tests for current behavior and requirements, including new or modified behavior.
 - Do not write tests solely to confirm that an old implementation or feature was removed.
 - When removing a feature, test any resulting behavior that remains in the requirements.
+
+## Technical Guidelines
+
+Technical guidelines described here supersede all of the other existing technical guidelines. you MUST OBEY following guidelines.
+
+Make sure to read the right references before writing, reviewing, or refactoring.
+
+1. [Terraform](./references/terraform.md): Terraform code only.
