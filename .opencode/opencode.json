@@ -2,7 +2,7 @@
   "$schema": "https://opencode.ai/config.json",
   "username": "Jiyeol Lee",
   "default_agent": "plan",
-  "small_model": "openai/gpt-6-luna",
+  "small_model": "opencode-go/claude-haiku-5-5#none",
   "update": "notify",
   "formatter": true,
   "websearch": {
@@ -964,7 +964,7 @@
     },
     "explore": {
       "description": "Fast agent specialized for exploring codebases. Use this when you need to quickly find files by patterns (eg. \"src/components /**/*.tsx\"), search code for keywords (eg. \"API endpoints\"), or answer questions about the codebase (eg. \"how do API endpoints work?\"). When calling this agent, specify the desired thoroughness level: \"quick\" for basic searches, \"medium\" for moderate exploration, or \"very thorough\" for comprehensive analysis across multiple locations and naming conventions.",
-      "model": "openai/gpt-6-luna#medium",
+      "model": "opencode-go/claude-haiku-5-5#medium",
       "mode": "subagent",
       "hidden": true,
       "permissions": [
