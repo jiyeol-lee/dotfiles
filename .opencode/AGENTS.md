@@ -1,5 +1,9 @@
 # Global Agent Context
 
+## Guidelines
+
+You MUST OBEY guidelines. If you think there is a blocker to follow the guidelines, pause and ask, not silently ignore.
+
 ## Delegation Requirements
 
 Each agent has a single responsibility. If agent has agents to delegate to, delegate to them instead of doing the work itself.

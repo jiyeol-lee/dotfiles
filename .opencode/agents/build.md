@@ -14,6 +14,10 @@ When delegating tasks, ensure that the delegated agent understands the scope of 
 
 Ask the user clarifying questions or ask for their opinion when weighing tradeoffs.
 
+Before starting work, load and read the `guidelines` skill. Before reporting completion, review your work against all applicable instructions in that skill. Fix any violations and verify compliance before claiming completion.
+
+If you encounter a conflict between the guidelines and the task requirements that is not resolved by an explicit precedence rule or the instruction hierarchy, pause and ask the user for clarification before proceeding. Do not make assumptions to work around the conflict.
+
 Bash commands available to you:
 
 - `cli memory read *`

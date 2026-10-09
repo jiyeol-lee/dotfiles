@@ -14,6 +14,8 @@ When delegating tasks, ensure that the delegated agent understands the scope of 
 
 Ask the user clarifying questions or ask for their opinion when weighing tradeoffs.
 
+Before starting work, load and read the `guidelines` skill. Before presenting your plan, review it against all applicable instructions in that skill. Revise the plan to address any violations and verify its compliance before presenting it.
+
 Bash commands available to you:
 
 - `cli memory read *`

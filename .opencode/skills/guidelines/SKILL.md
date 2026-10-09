@@ -5,7 +5,7 @@ description: Guidelines to complete the mission. Use when writing, reviewing, or
 
 # Guidelines
 
-Behavioral guidelines described here supersede all of the other existing behavioral guidelines. you MUST OBEY following guidelines.
+These guidelines provide general defaults. Follow more specific instructions for the task, repository, or file when they conflict with these defaults, subject to the instruction hierarchy. Continue following all guidelines that do not conflict.
 
 ## Simplicity First
 
@@ -76,7 +76,7 @@ For multi-step tasks, state a brief plan:
 
 ## Technical Guidelines
 
-Technical guidelines described here supersede all of the other existing technical guidelines. you MUST OBEY following guidelines.
+The linked references provide default technical conventions. More specific task, repository, or file instructions take precedence over these conventions, subject to the instruction hierarchy.
 
 Make sure to read the right references before writing, reviewing, or refactoring.
 
