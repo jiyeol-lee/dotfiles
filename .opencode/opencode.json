@@ -40,6 +40,11 @@
       "effect": "allow"
     },
     {
+      "action": "external_directory",
+      "resource": "~/dev/**",
+      "effect": "ask"
+    },
+    {
       "action": "skill",
       "resource": "*",
       "effect": "deny"
@@ -55,9 +60,7 @@
       "effect": "allow"
     }
   ],
-  "instructions": [
-    "AGENTS.md"
-  ],
+  "instructions": ["AGENTS.md"],
   "mcp": {
     "servers": {
       "mcp__context7": {
