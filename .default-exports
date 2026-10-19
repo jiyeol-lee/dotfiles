@@ -99,8 +99,8 @@ if _pass_value="$(pass show google/oauth/client_secret 2>/dev/null)"; then
 fi
 
 if _pass_value="$(pass show opencode/api_key 2>/dev/null)"; then
-  OPENCODE_GO_API_KEY="${_pass_value%%$'\n'*}"
-  export OPENCODE_GO_API_KEY
+  OPENCODE_API_KEY="${_pass_value%%$'\n'*}"
+  export OPENCODE_API_KEY
 fi
 
 if _pass_value="$(pass show exa/api_key 2>/dev/null)"; then
