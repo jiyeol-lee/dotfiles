@@ -280,7 +280,7 @@ export default Plugin.define({
         }
         const probability = result.probability;
         if (before !== snapshot(invocation)) return;
-        const approve = probability > 0.95;
+        const approve = probability > 0.9;
         const notification = Object.freeze({
           command: call.command,
           sessionID: event.sessionID,
