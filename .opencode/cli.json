@@ -75,7 +75,7 @@
     "markdown": "rendered",
     "grouping": "auto",
     "permissions": "prompt",
-    "verbosity": "low"
+    "verbosity": "medium"
   },
   "animations": true,
   "tabs": {
