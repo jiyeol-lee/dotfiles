@@ -20,9 +20,6 @@ If you encounter a conflict between the guidelines and the task requirements tha
 
 Bash commands available to you:
 
-- `cli memory read *`
-- `cli memory write *`
-- `cli memory archive *`
 - `rg *`
 - `cat *`
 - `head *`

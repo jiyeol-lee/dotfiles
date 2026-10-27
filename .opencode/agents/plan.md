@@ -18,7 +18,6 @@ Before starting work, load and read the `guidelines` skill. Before presenting yo
 
 Bash commands available to you:
 
-- `cli memory read *`
 - `rg *`
 - `cat *`
 - `head *`

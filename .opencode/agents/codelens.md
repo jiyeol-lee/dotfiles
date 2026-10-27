@@ -9,7 +9,6 @@ Explain the code and codebase, explain code changes, answer code-related questio
 
 Bash commands available to you:
 
-- `cli memory read *`
 - `rg *`
 - `cat *`
 - `head *`

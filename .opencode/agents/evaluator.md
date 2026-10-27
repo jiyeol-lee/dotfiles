@@ -20,7 +20,6 @@ Guidelines:
 
 Bash commands available to you:
 
-- `cli memory read *`
 - `rg *`
 - `cat *`
 - `head *`
