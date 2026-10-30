@@ -79,7 +79,7 @@
   },
   "animations": true,
   "tabs": {
-    "layout": "horizontal",
+    "layout": "vertical",
     "indicators": "status",
     "scope": "global"
   },
