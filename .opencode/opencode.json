@@ -10,9 +10,14 @@
   },
   "permissions": [
     {
-      "action": "mcp__*",
+      "action": "mcp__context7_*",
       "resource": "*",
-      "effect": "deny"
+      "effect": "allow"
+    },
+    {
+      "action": "mcp__aws-knowledge_*",
+      "resource": "*",
+      "effect": "allow"
     },
     {
       "action": "tool__*",
@@ -322,6 +327,16 @@
         },
         {
           "action": "question",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "mcp__context7_*",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "mcp__aws-knowledge_*",
           "resource": "*",
           "effect": "allow"
         },
@@ -1044,16 +1059,6 @@
           "effect": "deny"
         },
         {
-          "action": "mcp__context7_*",
-          "resource": "*",
-          "effect": "allow"
-        },
-        {
-          "action": "mcp__aws-knowledge_*",
-          "resource": "*",
-          "effect": "allow"
-        },
-        {
           "action": "tool__gh--retrieve-pull-request-info",
           "resource": "*",
           "effect": "allow"
@@ -1361,16 +1366,6 @@
           "effect": "allow"
         },
         {
-          "action": "mcp__context7_*",
-          "resource": "*",
-          "effect": "allow"
-        },
-        {
-          "action": "mcp__aws-knowledge_*",
-          "resource": "*",
-          "effect": "allow"
-        },
-        {
           "action": "tool__gh--retrieve-pull-request-info",
           "resource": "*",
           "effect": "allow"
@@ -1601,16 +1596,6 @@
           "action": "question",
           "resource": "*",
           "effect": "deny"
-        },
-        {
-          "action": "mcp__context7_*",
-          "resource": "*",
-          "effect": "allow"
-        },
-        {
-          "action": "mcp__aws-knowledge_*",
-          "resource": "*",
-          "effect": "allow"
         },
         {
           "action": "tool__gh--retrieve-pull-request-info",
