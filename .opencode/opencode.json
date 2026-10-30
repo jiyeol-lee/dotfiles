@@ -45,6 +45,11 @@
       "effect": "ask"
     },
     {
+      "action": "external_directory",
+      "resource": "~/dotfiles/.opencode/**",
+      "effect": "ask"
+    },
+    {
       "action": "skill",
       "resource": "*",
       "effect": "deny"
@@ -61,6 +66,11 @@
     }
   ],
   "instructions": ["AGENTS.md"],
+  "references": {
+    "opencode-settings": {
+      "path": "~/dotfiles/.opencode"
+    }
+  },
   "mcp": {
     "servers": {
       "mcp__context7": {
