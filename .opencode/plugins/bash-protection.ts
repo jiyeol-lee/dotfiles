@@ -65,18 +65,6 @@ export default Plugin.define({
           );
         }
 
-        if (/(python3?|node)\b/.test(command)) {
-          throw new Error(
-            "Inline script execution with interpreters (python, python3, node) is not allowed.",
-          );
-        }
-
-        if (/(awk|sed|perl)\b/.test(command)) {
-          throw new Error(
-            "Inline script execution with text processing tools (awk, sed, perl) is not allowed.",
-          );
-        }
-
         if (isDeniedGitInvocation(command)) {
           throw new Error(
             "`git -c`, `git -C`, `git worktree`, `git checkout`, `git stash`, `git pop` commands are not allowed.",

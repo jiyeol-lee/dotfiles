@@ -14,7 +14,7 @@ description: Analyzes branch diffs, drafts PR titles and bodies following Conven
    - Check for PR template: try to read `.github/pull_request_template.md` or `pull_request_template.md`
 3. **Draft**
    - **If existing PR**:
-     - Fetch context (reviews, comments) using `tool__gh--retrieve-pull-request-info`
+     - Fetch PR details, reviews, and comments with `gh pr view --json number,title,body,state,reviews,comments`; use `gh api graphql` for review threads when needed
      - If a template was found, validate the existing body against it and draft updates conforming to the template
      - Draft content updates based on reviews/comments
    - **If new PR**:
@@ -24,8 +24,8 @@ description: Analyzes branch diffs, drafts PR titles and bodies following Conven
      - Ask the user: "Who should be the reviewer?"
    - Present the draft (title, body) and wait for approval
 4. **Publish** (only after explicit approval)
-   - Push commits if needed: use `tool__git--push`
-   - Use `tool__gh--create-pull-request` (new) or `tool__gh--edit-pull-request` (existing)
+   - Push commits if needed with `git push -u origin HEAD`
+   - Create a draft PR with `gh pr create --draft --assignee @me` or update an existing PR with `gh pr edit`
    - Use user-provided reviewers
    - Report the final PR URL
 

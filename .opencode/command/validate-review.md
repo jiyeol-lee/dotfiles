@@ -7,8 +7,8 @@ agent: codelens
 
 1. **Determine target PR** from the task context (PR number or current branch's PR)
 2. **Fetch review data**
-   - Use `tool__gh--retrieve-pull-request-info` with `with_resolved: false` to fetch only unresolved review threads
-   - Extract file paths, line numbers, comment bodies, and URLs
+   - Run `gh pr view <pr-number> --json number,title,body,state,reviews,comments` for PR context, omitting `<pr-number>` only when using the current branch's PR. Then use `gh api graphql` to query the repository's `pullRequest(number: $number)` for `reviewThreads(last: 50)` with each thread's `path`, `line`, `isResolved`, and comment `body`, `author { login }`, and `url`; pass the repository owner, name, and PR number as GraphQL variables
+   - Filter out threads where `isResolved` is true, then extract file paths, line numbers, comment bodies, and URLs
 3. **Gather code context** for each unresolved thread:
    - Read the referenced file using the `path` field
    - Focus on the code around the `line` number (±20 lines context)

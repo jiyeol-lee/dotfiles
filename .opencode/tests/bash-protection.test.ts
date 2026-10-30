@@ -124,19 +124,3 @@ test("allows safe Git commands", async () => {
     await assert.doesNotReject(runShell(command));
   }
 });
-
-test("preserves interpreter and text-tool protection", async () => {
-  for (const command of ["python script.py", "python3 script.py", "node script.js"]) {
-    await assert.rejects(runShell(command), {
-      message:
-        "Inline script execution with interpreters (python, python3, node) is not allowed.",
-    });
-  }
-
-  for (const command of ["awk '{print $1}' file", "sed 's/a/b/' file", "perl -e 'print 1'"]) {
-    await assert.rejects(runShell(command), {
-      message:
-        "Inline script execution with text processing tools (awk, sed, perl) is not allowed.",
-    });
-  }
-});
