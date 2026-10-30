@@ -98,6 +98,8 @@ function installLinuxPackages() {
 
   sudo dnf install opentofu -y
 
+  sudo dnf install podman-compose -y
+
   sudo dnf install awscli2 -y
 
   sudo dnf install oh-my-posh -y
