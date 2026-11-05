@@ -82,3 +82,4 @@ Make sure to read the right references before writing, reviewing, or refactoring
 
 1. [Terraform](./references/terraform.md): Terraform code only.
 2. [Go](./references/go.md): Go code only.
+3. [Engineering spec](./references/engineering-spec.md): engineering spec documents, including their folder structure, templates, and decision files.
