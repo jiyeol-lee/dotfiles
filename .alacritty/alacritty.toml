@@ -5,6 +5,9 @@ import = ["alacritty-os-specific.toml"]
 [colors]
 draw_bold_text_with_bright_colors = false
 
+[font]
+size = 11.0
+
 [font.bold]
 family = "FiraCode Nerd Font"
 
