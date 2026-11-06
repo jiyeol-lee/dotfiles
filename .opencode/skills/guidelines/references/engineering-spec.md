@@ -73,6 +73,16 @@ Remove this section when no questions are open.
 
 | Ticket | Repository | Depends on |
 | ------ | ---------- | ---------- |
+
+## Documents
+
+Link every spec file except `README.md`, including each repository file, `infrastructure.md` when present, and every file under `decisions/`. Replace the example rows with actual files, using paths relative to `README.md`, document names as link text, and brief scope descriptions.
+
+| Document                             | Covers                                           |
+| ------------------------------------ | ------------------------------------------------ |
+| [Infrastructure](infrastructure.md)  | Resources, connections, ownership, and access.   |
+| [Repository name](repository.md)     | This repository's design, tests, and tickets.    |
+| [Decision topic](decisions/topic.md) | Alternatives, the chosen option, and trade-offs. |
 ```
 
 ## Repository file template
