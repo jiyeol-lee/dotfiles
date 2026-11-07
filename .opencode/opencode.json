@@ -8,6 +8,9 @@
   "websearch": {
     "provider": "exa"
   },
+  "plugins": [
+    "-opencode.provider.openai-context-caps"
+  ],
   "policies": [
     {
       "action": "tool.use",
