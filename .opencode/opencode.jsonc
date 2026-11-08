@@ -6,131 +6,129 @@
   "update": "notify",
   "formatter": true,
   "websearch": {
-    "provider": "exa"
+    "provider": "exa",
   },
-  "plugins": [
-    "-opencode.provider.openai-context-caps"
-  ],
+  "plugins": ["-opencode.provider.openai-context-caps"],
   "policies": [
     {
       "action": "tool.use",
       "resource": "shell:python *",
-      "effect": "deny"
+      "effect": "deny",
     },
     {
       "action": "tool.use",
       "resource": "shell:python3 *",
-      "effect": "deny"
+      "effect": "deny",
     },
     {
       "action": "tool.use",
       "resource": "shell:node *",
-      "effect": "deny"
+      "effect": "deny",
     },
     {
       "action": "tool.use",
       "resource": "shell:awk *",
-      "effect": "deny"
+      "effect": "deny",
     },
     {
       "action": "tool.use",
       "resource": "shell:sed *",
-      "effect": "deny"
+      "effect": "deny",
     },
     {
       "action": "tool.use",
       "resource": "shell:perl *",
-      "effect": "deny"
+      "effect": "deny",
     },
     {
       "action": "tool.use",
       "resource": "read:.env",
-      "effect": "deny"
-    }
+      "effect": "deny",
+    },
   ],
   "permissions": [
     {
       "action": "mcp__context7_*",
       "resource": "*",
-      "effect": "allow"
+      "effect": "allow",
     },
     {
       "action": "mcp__aws-knowledge_*",
       "resource": "*",
-      "effect": "allow"
+      "effect": "allow",
     },
     {
       "action": "tool__*",
       "resource": "*",
-      "effect": "deny"
+      "effect": "deny",
     },
     {
       "action": "doom_loop",
       "resource": "*",
-      "effect": "allow"
+      "effect": "allow",
     },
     {
       "action": "external_directory",
       "resource": "*",
-      "effect": "deny"
+      "effect": "deny",
     },
     {
       "action": "external_directory",
       "resource": "/tmp/agentic-coding-tool/**",
-      "effect": "allow"
+      "effect": "allow",
     },
     {
       "action": "external_directory",
       "resource": "~/.config/opencode/**",
-      "effect": "allow"
+      "effect": "allow",
     },
     {
       "action": "external_directory",
       "resource": "~/dev/**",
-      "effect": "ask"
+      "effect": "ask",
     },
     {
       "action": "external_directory",
       "resource": "~/dotfiles/.opencode/**",
-      "effect": "ask"
+      "effect": "ask",
     },
     {
       "action": "skill",
       "resource": "*",
-      "effect": "deny"
+      "effect": "deny",
     },
     {
       "action": "skill",
       "resource": "unslop",
-      "effect": "allow"
+      "effect": "allow",
     },
     {
       "action": "skill",
       "resource": "guidelines",
-      "effect": "allow"
-    }
+      "effect": "allow",
+    },
   ],
   "instructions": ["AGENTS.md"],
   "references": {
     "opencode-settings": {
-      "path": "~/dotfiles/.opencode"
-    }
+      "path": "~/dotfiles/.opencode",
+    },
   },
   "mcp": {
     "servers": {
       "mcp__context7": {
         "type": "remote",
-        "url": "https://mcp.context7.com/mcp"
+        "url": "https://mcp.context7.com/mcp",
       },
       "mcp__aws-knowledge": {
         "type": "remote",
-        "url": "https://knowledge-mcp.global.api.aws"
-      }
-    }
+        "url": "https://knowledge-mcp.global.api.aws",
+      },
+    },
   },
   "agents": {
     "general": {
-      "disabled": true
+      "disabled": true,
     },
     "plan": {
       "mode": "primary",
@@ -138,274 +136,274 @@
         {
           "action": "shell",
           "resource": "*",
-          "effect": "ask"
+          "effect": "ask",
         },
         {
           "action": "shell",
           "resource": "rg *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "cat *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "head *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tail *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "ls *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "echo *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "jq",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "jq *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "wc *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "grep *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "sort *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "pwd *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tree *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git log *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git show *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git status *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git diff *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git branch --show-current",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git merge-base *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git ls-files",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git ls-files *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git show-ref *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git rev-parse *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git rev-list *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git config --get user.name",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git config --get user.email",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "playwright-cli *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "sleep *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu init",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu init *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu plan",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu plan *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu validate",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu validate *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "read",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "write",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "edit",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "list",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "glob",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "grep",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "patch",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "todowrite",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "todoread",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "webfetch",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "websearch",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "question",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "mcp__context7_*",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "mcp__aws-knowledge_*",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "subagent",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "subagent",
           "resource": "explore",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "subagent",
           "resource": "evaluator",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "skill",
           "resource": "grill-me",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "skill",
           "resource": "playwright-cli",
-          "effect": "allow"
-        }
-      ]
+          "effect": "allow",
+        },
+      ],
     },
     "build": {
       "mode": "primary",
@@ -413,314 +411,314 @@
         {
           "action": "shell",
           "resource": "*",
-          "effect": "ask"
+          "effect": "ask",
         },
         {
           "action": "shell",
           "resource": "rg *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "cat *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "head *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tail *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "ls *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "echo *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "jq",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "jq *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "wc *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "grep *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "sort *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "pwd *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tree *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git log *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git show *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git status *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git diff *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git branch --show-current",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git merge-base *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git ls-files",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git ls-files *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git show-ref *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git rev-parse *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git rev-list *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git config --get user.name",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git config --get user.email",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "go build *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "go test *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "go vet *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "go fmt *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "gofmt *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "playwright-cli *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "sleep *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu init",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu init *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu plan",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu plan *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu validate",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu validate *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu fmt",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu fmt *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "read",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "write",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "edit",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "list",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "glob",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "grep",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "patch",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "todowrite",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "todoread",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "webfetch",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "websearch",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "question",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "subagent",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "subagent",
           "resource": "explore",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "subagent",
           "resource": "generator",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "subagent",
           "resource": "evaluator",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "skill",
           "resource": "grill-me",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "skill",
           "resource": "playwright-cli",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "skill",
           "resource": "pull-request",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "tool__gh--retrieve-repository-collaborators",
           "resource": "*",
-          "effect": "allow"
-        }
-      ]
+          "effect": "allow",
+        },
+      ],
     },
     "codelens": {
       "mode": "primary",
@@ -728,259 +726,259 @@
         {
           "action": "shell",
           "resource": "*",
-          "effect": "ask"
+          "effect": "ask",
         },
         {
           "action": "shell",
           "resource": "http-sever *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "rg *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "cat *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "head *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tail *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "ls *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "echo *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "jq",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "jq *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "wc *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "grep *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "sort *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "pwd *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tree *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git log *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git show *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git status *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git diff *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git branch --show-current",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git merge-base *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git ls-files",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git ls-files *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git show-ref *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git rev-parse *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git rev-list *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git config --get user.name",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git config --get user.email",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "playwright-cli *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "sleep *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu init",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu init *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu plan",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu plan *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu validate",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu validate *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "read",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "write",
           "resource": "/tmp/agentic-coding-tool/**",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "edit",
           "resource": "/tmp/agentic-coding-tool/**",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "list",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "glob",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "grep",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "patch",
           "resource": "/tmp/agentic-coding-tool/**",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "todowrite",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "todoread",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "webfetch",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "websearch",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "question",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "subagent",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "subagent",
           "resource": "explore",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "skill",
           "resource": "playwright-cli",
-          "effect": "allow"
-        }
-      ]
+          "effect": "allow",
+        },
+      ],
     },
     "explore": {
       "description": "Fast agent specialized for exploring codebases. Use this when you need to quickly find files by patterns (eg. \"src/components /**/*.tsx\"), search code for keywords (eg. \"API endpoints\"), or answer questions about the codebase (eg. \"how do API endpoints work?\"). When calling this agent, specify the desired thoroughness level: \"quick\" for basic searches, \"medium\" for moderate exploration, or \"very thorough\" for comprehensive analysis across multiple locations and naming conventions.",
@@ -991,69 +989,69 @@
         {
           "action": "subagent",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "shell",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "edit",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "write",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "read",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "grep",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "glob",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "list",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "patch",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "todowrite",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "todoread",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "webfetch",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "question",
           "resource": "*",
-          "effect": "deny"
-        }
-      ]
+          "effect": "deny",
+        },
+      ],
     },
     "generator": {
       "description": "Agent specialized for substantial code and content generation. Use this when you need to create/update/delete files, implement features, or generate content based on specifications. Do not use this for simple code or content modifications.",
@@ -1063,294 +1061,294 @@
         {
           "action": "subagent",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "shell",
           "resource": "*",
-          "effect": "ask"
+          "effect": "ask",
         },
         {
           "action": "shell",
           "resource": "rg *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "cat *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "head *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tail *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "ls *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "echo *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "jq",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "jq *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "wc *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "grep *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "sort *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "pwd *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tree *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "playwright-cli *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "sleep *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git -C *",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "shell",
           "resource": "git worktree *",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "shell",
           "resource": "git checkout *",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "shell",
           "resource": "git stash *",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "shell",
           "resource": "git pop *",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "shell",
           "resource": "git log *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git show *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git status *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git diff *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git branch --show-current",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git merge-base *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git ls-files",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git ls-files *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git show-ref *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git rev-parse *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git rev-list *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "go build *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "go test *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "go vet *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "go fmt *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "gofmt *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu init",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu init *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu plan",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu plan *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu validate",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu validate *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu fmt",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tofu fmt *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "edit",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "write",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "read",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "grep",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "glob",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "list",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "patch",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "todowrite",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "todoread",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "webfetch",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "question",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "skill",
           "resource": "playwright-cli",
-          "effect": "allow"
-        }
-      ]
+          "effect": "allow",
+        },
+      ],
     },
     "evaluator": {
       "description": "An agent specialized in evaluating code and content against specified criteria. Use this to evaluate changes and provide feedback or validation when you need to assess the quality, correctness, and regression testing of new or existing code and content. You always use this before finishing a task if any code has changed.",
@@ -1360,214 +1358,214 @@
         {
           "action": "subagent",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "shell",
           "resource": "*",
-          "effect": "ask"
+          "effect": "ask",
         },
         {
           "action": "shell",
           "resource": "rg *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "cat *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "head *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tail *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "ls *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "echo *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "jq",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "jq *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "wc *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "grep *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "sort *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "pwd *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "tree *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git -C *",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "shell",
           "resource": "git worktree *",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "shell",
           "resource": "git checkout *",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "shell",
           "resource": "git stash *",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "shell",
           "resource": "git pop *",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "shell",
           "resource": "git log *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git show *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git status *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git diff *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git branch --show-current",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git merge-base *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git ls-files",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git ls-files *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git show-ref *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git rev-parse *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "shell",
           "resource": "git rev-list *",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "edit",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "write",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "read",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "grep",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "glob",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "list",
           "resource": "*",
-          "effect": "allow"
+          "effect": "allow",
         },
         {
           "action": "patch",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "todowrite",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "todoread",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "webfetch",
           "resource": "*",
-          "effect": "deny"
+          "effect": "deny",
         },
         {
           "action": "question",
           "resource": "*",
-          "effect": "deny"
-        }
-      ]
-    }
-  }
+          "effect": "deny",
+        },
+      ],
+    },
+  },
 }
