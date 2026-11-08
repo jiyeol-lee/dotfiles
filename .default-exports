@@ -11,7 +11,10 @@ export HISTCONTROL='ignoreboth'
 export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 
 # opencode
-export PATH=/home/jiyeollee/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
+
+# under home local binary
+export PATH="$HOME/.local/bin:$PATH"
 
 # Change default editor to neovim
 export EDITOR=nvim

@@ -48,16 +48,6 @@
   ],
   "permissions": [
     {
-      "action": "mcp__context7_*",
-      "resource": "*",
-      "effect": "allow",
-    },
-    {
-      "action": "mcp__aws-knowledge_*",
-      "resource": "*",
-      "effect": "allow",
-    },
-    {
       "action": "tool__*",
       "resource": "*",
       "effect": "deny",
@@ -123,6 +113,13 @@
       "mcp__aws-knowledge": {
         "type": "remote",
         "url": "https://knowledge-mcp.global.api.aws",
+      },
+      "mcp__browse": {
+        "type": "local",
+        "command": ["browse", "mcp"],
+        "environment": {
+          "OPENCODE_BROWSER_RUNTIME": "auto-update",
+        },
       },
     },
   },
@@ -270,11 +267,6 @@
         },
         {
           "action": "shell",
-          "resource": "playwright-cli *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
           "resource": "sleep *",
           "effect": "allow",
         },
@@ -369,16 +361,6 @@
           "effect": "allow",
         },
         {
-          "action": "mcp__context7_*",
-          "resource": "*",
-          "effect": "allow",
-        },
-        {
-          "action": "mcp__aws-knowledge_*",
-          "resource": "*",
-          "effect": "allow",
-        },
-        {
           "action": "subagent",
           "resource": "*",
           "effect": "deny",
@@ -396,11 +378,6 @@
         {
           "action": "skill",
           "resource": "grill-me",
-          "effect": "allow",
-        },
-        {
-          "action": "skill",
-          "resource": "playwright-cli",
           "effect": "allow",
         },
       ],
@@ -570,11 +547,6 @@
         },
         {
           "action": "shell",
-          "resource": "playwright-cli *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
           "resource": "sleep *",
           "effect": "allow",
         },
@@ -701,11 +673,6 @@
         {
           "action": "skill",
           "resource": "grill-me",
-          "effect": "allow",
-        },
-        {
-          "action": "skill",
-          "resource": "playwright-cli",
           "effect": "allow",
         },
         {
@@ -865,11 +832,6 @@
         },
         {
           "action": "shell",
-          "resource": "playwright-cli *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
           "resource": "sleep *",
           "effect": "allow",
         },
@@ -971,11 +933,6 @@
         {
           "action": "subagent",
           "resource": "explore",
-          "effect": "allow",
-        },
-        {
-          "action": "skill",
-          "resource": "playwright-cli",
           "effect": "allow",
         },
       ],
@@ -1131,11 +1088,6 @@
         {
           "action": "shell",
           "resource": "tree *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "playwright-cli *",
           "effect": "allow",
         },
         {
@@ -1342,11 +1294,6 @@
           "action": "question",
           "resource": "*",
           "effect": "deny",
-        },
-        {
-          "action": "skill",
-          "resource": "playwright-cli",
-          "effect": "allow",
         },
       ],
     },

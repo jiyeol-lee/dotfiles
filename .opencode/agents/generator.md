@@ -32,7 +32,6 @@ Bash commands available to you:
 - `sort *`
 - `pwd *`
 - `tree *`
-- `playwright-cli *`
 - `sleep *`
 - `git log *`
 - `git show *`

@@ -35,7 +35,6 @@ Bash commands available to you:
 - `git rev-list *`
 - `git config --get user.name`
 - `git config --get user.email`
-- `playwright-cli *`
 - `sleep *`
 - `tofu init`
 - `tofu init *`

@@ -14,3 +14,6 @@ unset file
 ~/dotfiles/scripts/git_config.sh
 ~/dotfiles/scripts/create_config_folders.sh
 ~/dotfiles/scripts/link_symbolic.sh
+
+# browse
+export PATH='/home/jiyeollee/.local/bin':"$PATH"

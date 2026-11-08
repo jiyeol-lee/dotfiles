@@ -51,7 +51,6 @@ Bash commands available to you:
 - `go vet *`
 - `go fmt *`
 - `gofmt *`
-- `playwright-cli *`
 - `sleep *`
 - `tofu init`
 - `tofu init *`
