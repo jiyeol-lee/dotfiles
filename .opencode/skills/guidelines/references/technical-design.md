@@ -28,16 +28,17 @@ An order stays PENDING until its payment check finishes, and the customer sees t
 The worker sets the order status before it publishes `ORDER-UPDATED` to the `customer:{customer_id}` room.
 ```
 
-| Topic          | README                                                         | Repository file                            |
-| -------------- | -------------------------------------------------------------- | ------------------------------------------ |
-| Behavior       | What users and systems see                                     | The rules behind it                        |
-| Flow           | The main steps across repositories, in the Architecture table  | Failures, retries, and edge cases          |
-| Interactions   | New or changed connections, with mechanism, owner, and failure | The contract's detail, in the owner's file |
-| Data model     | Each entity and its role                                       | Fields, constraints, states                |
-| API            | Each endpoint's purpose, plus one example of the main call     | All requests, responses, and status codes  |
-| Permissions    | Who can do what on which resource, people and services         | The checks and policies that enforce it    |
-| Infrastructure | Each new resource, in the Repositories table                   | Each resource, its settings, and why       |
-| Tests          | Not covered                                                    | What tests must prove                      |
+| Topic          | README                                                         | Repository file                                           |
+| -------------- | -------------------------------------------------------------- | --------------------------------------------------------- |
+| Behavior       | What users and systems see                                     | The rules behind it                                       |
+| Flow           | The main steps across repositories, in the Architecture table  | Internal runtime paths, failures, retries, and edge cases |
+| Interactions   | New or changed connections, with mechanism, owner, and failure | The contract's detail, in the owner's file                |
+| Data model     | Each entity and its role                                       | Fields, constraints, states                               |
+| API            | Each endpoint's purpose, plus one example of the main call     | All requests, responses, and status codes                 |
+| Permissions    | Who can do what on which resource, people and services         | The checks and policies that enforce it                   |
+| Infrastructure | Each new resource, in the Repositories table                   | Each resource, its settings, and why                      |
+| Program layout | Not covered                                                    | Changed files and necessary existing context              |
+| Tests          | Not covered                                                    | Planned test files and the behavior each must prove       |
 
 ## Writing rules
 
@@ -135,18 +136,64 @@ The README links every other file: repository files from Repositories, and decis
 
 ## Repository file template
 
-```markdown
+Keep repository files concise and self-contained, understandable without browsing source. In both repository templates, omit sections that do not apply.
+
+````markdown
 # <repository>
 
 Back to [README.md](README.md).
 
-## Responsibility
-
-What this repository is responsible for in this design, in one paragraph.
-
 ## Design
 
+### Behavior
+
 The behavior and rules first, then the data shapes, the contracts it owns, and links to the contracts it calls. A choice that affects only this repository states its reason here.
+
+### Program layout
+
+Show changed files and the existing context needed to understand them. Use indentation only, without tree connectors. Mark changes relative to the repository's main branch: `[+]` added, `[~]` updated, `[-]` deleted, and unmarked existing context. Put a one-line purpose or change explanation after `#` on the same line as each filename.
+
+```text
+src/
+  feature/
+    [+] handler.ext       # Handle the new request path
+    [~] storage.ext       # Save the new state
+    [-] legacy.ext        # Replaced by handler.ext
+    contract.ext          # Existing request contract
+tests/
+  [+] <new-file>          # Cover the new behavior
+  [~] <existing-file>     # Cover changed expectations
+```
+
+### Runtime flow
+
+Use a plain-language ASCII diagram for each materially different runtime path. Name files only when that helps connect the flow to Program layout. Show important decisions, failure branches, and transaction boundaries where relevant. Do not list functions or walk through source code.
+
+## Tests
+
+Group planned tests by file, not in a table or framework syntax. Each file heading includes a repository-relative path and a `[+]`, `[~]`, or `[-]` marker, using the same main-branch baseline as Program layout. Give each file one short approach note, explaining real or replaced dependencies when meaningful.
+
+Use natural-language bullets for scenarios, each with a change marker, a concise behavior label, the setup, and the observable expected result. File and scenario markers are independent. Include only markers that apply. Updated cases state the target expectation. Removed cases explain the obsolete expectation or where coverage moves. Add short `input -> action -> result` text pseudocode only where useful.
+
+### [+] tests/<new-file>
+
+Approach: <How the file checks behavior, including real or replaced dependencies when meaningful.>
+
+- [+] <Behavior label>. Given <setup>, <action> produces <observable result>.
+
+Optional pseudocode for a case:
+
+```text
+<input> -> <action> -> <observable result>
+```
+
+### [~] tests/<existing-file>
+
+Approach: <One short note on how the file checks behavior.>
+
+- [+] <Added behavior>. Given <setup>, <action> produces <observable result>.
+- [~] <Updated behavior>. Given <setup>, <action> produces <target observable result>.
+- [-] <Removed expectation>. <Why it is obsolete or where coverage moves.>
 
 ## Failures
 
@@ -159,15 +206,11 @@ Detected by names the alarm or signal that catches the failure. When nothing cat
 
 Omit this section unless this repository owns infrastructure for the design. It holds the Resources, Outputs, and Alarms tables from the infrastructure repository file template.
 
-## Tests
-
-What tests must prove, as behavior.
-
 ## Tickets
 
 | Ticket | Scope |
 | ------ | ----- |
-```
+````
 
 ## Infrastructure repository file template
 
@@ -175,10 +218,6 @@ What tests must prove, as behavior.
 # <repository>
 
 Back to [README.md](README.md).
-
-## Responsibility
-
-What this repository owns in this design.
 
 ## Resources
 
@@ -240,9 +279,11 @@ A table comparing the options.
 
 A decision file is the only place a design document compares alternatives. Link it from the matching row in Key decisions and why. Every alternative the file argues against is one of its options. Why option N compares the chosen option with the others instead of repeating its pros.
 
-## Behavior, not code changes
+## Target design, not edit steps
 
-Do describe behavior, rules, and interfaces, not where or what to edit. Keep design names such as models, fields, statuses, endpoints, and queues. Leave out file paths, line numbers, class placement, and step-by-step edit lists.
+Describe target behavior and structure, not an edit checklist. Keep design names such as models, fields, statuses, endpoints, and queues. Use file paths in Program layout and test-file headings. Runtime diagrams may label files to connect the flow to the layout. Leave out line numbers, class-placement details, and step-by-step edit lists.
+
+Do not include source code, language-specific type declarations or method signatures, dependency-injection wiring code, executable tests, or framework-shaped skeletons. Contract and payload examples may still show fields and endpoints.
 
 ```markdown
 <!-- Do -->
@@ -256,7 +297,7 @@ Add `OrderCreateView` to `src/orders/views/order_create.py`, register it in `src
 
 ## No refinement log
 
-The technical design documentation guideline applies to design documents: describe the target design, not how it was reached. Outside decision files, a design document also leaves out:
+The technical design documentation guideline applies to design documents: describe the target design, not how it was reached. The `[+]`, `[~]`, and `[-]` markers in Program layout and Tests record planned scope, not refinement history. Brief removal or replacement explanations are allowed there. Outside decision files, a design document also leaves out:
 
 - denials of designs that were considered and rejected
 - "future" or "out of scope" notes for ideas that were discussed and dropped
