@@ -1,6 +1,6 @@
 ---
 description: Performs code review analysis.
-agent: codelens
+agent: software-engineer
 ---
 
 You are acting as a reviewer for a proposed code change made by another engineer.

@@ -1,8 +1,9 @@
 ---
 description: Explains the differences of a code change, diff, branch, or pull request.
-agent: codelens
+agent: software-engineer
 ---
 
+[[IMPLEMENTATION_AUTHORIZED]]
 Make me a rich explanation of the code change.
 
 It should have these sections:

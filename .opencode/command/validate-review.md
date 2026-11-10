@@ -1,6 +1,6 @@
 ---
 description: Validates the review of a code change, diff, branch, or pull request.
-agent: codelens
+agent: software-engineer
 ---
 
 ## Workflow

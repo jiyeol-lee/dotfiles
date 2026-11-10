@@ -4,20 +4,6 @@
 
 You MUST OBEY guidelines. If you think there is a blocker to follow the guidelines, pause and ask, not silently ignore.
 
-## Delegation Requirements
-
-Each agent has a single responsibility. If agent has agents to delegate to, delegate to them instead of doing the work itself.
-
-**CRITICAL**: Agent MUST provides full context when delegating the task. Agent who receives the delegation MUST start from zero context and cannot infer prior state.
-
-When delegating, include:
-
-| Element         | Description                                      | Required    |
-| --------------- | ------------------------------------------------ | ----------- |
-| Goal            | What needs to be accomplished                    | Yes         |
-| Context         | Relevant file paths, constraints, prior findings | Yes         |
-| Expected output | What information to return                       | Recommended |
-
 ## Bash commands
 
 - NEVER chain with `&&` or `;`. Instead, run each command separately.
