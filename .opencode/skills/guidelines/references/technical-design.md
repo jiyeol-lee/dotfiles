@@ -58,14 +58,6 @@ Every README section stays high level, Data model, API, and Permissions included
 
 Up to 5 bullets: what changes and for whom, how it works in one sentence, and the biggest risk. A reader who stops here can explain the change to a teammate.
 
-## Repositories
-
-| Repository                  | What changes  | Ticket | Depends on |
-| --------------------------- | ------------- | ------ | ---------- |
-| [repository](repository.md) | One sentence. |        |            |
-
-One row per ticket for every changed repository, infrastructure repositories included.
-
 ## Goal
 
 What the change achieves and why.
@@ -84,6 +76,14 @@ What users and systems see.
 
 An ASCII diagram per path with numbered steps, then a table of each step: step, from, to, purpose. The table is the main flow.
 
+### Data model
+
+Each entity and its role.
+
+### API
+
+Each endpoint's purpose, plus one example of the main call.
+
 ### Interactions
 
 | Interaction | Mechanism | Contract owner | When it fails |
@@ -95,6 +95,15 @@ Mechanism names sync or async and the delivery guarantee, plus:
 
 - For a synchronous call, the timeout and the number of attempts, such as "HTTP, sync, 10 s timeout, 3 attempts". The caller's repository file links here for those numbers. Along a chain of synchronous calls, each caller waits longer than everything it calls, attempts included. When it does not, add it to Open questions.
 - For an asynchronous connection, the id both sides log, so one request can be followed across them, such as "SQS, async, at least once, `order_id`".
+
+## Permissions
+
+| Who | Can do what | On which resource |
+| --- | ----------- | ----------------- |
+
+People and services both, including public access.
+
+Omit Data model, API, or Permissions when the design does not change it.
 
 ## Key decisions and why
 
@@ -114,22 +123,13 @@ For each Interactions row, ask whether the two sides can run different versions 
 
 Under the table, name the feature flag, what it covers and what it does not, and how to roll back. Omit this section when the repositories can release in any order and no feature flag is involved.
 
-## Data model
+## Repositories
 
-Each entity and its role.
+| Repository                  | What changes  | Ticket | Depends on |
+| --------------------------- | ------------- | ------ | ---------- |
+| [repository](repository.md) | One sentence. |        |            |
 
-## API
-
-Each endpoint's purpose, plus one example of the main call.
-
-## Permissions
-
-| Who | Can do what | On which resource |
-| --- | ----------- | ----------------- |
-
-People and services both, including public access.
-
-Omit Data model, API, or Permissions when the design does not change it.
+One row per ticket for every changed repository, infrastructure repositories included.
 ```
 
 The README links every other file: repository files from Repositories, and decision files from Key decisions and why.
