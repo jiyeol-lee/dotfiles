@@ -16,7 +16,7 @@ Give every changed repository its own file, infrastructure repositories included
 
 ## Where each fact lives
 
-The README summarizes what crosses repositories, and each repository file holds that repository's detail. State each detail once, in the file of the repository that owns or enforces it, and link to it from other files. A contract's detail, such as payloads, status codes, and record shapes, lives in the file of the repository that defines it.
+The README summarizes the whole design, including changes within a single repository, and each repository file holds that repository's detail. State each detail once, in the file of the repository that owns or enforces it, and link to it from other files. A contract's detail, such as payloads, status codes, and record shapes, lives in the file of the repository that defines it.
 
 ```markdown
 <!-- Do: README -->
@@ -28,17 +28,18 @@ An order stays PENDING until its payment check finishes, and the customer sees t
 The worker sets the order status before it publishes `ORDER-UPDATED` to the `customer:{customer_id}` room.
 ```
 
-| Topic          | README                                                         | Repository file                                           |
-| -------------- | -------------------------------------------------------------- | --------------------------------------------------------- |
-| Behavior       | What users and systems see                                     | The rules behind it                                       |
-| Flow           | The main steps across repositories, in the Architecture table  | Internal runtime paths, failures, retries, and edge cases |
-| Interactions   | New or changed connections, with mechanism, owner, and failure | The contract's detail, in the owner's file                |
-| Data model     | Each entity and its role                                       | Fields, constraints, states                               |
-| API            | Each endpoint's purpose, plus one example of the main call     | All requests, responses, and status codes                 |
-| Permissions    | Who can do what on which resource, people and services         | The checks and policies that enforce it                   |
-| Infrastructure | Each new resource, in the Repositories table                   | Each resource, its settings, and why                      |
-| Program layout | Not covered                                                    | Changed files and necessary existing context              |
-| Tests          | Not covered                                                    | Planned test files and the behavior each must prove       |
+| Topic          | README                                                         | Repository file                                                 |
+| -------------- | -------------------------------------------------------------- | --------------------------------------------------------------- |
+| Behavior       | What users and systems see                                     | The rules behind it                                             |
+| Flow           | The main steps across repositories, in the Architecture table  | Internal runtime paths, failures, retries, and edge cases       |
+| Interactions   | New or changed connections, with mechanism, owner, and failure | The contract's detail, in the owner's file                      |
+| Data model     | Each entity and its role                                       | Fields, constraints, states                                     |
+| Data migration | Existing data changes, service impact, and migration phases    | Transformation, backfill, compatibility, verification, rollback |
+| API            | Each endpoint's purpose, plus one example of the main call     | All requests, responses, and status codes                       |
+| Permissions    | Who can do what on which resource, people and services         | The checks and policies that enforce it                         |
+| Infrastructure | Each new resource, in the Repositories table                   | Each resource, its settings, and why                            |
+| Program layout | Not covered                                                    | Changed files and necessary existing context                    |
+| Tests          | Not covered                                                    | Planned test files and the behavior each must prove             |
 
 ## Writing rules
 
@@ -49,7 +50,7 @@ The worker sets the order status before it publishes `ORDER-UPDATED` to the `cus
 
 ## README template
 
-Every README section stays high level, Data model, API, and Permissions included. A reviewer who reads through Architecture knows what changes, how it works, and what it risks.
+Assume most reviewers are software engineers who read only the README. It must explain the goal, proposed behavior, architecture and infrastructure, data changes and migration, main risks, and rollout without requiring them to open repository files. Every section stays high level. Repository links provide deeper detail, not explanations needed to understand the overall design.
 
 ```markdown
 # <Title>
@@ -80,21 +81,31 @@ An ASCII diagram per path with numbered steps, then a table of each step: step, 
 
 Each entity and its role.
 
+### Data migration
+
+Explain what existing data changes or moves and the migration phases. State service availability, version compatibility, and the main risks or irreversible boundaries. Summarize cutover conditions and link to each owning repository's Data migration section for detail. Include this summary even for a small, single-repository migration; omit only when no data migration is needed.
+
 ### API
 
 Each endpoint's purpose, plus one example of the main call.
 
 ### Interactions
 
-| Interaction | Mechanism | Contract owner | When it fails |
-| ----------- | --------- | -------------- | ------------- |
+Use one ASCII UML sequence diagram per materially different flow involving new or changed connections between repositories or with an external service. Omit this section when no connection is new or changed.
 
-One row per new or changed connection between repositories or with an external service. Omit this section when no connection is new or changed.
+Give each participant a column, with time running from top to bottom. Label message arrows with the operation or event and the protocol or transport. Show responses, acknowledgements, and important failure or retry branches when they affect the sequence.
 
-Mechanism names sync or async and the delivery guarantee, plus:
+Below the diagrams, use one `#### <sender> to <receiver>` subsection per connection, with short bullets covering:
 
-- For a synchronous call, the timeout and the number of attempts, such as "HTTP, sync, 10 s timeout, 3 attempts". The caller's repository file links here for those numbers. Along a chain of synchronous calls, each caller waits longer than everything it calls, attempts included. When it does not, add it to Open questions.
-- For an asynchronous connection, the id both sides log, so one request can be followed across them, such as "SQS, async, at least once, `order_id`".
+- Whether the connection is synchronous or asynchronous, and its delivery guarantee.
+- For a synchronous call, the timeout per attempt and total number of attempts, including the first. The caller's repository file links here for those numbers.
+- For an asynchronous connection, the id both sides log to trace one request across them, plus any publish-confirmation or acknowledgement timeout.
+- The contract owner, linked to the repository file section that defines the contract's detail.
+- What happens when the connection fails, including caller-visible effects, retry policy, and recovery after attempts are exhausted.
+
+Describe each connection's notes once and refer to them from other diagrams that use it. Keep payloads, status codes, and other contract detail in the owner's repository file.
+
+Along a chain of synchronous calls, each caller waits longer than everything it calls, attempts included. When it does not, add it to Open questions.
 
 ## Permissions
 
@@ -119,9 +130,11 @@ Remove this section when no questions are open.
 | Step | Repositories | Why this order |
 | ---- | ------------ | -------------- |
 
-For each Interactions row, ask whether the two sides can run different versions while one deploys before the other. When they cannot, the order between them becomes a step. An infrastructure repository becomes a step when a later step needs its outputs. Why this order says what fails otherwise.
+For each connection shown in Interactions, ask whether the two sides can run different versions while one deploys before the other. When they cannot, the order between them becomes a step. An infrastructure repository becomes a step when a later step needs its outputs. Why this order says what fails otherwise.
 
-Under the table, name the feature flag, what it covers and what it does not, and how to roll back. Omit this section when the repositories can release in any order and no feature flag is involved.
+Include required migration phases alongside deployments, with links to the owning repository's Data migration section and the checks that must pass before the next phase.
+
+Under the table, name any feature flag, what it covers and what it does not, and explain how to roll back. Omit this section only when the repositories can release in any order, no feature flag is involved, and no migration requires ordered or gated steps.
 
 ## Repositories
 
@@ -148,6 +161,18 @@ Back to [README.md](README.md).
 ### Behavior
 
 The behavior and rules first, then the data shapes, the contracts it owns, and links to the contracts it calls. A choice that affects only this repository states its reason here.
+
+### Data migration
+
+Describe this repository's migration of existing data, even for a small or single-repository migration. Include the applicable details:
+
+- Source-to-target transformations and treatment of existing records.
+- Backfill behavior, concurrent-write handling, and compatibility while old and new versions coexist.
+- Progress tracking, restart and retry behavior, and failure recovery.
+- Completeness and consistency checks that allow cutover.
+- Rollback, irreversible boundaries, and cleanup conditions.
+
+Omit this section when this repository owns no data migration.
 
 ### Program layout
 
@@ -235,6 +260,10 @@ Back to [README.md](README.md).
 | ----- | ------------- | ---------- |
 
 Omit this section when the repository adds no alarm.
+
+## Data migration
+
+For existing data moved or changed by this repository, use the Data migration requirements from the repository file template. Omit this section when this repository owns no data migration.
 
 ## Verification
 
