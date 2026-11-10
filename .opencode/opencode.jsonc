@@ -97,6 +97,11 @@
       "resource": "guidelines",
       "effect": "allow",
     },
+    {
+      "action": "skill",
+      "resource": "technical-design",
+      "effect": "allow",
+    },
   ],
   "instructions": ["AGENTS.md"],
   "references": {
