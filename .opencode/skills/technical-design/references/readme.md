@@ -38,9 +38,9 @@ Each endpoint's purpose, plus one example of the main call.
 
 Use one ASCII UML sequence diagram per materially different flow involving new or changed connections between repositories or with an external service. Omit this section when no connection is new or changed.
 
-Give each participant a column, with time running from top to bottom. Number arrows consecutively across all diagrams in Interactions (`[^1]`, `[^2]`, ...) and label each with the operation or event and the protocol or transport. Show responses, acknowledgements, and important failure or retry branches when they affect the sequence.
+Give each participant a column, with time running from top to bottom. Number arrows consecutively across all diagrams in Interactions (`<1>`, `<2>`, ...) and label each with the operation or event and the protocol or transport. Show responses, acknowledgements, and important failure or retry branches when they affect the sequence.
 
-Immediately below each diagram, before the next diagram, use a matching `#### [^number] <sender> to <receiver>` subsection for each arrow in diagram order. Describe each connection's policy once across its request, response, or acknowledgement notes for that diagram, using short bullets covering:
+Immediately below each diagram, before the next diagram, use a matching `#### <number> <sender> to <receiver>` subsection for each arrow in diagram order. Describe each connection's policy once across its request, response, or acknowledgement notes for that diagram, using short bullets covering:
 
 - Whether the connection is synchronous or asynchronous, and its delivery guarantee.
 - For a synchronous call, the timeout per attempt and total number of attempts, including the first. The caller's repository file links here for those numbers.
