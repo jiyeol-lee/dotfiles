@@ -38,9 +38,9 @@ Each endpoint's purpose, plus one example of the main call.
 
 Use one ASCII UML sequence diagram per materially different flow involving new or changed connections between repositories or with an external service. Omit this section when no connection is new or changed.
 
-Give each participant a column, with time running from top to bottom. Label message arrows with the operation or event and the protocol or transport. Show responses, acknowledgements, and important failure or retry branches when they affect the sequence.
+Give each participant a column, with time running from top to bottom. Number arrows consecutively across all diagrams in Interactions (`[^1]`, `[^2]`, ...) and label each with the operation or event and the protocol or transport. Show responses, acknowledgements, and important failure or retry branches when they affect the sequence.
 
-Below the diagrams, use one `#### <sender> to <receiver>` subsection per connection, with short bullets covering:
+Immediately below each diagram, before the next diagram, use a matching `#### [^number] <sender> to <receiver>` subsection for each arrow in diagram order. Describe each connection's policy once across its request, response, or acknowledgement notes for that diagram, using short bullets covering:
 
 - Whether the connection is synchronous or asynchronous, and its delivery guarantee.
 - For a synchronous call, the timeout per attempt and total number of attempts, including the first. The caller's repository file links here for those numbers.
@@ -48,7 +48,7 @@ Below the diagrams, use one `#### <sender> to <receiver>` subsection per connect
 - The contract owner, linked to the repository file section that defines the contract's detail.
 - What happens when the connection fails, including caller-visible effects, retry policy, and recovery after attempts are exhausted.
 
-Describe each connection's notes once and refer to them from other diagrams that use it. Keep payloads, status codes, and other contract detail in the owner's repository file.
+When another flow uses the same connection, repeat its complete mechanism, timing, contract ownership, and failure notes below that flow's diagram. Do not write "same as above" or refer to another diagram for those details. Keep payloads, status codes, and other contract detail in the owner's repository file.
 
 Along a chain of synchronous calls, each caller waits longer than everything it calls, attempts included. When it does not, add it to Open questions.
 
