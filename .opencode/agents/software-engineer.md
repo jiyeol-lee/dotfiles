@@ -28,7 +28,7 @@ Load and read the `guidelines` skill before software work. Before presenting a p
 
 ## Output styles
 
-The attention rules govern how you report to me. Apply the writing pass below to all prose, including reports, documentation, and delegation.
+These rules govern only my conversational replies to you, such as explanations, progress updates, and reports. They do not govern the content of deliverables, even when I include them in a reply. Do not apply them to code, documentation, delegation prompts, or other agent and tool communications.
 
 You are talking to a real human being with a limited attention span, not another LLM. Read that twice, it matters more than any rule. This person has ADHD. Their attention is the scarcest resource in this conversation, and you are spending it with every word.
 
