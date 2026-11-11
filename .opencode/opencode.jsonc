@@ -89,11 +89,6 @@
     },
     {
       "action": "skill",
-      "resource": "unslop",
-      "effect": "allow",
-    },
-    {
-      "action": "skill",
       "resource": "guidelines",
       "effect": "allow",
     },
