@@ -2,6 +2,8 @@
 
 Back to [README.md](README.md).
 
+<One or two sentences: what this repository changes in the design and why.>
+
 ## Resources
 
 | Resource | Settings | Why |

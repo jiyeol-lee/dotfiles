@@ -5,20 +5,11 @@ description: Use when writing or reviewing technical design documents.
 
 # Technical design document
 
-This document describes how to solve the business problem in technical terms. Other software engineers read it to review the design, and the author reads it to build the feature. The `README.md` gives the whole design, concise, high level, and clear. Each changed repository has its own file with that repository's detail.
+This document describes how to solve the business problem in technical terms. Other software engineers read it to review the design, and the author reads it to build the feature. The `README.md` gives the whole design, high level and clear. Each changed repository has its own file with that repository's detail.
 
 ## Writing style
 
-This style governs how you write this documentation.
-
-You are reporting to a real human being with a limited attention span, not another LLM. Read that twice, it matters more than any rule. We are all tired of LLM writing that dumps every piece of information without organization. Their attention is the scarcest resource you have, and you spend it with every word.
-
-A human does not read a wall of text, they bounce off it. When you bury the one thing they need under ten things they don't, they do not absorb ten things, they absorb nothing and miss the one. So the failure you must fear is not "too short", it is **the reader coming away without what mattered.** That failure has two doors, and you must shut both:
-
-- **Not putting what matters to most readers at the beginning of each section.** Explaining the how, what, and why first and putting the important part at the end tires the reader, and they miss it. Put the important part first, getting their attention, then explain the rest. That important part must be the one thing that matters to most readers.
-- **Burying it so they never reach it.** A dense, exhaustive document is not "complete", it is unread. Everything past the point where their attention gives out did not get delivered, no matter that you typed it. Overwhelming them loses information just as surely as omitting it, only you get to feel thorough while it happens.
-
-Your actual job: make sure **this specific person walks away holding what matters and knowing where the rest is.** Optimize for what they absorb, not for what is technically on the page. Every rule below serves that one goal.
+Load the `documentation-writing` skill and follow its writing style. The templates below apply it: every file opens with what matters most, the README gives the whole design at a high level, and each repository file stands alone, understandable without the README.
 
 ## Folder structure
 
@@ -34,7 +25,13 @@ Give every changed repository its own file, infrastructure repositories included
 
 ## Where each fact lives
 
-The README summarizes the whole design, including changes within a single repository, and each repository file holds that repository's detail. State each detail once, in the file of the repository that owns or enforces it, and link to it from other files. A contract's detail, such as payloads, status codes, and record shapes, lives in the file of the repository that defines it.
+The README and each repository file stand alone.
+
+- The README gives the whole design at a high level, including changes within a single repository, understandable without opening any other file. It links to repository files for depth.
+- A repository file gives one repository's part, understandable without the README or another repository file. It states the context that repository needs, such as what calls it, what it calls, and the cross-repository decisions that shape it, in a sentence or two each. It does not retell the README's design.
+- The repository that defines a contract holds its full detail, such as payloads, status codes, and record shapes. A repository that uses the contract restates the parts it uses and links to the owner for the rest.
+
+Link between files for deeper detail, never for something needed to understand the file that links.
 
 ```markdown
 <!-- Do: README -->
@@ -50,10 +47,10 @@ The worker sets the order status before it publishes `ORDER-UPDATED` to the `cus
 | -------------- | -------------------------------------------------------------- | --------------------------------------------------------------- |
 | Behavior       | What users and systems see                                     | The rules behind it                                             |
 | Flow           | The main steps across repositories, in the Architecture table  | Internal runtime paths, failures, retries, and edge cases       |
-| Interactions   | New or changed connections, with mechanism, owner, and failure | The contract's detail, in the owner's file                      |
+| Interactions   | New or changed connections, with mechanism, owner, and failure | Each connection's contract, timeouts, and retries               |
 | Data model     | Each entity and its role                                       | Fields, constraints, states                                     |
 | Data migration | Existing data changes, service impact, and migration phases    | Transformation, backfill, compatibility, verification, rollback |
-| API            | Each endpoint's purpose, plus one example of the main call     | All requests, responses, and status codes                       |
+| API            | Each endpoint's purpose, plus one example of the main call     | All requests, responses, and status codes, in Connections       |
 | Permissions    | Who can do what on which resource, people and services         | The checks and policies that enforce it                         |
 | Infrastructure | Each new resource, in the Repositories table                   | Each resource, its settings, and why                            |
 | Program layout | Not covered                                                    | Changed files and necessary existing context                    |
@@ -68,7 +65,7 @@ The worker sets the order status before it publishes `ORDER-UPDATED` to the `cus
 
 ## README template
 
-Assume most reviewers are software engineers who read only the README. It must explain the goal, proposed behavior, architecture and infrastructure, data changes and migration, main risks, and rollout without requiring them to open repository files. Every section stays high level. Repository links provide deeper detail, not explanations needed to understand the overall design.
+The README explains the goal, proposed behavior, architecture and infrastructure, data changes and migration, main risks, and rollout without opening repository files. Every section stays high level.
 
 [README template](./references/readme.md)
 
@@ -76,7 +73,7 @@ The README links every other file: repository files from Repositories, and decis
 
 ## Repository file template
 
-Keep repository files concise and self-contained, understandable without browsing source. In both repository templates, omit sections that do not apply.
+Keep repository files self-contained, understandable without browsing source. Add the detail this repository needs beyond the README's high level, enough to review and build it, not a line-by-line account of the code. In both repository templates, omit sections that do not apply.
 
 [Repository file template](./references/repository.md)
 

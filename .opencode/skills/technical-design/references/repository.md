@@ -2,11 +2,25 @@
 
 Back to [README.md](README.md).
 
+<One or two sentences: what this repository changes in the design and why.>
+
 ## Design
 
 ### Behavior
 
-The behavior and rules first, then the data shapes, the contracts it owns, and links to the contracts it calls. A choice that affects only this repository states its reason here.
+The behavior and rules first, then the stored data's fields, constraints, and states. A choice that affects only this repository states its reason here. When a cross-repository decision shapes this repository, state it and its effect here, linking to the decision file. Name the unchanged repositories or services it calls or that call it, when the change depends on them.
+
+### Connections
+
+One subsection per new or changed connection this repository takes part in, titled `#### <operation> <to|from> <other repository, service, or client>`. Each covers:
+
+- What the connection does for this repository, whether it is synchronous or asynchronous, and its delivery guarantee.
+- The contract: its full detail when this repository owns it, or the fields and behaviors this repository uses and a link to the owner.
+- The timeout per attempt and total attempts including the first, publish-confirmation or acknowledgement timeouts, and redelivery this side enforces.
+- The id both sides log to trace one request, and which side creates it.
+- The Failures row that covers the connection's failure.
+
+Omit this section when this repository has no new or changed connection.
 
 ### Data migration
 

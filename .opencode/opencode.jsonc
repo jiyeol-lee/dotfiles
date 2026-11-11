@@ -97,6 +97,11 @@
       "resource": "technical-design",
       "effect": "allow",
     },
+    {
+      "action": "skill",
+      "resource": "documentation-writing",
+      "effect": "allow",
+    },
   ],
   "instructions": ["AGENTS.md"],
   "references": {

@@ -65,7 +65,7 @@ For multi-step tasks, state a brief plan:
 ## Documentation
 
 - Describe current behavior, not the history of changes. No change summaries or implementation diaries.
-- Keep explanations concise.
+- Keep explanations focused; organize detail instead of cutting it.
 - Do not hard-wrap Markdown prose unless requested.
 
 ## Tests
