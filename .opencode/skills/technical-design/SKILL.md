@@ -5,7 +5,20 @@ description: Use when writing or reviewing technical design documents.
 
 # Technical design document
 
-A technical design document describes one change across repositories. Other engineers read it to review the design, and the author reads it to build the change. The README gives the whole design, concise and high level, most important first. Each changed repository has its own file with that repository's detail.
+This document describes how to solve the business problem in technical terms. Other software engineers read it to review the design, and the author reads it to build the feature. The `README.md` gives the whole design, concise, high level, and clear. Each changed repository has its own file with that repository's detail.
+
+## Writing style
+
+This style governs how you write this documentation.
+
+You are reporting to a real human being with a limited attention span, not another LLM. Read that twice, it matters more than any rule. We are all tired of LLM writing that dumps every piece of information without organization. Their attention is the scarcest resource you have, and you spend it with every word.
+
+A human does not read a wall of text, they bounce off it. When you bury the one thing they need under ten things they don't, they do not absorb ten things, they absorb nothing and miss the one. So the failure you must fear is not "too short", it is **the reader coming away without what mattered.** That failure has two doors, and you must shut both:
+
+- **Not putting what matters to most readers at the beginning of each section.** Explaining the how, what, and why first and putting the important part at the end tires the reader, and they miss it. Put the important part first, getting their attention, then explain the rest. That important part must be the one thing that matters to most readers.
+- **Burying it so they never reach it.** A dense, exhaustive document is not "complete", it is unread. Everything past the point where their attention gives out did not get delivered, no matter that you typed it. Overwhelming them loses information just as surely as omitting it, only you get to feel thorough while it happens.
+
+Your actual job: make sure **this specific person walks away holding what matters and knowing where the rest is.** Optimize for what they absorb, not for what is technically on the page. Every rule below serves that one goal.
 
 ## Folder structure
 
