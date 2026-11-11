@@ -1,6 +1,6 @@
 ---
 name: technical-design
-description: Use when writing or reviewing technical design documents.
+description: Use when writing or reviewing a technical design document, also called a design doc, tech spec, or engineering spec.
 ---
 
 # Technical design document
