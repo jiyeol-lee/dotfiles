@@ -7,3 +7,5 @@
 .alacritty/alacritty-os-specific.toml
 
 **/.opencode/package-lock.json
+
+.opencode/service.json
