@@ -69,7 +69,7 @@
     "single": true
   },
   "session": {
-    "sidebar": "hide",
+    "sidebar": "auto",
     "scrollbar": true,
     "thinking": "hide",
     "markdown": "rendered",
