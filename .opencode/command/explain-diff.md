@@ -40,7 +40,7 @@ Format:
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.5"></script>
     <script>
       tailwind.config = { darkMode: "class" };
     </script>
@@ -55,7 +55,7 @@ Format:
     </script>
 
     <script type="module">
-      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@12.2.0/+esm";
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@12.3.0/+esm";
       mermaid.initialize({ startOnLoad: true, theme: "dark" });
     </script>
   </head>
