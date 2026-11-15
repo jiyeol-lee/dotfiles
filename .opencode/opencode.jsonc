@@ -45,17 +45,32 @@
       "resource": "read:.env",
       "effect": "deny",
     },
+    {
+      "action": "tool.use",
+      "resource": "shell:git stash *",
+      "effect": "deny",
+    },
+    {
+      "action": "tool.use",
+      "resource": "shell:git pop *",
+      "effect": "deny",
+    },
+    {
+      "action": "tool.use",
+      "resource": "shell:terraform apply *",
+      "effect": "deny",
+    },
+    {
+      "action": "tool.use",
+      "resource": "shell:opentofu apply *",
+      "effect": "deny",
+    },
   ],
   "permissions": [
     {
       "action": "tool__*",
       "resource": "*",
       "effect": "deny",
-    },
-    {
-      "action": "doom_loop",
-      "resource": "*",
-      "effect": "allow",
     },
     {
       "action": "external_directory",
@@ -102,6 +117,46 @@
       "resource": "documentation-writing",
       "effect": "allow",
     },
+    {
+      "action": "skill",
+      "resource": "grill-me",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "how",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "why",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "architect",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "tdd",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "handbook-*",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "playbook-*",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "principle-*",
+      "effect": "allow",
+    },
   ],
   "instructions": ["AGENTS.md"],
   "references": {
@@ -133,9 +188,6 @@
       "disabled": true,
     },
     "build": {
-      "disabled": true,
-    },
-    "general": {
       "disabled": true,
     },
     "software-engineer": {
@@ -423,22 +475,7 @@
         },
         {
           "action": "subagent",
-          "resource": "generator",
-          "effect": "allow",
-        },
-        {
-          "action": "subagent",
-          "resource": "evaluator",
-          "effect": "allow",
-        },
-        {
-          "action": "skill",
-          "resource": "grill-me",
-          "effect": "allow",
-        },
-        {
-          "action": "skill",
-          "resource": "pull-request",
+          "resource": "general",
           "effect": "allow",
         },
         {
@@ -521,8 +558,8 @@
         },
       ],
     },
-    "generator": {
-      "description": "Implements a bounded, independently scoped code or content change. Use during an authorized implementation-only request when the work can run in parallel without unresolved shared decisions or overlapping edits. Do not use for sequential or tightly coupled work.",
+    "general": {
+      "description": "General-purpose subagent for any delegated work.",
       "mode": "subagent",
       "hidden": true,
       "permissions": [
@@ -609,26 +646,6 @@
         {
           "action": "shell",
           "resource": "git -C *",
-          "effect": "deny",
-        },
-        {
-          "action": "shell",
-          "resource": "git worktree *",
-          "effect": "deny",
-        },
-        {
-          "action": "shell",
-          "resource": "git checkout *",
-          "effect": "deny",
-        },
-        {
-          "action": "shell",
-          "resource": "git stash *",
-          "effect": "deny",
-        },
-        {
-          "action": "shell",
-          "resource": "git pop *",
           "effect": "deny",
         },
         {
@@ -785,223 +802,6 @@
           "action": "patch",
           "resource": "*",
           "effect": "allow",
-        },
-        {
-          "action": "todowrite",
-          "resource": "*",
-          "effect": "deny",
-        },
-        {
-          "action": "todoread",
-          "resource": "*",
-          "effect": "deny",
-        },
-        {
-          "action": "webfetch",
-          "resource": "*",
-          "effect": "deny",
-        },
-        {
-          "action": "question",
-          "resource": "*",
-          "effect": "deny",
-        },
-      ],
-    },
-    "evaluator": {
-      "description": "Read-only agent for independently assessing code, proposed changes, diffs, and review claims against specified criteria. Prefer delegating substantive evaluation questions when an independent assessment could uncover mistakes or resolve uncertainty. Skip only clearly trivial checks where a second assessment would add little value. Report confirmed findings and testing gaps; do not modify files or run tests.",
-      "mode": "subagent",
-      "hidden": true,
-      "permissions": [
-        {
-          "action": "subagent",
-          "resource": "*",
-          "effect": "deny",
-        },
-        {
-          "action": "shell",
-          "resource": "*",
-          "effect": "ask",
-        },
-        {
-          "action": "shell",
-          "resource": "rg *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "cat *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "head *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "tail *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "ls *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "echo *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "jq",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "jq *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "wc *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "grep *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "sort *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "pwd *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "tree *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "git -C *",
-          "effect": "deny",
-        },
-        {
-          "action": "shell",
-          "resource": "git worktree *",
-          "effect": "deny",
-        },
-        {
-          "action": "shell",
-          "resource": "git checkout *",
-          "effect": "deny",
-        },
-        {
-          "action": "shell",
-          "resource": "git stash *",
-          "effect": "deny",
-        },
-        {
-          "action": "shell",
-          "resource": "git pop *",
-          "effect": "deny",
-        },
-        {
-          "action": "shell",
-          "resource": "git log *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "git show *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "git status *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "git diff *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "git branch --show-current",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "git merge-base *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "git ls-files",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "git ls-files *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "git show-ref *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "git rev-parse *",
-          "effect": "allow",
-        },
-        {
-          "action": "shell",
-          "resource": "git rev-list *",
-          "effect": "allow",
-        },
-        {
-          "action": "edit",
-          "resource": "*",
-          "effect": "deny",
-        },
-        {
-          "action": "write",
-          "resource": "*",
-          "effect": "deny",
-        },
-        {
-          "action": "read",
-          "resource": "*",
-          "effect": "allow",
-        },
-        {
-          "action": "grep",
-          "resource": "*",
-          "effect": "allow",
-        },
-        {
-          "action": "glob",
-          "resource": "*",
-          "effect": "allow",
-        },
-        {
-          "action": "list",
-          "resource": "*",
-          "effect": "allow",
-        },
-        {
-          "action": "patch",
-          "resource": "*",
-          "effect": "deny",
         },
         {
           "action": "todowrite",
