@@ -5,6 +5,9 @@
   "small_model": "opencode-go/claude-haiku-5-5#none",
   "update": "notify",
   "formatter": true,
+  "experimental": {
+    "todo": true,
+  },
   "websearch": {
     "provider": "exa",
   },
