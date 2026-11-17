@@ -1,6 +1,6 @@
 ---
 name: documentation-writing
-description: Use when writing or reviewing Markdown documentation.
+description: Sets the writing style for Markdown documentation, putting what matters first and moving detail out of the way. Use when writing or reviewing Markdown documentation.
 ---
 
 # Markdown documentation writing style
@@ -17,3 +17,9 @@ A human does not read a wall of text, they bounce off it. When you bury the one 
 Your actual job: make sure **this specific person walks away holding what matters and knowing where the rest is.** Optimize for what they absorb, not for what is technically on the page. Every documentation rule you follow serves that one goal.
 
 When reviewing documentation, find missing essentials and passages that obscure the point, and flag them.
+
+## Rules
+
+- Describe current behavior, not the history of changes. No change summaries or implementation diaries.
+- Keep explanations focused; organize detail instead of cutting it.
+- Do not hard-wrap Markdown prose unless requested.
