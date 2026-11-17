@@ -1,73 +1,21 @@
 ---
 name: pull-request
-description: Analyzes branch diffs, drafts PR titles and bodies following Conventional Commits, and creates or updates pull requests via GitHub CLI. Use when user asks to "create a PR", "open a pull request", "update PR description", "draft a PR", or "submit changes for review".
+description: Opens or updates a draft pull request whose description explains the change by behavior. Use when a change is ready to ship as a PR, such as "open a PR", "create a pull request", or "update the PR", and when a playbook step names it.
 ---
 
-## Workflow
+# Pull request
 
-1. **Preflight**
-   - Confirm git repo, branch, and commits exist
-   - Ensure current branch is NOT `main` or `master` — abort if so
-   - Check for unpushed commits
-2. **Analyze**
-   - Use `git diff <target-branch>...HEAD` to analyze changes since diverging from the target branch
-   - Check for PR template: try to read `.github/pull_request_template.md` or `pull_request_template.md`
-3. **Draft**
-   - **If existing PR**:
-     - Fetch PR details, reviews, and comments with `gh pr view --json number,title,body,state,reviews,comments`; use `gh api graphql` for review threads when needed
-     - If a template was found, validate the existing body against it and draft updates conforming to the template
-     - Draft content updates based on reviews/comments
-   - **If new PR**:
-     - If template found: fill it out with the summary of changes (do not change template structure or headers)
-     - If no template: draft a standard title and body
-     - Use `tool__gh--retrieve-repository-collaborators` to list available reviewers
-     - Ask the user: "Who should be the reviewer?"
-   - Present the draft (title, body) and wait for approval
-4. **Publish** (only after explicit approval)
-   - Push commits if needed with `git push -u origin HEAD`
-   - Create a draft PR with `gh pr create --draft --assignee @me` or update an existing PR with `gh pr edit`
-   - Use user-provided reviewers
-   - Report the final PR URL
+The PR tells a reviewer what changed in behavior and why, in under a minute.
 
-## PR Title Format
+## Steps
 
-Follow Conventional Commits for the PR title:
+1. **Check the branch.** It is not `main` or `master`.
+2. **Commit what is left.** This is a fallback: each playbook commits its own work in its own step. If files you changed for this task are still uncommitted, commit them. Leave edits you did not make out of the commit.
+3. **Push** with `git push -u origin HEAD` when the branch is missing from the remote or behind it. A request to open the PR covers this push, so do not ask for it separately.
+4. **Summarize the change by behavior.** Read `git diff <base>...HEAD`, then describe what changed for users and callers, and why. Do not describe it file by file.
+5. **Follow the template** at `.github/pull_request_template.md` or `pull_request_template.md` when one exists, keeping its structure and headings. Without one, use `## Why`, `## What changed`, and `## Verification`.
+6. **Open it as a draft** with `gh pr create --draft --assignee @me`, titled in Conventional Commits form: `type(scope): subject`. Add `--base <branch>` only when the user or the calling playbook names a base branch. Otherwise leave the base to the repository default. Update an existing PR with `gh pr edit` instead.
 
-| Prefix      | When to Use              |
-| ----------- | ------------------------ |
-| `feat:`     | New feature              |
-| `fix:`      | Bug fix                  |
-| `refactor:` | Code refactoring         |
-| `docs:`     | Documentation only       |
-| `chore:`    | Maintenance, deps, CI    |
-| `test:`     | Adding or updating tests |
+## Output
 
-## PR Body Guidelines
-
-- If a PR template exists, conform to its structure and headers exactly
-- Summarize changes clearly — explain **why**, not just what or how
-- Use markdown formatting for readability
-- DO NOT include what commands were run like linters, tests, formatting.
-
-## Example Output
-
-For a branch with 3 commits adding a new caching layer:
-
-**Title**: `feat: add Redis caching for user session lookups`
-
-**Body**:
-
-```markdown
-## Summary
-
-- Add Redis-based caching for user session lookups to reduce DB load
-- Cache TTL is 15 minutes with automatic invalidation on session update
-- Add `RedisCacheService` with connection pooling and retry logic
-```
-
-## Constraints
-
-- NEVER create or update a PR without explicit user approval
-- NEVER auto-select or recommend reviewers — list collaborators and let the user choose
-- NEVER push without explicit approval
-- NEVER force-push to main/master
+PR link that you created or updated.

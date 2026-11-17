@@ -1,65 +1,26 @@
 ---
 name: grill-me
-description: Conducts thorough interviews to deeply understand user needs, requirements, and context before any implementation begins. Use when requirements are unclear, assumptions need validation, edge cases need exploration, when the user says "grill me", "ask me questions", "help me think through this", or when the underlying problem isn't fully understood.
+description: Interviews the user in rounds of questions until there is no gap between what they mean and what the agent understands. Not for trying to break code or a diff. Use when the user asks to be grilled or to stress-test a plan, design, decision, or idea through questions ("grill me", "poke holes in this plan", "interview me about this", "help me think this through"), and when a playbook step names it.
 ---
 
-## Workflow
+# Grill me
 
-1. **Understand the surface request** — Read the user's initial ask and identify what's stated vs. what's assumed
-2. **Explore the problem space** — Ask probing questions about the areas below, one at a time
-3. **Answer from codebase first** — If a question can be answered by exploring the codebase, explore the codebase instead of asking the user
-4. **Provide a recommended answer with every question** — For each question, include your best-guess recommendation so the user can confirm, correct, or refine rather than starting from scratch
-5. **Answer with recommendation** — Ask questions (one or multiple per invocation), where each question includes a recommended answer.
-6. **Converge on shared understanding** — Stop when you have enough context to define what to build, why, and what's out of scope
+Interview the user relentlessly until you reach a shared understanding, with no gap between what they mean and what you understand. Map the plan as a **design tree**: every decision branches into the decisions that hang off it. Change nothing while grilling.
 
-## Question Areas
-
-Probe these areas (adapt order based on the request):
-
-- **Underlying problem** — What's the real need behind the request? Why now?
-- **Success criteria** — How will we know this is done? What does "working" look like?
-- **Edge cases and failure modes** — What happens when input is invalid, network fails, user cancels?
-- **Dependencies and constraints** — What existing systems, APIs, or patterns must this integrate with?
-- **Risks and trade-offs** — What are we choosing NOT to do? What could go wrong?
-- **Prioritization and MVP scope** — What's the minimum that delivers value? What can be deferred?
-
-## Example
-
-**User request:** "I want to add a notifications feature"
+Work the tree in **rounds**. The **frontier** is every decision whose prerequisites are already settled: the questions you can ask now without guessing at answers you have not heard yet. Ask the whole frontier in one round, number each question, and give your recommended answer, worded so "yes" accepts it:
 
 ```
-Question 1 [underlying problem]:
-"What problem are notifications solving — are users missing important
-events, or is this about engagement/retention?
-→ User: "Users aren't seeing when their orders ship."
+**Q1. <question title>**
+<question body, with the options when there are several>
 
-Question 2 [scope]:
-"Should this be in-app notifications only, or also email/push?
-→ User: "In-app for now, email later."
+Recommended: <your answer, and why>
 
-Question 3 [edge cases]:
-"What happens when a user has 500+ unread notifications — do we
-paginate, auto-archive old ones, or cap the count?
-→ User: "Auto-archive after 30 days, paginate."
-
-Question 4 [integration]:
-"I see the app uses WebSockets for real-time chat already. Should
-notifications use the same WebSocket connection, or poll?
-→ User: "Yes, reuse WebSockets."
-
-Question 5 [success criteria]:
-"So the MVP is: in-app notifications via WebSocket when order status
-changes, paginated list with 30-day auto-archive. Correct?"
-→ User: "Yes, that's it."
+**Q2. <question title>**
+...
 ```
 
-Notice: Question 4 was informed by exploring the codebase rather than asking blindly.
+Each round of answers reshapes the tree: settled decisions unblock the questions that depended on them. Recompute the frontier and ask the next round. A question that depends on another question still open in this round belongs to a later round.
 
-## Constraints
+Finding facts is your job, never the user's. When a question needs a fact from the code, config, or tools, look it up or delegate the lookup, and do not ask the user. Do not block on a running lookup: only the questions downstream of it wait. The decisions are the user's: put each to them and wait.
 
-- **NEVER** propose solutions before understanding the problem — ask first, build later
-- **NEVER** skip edge case exploration — surface at least 2 edge cases per feature
-- **NEVER** ask questions the codebase can answer — explore code first
-- **NEVER** ask questions without a recommended answer — every question in an invocation must include one
-- **ALWAYS** provide a recommended answer with each question so the user can confirm or correct
-- **ALWAYS** summarize the agreed requirements before declaring the interview complete
+The grilling is done when the frontier is empty: every branch visited, nothing left silently assumed. Do not act on the plan until the user confirms you have reached a shared understanding.

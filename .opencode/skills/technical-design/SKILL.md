@@ -1,6 +1,6 @@
 ---
 name: technical-design
-description: Use when writing or reviewing a technical design document, also called a design doc, tech spec, or engineering spec.
+description: Gives the folder structure, templates, and rules for a technical design document: a README with the whole design and one file per changed repository. Use when writing or reviewing a technical design document, also called a design doc, tech spec, or engineering spec.
 ---
 
 # Technical design document
