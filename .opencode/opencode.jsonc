@@ -4,6 +4,9 @@
   "default_agent": "software-engineer",
   "small_model": "opencode-go/claude-haiku-5-5#none",
   "update": "notify",
+  "worktree": {
+    "directory": "~/worktree",
+  },
   "formatter": true,
   "experimental": {
     "todo": true,
@@ -73,7 +76,7 @@
     {
       "action": "tool__*",
       "resource": "*",
-      "effect": "deny",
+      "effect": "allow",
     },
     {
       "action": "external_directory",
@@ -87,18 +90,28 @@
     },
     {
       "action": "external_directory",
+      "resource": "~/dev/**",
+      "effect": "allow",
+    },
+    {
+      "action": "external_directory",
+      "resource": "~/worktree/**",
+      "effect": "allow",
+    },
+    {
+      "action": "external_directory",
       "resource": "~/.config/opencode/**",
       "effect": "allow",
     },
     {
       "action": "external_directory",
-      "resource": "~/dev/**",
-      "effect": "ask",
+      "resource": "~/.local/share/agentic-coding-tool/**",
+      "effect": "allow",
     },
     {
       "action": "external_directory",
       "resource": "~/dotfiles/.opencode/**",
-      "effect": "ask",
+      "effect": "allow",
     },
     {
       "action": "skill",
@@ -107,7 +120,7 @@
     },
     {
       "action": "skill",
-      "resource": "guidelines",
+      "resource": "language-guidelines",
       "effect": "allow",
     },
     {
@@ -127,16 +140,6 @@
     },
     {
       "action": "skill",
-      "resource": "how",
-      "effect": "allow",
-    },
-    {
-      "action": "skill",
-      "resource": "why",
-      "effect": "allow",
-    },
-    {
-      "action": "skill",
       "resource": "architect",
       "effect": "allow",
     },
@@ -147,17 +150,72 @@
     },
     {
       "action": "skill",
-      "resource": "handbook-*",
+      "resource": "orchestrate",
       "effect": "allow",
     },
     {
       "action": "skill",
-      "resource": "playbook-*",
+      "resource": "arena",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "interrogate",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "worktree",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "swarm",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "autopilot",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "autonomous-run",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "hillclimb",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "gardening",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "authoring-skills",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "show-me-your-work",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "pull-request",
       "effect": "allow",
     },
     {
       "action": "skill",
       "resource": "principle-*",
+      "effect": "allow",
+    },
+    {
+      "action": "skill",
+      "resource": "output-styles",
       "effect": "allow",
     },
   ],
@@ -363,6 +421,11 @@
         },
         {
           "action": "shell",
+          "resource": "go run *.config/opencode/scripts/*",
+          "effect": "allow",
+        },
+        {
+          "action": "shell",
           "resource": "sleep *",
           "effect": "allow",
         },
@@ -479,11 +542,6 @@
         {
           "action": "subagent",
           "resource": "general",
-          "effect": "allow",
-        },
-        {
-          "action": "tool__gh--retrieve-repository-collaborators",
-          "resource": "*",
           "effect": "allow",
         },
       ],
@@ -733,6 +791,11 @@
         },
         {
           "action": "shell",
+          "resource": "go run *.config/opencode/scripts/*",
+          "effect": "allow",
+        },
+        {
+          "action": "shell",
           "resource": "tofu init",
           "effect": "allow",
         },
@@ -819,7 +882,7 @@
         {
           "action": "webfetch",
           "resource": "*",
-          "effect": "deny",
+          "effect": "allow",
         },
         {
           "action": "question",
