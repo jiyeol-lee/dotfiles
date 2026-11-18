@@ -46,7 +46,7 @@ alias osrs='openssl rand -hex'
 
 # Opencode (AI)
 ### Open opencode in current directory
-alias oc='opencode'
+alias oc='opencode --auto'
 
 # Workmux
 ### WorkMux

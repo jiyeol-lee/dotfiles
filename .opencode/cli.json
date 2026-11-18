@@ -74,7 +74,7 @@
     "thinking": "hide",
     "markdown": "rendered",
     "grouping": "auto",
-    "permissions": "autoaccept",
+    "permissions": "prompt",
     "verbosity": "medium"
   },
   "animations": true,
