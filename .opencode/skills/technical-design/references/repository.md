@@ -16,7 +16,7 @@ One subsection per new or changed connection this repository takes part in, titl
 
 - What the connection does for this repository, whether it is synchronous or asynchronous, and its delivery guarantee.
 - The contract: its full detail when this repository owns it, or the fields and behaviors this repository uses and a link to the owner.
-- The timeout per attempt and total attempts including the first, publish-confirmation or acknowledgement timeouts, and redelivery this side enforces.
+- The timeout per attempt and total attempts including the first, publish-confirmation or acknowledgement timeouts, and redelivery this side enforces. On a synchronous call, this side waits longer than everything the other side waits on to answer, attempts included. When it does not, add it to the README's Open questions.
 - The id both sides log to trace one request, and which side creates it.
 - The Failures row that covers the connection's failure.
 

@@ -1,16 +1,12 @@
 # <Title>
 
-## Summary
-
-Up to 5 bullets: what changes and for whom, how it works in one sentence, and the biggest risk. A reader who stops here can explain the change to a teammate.
-
 ## Goal
 
-What the change achieves and why.
+The problem, what this change improves, and how it solves it, in a few short sentences. A reader who stops here knows what the document is about and what the change does.
 
 ## Current behavior
 
-What the code does today, verified against each repository's main branch. Then one short paragraph per change to existing behavior: "Today X. With this change, Y."
+What the code does today, verified against each repository's origin/default branch. Then one short paragraph per change to existing behavior: "Today X. With this change, Y."
 
 ## Design
 
@@ -36,20 +32,9 @@ Each endpoint's purpose, plus one example of the main call.
 
 ### Interactions
 
-Use one ASCII UML sequence diagram per materially different flow involving new or changed connections between repositories or with an external service. Omit this section when no connection is new or changed.
+One ASCII UML sequence diagram per materially different flow that has a new or changed connection between repositories or with an external service. Omit this section when no connection is new or changed.
 
-Give each participant a column, with time running from top to bottom. Number arrows consecutively across all diagrams in Interactions (`<1>`, `<2>`, ...) and label each with the operation or event and the protocol or transport. Show responses, acknowledgements, and important failure or retry branches when they affect the sequence.
-
-Immediately below each diagram, before the next diagram, use a matching `#### <number> <sender> to <receiver>` subsection for each arrow in diagram order, with short bullets covering:
-
-- Whether the connection is synchronous or asynchronous, and its delivery guarantee.
-- The contract owner, linked to the repository file section that defines the contract's detail.
-- What the caller sees when the connection fails.
-- Links to the Connections section of each repository that enforces the connection's timeouts, attempts, and retries.
-
-Describe each connection once across its request, response, or acknowledgement subsections. When another flow reuses a connection, refer to its arrow number instead of repeating it.
-
-Along a chain of synchronous calls, each caller waits longer than everything it calls, attempts included. When it does not, add it to Open questions.
+Give each participant a column, with time running from top to bottom. Label each arrow with the operation or event and the protocol or transport. Show a response or a failure branch only when it changes the sequence. Each connection's contract, timeouts, retries, and failures go in the Connections section of the repository files that take part.
 
 ## Permissions
 

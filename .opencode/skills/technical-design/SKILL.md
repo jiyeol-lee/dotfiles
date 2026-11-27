@@ -43,18 +43,18 @@ An order stays PENDING until its payment check finishes, and the customer sees t
 The worker sets the order status before it publishes `ORDER-UPDATED` to the `customer:{customer_id}` room.
 ```
 
-| Topic          | README                                                         | Repository file                                                 |
-| -------------- | -------------------------------------------------------------- | --------------------------------------------------------------- |
-| Behavior       | What users and systems see                                     | The rules behind it                                             |
-| Flow           | The main steps across repositories, in the Architecture table  | Internal runtime paths, failures, retries, and edge cases       |
-| Interactions   | New or changed connections, with mechanism, owner, and failure | Each connection's contract, timeouts, and retries               |
-| Data model     | Each entity and its role                                       | Fields, constraints, states                                     |
-| Data migration | Existing data changes, service impact, and migration phases    | Transformation, backfill, compatibility, verification, rollback |
-| API            | Each endpoint's purpose, plus one example of the main call     | All requests, responses, and status codes, in Connections       |
-| Permissions    | Who can do what on which resource, people and services         | The checks and policies that enforce it                         |
-| Infrastructure | Each new resource, in the Repositories table                   | Each resource, its settings, and why                            |
-| Program layout | Not covered                                                    | Changed files and necessary existing context                    |
-| Tests          | Not covered                                                    | Planned test files and the behavior each must prove             |
+| Topic          | README                                                        | Repository file                                                 |
+| -------------- | ------------------------------------------------------------- | --------------------------------------------------------------- |
+| Behavior       | What users and systems see                                    | The rules behind it                                             |
+| Flow           | The main steps across repositories, in the Architecture table | Internal runtime paths, failures, retries, and edge cases       |
+| Interactions   | A sequence diagram per flow with new or changed connections   | Each connection's mechanism, contract, timeouts, and failures   |
+| Data model     | Each entity and its role                                      | Fields, constraints, states                                     |
+| Data migration | Existing data changes, service impact, and migration phases   | Transformation, backfill, compatibility, verification, rollback |
+| API            | Each endpoint's purpose, plus one example of the main call    | All requests, responses, and status codes, in Connections       |
+| Permissions    | Who can do what on which resource, people and services        | The checks and policies that enforce it                         |
+| Infrastructure | Each new resource, in the Repositories table                  | Each resource, its settings, and why                            |
+| Program layout | Not covered                                                   | Changed files and necessary existing context                    |
+| Tests          | Not covered                                                   | Planned test files and the behavior each must prove             |
 
 ## Writing rules
 
